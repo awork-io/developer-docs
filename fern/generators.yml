@@ -7,3 +7,6 @@ groups:
         output:
           location: local-file-system
           path: ../sdks/typescript
+api: 
+  path: ./openapi/openapi.yml
+  origin: https://awork-function-swaggercombine-global.azurewebsites.net/api/swagger-combine
