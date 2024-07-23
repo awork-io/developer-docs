@@ -1,0 +1,65 @@
+instances:
+  - url: https://sebastianrosch.docs.buildwithfern.com
+colors:
+  accentPrimary: '#4D9AFF'
+  background: '#F2F9FF'
+favicon: ./assets/favicon.ico
+logo:
+    light: ./assets/logo.png
+    dark: ./assets/logo.png
+    height: 40
+    href: https://www.awork.com
+title: awork API | Documentation
+navigation:
+  - section: Overview
+    contents: 
+      - page: Introduction 
+        path: ./pages/introduction.mdx
+      - page: Getting Started
+        path: ./pages/getting-started.mdx
+      - page: Authentication
+        path: ./pages/authentication.mdx
+      - page: Error Handling
+        path: ./pages/error-handling.mdx
+      - page: Pagination
+        path: ./pages/pagination.mdx
+      - page: Filtering
+        path: ./pages/filtering.mdx
+      - page: Ordering
+        path: ./pages/ordering.mdx
+      - page: Rate Limits
+        path: ./pages/rate-limits.mdx
+      - page: Permissions
+        path: ./pages/permissions.mdx
+      - page: Webhooks
+        path: ./pages/webhooks.mdx
+      - page: Changelog
+        path: ./pages/changelog.mdx
+      - page: Support
+        path: ./pages/support.mdx
+  - api: awork API Reference
+    display-errors: true
+    layout:
+      - absences:
+          - page: Overview
+            path: ./pages/api/absences.mdx
+      - accounts:
+          - page: Overview
+            path: ./pages/api/accounts.mdx
+      - API Users:
+          - page: Overview
+            path: ./pages/api/apiusers.mdx
+navbar-links:
+  - type: secondary
+    text: Support
+    url: https://support.awork.com
+  - type: secondary
+    text: Developer Forum
+    url: https://community.awork.com/c/developer-forum/17
+  - type: primary
+    text: Login
+    url: https://app.awork.com
+layout:
+  searchbar-placement: header
+  tabs-placement: header
+  content-alignment: left
