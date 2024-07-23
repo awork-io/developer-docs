@@ -1,5 +1,5 @@
 instances:
-  - url: https://anwok.docs.buildwithfern.com
+  - url: https://aworkapi.docs.buildwithfern.com
 colors:
   accentPrimary: '#4D9AFF'
   background: '#F2F9FF'
@@ -9,7 +9,7 @@ logo:
     dark: ./assets/logo.png
     height: 40
     href: https://www.awork.com
-title: awork API | Documentation
+title: Awork API | Documentation
 navigation:
   - section: Overview
     contents: 
