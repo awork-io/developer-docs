@@ -42,7 +42,7 @@ navigation:
     display-errors: true
     icon: ./assets/logo.png
     summary: ./apis/v1/summary.mdx
-    slug: v1
+    slug: apiv1
     audiences: 
       - v1
     layout:
@@ -59,7 +59,7 @@ navigation:
     api-name: v2
     display-errors: true
     summary: ./apis/v2/summary.mdx
-    slug: v2
+    slug: apiv2
     audiences: 
       - v2
 navbar-links:
