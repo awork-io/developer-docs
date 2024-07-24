@@ -37,8 +37,14 @@ navigation:
         path: ./pages/changelog.mdx
       - page: Support
         path: ./pages/support.mdx
-  - api: awork API Reference
+  - api: awork API v1 Reference
+    api-name: v1
     display-errors: true
+    icon: ./assets/logo.png
+    summary: ./apis/v1/summary.mdx
+    slug: v1
+    audiences: 
+      - v1
     layout:
       - absences:
           - page: Overview
@@ -49,6 +55,13 @@ navigation:
       - apiUsers:
           - page: Overview
             path: ./pages/api/apiusers.mdx
+  - api: awork API v2 Reference
+    api-name: v2
+    display-errors: true
+    summary: ./apis/v2/summary.mdx
+    slug: v2
+    audiences: 
+      - v2
 navbar-links:
   - type: secondary
     text: Support

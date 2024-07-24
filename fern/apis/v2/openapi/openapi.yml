@@ -1,14 +1,24 @@
 openapi: 3.0.0
 info:
-  title: awork API
-  version: 1.2.0
+  title: awork API v2
+  version: 1.3.0
+  description: This is the API documentation for awork.
+  termsOfService: https://www.awork.com/legal-and-privacy/privacy-policy-awork-app
+  contact:
+    name: awork Support
+    url: https://support.awork.com
+    email: support@awork.com
+servers:
+  - url: https://api.awork.com/api/v2
+    description: awork Production
 paths:
   /absences:
     get:
+      x-fern-audiences:
+        - v2
       tags:
         - Absences
-      summary: "Returns all absences."
-      description: "Admin or user planning data permissions are required,\r\notherwise only the absences of the current user are returned."
+      summary: "Returns all absences of all users."
       parameters:
         - name: page
           in: query
@@ -54,8 +64,8 @@ paths:
     post:
       tags:
         - Absences
-      summary: "Creates a new absence."
-      description: "User planning data permissions are required if the calling user is not the owner of the absence or admin. The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date."
+      summary: "Creates a new absence.\r\nUser planning data permissions are required if the calling user\r\nis not the owner of the absence or admin."
+      description: "The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date."
       requestBody:
         description: The absence to create.
         content:
@@ -79,8 +89,7 @@ paths:
     get:
       tags:
         - Absences
-      summary: "Returns the absence with the specified id."
-      description: "User planning data permissions are required if the calling user is not the owner of the absence or admin."
+      summary: "Returns the absence with the specified id.\r\nUser planning data permissions are required if the calling user\r\nis not the owner of the absence or admin."
       parameters:
         - name: absenceId
           in: path
@@ -102,8 +111,8 @@ paths:
     put:
       tags:
         - Absences
-      summary: "Updates the absence with the specified id."
-      description: "User planning data permissions are required if the calling user is not the owner of the absence or admin. The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date."
+      summary: "Updates the absence with the specified id.\r\nUser planning data permissions are required if the calling user\r\nis not the owner of the absence or admin."
+      description: "The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date."
       parameters:
         - name: absenceId
           in: path
@@ -134,8 +143,7 @@ paths:
     delete:
       tags:
         - Absences
-      summary: "Deletes the absence with the specified id."
-      description: "User planning data permissions are required if the calling user is not the owner of the absence or admin."
+      summary: "Deletes the absence with the specified id.\r\nUser planning data permissions are required if the calling user\r\nis not the owner of the absence or admin."
       parameters:
         - name: absenceId
           in: path
@@ -20381,27 +20389,23 @@ components:
         id:
           type: string
           format: uuid
-          example: b4601eef-34c3-443c-9e8c-27b5b672be4e
         createdOn:
           type: string
           format: date-time
         createdBy:
           type: string
           format: uuid
-          example: b4601eef-34c3-443c-9e8c-27b5b672be4e
         updatedOn:
           type: string
           format: date-time
         updatedBy:
           type: string
           format: uuid
-          example: b4601eef-34c3-443c-9e8c-27b5b672be4e
         userId:
           type: string
           description: The id of the user to create the absence for.
           format: uuid
           nullable: true
-          example: b4601eef-34c3-443c-9e8c-27b5b672be4e
         startOn:
           type: string
           description: The start time of the absence.
@@ -31477,3 +31481,249 @@ components:
           type: string
           format: date-time
       additionalProperties: false
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerAuth: []
+tags:
+  - name: Accounts
+    description: >-
+      The accounts endpoints allow you to manage the basic account details of a
+      user.
+  - name: ClientApplications
+    description: >-
+      Client applications are important for the external login flow used by your
+      applications. These endpoints allow you to manage the client applications
+      registered by your workspace.
+  - name: Absences
+    description: The absence endpoints allow you to manage absences for users.
+  - name: ApiUsers
+    description: >-
+      API users are required to create API keys. Changes made by a client using
+      an API key are shown in the UI as the associated API user.
+  - name: AssignedTasks
+    description: >-
+      The assigned tasks endpoints allow you to get all assigned tasks of a
+      user.
+                                      Project tasks are only visible if the related project is in progress.
+  - name: ChecklistItems
+    description: >-
+      The checklist items endpoints can be used for managing the checklist items
+      of a task.
+  - name: Comments
+    description: These endpoints allow you to manage comments for various entities.
+  - name: Companies
+    description: >-
+      The company endpoints allow you to add and manage companies and their
+      details.
+  - name: CompanyTags
+    description: The endpoint to manage the tags.
+  - name: Dashboards
+    description: >-
+      The Dashboard Endpoints allow you to manage Dashboards and Widgets for
+      users.
+  - name: EntityTimeEntries
+    description: >-
+      The endpoints allow access to time entires and tracked times on specific
+      entities like 'projects' and 'tasks'.
+  - name: Global
+    description: >-
+      The global endpoints contains a set of internal endpoints that are not
+      tied to a specific feature.
+  - name: Permissions
+    description: >-
+      The permissions endpoints provide the permission information of the
+      workspace.
+                                   That includes the complete permission set of the currently logged-in user as well as all available features.
+  - name: PrivateTasks
+    description: |-
+      Private tasks belong to a single user.
+                                   Only the users themselves have access to their tasks and they can only be assigned to them.
+                                   It is possible to create and assign private tasks to another user in which case both users have access to the task.
+  - name: ProjectMilestones
+    description: >-
+      The project milestone endpoints allow you to work with the basic project
+      milestone data.
+  - name: ProjectMilestoneTemplates
+    description: >-
+      Endpoints to manage project milestone templates. From these templates,
+      project milestones can be created,
+                              when you create a project with a project template.
+  - name: ProjectRoles
+    description: >-
+      The project roles endpoints allow you to define roles for your project
+      members
+                                   You can assign members to these roles on each project.
+                                   If the roles are linked to the project types then the roles are available in every project using this type.
+                                   When you want to delete a project role which is still in use, you are required to specify which role the currently assigned members should be assigned to instead.
+  - name: Projects
+    description: |-
+      The projects endpoints allow you to work with the basic project data.
+                                   If you don't assign a customer to the project, the project will be an internal project.
+                                   In addition to the normal operation you can handle the project members and tags of the projects.
+                                   When you assign a user to this project as a project member, you need to specify a project role for this project member. The available roles depend on the type of the project.
+                                   You can also make one member responsible for the project, which means that we will notify this person if anything of interest happens in the project.
+                                   The tags help you to add additional values to your projects and to find them faster.
+                                   If you create new tags, they will be available for all other projects, too.
+  - name: ProjectStatuses
+    description: |-
+      The project status endpoints allow you to define statuses for projects.
+                                   A status defines the current situation of a project.
+                                   The statuses of a project type have an order which defines the flow the project typically goes through.
+                                   Statuses can also be unlinked from the typical flow.
+  - name: ProjectTasks
+    description: |-
+      The project tasks are linked to projects.
+                                  Only members of the project or users with project management 'read' permissions have access to these tasks.
+  - name: ProjectTemplates
+    description: >-
+      The project templates endpoints allow you to define different templates
+      for projects.
+  - name: ProjectTypes
+    description: >-
+      The project types endpoints allow you to define different types for
+      projects.
+                                   The project types contain the basic information of the project.
+                                   This includes the project roles, statuses and status orders.
+  - name: Roles
+    description: |-
+      The roles endpoints allow you to configure the permissions of users.
+                                   You have the possibility to manage roles and assign users to these roles.
+  - name: TaskBundles
+    description: >-
+      Task bundles are used to manage task templates, task list templates and
+      task dependency templates.
+              They can be imported into projects and simplify reoccuring processes.
+  - name: TaskDependencies
+    description: >-
+      The task dependency endpoints allow you to get all task dependencies of a
+      project or a task.
+                                      Every Task can have multiple predeccessors and one successor
+  - name: TaskDependencyTemplates
+    description: >-
+      This controller is used to manage task dependency templates. A task
+      dependency template belongs to one task bundle
+                              and connects two task templates from the same task bundle with each other. When a project gets created from a project template with task dependency templates,
+                              these templates get converted to actual task dependencies.
+  - name: TaskLists
+    description: |-
+      Task lists are a way to group tasks into user-defined lists.
+                                  Task lists are currently available in projects and for users.
+                                  This way, each project and each user can have a set of ordered task lists.
+                                  Task lists can be reordered as well as the tasks within the list.
+                                  Since tasks can be in multiple lists, the order is only applied to one list and does not affect others.
+  - name: Tasks
+    description: >-
+      The Tasks endpoints can be used for general task operations and batch
+      operations.
+              The batch operations include changing the task status, assigning users and more.
+  - name: TasksBatch
+    description: Controller that offers batch operations for tasks.
+  - name: TaskTemplates
+    description: >-
+      The task templates endpoints can be used for managing task templates
+      inside task bundles.
+  - name: TaskViews
+    description: |-
+      Task views are saved filters on project tasks.
+                                   They can be stored by users and shared within the workspace. Users can subscribe to shared task views to use them.
+  - name: Teams
+    description: The teams endpoints are used to manage the details of your team.
+  - name: TimeEntries
+    description: |-
+      The endpoints can be used for general operations on existing time entries.
+                                   A time entry can be linked to a task and / or project, although it can also be created for the user themselves without any entity link.
+                                   If the time entry is linked to a project it is also indirectly linked to the company of that project.
+                                   Similarly, the time entry is automatically linked to the project of the the task.
+  - name: TimeReports
+    description: The endpoints to manage the time reports.
+  - name: TimeTracking
+    description: >-
+      The endpoints can be used to start or stop an actual time tracking. As
+      well as to get the last time tracking of a user.
+  - name: TimeTrackingStatistics
+    description: >-
+      The endpoints can be used to retrieve aggregated timetracking KPIs for
+      entities.
+  - name: TypeOfWork
+    description: >-
+      The type of work endpoints allow you to manage your types of work. They
+      are helpful to describe the type of a task or a time entry.
+  - name: UserCapacity
+    description: >-
+      The user capacity endpoints allow you to define the work capacity of
+      users.
+  - name: Users
+    description: >-
+      The users endpoints allow you to manage the users of your workspace as
+      well as their contact details.
+  - name: UserTags
+    description: The endpoint to manage the tags.
+  - name: EntityFiles
+    description: The entity file endpoints allow you to attach files to several entities.
+  - name: Files
+    description: The file endpoints to get non shared and non temporay files.
+  - name: Images
+    description: >-
+      The image endpoints are used to upload and download profile images, for
+      example for users, projects and your workspace.
+                                   These endpoints also allow you to crop and scale the image to the size you need.
+  - name: SharedFiles
+    description: >-
+      These file endpoints are used to get shared files, for example to provide
+      images in emails.
+  - name: TemporaryFiles
+    description: |-
+      The temporary file endpoints allow you to upload and update files 
+          that do not have a connection to any entity. The files can be linked to an entity later.
+          They don’t show up in awork before they are either linked to a file or marked as a global file. 
+          Only the user who uploaded the file has access to the temporary file.
+  - name: ProjectActions
+    description: >-
+      The actions endpoints allow you to manage the actions for automations in
+      awork.
+  - name: ProjectAutomations
+    description: >-
+      The automation endpoints allow you to manage the automations for projects
+      in awork.
+  - name: ProjectTemplateActions
+    description: >-
+      The actions endpoints allow you to manage the actions for automations of
+      project templates in awork.
+  - name: ProjectTemplateAutomations
+    description: >-
+      The automation endpoints allow you to manage the automations for projects
+      in awork.
+  - name: Webhooks
+    description: |-
+      Webhooks can be used to get notified about events happening.
+                                      These endpoints allow you to configure webhooks.
+                                      Read more about webhooks in the developer documentation above.
+  - name: Autopilot
+    description: >-
+      The autopilot endpoints allow you to manage the awork autopilot for
+      projects.
+  - name: Invitations
+    description: >-
+      The invitation endpoints are used to invite users to a workspace. You can
+      invite a new user or an existing user to a workspace. The invitation code
+      is used to identify the workspace and the account to which the user should
+      be linked. The invitation code is encrypted and can only be decrypted by
+      the service. The invitation code is valid for 24 hours.
+  - name: Workspaces
+    description: The workspaces endpoints are used to manage the details of your workspace.
+  - name: ProjectTimeBookings
+    description: >-
+
+      The project time bookings are used as a simple way to book a user's time
+      for a specific project in a specific time frame.
+
+      Those bookings are then used in the workload to calculate the estimated
+      load of a user.
+  - name: TaskSchedules
+    description: ''
+  - name: Workload
+    description: ''
