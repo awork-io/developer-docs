@@ -1,5 +1,5 @@
 instances:
-  - url: https://sebastianrosch.docs.buildwithfern.com
+  - url: https://aworkapi.docs.buildwithfern.com
 colors:
   accentPrimary: '#4D9AFF'
   background: '#F2F9FF'
@@ -46,7 +46,7 @@ navigation:
       - accounts:
           - page: Overview
             path: ./pages/api/accounts.mdx
-      - API Users:
+      - apiUsers:
           - page: Overview
             path: ./pages/api/apiusers.mdx
 navbar-links:
