@@ -37,31 +37,111 @@ navigation:
         path: ./pages/changelog.mdx
       - page: Support
         path: ./pages/support.mdx
-  - api: awork API v1 Reference
+  - api: API Reference
     api-name: v1
     display-errors: true
-    icon: ./assets/logo.png
     summary: ./apis/v1/summary.mdx
     slug: apiv1
-    audiences: 
-      - v1
     layout:
-      - absences:
-          - page: Overview
-            path: ./pages/api/absences.mdx
-      - accounts:
-          - page: Overview
-            path: ./pages/api/accounts.mdx
-      - apiUsers:
-          - page: Overview
-            path: ./pages/api/apiusers.mdx
-  - api: awork API v2 Reference
-    api-name: v2
-    display-errors: true
-    summary: ./apis/v2/summary.mdx
-    slug: apiv2
-    audiences: 
-      - v2
+      - page: Projects Overview
+        path: ./pages/api/projects.mdx
+        icon: diagram-project
+      - projects
+      - projectTypes
+      - projectStatuses
+      - projectRoles
+      # - projectTags
+      - projectMilestones
+      - projectAutomations
+      - projectActions
+      - projectTimeBookings
+      - autopilot
+      - page: Tasks Overview
+        path: ./pages/api/tasks.mdx
+        icon: list-check
+      - tasks
+      - taskLists
+      - taskViews
+      - projectTasks
+      - privateTasks
+      - assignedTasks
+      - checklistItems
+      - taskTags
+      - taskDependencies
+      - taskSchedules
+      - tasksBatch
+      - typeOfWork
+      - page: Time Tracking Overview
+        path: ./pages/api/timetracking.mdx
+        icon: timer
+      - timeEntries
+      - timeTracking
+      - timeTrackingStatistics
+      - timeReports
+      - projectTimeEntries
+      - taskTimeEntries
+      - page: Companies Overview
+        path: ./pages/api/companies.mdx
+        icon: crown
+      - companies
+      - companyTags
+      - page: Users Overview
+        path: ./pages/api/users.mdx
+        icon: users
+      - users
+      - userCapacity
+      - userTags
+      - absences
+      - dashboards
+      - page: Files & Images Overview
+        path: ./pages/api/files.mdx
+        icon: files
+      - files
+      - projectFiles
+      - taskFiles
+      - companyFiles
+      - projecttemplateFiles
+      - tasktemplateFiles
+      - commentFiles
+      - userFiles
+      - workspaceFiles
+      - sharedFiles
+      - temporaryFiles
+      - images
+      - page: Workload & Planning Overview
+        path: ./pages/api/workload.mdx
+        icon: briefcase
+      - workload
+      - page: Project Templates Overview
+        path: ./pages/api/projecttemplates.mdx
+        icon: box
+      - projectTemplates
+      - taskBundles
+      - taskTemplates
+      - taskDependencyTemplates
+      # - projectTemplateTags
+      - projectMilestoneTemplates
+      - projectTemplateAutomations
+      - projectTemplateActions
+      - page: Login & Access Overview
+        path: ./pages/api/login.mdx
+        icon: key
+      - accounts
+      - invitations
+      - permissions
+      - roles
+      - teams
+      - workspaces
+      - page: API Overview
+        path: ./pages/api/api.mdx
+        icon: code
+      - apiUsers
+      - webhooks
+      - clientApplications
+      - page: Others
+        path: ./pages/api/others.mdx
+        icon: angles-right
+
 navbar-links:
   - type: secondary
     text: Support
