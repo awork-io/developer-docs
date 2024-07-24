@@ -1,7 +1,49 @@
 ---
-title: API v1
-description: API v1 Reference.
+title: API Reference
+description: API Reference.
 slug: apiv1
 ---
 
-API v1.
+This API Reference lists all entities and operations supported by the awork API.
+
+## How to use the API Reference
+
+The endpoints are grouped by feature area. At the beginning of each section there is an introduction to the general concepts that are important to understand when working with these endpoints. Each endpoint includes a brief description of the resource, the operations supported, and the request and response formats as well as example values.
+
+If you have any questions or need help, please contact us in the [Developer Forum](https://community.awork.com/c/developer-forum/17).
+
+## Main Feature Areas
+
+These are the main feature areas in awork and the corresponding API endpoints:
+
+<CardGroup cols={2}>
+  <Card title="Projects" icon="diagram-project"
+    href="/projects">
+    Projects are the core entity in awork and represent a collection of tasks and other resources.
+  </Card>
+  <Card title="Tasks" icon="list-check"
+    href="/tasks">
+    Tasks are the smallest unit of work in awork and represent work to be done.
+  </Card>
+  <Card title="Time Tracking" icon="timer"
+    href="/timetracking">
+    Time Tracking and the resulting Time Entries allow projects to be billed.
+  </Card>
+  <Card title="Companies" icon="crown"
+    href="/companies">
+    Projects are usually connected to Companies (Clients).
+  </Card>
+  <Card title="Users" icon="users"
+    href="/users">
+    Users, Teams and Roles form the basis of awork's permission management.
+  </Card>
+  <Card title="Workload & Planning" icon="briefcase"
+    href="/workload">
+    Workload, commited work and user capacities help with Project Planning.
+  </Card>
+</CardGroup>
+
+
+## API v1
+
+This is the first and default version of the awork API. It is a RESTful API that uses JSON for serialization and OAuth 2.0 for authentication. The API is designed to be easy to use and to provide a consistent interface for all clients.

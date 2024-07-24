@@ -1,7 +1,71 @@
 ---
 title: Tasks
-description: API Users API Reference.
+description: Tasks API Reference.
 slug: tasks
 ---
 
-Some more details about Tasks.
+Tasks represent the smallest unit of work in awork. They are used to break down larger chunks of work, track progress, and collaborate with others.
+
+## Types of Tasks
+
+There are two types of tasks: project tasks and private tasks. This is identified by the `baseType` field in the task object, which can be either `projecttask` or `private`.
+
+<CardGroup cols={2}>
+  <Card title="Project Tasks" icon="diagram-project">
+    Project tasks are tasks that are associated with a project and organized in task lists.
+  </Card>
+  <Card title="Private Tasks" icon="user">
+    Private tasks are tasks that are associated with a user and are not visible to other users.
+  </Card>
+</CardGroup>
+
+## Creating a Task
+
+The following properties are required when creating a task:
+
+```json {4-8}
+curl -X POST https://api.awork.com/api/v1/tasks \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "My first task",
+    "baseType": "projecttask",
+    "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+    "taskStatusId": "123e4567-e89b-12d3-a456-426614174000",
+    "entityId": "123e4567-e89b-12d3-a456-426614174000"
+  }'
+```
+
+## Subtasks
+
+Subtasks have almost the same properties as tasks, but they also have a `parentId` property that references the parent task. This is how you can create a subtask:
+
+```json {9}
+curl -X POST https://api.awork.com/api/v1/tasks \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "My first task",
+    "baseType": "projecttask",
+    "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+    "taskStatusId": "123e4567-e89b-12d3-a456-426614174000",
+    "entityId": "123e4567-e89b-12d3-a456-426614174000",
+    "parentId": "123e4567-e89b-12d3-a456-426614174000"
+  }'
+```
+
+<Note>The subtask has to be in the same project as the parent task.</Note>
+
+Learn more about subtasks [here](https://support.awork.com/en/articles/7050932-subtasks).
+
+## Checklist Items
+
+Each task comes with a checklist of simple items that can be checked off. This is how you can create a checklist item:
+
+```json
+curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/checklistItems \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "My first checklist item"
+  }'
+```
+
+Learn more about checklists [here](https://support.awork.com/en/articles/5344365-editing-task-details#h_395962a83e).

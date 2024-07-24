@@ -1,7 +1,40 @@
 ---
 title: Projects
-description: API Users API Reference.
+description: Projects API Reference.
 slug: projects
 ---
 
-Some more details about Projects.
+Projects are one of the core entities in the awork API. They represent a collection of tasks and other resources that are related to a specific project. Projects can be used to organize work, track progress, and collaborate with others in awork.
+
+## How to work with projects
+
+There are two major ways for creating a project in awork: using a project template or from scratch. See the [Project Template](./projecttemplates.mdx) endpoint for more information on how to manage project templates.
+
+### Creating a project from scratch
+
+Creating a project from scratch is easy. The only required field for creating a project is the `name`.
+
+```json {4}
+curl -X POST "https://api.awork.com/api/v1/projects" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "My new project"
+         }'
+```
+
+### Creating a project from a template
+
+To create a project from a project template, the `projectTemplateId` has to be passed in the `POST /projects` request.
+
+```json {5}
+curl -X POST "https://api.awork.com/api/v1/projects" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "My new project from a template",
+           "projectTemplateId": "123e4567-e89b-12d3-a456-426614174000"
+         }'
+```
+
+## Get more help
+
+Make sure to check out our dedicated support page on [getting started with projects](https://support.awork.com/en/articles/5336228-create-your-first-project) in awork.
