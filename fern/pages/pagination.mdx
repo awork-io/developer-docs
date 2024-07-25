@@ -9,23 +9,27 @@ For example, if you get all the projects, the response could end up with hundred
 
 ## Configuring the number of items
 
-You can set the number of items that you would like to get from the API via two properties: page and pageSize.
+You can set the number of items that you would like to retrieve from the API via two properties: `page` and `pageSize`.
 
-For example, if you want to get 50 users, you would end up making a request with the following url: `/users?page=1&pageSize=50`.\
-When you make a request to retrieve the users from the API, you get the response as well as its headers. The headers of the response contain a property named `aw-totalitems`, which provides the information about the maximum retrievable results.
+| Query Param | Type    | Description                                                      |
+| ----------- | ------- | ---------------------------------------------------------------- |
+| `page`      | integer | The current page number                                          |
+| `pageSize`  | integer | How many items should be returned on each page, maximum of 1000  |
 
-| Name       | Type            | Description                                                      |
-| ---------- | --------------- | ---------------------------------------------------------------- |
-| `page`     | integer (query) | The current page number                                          |
-| `pageSize` | integer (query) | How many items should be returned on each page. Maximum of 1000. |
+For example, if you want to get the first 50 users, you would make a request to the following URL: `GET /users?page=1&pageSize=50`.
+
+```sh title="Request"
+curl https://api.awork.com/api/v1/users?page=1&pageSize=50
+```
 
 ## Response Headers
 
-The following response headers are returned on paginated endpoints:
+When you make a request to retrieve a list of entries from the API, you get the response as well as headers containing more pagination information.
+The following response headers are returned:
 
-| Name            | Type    | Description                                     |
+| Header Name     | Type    | Description                                     |
 | --------------- | ------- | ----------------------------------------------- |
 | `aw-page`       | integer | The current page                                |
-| `aw-totalitems` | integer | The total items available (considering filters) |
+| `aw-pagesize`   | integer | The current page size, 1000 by default          |
 | `aw-items`      | integer | The items in the current page                   |
-| `aw-pagesize`   | integer | The current page size. 1000 by default.         |
+| `aw-totalitems` | integer | The total items available (considering filters) |
