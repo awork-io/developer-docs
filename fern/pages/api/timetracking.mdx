@@ -4,4 +4,59 @@ description: Time Tracking API Reference.
 slug: timetracking
 ---
 
-Some more details about Time Tracking.
+Time Tracking and the resulting Time Entries allow project progress to be tracked and ultimately billed to a client.
+
+## How to work with time tracking
+
+Time Tracking in awork is based on Time Entries. Time Entries are created for a specific project and task and are always assigned to a user. There are two ways to create time entries: manually or using the timer.
+
+### Creating a time entry manually
+
+There are multiple ways to create time entries. The easiest way is by specifying the `startDateUtc` and `duration`. The only other required fields for creating a time entry are the `timezone`, `typeOfWorkId` and `userId`.
+
+```sh title="Request" {4-8}
+curl -X POST "https://api.awork.com/api/v1/timeentries" \
+     -H "Content-Type: application/json" \
+     -d '{
+            "timezone": "Europe/Berlin",
+            "userId": "123e4567-e89b-12d3-a456-426614174000",
+            "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+            "startDateUtc": "2024-05-14T10:00:00Z",
+            "duration": 3600
+         }'
+```
+
+Alternatively, you can also specify the `startDateUtc` and `endDateUtc` fields to create a time entry for a specific time range.
+
+Additionally, you can assign the time entry to a specific project and task by providing the `projectId` and `taskId` fields.
+
+```sh title="Request" {7-8}
+curl -X POST "https://api.awork.com/api/v1/timeentries" \
+     -H "Content-Type: application/json" \
+     -d '{
+            "timezone": "Europe/Berlin",
+            "userId": "123e4567-e89b-12d3-a456-426614174000",
+            "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+            "projectId": "123e4567-e89b-12d3-a456-426614174000",
+            "taskId": "123e4567-e89b-12d3-a456-426614174000",
+            "startDateUtc": "2024-05-14T10:00:00Z",
+            "duration": 3600
+         }'
+```
+
+### Using the timer
+
+The timer is a convenient way to track time while working on a task or project. To start the timer, you need to make a request to `POST /users/:userId/timetracking/start`.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/users/123e4567-e89b-12d3-a456-426614174000/timetracking/start \
+     -H "Content-Type: application/json" \
+     -d '{
+            "timezone": "Europe/Berlin",
+            "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+         }'
+```
+
+You can then also pause, resume and stop the timer. There can only be one active timer per user. Timers are automatically stopped after 24h or when the time entry reaches the maximum allowed time for that user and day.
+
+See the [Tracking Times](https://support.awork.com/en/articles/5366812-tracking-times) for more details on how the timer works.

@@ -4,4 +4,35 @@ description: Users API Reference.
 slug: users
 ---
 
-Some more details about Users.
+Users represent the people who are part of an awork workspace. They can be assigned to tasks, projects, and other resources. Users can have different roles and permissions in the workspace.
+
+## Inviting Users
+
+To invite a new user to an awork workspace, you need to make a request to `POST /invitations`. This is one of the few requests that requires a `workspaceId`.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/invitations \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"email": "carla.creative@ncnstn.com",
+	"invitationFlow": "invite",
+	"workspaceId": "123e4567-e89b-12d3-a456-426614174000",
+	"roleId": "123e4567-e89b-12d3-a456-426614174000"
+  }'
+```
+
+You can find the workspace id of the current user by making a request to the `/users/me` endpoint.
+
+```sh title="Request"
+curl https://api.awork.com/api/v1/users/me
+```
+```json title="Response" {4}
+{
+	"id": "123e4567-e89b-12d3-a456-426614174000",
+	"workspace": {
+		"id": "123e4567-e89b-12d3-a456-426614174000",
+		"name": "NCNSTN",
+		"url": "https://ncnstn.awork.com"
+	}
+}
+```

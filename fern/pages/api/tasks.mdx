@@ -23,7 +23,7 @@ There are two types of tasks: project tasks and private tasks. This is identifie
 
 The following properties are required when creating a task:
 
-```json {4-8}
+```sh title="Request" {4-8}
 curl -X POST https://api.awork.com/api/v1/tasks \
   -H 'Content-Type: application/json' \
   -d '{
@@ -39,7 +39,7 @@ curl -X POST https://api.awork.com/api/v1/tasks \
 
 Subtasks have almost the same properties as tasks, but they also have a `parentId` property that references the parent task. This is how you can create a subtask:
 
-```json {9}
+```sh title="Request" {9}
 curl -X POST https://api.awork.com/api/v1/tasks \
   -H 'Content-Type: application/json' \
   -d '{
@@ -60,7 +60,7 @@ Learn more about subtasks [here](https://support.awork.com/en/articles/7050932-s
 
 Each task comes with a checklist of simple items that can be checked off. This is how you can create a checklist item:
 
-```json
+```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/checklistItems \
   -H 'Content-Type: application/json' \
   -d '{

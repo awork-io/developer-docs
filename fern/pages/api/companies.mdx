@@ -4,4 +4,16 @@ description: Companies API Reference.
 slug: companies
 ---
 
-Some more details about Companies (Clients).
+Companies (Clients in the awork UI) are the contacts or organizations that you work with. Projects are usually connected to Companies.
+
+## Creating a company
+
+Creating a company is easy. The only required field for creating a company is the `name`.
+
+```sh title="Request" {4}
+curl -X POST "https://api.awork.com/api/v1/companies" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "My first company"
+         }'
+```

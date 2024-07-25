@@ -1,7 +1,29 @@
 ---
-title: Files
-description: Files API Reference.
+title: Files & Images
+description: Files & Images API Reference.
 slug: files
 ---
 
-Some more details about Files.
+awork allows you to upload files and images to tasks, projects, comments and many other entities.
+
+## Upload a file
+
+Uploading a file is easy. You can upload files up to 1000MB in size.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/files \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'File=@/path/to/file.png'
+```
+
+## Upload a profile image
+
+Several entities in awork support profile images. This is how you can upload an image for a project profile icon:
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/files/images/projects/123e4567-e89b-12d3-a456-426614174000 \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'File=@/path/to/file.png'
+```
+
+See more on working with files and images in the [Help Center](https://support.awork.com/en/articles/5353332-project-files).
