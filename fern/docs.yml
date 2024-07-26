@@ -1,5 +1,6 @@
 instances:
   - url: https://aworkapi.docs.buildwithfern.com
+    custom-domain: developers.awork.com
 colors:
   accentPrimary: '#4D9AFF'
   background: '#F2F9FF'
