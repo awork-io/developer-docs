@@ -50,7 +50,8 @@ navigation:
       - projectTypes
       - projectStatuses
       - projectRoles
-      # - projectTags
+      - projectComments
+      - projectTags
       - projectMilestones
       - projectAutomations
       - projectActions
@@ -66,6 +67,7 @@ navigation:
       - privateTasks
       - assignedTasks
       - checklistItems
+      - taskComments
       - taskTags
       - taskDependencies
       - taskSchedules
@@ -76,7 +78,6 @@ navigation:
         icon: timer
       - timeEntries
       - timeTracking
-      - timeTrackingStatistics
       - timeReports
       - projectTimeEntries
       - taskTimeEntries
@@ -100,11 +101,11 @@ navigation:
       - projectFiles
       - taskFiles
       - companyFiles
-      - projecttemplateFiles
-      - tasktemplateFiles
       - commentFiles
       - userFiles
       - workspaceFiles
+      - projectTemplateFiles
+      - taskTemplateFiles
       - sharedFiles
       - temporaryFiles
       - images
@@ -119,7 +120,7 @@ navigation:
       - taskBundles
       - taskTemplates
       - taskDependencyTemplates
-      # - projectTemplateTags
+      - projectTemplateTags
       - projectMilestoneTemplates
       - projectTemplateAutomations
       - projectTemplateActions
@@ -132,15 +133,16 @@ navigation:
       - roles
       - teams
       - workspaces
-      - page: API Overview
+      - page: API Management Overview
         path: ./pages/api/api.mdx
         icon: code
       - apiUsers
       - webhooks
       - clientApplications
-      - page: Others
-        path: ./pages/api/others.mdx
-        icon: angles-right
+      # Reenable others when there are uncategorized endpoints
+      # - page: Others
+      #   path: ./pages/api/others.mdx
+      #   icon: angles-right
 
 navbar-links:
   - type: secondary
