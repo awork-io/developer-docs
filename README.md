@@ -41,3 +41,5 @@ fern generate --docs --log-level debug
 ## Fern Documentation
 
 <https://buildwithfern.com/learn/api-definition/introduction/what-is-an-api-definition>
+
+Icons from <https://fontawesome.com/search>.

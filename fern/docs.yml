@@ -49,7 +49,7 @@ navigation:
         path: ./pages/support.mdx
   - api: API Reference
     api-name: v1
-    display-errors: false
+    display-errors: true
     summary: ./apis/v1/summary.mdx
     slug: apiv1
     layout:

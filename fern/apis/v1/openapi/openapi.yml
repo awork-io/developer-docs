@@ -735,7 +735,7 @@ paths:
     post:
       tags:
         - ChecklistItems
-      summary: Convert all the checklist items of the specified task to subtasks.
+      summary: Convert all checklist items of the specified task to subtasks.
       description: ''
       parameters:
         - name: taskId
@@ -9032,7 +9032,9 @@ paths:
       tags:
         - Projects
       summary: Returns all projects.
-      description: "Returns all projects the user has 'read' permissions\r\nof feature 'project-master-data' for."
+      description: >-
+        Returns all projects the user has `read` permissions of feature
+        `project-master-data` for.
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
@@ -9086,7 +9088,9 @@ paths:
       tags:
         - Projects
       summary: Returns the project with the specified id.
-      description: "Returns the project with the specified id if the user has 'read' permissions\r\nof feature 'project-master-data'."
+      description: >-
+        Returns the project with the specified id if the user has `read`
+        permissions of feature `project-master-data`.
       parameters:
         - name: projectId
           in: path
@@ -9112,7 +9116,7 @@ paths:
       tags:
         - Projects
       summary: Updates the project with the specified id.
-      description: "Updates the project with the specified id.\r\nThe user can update a project if he is the owner or\r\nhe needs 'write' permissions of the feature 'project-master-data'."
+      description: "Updates the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -9148,7 +9152,7 @@ paths:
       tags:
         - Projects
       summary: Changes the status of the project with the specified id.
-      description: "Changes the status of the project with the specified id.\r\nThe project status must be associated with the current project type.\r\nThis adds task bundles to the project and informs the project members about the status change.\r\nIf the project is already in the specified status, nothing happens.\r\nThe user can update a project if he is the owner or\r\nhe needs 'write' permissions of the feature 'project-master-data'."
+      description: "Changes the status of the project with the specified id.\r\nThe project status must be associated with the project type used by the project.\r\nThis potentially adds task bundles to the project and informs the project members about the status change.\r\nIf the project is already in the specified status, nothing happens.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -9180,7 +9184,7 @@ paths:
       tags:
         - Projects
       summary: Changes the project type of the project with the specified id.
-      description: "The user can update a project if he is the owner or\r\nhe needs 'write' permissions of the feature 'project-master-data'."
+      description: "Changes the project type of the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -9213,7 +9217,7 @@ paths:
       tags:
         - Projects
       summary: Deletes the project with the specified id.
-      description: "Deletes the project with the specified id.\r\nIn the default case the related tasks of this project will\r\nalso be deleted and the related time trackings of this project and\r\nall tasks loose the relation to the deleted project and tasks.\r\nTo delete the time trackings as well, it is necessary to\r\nset the 'DeleteTimeTrackings' property of the post model to true.\r\nThe user can delete a project if he is the owner or\r\nhe needs 'write' permissions of the feature 'project-master-data'."
+      description: "Deletes the project with the specified id.\r\nIn the default case the related tasks of this project will also be deleted and the related time entries of this project and all tasks loose the relation to the deleted project and tasks.\r\nTo delete the time entries as well, you can set the `deleteTimeTrackings` property of the request to `true`.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -9244,8 +9248,8 @@ paths:
     get:
       tags:
         - Projects
-      summary: Returns the project members from the project with the specified id.
-      description: "Returns the project members from the project with the specified id.\r\nThe user needs 'read' permissions of feature 'project-master-data'."
+      summary: Returns the project members of the project with the specified id.
+      description: "Returns the project members of the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `read` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -9274,7 +9278,7 @@ paths:
       tags:
         - Projects
       summary: Adds a project member to the project with the specified id.
-      description: "Adds a project member to the project with the specified id.\r\nThe new project member can also be set as a responsible project member, but only if no other member of this project is\r\nresponsible.\r\nIt is necessary that the project role is available in this project otherwise the member cannot be added.\r\nA project role is available when they are connected to the specified project type of the project.\r\nA user can only be added to the project once.\r\nThe user needs 'manage' permissions of feature 'project-master-data'."
+      description: "Adds a project member to the project with the specified id.\r\nThe new project member can also be set as a responsible project member, but only if no other member of this project is responsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be added.\r\nA project role is available when they are connected to the specified project type of the project.\r\nA user can only be added to the project once.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -9309,8 +9313,10 @@ paths:
     post:
       tags:
         - Projects
-      summary: Updates a project member from the project with the specified id.
-      description: "Changes the role of a project member.\r\nThe project member can also be set as a responsible project member, but only if no other member of this project is\r\nresponsible.\r\nIt is necessary that the project role is available in this project otherwise the member cannot be updated.\r\nA project role is available when they are connected to the specified project type of the project.\r\nThe user needs 'manage' permissions of feature 'project-master-data'."
+      summary: >-
+        Updates the role of a project member of the project with the specified
+        id.
+      description: "Changes the role of a project member.\r\nThe project member can also be set as a responsible project member, but only if no other member of this project is\r\nresponsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be updated.\r\nA project role is available when they are connected to the specified project type of the project.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -9346,7 +9352,7 @@ paths:
       tags:
         - Projects
       summary: Removes a project member from the project with the specified id.
-      description: "Removes a project member from the project with the specified id.\r\nThe user needs 'manage' permissions of feature 'project-master-data'."
+      description: "Removes a project member from the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>"
       parameters:
         - name: projectId
           in: path
@@ -14339,7 +14345,7 @@ paths:
         - Tasks
       summary: Modifies a list of planned efforts of a given task.
       description: >-
-        Only the efforts passed in the body will be updated, ignoring any
+        Only the efforts passed in the request will be updated, ignoring any
         missing effort.
       parameters:
         - name: taskId
@@ -14375,8 +14381,8 @@ paths:
     post:
       tags:
         - Tasks
-      summary: Deletes the specified tasks.
-      description: "Returns 204 NoContent if all tasks have been deleted successfully.\r\nReturns 207 MultiStatus if at least one task could not be deleted, including the reasons.\r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required.\r\nBy default, the related time trackings of these tasks\r\nloose the relation to the deleted tasks.\r\nIn order to delete the time trackings as well, you need to set the 'DeleteTimeTrackings' property to true."
+      summary: Deletes several tasks.
+      description: "Deletes the specified tasks.\r\nBy default, the related time entries of these tasks loose the relation to the deleted tasks.\r\nIn order to delete the time entires as well, you need to set the 'DeleteTimeTrackings' property to true.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info> Returns `204 NoContent` if all tasks have been deleted successfully. Returns `207 MultiStatus` if at least one task could not be deleted, including the reasons.</Info>"
       requestBody:
         description: The model to delete tasks.
         content:
@@ -14400,7 +14406,7 @@ paths:
       tags:
         - Tasks
       summary: Changes statuses of tasks.
-      description: "Returns 204 NoContent if all tasks have been changed successfully.\r\nReturns 207 MultiStatus if at least one task could not be changed, including the reasons.\r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required."
+      description: "Changes statuses of several tasks.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info> Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>"
       requestBody:
         description: The model to change statuses.
         content:
@@ -14430,7 +14436,7 @@ paths:
       tags:
         - Tasks
       summary: Updates the order of the task with the specified id.
-      description: "Updates the order of the task of a specific task status for project tasks.\r\nIf it is a private task it updates the order of the private tasks of the user.\r\nThis can have an impact of other tasks as well.\r\nIf the task is not appended to the end, the other tasks of the project within the same task status will get a new\r\norder."
+      description: "Updates the order of the task of a specific task status for project tasks.\r\nIf it is a private task it updates the order of the private tasks of the user.\r\nThis can have an impact of other tasks as well.\r\nIf the task is not appended to the end, the other tasks of the project within the same task status will get a new order."
       parameters:
         - name: taskId
           in: path
@@ -14468,7 +14474,7 @@ paths:
       tags:
         - Tasks
       summary: Changes the type of work for a batch of tasks.
-      description: "Changes the type of work for a batch of tasks and their related time entries.\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private tasks, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>"
+      description: "Changes the type of work for a batch of tasks and their related time entries.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private tasks, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>"
       requestBody:
         description: The model to change types.
         content:
@@ -14494,7 +14500,7 @@ paths:
       tags:
         - Tasks
       summary: Changes the base type for a batch of tasks.
-      description: "Changes the base type for a batch of tasks.\r\nThis operation will remove the task from the lists it is in.\r\nIf the task is a parent task, all subtasks are changed as well.\r\nIf the task has task dependencies to tasks not in the given list of task ids, those will be removed as well.\r\nIf the task baseType is already the correct base type, no changes are made.\r\nThe status of the task is matched automatically to the first status of the new basetype based on order and type.\r\n\r\nReturns 204 NoContent if all tasks have been changed successfully.\r\nReturns 207 MultiStatus if at least one task could not be changed, including the reasons.\r\n            \r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required."
+      description: "Changes the base type for a batch of tasks.\r\nThis operation will remove the task from the lists it is in.\r\nIf the task is a parent task, all subtasks are changed as well.\r\nIf the task has task dependencies to tasks not in the given list of task ids, those will be removed as well.\r\nIf the task baseType is already the correct base type, no changes are made.\r\nThe status of the task is matched automatically to the first status of the new basetype based on order and type.\r\n            \r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info> Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>"
       requestBody:
         description: The model to change types.
         content:
@@ -14542,10 +14548,8 @@ paths:
     get:
       tags:
         - Tasks
-      summary: Returns the existing recurrency rule for one task.
-      description: >-
-        Read permissions for this task are required. Returns 404 if no rule
-        exists.
+      summary: Gets the recurrency rule for the specified task.
+      description: "<Check>\r\n  <b>Required Permissions</b>: `read` permissions on the task.</Check>\r\n<Info>Returns `404 NotFound` if no recurrence rule exists.</Info>"
       parameters:
         - name: taskId
           in: path
@@ -19624,13 +19628,14 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     ChangeProjectTypeForm:
+      required:
+        - projectTypeId
       type: object
       properties:
         projectTypeId:
           type: string
           description: The id of the project type to change to.
           format: uuid
-          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     ChangeStatusForm:
@@ -22220,7 +22225,6 @@ components:
       additionalProperties: false
     Project:
       required:
-        - isPrivate
         - name
       type: object
       properties:
@@ -22486,7 +22490,6 @@ components:
       additionalProperties: false
     ProjectForm:
       required:
-        - isPrivate
         - name
       type: object
       properties:
@@ -22917,7 +22920,6 @@ components:
       additionalProperties: false
     ProjectPutForm:
       required:
-        - isPrivate
         - name
       type: object
       properties:
@@ -24572,6 +24574,9 @@ components:
           type: boolean
           description: "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
         baseType:
+          enum:
+            - private
+            - projecttask
           type: string
           description: "The base type of the task.\r\nCan be 'private' for a private task or\r\n'projecttask' for a project task."
           nullable: true
@@ -25590,6 +25595,9 @@ components:
       properties:
         baseType:
           minLength: 1
+          enum:
+            - private
+            - projecttask
           type: string
           description: "The type the tasks should be migrated to.\r\nPossible values are 'private' or 'projecttask'."
           example: private
@@ -26761,6 +26769,8 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     UpdateProjectStatusOrderForm:
+      required:
+        - projectStatusId
       type: object
       properties:
         projectStatusId:
