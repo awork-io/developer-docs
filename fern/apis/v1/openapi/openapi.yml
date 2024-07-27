@@ -6711,6 +6711,39 @@ paths:
       x-api-versions:
         - v1
       x-access-any: 'true'
+  /projects/{projectId}/typeofwork:
+    get:
+      tags:
+        - ProjectTasks
+      summary: |-
+        Returns the type of work for the project with the specified id.
+                    .
+      description: |-
+        The project can be a connected or a workspace project.
+                    User must have at least 'read' permissions on the 'project-planning-data' feature.
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of the project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TypeOfWork'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-any: 'true'
   /projects/{projectId}/projecttasks/{taskId}/changeproject:
     post:
       tags:
@@ -6747,39 +6780,6 @@ paths:
           description: Success
         '204':
           description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-any: 'true'
-  /projects/{projectId}/typeofwork:
-    get:
-      tags:
-        - ProjectTasks
-      summary: |-
-        Returns the type of work for the project with the specified id.
-                    .
-      description: |-
-        The project can be a connected or a workspace project.
-                    User must have at least 'read' permissions on the 'project-planning-data' feature.
-      parameters:
-        - name: projectId
-          in: path
-          description: The id of the project.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TypeOfWork'
       security:
         - oauth2:
             - full_access
@@ -10533,12 +10533,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '204':
           description: No Content
@@ -12035,8 +12039,7 @@ paths:
         - TaskLists
       summary: Changes the project of the task list with the specified id.
       description: |-
-        Changes the project of the task list with the specified id.
-                    This endpoint also moves all tasks and time entries to the new project.
+        This endpoint also moves all tasks and time entries to the new project.
                     This will also change the tracked time sum of the old and new projects.
                     The task status mapping will move all tasks of a certain status to the new provided status on the mapping.
       parameters:
@@ -12414,12 +12417,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '204':
           description: No Content
@@ -13685,12 +13692,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '204':
           description: No Content
@@ -14110,6 +14121,34 @@ paths:
       x-api-versions:
         - v1
       x-access-any: 'true'
+  /tasks:
+    post:
+      tags:
+        - Tasks
+      summary: Creates a new task.
+      description: |-
+        Can be a project task or a user's private task.
+                    To create a task, the user needs to be the assignee of the task or 'ProjectPlanning'
+                    permissions in general or in the project the task is related to.
+      requestBody:
+        description: The model used to create a task.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeneralTaskPostForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskModel'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-any: 'true'
   /tasks/{taskId}/copy:
     post:
       tags:
@@ -14127,34 +14166,6 @@ paths:
           schema:
             type: string
             format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TaskModel'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-any: 'true'
-  /tasks:
-    post:
-      tags:
-        - Tasks
-      summary: Creates a new task.
-      description: |-
-        Can be a project task or a user's private task.
-                    To create a task, the user needs to be the assignee of the task or 'ProjectPlanning'
-                    permissions in general or in the project the task is related to.
-      requestBody:
-        description: The model used to create a task.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GeneralTaskPostForm'
       responses:
         '200':
           description: Success
@@ -14279,12 +14290,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '204':
           description: No Content
@@ -14299,7 +14314,7 @@ paths:
       tags:
         - Tasks
       summary: Assigns a new user to a tasks by email invitation.
-      description: "For the invitation, the role of the user has to be specified. The user is then invited\r\nto the workspace and assigned to the task.\r\nThe user will receive an email with the invitation link, as well as a redirect to the task.\r\nThe new user will replace any currently existing task assignments."
+      description: "For the invitation, the role of the user has to be specified. The user is then invited to the workspace and assigned to the task.\r\nThe user will receive an email with the invitation link, as well as a redirect to the task.\r\nThe new user will replace any currently existing task assignments."
       requestBody:
         description: The model to assign the user.
         content:
@@ -14324,7 +14339,7 @@ paths:
         - Tasks
       summary: Modifies a list of planned efforts of a given task.
       description: >-
-        Only the efforts passed on the body will be updated, ignoring any
+        Only the efforts passed in the body will be updated, ignoring any
         missing effort.
       parameters:
         - name: taskId
@@ -14361,7 +14376,7 @@ paths:
       tags:
         - Tasks
       summary: Deletes the specified tasks.
-      description: "Returns 204 NoContent if all tasks have been changed successfully.\r\nReturns 207 MultiStatus if at least one task could not be changed, including the reasons.\r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required.\r\nBy default, the related time trackings of these tasks\r\nloose the relation to the deleted tasks.\r\nIn order to delete the time trackings as well, you need to set the 'DeleteTimeTrackings' property to true."
+      description: "Returns 204 NoContent if all tasks have been deleted successfully.\r\nReturns 207 MultiStatus if at least one task could not be deleted, including the reasons.\r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required.\r\nBy default, the related time trackings of these tasks\r\nloose the relation to the deleted tasks.\r\nIn order to delete the time trackings as well, you need to set the 'DeleteTimeTrackings' property to true."
       requestBody:
         description: The model to delete tasks.
         content:
@@ -14453,7 +14468,7 @@ paths:
       tags:
         - Tasks
       summary: Changes the type of work for a batch of tasks.
-      description: "Changes the type of work for a batch of tasks and their related time trackings.\r\nReturns 204 NoContent if all tasks have been changed successfully.\r\nReturns 207 MultiStatus if at least one task could not be changed, including the reasons.\r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required."
+      description: "Changes the type of work for a batch of tasks and their related time entries.\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private tasks, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>"
       requestBody:
         description: The model to change types.
         content:
@@ -14479,7 +14494,7 @@ paths:
       tags:
         - Tasks
       summary: Changes the base type for a batch of tasks.
-      description: "Changes the base type for a batch of tasks.\r\nThis operation will remove the task from the lists it is on.\r\nIf the task is a parent task, also all subtasks are changed as well.\r\nIf the task has task dependencies to tasks not in the given list of task ids, those will be removed as well.\r\nIf the task baseType is already the correct base type, no changes are made.\r\nThe status of the task is matched automatically to the first status of the new basetype based on order and type. In the\r\nfuture, this should be a mapping in the form.\r\nReturns 204 NoContent if all tasks have been changed successfully.\r\nReturns 207 MultiStatus if at least one task could not be changed, including the reasons.\r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required."
+      description: "Changes the base type for a batch of tasks.\r\nThis operation will remove the task from the lists it is in.\r\nIf the task is a parent task, all subtasks are changed as well.\r\nIf the task has task dependencies to tasks not in the given list of task ids, those will be removed as well.\r\nIf the task baseType is already the correct base type, no changes are made.\r\nThe status of the task is matched automatically to the first status of the new basetype based on order and type.\r\n\r\nReturns 204 NoContent if all tasks have been changed successfully.\r\nReturns 207 MultiStatus if at least one task could not be changed, including the reasons.\r\n            \r\nThe required permissions depend on the base type of the task.\r\nIf the task is a project task, 'write' permissions on the 'project-planning-data' feature are required.\r\nFor a user's private task, no special permissions are required."
       requestBody:
         description: The model to change types.
         content:
@@ -14774,12 +14789,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '200':
           description: Success
@@ -14817,12 +14836,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '204':
           description: No Content
@@ -14855,12 +14878,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '200':
           description: Success
@@ -14899,12 +14926,16 @@ paths:
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
           application/*+json:
             schema:
               type: array
               items:
                 type: string
                 format: uuid
+            example:
+              - 123e4567-e89b-12d3-a456-426614174000
       responses:
         '204':
           description: No Content
@@ -15104,6 +15135,145 @@ paths:
       x-api-versions:
         - v1
       x-access-any: 'true'
+  /timeentries/{timeEntryId}/removebreaks:
+    post:
+      tags:
+        - TimeEntries
+      summary: Removes all finished breaks of the time entry.
+      description: A currently running break is not removed.
+      parameters:
+        - name: timeEntryId
+          in: path
+          description: The id of the time entry.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeTracking'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-any: 'true'
+  /timeentries/{timeEntryId}:
+    get:
+      tags:
+        - TimeEntries
+      summary: Returns the time entries with the specified id.
+      description: |-
+        Returns the time entry with the specified id.
+                    Depending on the time entry, the calling users has to have several permissions to get the time entry.
+                    No permissions are required if the calling user is owner of this time entry.
+                    If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'
+                    permissions
+                    on the 'project-timetracking' feature are necessary.
+                    If the time entry is connected to a task, the user needs
+                    to be assignee of this task or the user needs permissions on:
+                    'project-planning-data' if it is a project task.
+      parameters:
+        - name: timeEntryId
+          in: path
+          description: The id of the time entry.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeTracking'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-any: 'true'
+    delete:
+      tags:
+        - TimeEntries
+      summary: Deletes the time entry with the specified id.
+      description: |-
+        Deletes the time entry with the specified id.
+                    Depending on the time entry, the calling users has to have several permissions to delete the time entry.
+                    No permissions are required if the calling user is owner of this time entry.
+                    If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'
+                    permissions
+                    on the 'project-timetracking' feature are necessary.
+                    If the time entry is billed, Admin permissions are required.
+      parameters:
+        - name: timeEntryId
+          in: path
+          description: The id of the time entry.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-any: 'true'
+    put:
+      tags:
+        - TimeEntries
+      summary: Updates the time entry with the specified id.
+      description: |-
+        Updates the time entry with the specified id.
+                    Depending on the time entry, the calling users has to have several permissions to update the time entry:
+                    No permissions are required if the calling user is owner of this time entry.
+                    If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'
+                    permissions
+                    on the 'project-timetracking' feature are necessary.
+                    If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:
+                    'project-planning-data' if it is a project task.
+                    The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the
+                    time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.
+                    Following combination of times and duration are allowed for already completed time entries:
+                    - start time (local or utc) and end time (local or utc) (this option always takes precedence)
+                    - start time (local or utc) and duration
+                    - end time (local or utc) and duration
+                    For running time entries, you can only update the start time (local or utc) while the duration stays 0.
+      parameters:
+        - name: timeEntryId
+          in: path
+          description: The id of the time entry.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to update the time entry with the specified id.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeTrackingTimesForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeTracking'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-any: 'true'
   /timeentries:
     post:
       tags:
@@ -15148,6 +15318,37 @@ paths:
                     If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'
                     permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).
       parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/orderby'
+        - $ref: '#/components/parameters/filterby'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeTracking'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-any: 'true'
+  /timeentries/simplified:
+    get:
+      tags:
+        - TimeEntries
+      summary: Returns all time entries with a simplified model.
+      description: ''
+      parameters:
+        - name: grouping
+          in: query
+          description: The group by param.
+          schema:
+            type: string
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/orderby'
@@ -15216,176 +15417,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MultiStatusResult'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-any: 'true'
-  /timeentries/{timeEntryId}:
-    delete:
-      tags:
-        - TimeEntries
-      summary: Deletes the time entry with the specified id.
-      description: |-
-        Deletes the time entry with the specified id.
-                    Depending on the time entry, the calling users has to have several permissions to delete the time entry.
-                    No permissions are required if the calling user is owner of this time entry.
-                    If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'
-                    permissions
-                    on the 'project-timetracking' feature are necessary.
-                    If the time entry is billed, Admin permissions are required.
-      parameters:
-        - name: timeEntryId
-          in: path
-          description: The id of the time entry.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-any: 'true'
-    get:
-      tags:
-        - TimeEntries
-      summary: Returns the time entries with the specified id.
-      description: |-
-        Returns the time entry with the specified id.
-                    Depending on the time entry, the calling users has to have several permissions to get the time entry.
-                    No permissions are required if the calling user is owner of this time entry.
-                    If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'
-                    permissions
-                    on the 'project-timetracking' feature are necessary.
-                    If the time entry is connected to a task, the user needs
-                    to be assignee of this task or the user needs permissions on:
-                    'project-planning-data' if it is a project task.
-      parameters:
-        - name: timeEntryId
-          in: path
-          description: The id of the time entry.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeTracking'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-any: 'true'
-    put:
-      tags:
-        - TimeEntries
-      summary: Updates the time entry with the specified id.
-      description: |-
-        Updates the time entry with the specified id.
-                    Depending on the time entry, the calling users has to have several permissions to update the time entry:
-                    No permissions are required if the calling user is owner of this time entry.
-                    If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'
-                    permissions
-                    on the 'project-timetracking' feature are necessary.
-                    If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:
-                    'project-planning-data' if it is a project task.
-                    The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the
-                    time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.
-                    Following combination of times and duration are allowed for already completed time entries:
-                    - start time (local or utc) and end time (local or utc) (this option always takes precedence)
-                    - start time (local or utc) and duration
-                    - end time (local or utc) and duration
-                    For running time entries, you can only update the start time (local or utc) while the duration stays 0.
-      parameters:
-        - name: timeEntryId
-          in: path
-          description: The id of the time entry.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to update the time entry with the specified id.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TimeTrackingTimesForm'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeTracking'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-any: 'true'
-  /timeentries/simplified:
-    get:
-      tags:
-        - TimeEntries
-      summary: Returns all time entries with a simplified model.
-      description: ''
-      parameters:
-        - name: grouping
-          in: query
-          description: The group by param.
-          schema:
-            type: string
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/orderby'
-        - $ref: '#/components/parameters/filterby'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TimeTracking'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-any: 'true'
-  /timeentries/{timeEntryId}/removebreaks:
-    post:
-      tags:
-        - TimeEntries
-      summary: Removes all finished breaks of the time entry.
-      description: A currently running break is not removed.
-      parameters:
-        - name: timeEntryId
-          in: path
-          description: The id of the time entry.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeTracking'
       security:
         - oauth2:
             - full_access
@@ -15728,63 +15759,6 @@ paths:
       x-api-versions:
         - v1
       x-access-any: 'true'
-  /me/timetracking/pause:
-    post:
-      tags:
-        - TimeTracking
-      summary: Pauses a running time tracking for a user.
-      description: >-
-        If there is already a paused time tracking nothing happens. If there is
-        no running time tracking, returns NoContent.
-      parameters:
-        - name: userId
-          in: query
-          description: The id of the user. Not required if the me route is used.
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeTracking'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-owner: 'true'
-  /users/{userId}/timetracking/pause:
-    post:
-      tags:
-        - TimeTracking
-      summary: Pauses a running time tracking for a user.
-      description: >-
-        If there is already a paused time tracking nothing happens. If there is
-        no running time tracking, returns NoContent.
-      parameters:
-        - name: userId
-          in: path
-          description: The id of the user. Not required if the me route is used.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TimeTracking'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access-owner: 'true'
   /me/timetracking/start:
     post:
       tags:
@@ -15890,6 +15864,63 @@ paths:
       description: |-
         There is no request body necessary for this operation.
                     For this operation to work there must be a running time tracking for the user.
+      parameters:
+        - name: userId
+          in: path
+          description: The id of the user. Not required if the me route is used.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeTracking'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-owner: 'true'
+  /me/timetracking/pause:
+    post:
+      tags:
+        - TimeTracking
+      summary: Pauses a running time tracking for a user.
+      description: >-
+        If there is already a paused time tracking nothing happens. If there is
+        no running time tracking, returns NoContent.
+      parameters:
+        - name: userId
+          in: query
+          description: The id of the user. Not required if the me route is used.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeTracking'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access-owner: 'true'
+  /users/{userId}/timetracking/pause:
+    post:
+      tags:
+        - TimeTracking
+      summary: Pauses a running time tracking for a user.
+      description: >-
+        If there is already a paused time tracking nothing happens. If there is
+        no running time tracking, returns NoContent.
       parameters:
         - name: userId
           in: path
@@ -19047,20 +19078,27 @@ components:
       properties:
         id:
           type: string
+          description: The id of the entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         createdOn:
           type: string
+          description: The date this entity was created.
           format: date-time
+          example: '2022-03-11T15:33:47.100Z'
         createdBy:
           type: string
+          description: The id of the user who created this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         updatedOn:
           type: string
+          description: The date this entity was last modified.
           format: date-time
+          example: '2022-03-11T21:15:00.100Z'
         updatedBy:
           type: string
+          description: The id of the user who last modified this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         userId:
@@ -19281,7 +19319,7 @@ components:
       properties:
         isArchived:
           type: boolean
-          description: Flags the entity as archived. Required.
+          description: Flags the entity as archived.
           example: true
       additionalProperties: false
     ArchivedTaskListForm:
@@ -19291,7 +19329,7 @@ components:
       properties:
         isArchived:
           type: boolean
-          description: Flags the entity as archived. Required.
+          description: Flags the entity as archived.
           example: true
         taskOperation:
           type: string
@@ -19310,6 +19348,10 @@ components:
           nullable: true
       additionalProperties: false
     AssignByEmailForm:
+      required:
+        - email
+        - roleId
+        - taskId
       type: object
       properties:
         taskId:
@@ -19318,10 +19360,15 @@ components:
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         email:
+          minLength: 1
           type: string
           description: The email of the new user.
-          nullable: true
           example: carla.creative@ncnstn.com
+        roleId:
+          type: string
+          description: The id of the role to which the new user should be added.
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
         firstName:
           type: string
           description: The first name of the user to be invited.
@@ -19337,53 +19384,66 @@ components:
           description: "The gender of the user to be invited.\r\nCould be 'male', 'female', 'other'"
           nullable: true
           example: female
-        roleId:
-          type: string
-          description: The id of the role to which the new user should be added.
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     BaseTagModel:
       type: object
       properties:
         id:
           type: string
+          description: The id of the entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         createdOn:
           type: string
+          description: The date this entity was created.
           format: date-time
+          example: '2022-03-11T15:33:47.100Z'
         createdBy:
           type: string
+          description: The id of the user who created this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         updatedOn:
           type: string
+          description: The date this entity was last modified.
           format: date-time
+          example: '2022-03-11T21:15:00.100Z'
         updatedBy:
           type: string
+          description: The id of the user who last modified this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the tag.
           nullable: true
+          example: Design
         color:
           type: string
+          description: The color of the tag.
           nullable: true
+          example: purple
       additionalProperties: false
+      description: The model used for the API.
     BaseTagModelWithCount:
       type: object
       properties:
         name:
           type: string
+          description: The name of the tag.
           nullable: true
+          example: Design
         color:
           type: string
+          description: The color of the tag.
           nullable: true
+          example: purple
         usageCount:
           type: integer
+          description: The count how often a specific tag was already used.
           format: int32
       additionalProperties: false
+      description: The model used for the API.
     BatchOperationForm:
       required:
         - taskIds
@@ -19536,6 +19596,9 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     ChangeProjectFormForTaskLists:
+      required:
+        - projectId
+        - taskStatusMapping
       type: object
       properties:
         projectId:
@@ -19548,14 +19611,15 @@ components:
           items:
             $ref: '#/components/schemas/ChangeTaskStatusForm'
           description: The task status mapping from old task status to new task status.
-          nullable: true
       additionalProperties: false
     ChangeProjectStatusForm:
+      required:
+        - projectStatusId
       type: object
       properties:
         projectStatusId:
           type: string
-          description: The id of the project status to change to. Required.
+          description: The id of the project status to change to.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -19570,6 +19634,9 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     ChangeStatusForm:
+      required:
+        - statusId
+        - taskId
       type: object
       properties:
         taskId:
@@ -19626,6 +19693,9 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     ChangeSubtasksPostForm:
+      required:
+        - parentId
+        - taskId
       type: object
       properties:
         taskId:
@@ -19662,6 +19732,8 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     ChangeTaskListsForm:
+      required:
+        - taskId
       type: object
       properties:
         taskId:
@@ -19677,6 +19749,9 @@ components:
           nullable: true
       additionalProperties: false
     ChangeTaskStatusForm:
+      required:
+        - newStatusId
+        - oldStatusId
       type: object
       properties:
         oldStatusId:
@@ -19820,13 +19895,15 @@ components:
           example: 2
       additionalProperties: false
     Comment:
+      required:
+        - message
       type: object
       properties:
         message:
           maxLength: 65000
+          minLength: 1
           type: string
-          description: "The message of the comment.\r\nRequired."
-          nullable: true
+          description: The message of the comment.
           example: Hey team, the customer loved the latest designs!
         userId:
           type: string
@@ -19908,13 +19985,15 @@ components:
       additionalProperties: false
       description: The comment model.
     CommentForm:
+      required:
+        - message
       type: object
       properties:
         message:
           maxLength: 65000
+          minLength: 1
           type: string
-          description: "The message of the comment.\r\nRequired."
-          nullable: true
+          description: The message of the comment.
           example: Hey team, the customer loved the latest designs!
         userId:
           type: string
@@ -19932,20 +20011,21 @@ components:
             - https://www.awork.com/en/blog/automatic-project-management/
       additionalProperties: false
     Company:
+      required:
+        - name
       type: object
       properties:
         name:
           maxLength: 1000
           minLength: 0
           type: string
-          description: The company name. Required.
-          nullable: true
+          description: The company name.
           example: NCNSTN Brand Design
         description:
           maxLength: 25000
           minLength: 0
           type: string
-          description: The company description. Optional.
+          description: The company description.
           nullable: true
           example: >-
             A small agency with a team of around 20 people, located in the heart
@@ -19954,7 +20034,7 @@ components:
           maxLength: 1000
           minLength: 0
           type: string
-          description: The company's industry. Optional.
+          description: The company's industry.
           nullable: true
           example: Brand Agency
         id:
@@ -20038,20 +20118,21 @@ components:
           example: delete-all
       additionalProperties: false
     CompanyForm:
+      required:
+        - name
       type: object
       properties:
         name:
           maxLength: 1000
           minLength: 0
           type: string
-          description: The company name. Required.
-          nullable: true
+          description: The company name.
           example: NCNSTN Brand Design
         description:
           maxLength: 25000
           minLength: 0
           type: string
-          description: The company description. Optional.
+          description: The company description.
           nullable: true
           example: >-
             A small agency with a team of around 20 people, located in the heart
@@ -20060,7 +20141,7 @@ components:
           maxLength: 1000
           minLength: 0
           type: string
-          description: The company's industry. Optional.
+          description: The company's industry.
           nullable: true
           example: Brand Agency
       additionalProperties: false
@@ -20089,16 +20170,22 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         firstName:
           type: string
+          description: The first name of the user.
           nullable: true
+          example: Carla
         lastName:
           type: string
+          description: The last name of the user.
           nullable: true
+          example: Creative
         hasImage:
           type: boolean
+          description: Whether this user has a profile image.
           nullable: true
         isExternal:
           type: boolean
@@ -20905,16 +20992,22 @@ components:
       properties:
         id:
           type: string
+          description: The Id of the tag.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the tag.
           nullable: true
+          example: Design
         color:
           type: string
+          description: The color of the tag.
           nullable: true
+          example: purple
         entityId:
           type: string
+          description: The id of the entity the tag is related to.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -20957,6 +21050,8 @@ components:
         name:
           minLength: 1
           type: string
+          description: The name of the tag to delete.
+          example: Design
       additionalProperties: false
     DeleteTaskTypeForm:
       type: object
@@ -21002,19 +21097,28 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         description:
           type: string
+          description: The description of the type.
           nullable: true
+          example: Work in progress
         type:
           type: string
+          description: The type of the status.
           nullable: true
+          example: todo
         isArchived:
           type: boolean
+          description: Whether the type is archived.
+          example: false
         typeOrder:
           type: integer
           description: The order of the status type.
@@ -21220,12 +21324,14 @@ components:
         A Type of work enriched with the list of external project ids in which
         this TypeOfWork exists.
     GeneralTaskForm:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
-          description: "The name of the task. Max allowed length: 25000 characters.\r\nRequired."
-          nullable: true
+          description: 'The name of the task. Max allowed length: 25000 characters.'
           example: Create logo concept
         description:
           type: string
@@ -21241,16 +21347,16 @@ components:
           description: The expected start date and time of the task.
           format: date-time
           nullable: true
-          example: '2021-03-03T17:00:00Z'
+          example: '2023-03-03T17:00:00Z'
         dueOn:
           type: string
           description: The expected due date and time of the task.
           format: date-time
           nullable: true
-          example: '2021-03-18T17:00:00Z'
+          example: '2023-03-18T17:00:00Z'
         laneOrder:
           type: integer
-          description: The lane order defines the vertical position in the gant planner.
+          description: The lane order defines the vertical position in the task board.
           format: int32
           nullable: true
         plannedDuration:
@@ -21266,12 +21372,16 @@ components:
           example: 10500
       additionalProperties: false
     GeneralTaskPostForm:
+      required:
+        - name
+        - taskStatusId
+        - typeOfWorkId
       type: object
       properties:
         name:
+          minLength: 1
           type: string
-          description: "The name of the task. Max allowed length: 25000 characters.\r\nRequired."
-          nullable: true
+          description: 'The name of the task. Max allowed length: 25000 characters.'
           example: Create logo concept
         description:
           type: string
@@ -21287,16 +21397,16 @@ components:
           description: The expected start date and time of the task.
           format: date-time
           nullable: true
-          example: '2021-03-03T17:00:00Z'
+          example: '2023-03-03T17:00:00Z'
         dueOn:
           type: string
           description: The expected due date and time of the task.
           format: date-time
           nullable: true
-          example: '2021-03-18T17:00:00Z'
+          example: '2023-03-18T17:00:00Z'
         laneOrder:
           type: integer
-          description: The lane order defines the vertical position in the gant planner.
+          description: The lane order defines the vertical position in the task board.
           format: int32
           nullable: true
         plannedDuration:
@@ -21312,12 +21422,12 @@ components:
           example: 10500
         typeOfWorkId:
           type: string
-          description: "The id of the type of work for this task.\r\nRequired."
+          description: The id of the type of work for this task.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         taskStatusId:
           type: string
-          description: "The id of the status for this task.\r\nRequired."
+          description: The id of the status for this task.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         order:
@@ -21399,10 +21509,12 @@ components:
       properties:
         id:
           type: string
+          description: The id of the entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
       additionalProperties: false
     ImportDefaultModel:
@@ -21580,27 +21692,37 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         hasImage:
           type: boolean
+          description: Whether the company has a profile image.
+          example: true
         description:
           type: string
+          description: The description of the company.
           nullable: true
+          example: One of our customers
       additionalProperties: false
     NestedCompanyModelForProjects:
       type: object
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         hasImage:
           type: boolean
           description: Whether the company has a profile image.
@@ -21622,11 +21744,14 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         hasImage:
           type: boolean
           description: Whether the company has a profile image.
@@ -21649,22 +21774,28 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
       additionalProperties: false
     NestedParentTaskModel:
       type: object
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         userId:
           type: string
           description: The id of the user of the private task. Null for project tasks.
@@ -21684,11 +21815,14 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         projectStatus:
           $ref: '#/components/schemas/NestedStatusModel'
         company:
@@ -21749,59 +21883,86 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         description:
           type: string
+          description: The description of the type.
           nullable: true
+          example: Work in progress
         type:
           type: string
+          description: The type of the status.
           nullable: true
+          example: todo
         isArchived:
           type: boolean
+          description: Whether the type is archived.
+          example: false
       additionalProperties: false
     NestedTaskStatusModel:
       type: object
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         description:
           type: string
+          description: The description of the type.
           nullable: true
+          example: Work in progress
         type:
           type: string
+          description: The type of the status.
           nullable: true
+          example: todo
         order:
           type: number
+          description: The order of the task status in a task.
           format: double
           nullable: true
+          example: 1
         icon:
           type: string
+          description: The icon of the task status in a task.
           nullable: true
+          example: arrow_forward
       additionalProperties: false
     NestedTaskTypeModel:
       type: object
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         icon:
           type: string
+          description: The icon of the type.
           nullable: true
+          example: thumb_up
         isArchived:
           type: boolean
+          description: Whether the type is archived.
+          example: false
       additionalProperties: false
     NestedTeamModel:
       type: object
@@ -21816,32 +21977,45 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         icon:
           type: string
+          description: The icon of the type.
           nullable: true
+          example: thumb_up
         isArchived:
           type: boolean
+          description: Whether the type is archived.
+          example: false
       additionalProperties: false
     NestedUserModel:
       type: object
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         firstName:
           type: string
+          description: The first name of the user.
           nullable: true
+          example: Carla
         lastName:
           type: string
+          description: The last name of the user.
           nullable: true
+          example: Creative
         hasImage:
           type: boolean
+          description: Whether this user has a profile image.
           nullable: true
       additionalProperties: false
     NestedUserModelForTasks:
@@ -21849,16 +22023,22 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         firstName:
           type: string
+          description: The first name of the user.
           nullable: true
+          example: Carla
         lastName:
           type: string
+          description: The last name of the user.
           nullable: true
+          example: Creative
         hasImage:
           type: boolean
+          description: Whether this user has a profile image.
           nullable: true
         plannedEffort:
           type: integer
@@ -22023,13 +22203,14 @@ components:
           example: 144000
       additionalProperties: false
     PlannedEffortForm:
+      required:
+        - userId
       type: object
       properties:
         userId:
           type: string
           description: The id of the user that is assigned to the task.
           format: uuid
-          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
         plannedEffort:
           type: integer
@@ -22038,20 +22219,20 @@ components:
           nullable: true
       additionalProperties: false
     Project:
+      required:
+        - isPrivate
+        - name
       type: object
       properties:
         name:
           maxLength: 1000
           minLength: 0
           type: string
-          description: >-
-            The name of the Project. Required. Max allowed length: 25000
-            characters.
-          nullable: true
+          description: 'The name of the Project. Max allowed length: 25000 characters.'
           example: Website Design
         isPrivate:
           type: boolean
-          description: "Whether this is a private project only visible to members and the creator.\r\nRequired. Defaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public."
+          description: "Whether this is a private project only visible to members and the creator.\r\nDefaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public."
           example: false
         description:
           maxLength: 25000
@@ -22124,7 +22305,7 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
         id:
           type: string
-          description: Id of the project. Required.
+          description: Id of the project.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         hasImage:
@@ -22304,20 +22485,20 @@ components:
           example: true
       additionalProperties: false
     ProjectForm:
+      required:
+        - isPrivate
+        - name
       type: object
       properties:
         name:
           maxLength: 1000
           minLength: 0
           type: string
-          description: >-
-            The name of the Project. Required. Max allowed length: 25000
-            characters.
-          nullable: true
+          description: 'The name of the Project. Max allowed length: 25000 characters.'
           example: Website Design
         isPrivate:
           type: boolean
-          description: "Whether this is a private project only visible to members and the creator.\r\nRequired. Defaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public."
+          description: "Whether this is a private project only visible to members and the creator.\r\nDefaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public."
           example: false
         description:
           maxLength: 25000
@@ -22527,11 +22708,13 @@ components:
           description: "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
       additionalProperties: false
     ProjectMemberRemoveForm:
+      required:
+        - userId
       type: object
       properties:
         userId:
           type: string
-          description: The id of the user to remove from the project. Required.
+          description: The id of the user to remove from the project.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -22692,11 +22875,14 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         projectStatus:
           $ref: '#/components/schemas/NestedStatusModel'
         company:
@@ -22730,20 +22916,20 @@ components:
           description: Whether the project is external.
       additionalProperties: false
     ProjectPutForm:
+      required:
+        - isPrivate
+        - name
       type: object
       properties:
         name:
           maxLength: 1000
           minLength: 0
           type: string
-          description: >-
-            The name of the Project. Required. Max allowed length: 25000
-            characters.
-          nullable: true
+          description: 'The name of the Project. Max allowed length: 25000 characters.'
           example: Website Design
         isPrivate:
           type: boolean
-          description: "Whether this is a private project only visible to members and the creator.\r\nRequired. Defaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public."
+          description: "Whether this is a private project only visible to members and the creator.\r\nDefaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public."
           example: false
         description:
           maxLength: 25000
@@ -22827,7 +23013,7 @@ components:
             project-master-data.
         id:
           type: string
-          description: The id of the project role. Required.
+          description: The id of the project role.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         memberCount:
@@ -22979,21 +23165,22 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     ProjectStatusForm:
+      required:
+        - name
+        - type
       type: object
       properties:
         name:
           maxLength: 255
           minLength: 0
           type: string
-          description: The name of the project status. Required.
-          nullable: true
+          description: The name of the project status.
           example: In Progress
         type:
           maxLength: 25
           minLength: 0
           type: string
-          description: "Specifies the general type of this project status.\r\nAccepted values: 'progress', 'not-started', 'closed', 'stuck\r\nRequired."
-          nullable: true
+          description: "Specifies the general type of this project status.\r\nAccepted values: 'progress', 'not-started', 'closed', 'stuck"
           example: progress
       additionalProperties: false
     ProjectTagModel:
@@ -23039,6 +23226,7 @@ components:
       properties:
         id:
           type: string
+          description: The id of the entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -23621,17 +23809,20 @@ components:
       additionalProperties: false
       description: The users reactions to a comment.
     ReactionForm:
+      required:
+        - emoji
+        - operation
       type: object
       properties:
         emoji:
+          minLength: 1
           type: string
-          description: "The reaction (emoji).\r\nRequired."
-          nullable: true
+          description: The reaction (emoji).
           example: 👍
         operation:
+          minLength: 1
           type: string
-          description: "The operation. Can be 'add' or 'remove'.\r\nRequired."
-          nullable: true
+          description: The operation. Can be 'add' or 'remove'.
           example: add
       additionalProperties: false
     RecurrencyModel:
@@ -23668,12 +23859,14 @@ components:
           example: Europe/Berlin
       additionalProperties: false
     Role:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
-          description: The name of the role. Required. Needs to be unique.
-          nullable: true
+          description: The name of the role. Must be unique.
           example: Designer
         isAdminRole:
           type: boolean
@@ -23717,12 +23910,14 @@ components:
       additionalProperties: false
       description: The role model.
     RoleForm:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
-          description: The name of the role. Required. Needs to be unique.
-          nullable: true
+          description: The name of the role. Must be unique.
           example: Designer
         isAdminRole:
           type: boolean
@@ -23784,6 +23979,9 @@ components:
           description: Whether the user should be migrated to Connect.
       additionalProperties: false
     StartTimeTrackingForm:
+      required:
+        - timezone
+        - typeOfWorkId
       type: object
       properties:
         isBillable:
@@ -23813,13 +24011,13 @@ components:
           example: I created a first draft for the new sitemap
         typeOfWorkId:
           type: string
-          description: "The id of the type of work of the time tracking.\r\nRequired."
+          description: The id of the type of work of the time tracking.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         timezone:
+          minLength: 1
           type: string
-          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.\r\nRequired."
-          nullable: true
+          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard."
           example: Europe/London
       additionalProperties: false
     StatusResult:
@@ -23837,28 +24035,40 @@ components:
       properties:
         id:
           type: string
+          description: The id of the entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         createdOn:
           type: string
+          description: The date this entity was created.
           format: date-time
+          example: '2022-03-11T15:33:47.100Z'
         createdBy:
           type: string
+          description: The id of the user who created this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         updatedOn:
           type: string
+          description: The date this entity was last modified.
           format: date-time
+          example: '2022-03-11T21:15:00.100Z'
         updatedBy:
           type: string
+          description: The id of the user who last modified this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Website Design and Implementation
         isDefault:
           type: boolean
+          description: Whether this is the workspace's default subdomain.
+          example: true
       additionalProperties: false
+      description: The commonly used subdomain API model.
     TagForm:
       required:
         - name
@@ -23867,9 +24077,13 @@ components:
         name:
           minLength: 1
           type: string
+          description: The name of the tag to delete.
+          example: Design
         color:
           type: string
+          description: "The color of the tag. Use one of 'red', 'coral', 'yellow', 'green', 'teal', 'arctic', 'blue', 'azure', 'purple',\r\n'violet'."
           nullable: true
+          example: purple
       additionalProperties: false
     TagUpdateForm:
       required:
@@ -23880,6 +24094,8 @@ components:
         oldTagName:
           minLength: 1
           type: string
+          description: The old name of the tag.
+          example: Design
         newTag:
           $ref: '#/components/schemas/TagForm'
       additionalProperties: false
@@ -24075,20 +24291,27 @@ components:
       properties:
         id:
           type: string
+          description: The id of the entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         createdOn:
           type: string
+          description: The date this entity was created.
           format: date-time
+          example: '2022-03-11T15:33:47.100Z'
         createdBy:
           type: string
+          description: The id of the user who created this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         updatedOn:
           type: string
+          description: The date this entity was last modified.
           format: date-time
+          example: '2022-03-11T21:15:00.100Z'
         updatedBy:
           type: string
+          description: The id of the user who last modified this entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         predecessorTemplateId:
@@ -24166,13 +24389,15 @@ components:
           example: 4
       additionalProperties: false
     TaskList:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the list.
-          nullable: true
-          example: Product and Marketing todos
+          example: Product and Marketing To-Dos
         order:
           type: number
           description: The order of the list.
@@ -24187,6 +24412,7 @@ components:
         isArchived:
           type: boolean
           description: Whether the task list has been archived.
+          example: false
         createdOn:
           type: string
           description: The date this task list was created.
@@ -24209,13 +24435,15 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     TaskListBundlePutForm:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the list.
-          nullable: true
-          example: Product and Marketing todos
+          example: Product and Marketing To-Dos
         order:
           type: number
           description: The order of the list.
@@ -24232,18 +24460,20 @@ components:
           nullable: true
         deleteTimes:
           type: boolean
-          description: Whether all times related to tasks in this list should be deleted.
+          description: "Whether all times related to tasks in this list should be deleted.\r\nFalse by default."
           nullable: true
           example: true
       additionalProperties: false
     TaskListForm:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the list.
-          nullable: true
-          example: Product and Marketing todos
+          example: Product and Marketing To-Dos
         order:
           type: number
           description: The order of the list.
@@ -24252,13 +24482,15 @@ components:
           example: 2
       additionalProperties: false
     TaskListPutForm:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the list.
-          nullable: true
-          example: Product and Marketing todos
+          example: Product and Marketing To-Dos
       additionalProperties: false
     TaskListTemplate:
       type: object
@@ -24285,12 +24517,14 @@ components:
           example: 1
       additionalProperties: false
     TaskModel:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
-          description: "The name of the task. Max allowed length: 25000 characters.\r\nRequired."
-          nullable: true
+          description: 'The name of the task. Max allowed length: 25000 characters.'
           example: Create logo concept
         description:
           type: string
@@ -24306,16 +24540,16 @@ components:
           description: The expected start date and time of the task.
           format: date-time
           nullable: true
-          example: '2021-03-03T17:00:00Z'
+          example: '2023-03-03T17:00:00Z'
         dueOn:
           type: string
           description: The expected due date and time of the task.
           format: date-time
           nullable: true
-          example: '2021-03-18T17:00:00Z'
+          example: '2023-03-18T17:00:00Z'
         laneOrder:
           type: integer
-          description: The lane order defines the vertical position in the gant planner.
+          description: The lane order defines the vertical position in the task board.
           format: int32
           nullable: true
         plannedDuration:
@@ -24549,11 +24783,14 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the entity.
           nullable: true
+          example: Design
         baseType:
           type: string
           description: "The base type of the task.\r\nCan be 'private' for a private task or\r\n'projecttask' for a project task."
@@ -24628,13 +24865,15 @@ components:
           $ref: '#/components/schemas/NestedModel'
       additionalProperties: false
     TaskOrderList:
+      required:
+        - name
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the list.
-          nullable: true
-          example: Product and Marketing todos
+          example: Product and Marketing To-Dos
         order:
           type: number
           description: The order of the list.
@@ -24649,6 +24888,7 @@ components:
         isArchived:
           type: boolean
           description: Whether the task list has been archived.
+          example: false
         createdOn:
           type: string
           description: The date this task list was created.
@@ -24726,6 +24966,9 @@ components:
           example: 3
       additionalProperties: false
     TaskSetPrioForm:
+      required:
+        - isPrio
+        - taskId
       type: object
       properties:
         taskId:
@@ -25213,6 +25456,8 @@ components:
           example: 5
       additionalProperties: false
     TaskToTaskList:
+      required:
+        - taskId
       type: object
       properties:
         taskId:
@@ -25337,16 +25582,20 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     TasksChangeBaseTypesForm:
+      required:
+        - baseType
+        - entityId
+        - taskIds
       type: object
       properties:
         baseType:
+          minLength: 1
           type: string
-          description: "The type the tasks should be migrated to.\r\nPossible values are 'private' or 'projecttask'.\r\nRequired."
-          nullable: true
+          description: "The type the tasks should be migrated to.\r\nPossible values are 'private' or 'projecttask'."
           example: private
         entityId:
           type: string
-          description: "The id of the entity.\r\nThe id of the project if the base type is 'projecttask'\r\nor the id of the user if the base type is 'private'.\r\nRequired."
+          description: "The id of the entity.\r\nThe id of the project if the base type is 'projecttask'\r\nor the id of the user if the base type is 'private'."
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         taskIds:
@@ -25354,15 +25603,17 @@ components:
           items:
             type: string
             format: uuid
-          description: "The list of task ids.\r\nRequired."
-          nullable: true
+          description: The list of task ids.
       additionalProperties: false
     TasksChangeTypesForm:
+      required:
+        - taskIds
+        - typeOfWorkId
       type: object
       properties:
         typeOfWorkId:
           type: string
-          description: "The id of the task type.\r\nRequired."
+          description: The id of the task type.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         changeTimeEntries:
@@ -25375,10 +25626,13 @@ components:
           items:
             type: string
             format: uuid
-          description: "The list of task ids.\r\nRequired."
-          nullable: true
+          description: The list of task ids.
+          example:
+            - 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     TasksDeleteForm:
+      required:
+        - taskIds
       type: object
       properties:
         taskIds:
@@ -25387,7 +25641,8 @@ components:
             type: string
             format: uuid
           description: List of tasks to be deleted.
-          nullable: true
+          example:
+            - 123e4567-e89b-12d3-a456-426614174000
         deleteTimeTrackings:
           type: boolean
           description: "Set to true to delete also the related time trackings.\r\nIf it is set to false the related time trackings are still there, but\r\nthe project and task reference will be cleared.\r\nThat will also happen if no request body is present."
@@ -26044,7 +26299,7 @@ components:
           example: I created a first draft for the new sitemap
         startDateUtc:
           type: string
-          description: "The date (in UTC) when the time tracking was started.\r\nRequired."
+          description: The date (in UTC) when the time tracking was started.
           format: date-time
           nullable: true
           example: '2022-03-01T00:00:00Z'
@@ -26066,7 +26321,7 @@ components:
           example: '11:45:00'
         startDateLocal:
           type: string
-          description: "The date (in Local) when the time tracking was started.\r\nRequired."
+          description: The date (in Local) when the time tracking was started.
           format: date-time
           nullable: true
           example: '2022-03-01T00:00:00'
@@ -26089,7 +26344,7 @@ components:
         timezone:
           minLength: 1
           type: string
-          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.\r\nRequired."
+          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard."
           example: Europe/Berlin
         duration:
           type: integer
@@ -26104,12 +26359,12 @@ components:
           nullable: true
         typeOfWorkId:
           type: string
-          description: "The id of the type of work.\r\nRequired."
+          description: The id of the type of work.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         userId:
           type: string
-          description: "The id of the user.\r\nRequired."
+          description: The id of the user.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         id:
@@ -26323,7 +26578,7 @@ components:
           example: I created a first draft for the new sitemap
         startDateUtc:
           type: string
-          description: "The date (in UTC) when the time tracking was started.\r\nRequired."
+          description: The date (in UTC) when the time tracking was started.
           format: date-time
           nullable: true
           example: '2022-03-01T00:00:00Z'
@@ -26345,7 +26600,7 @@ components:
           example: '11:45:00'
         startDateLocal:
           type: string
-          description: "The date (in Local) when the time tracking was started.\r\nRequired."
+          description: The date (in Local) when the time tracking was started.
           format: date-time
           nullable: true
           example: '2022-03-01T00:00:00'
@@ -26368,7 +26623,7 @@ components:
         timezone:
           minLength: 1
           type: string
-          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.\r\nRequired."
+          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard."
           example: Europe/Berlin
         duration:
           type: integer
@@ -26383,12 +26638,12 @@ components:
           nullable: true
         typeOfWorkId:
           type: string
-          description: "The id of the type of work.\r\nRequired."
+          description: The id of the type of work.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         userId:
           type: string
-          description: "The id of the user.\r\nRequired."
+          description: The id of the user.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -26972,16 +27227,22 @@ components:
       properties:
         id:
           type: string
+          description: Gets or sets the id of the nested model.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         firstName:
           type: string
+          description: The first name of the user.
           nullable: true
+          example: Carla
         lastName:
           type: string
+          description: The last name of the user.
           nullable: true
+          example: Creative
         hasImage:
           type: boolean
+          description: Whether this user has a profile image.
           nullable: true
         tags:
           type: array
@@ -27110,6 +27371,9 @@ components:
       additionalProperties: false
       description: The user model with the account id to create a new user.
     UserSetting:
+      required:
+        - key
+        - value
       type: object
       properties:
         entityId:
@@ -27129,13 +27393,12 @@ components:
           maxLength: 50
           minLength: 0
           type: string
-          description: The unique key. Required.
-          nullable: true
+          description: The unique key.
           example: onboarding-complete
         value:
+          minLength: 1
           type: string
           description: The value of the setting.
-          nullable: true
           example: 'true'
         createdOn:
           type: string
@@ -27160,6 +27423,9 @@ components:
       additionalProperties: false
       description: The user setting model.
     UserSettingForm:
+      required:
+        - key
+        - value
       type: object
       properties:
         entityId:
@@ -27179,13 +27445,12 @@ components:
           maxLength: 50
           minLength: 0
           type: string
-          description: The unique key. Required.
-          nullable: true
+          description: The unique key.
           example: onboarding-complete
         value:
+          minLength: 1
           type: string
           description: The value of the setting.
-          nullable: true
           example: 'true'
       additionalProperties: false
       description: The user setting model.
@@ -27243,6 +27508,7 @@ components:
       properties:
         id:
           type: string
+          description: The id of the entity.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -27398,6 +27664,7 @@ components:
       properties:
         workspaceId:
           type: string
+          description: The id of the workspace.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -27406,24 +27673,35 @@ components:
       properties:
         id:
           type: string
+          description: The id of the workspace.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
+          description: The name of the workspace.
           nullable: true
+          example: NCNSTN Brand Design
         hasImage:
           type: boolean
+          description: Whether this workspace has a profile image.
+          example: true
         language:
           type: string
+          description: The language of the workspace.
           nullable: true
+          example: en-GB
         subdomains:
           type: array
           items:
             $ref: '#/components/schemas/SubdomanModel'
+          description: The subdomains of the workspace.
           nullable: true
         isTestWorkspace:
           type: boolean
+          description: Whether this workspace is a test workspace.
+          example: false
       additionalProperties: false
+      description: The commonly used workspaces API model.
     WorkspaceOfUser:
       type: object
       properties:

@@ -1,13 +1,22 @@
 instances:
   - url: https://aworkapi.docs.buildwithfern.com
     custom-domain: developers.awork.com
+    edit-this-page:
+      github:
+        owner: awork-io
+        repo: developer-docs
+        branch: main
 colors:
-  accentPrimary: '#4D9AFF'
-  background: '#F2F9FF'
+  accentPrimary:
+    dark: "#4D9AFF"
+    light: "#4D9AFF"
+  background:
+    dark: "#141622"
+    light: "#F2F9FF"
 favicon: ./assets/favicon.ico
 logo:
-    light: ./assets/logo.png
-    dark: ./assets/logo.png
+    light: ./assets/logo_dark.png
+    dark: ./assets/logo_light.png
     height: 40
     href: https://www.awork.com
 title: awork API | Documentation
@@ -40,7 +49,7 @@ navigation:
         path: ./pages/support.mdx
   - api: API Reference
     api-name: v1
-    display-errors: true
+    display-errors: false
     summary: ./apis/v1/summary.mdx
     slug: apiv1
     layout:
