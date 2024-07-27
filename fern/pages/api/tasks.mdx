@@ -69,3 +69,22 @@ curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-42661417
 ```
 
 Learn more about checklists [here](https://support.awork.com/en/articles/5344365-editing-task-details#h_395962a83e).
+
+## Task Lists
+
+Tasks can be in one or several task lists. This is how you can add a task to a task list or change the list:
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/tasks/changelists \
+  -H 'Content-Type: application/json' \
+  -d '[
+	{
+		"taskId": "123e4567-e89b-12d3-a456-426614174000",
+		"taskLists": [
+			{
+				"id": "123e4567-e89b-12d3-a456-426614174000"
+			}
+		]
+	}
+]'
+```
