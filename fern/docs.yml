@@ -17,8 +17,8 @@ favicon: ./assets/favicon.ico
 logo:
     light: ./assets/logo_dark.png
     dark: ./assets/logo_light.png
-    height: 40
-    href: https://www.awork.com
+    height: 30
+    href: https://www.awork.com/
 title: awork API | Documentation
 navigation:
   - section: Overview
