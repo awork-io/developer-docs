@@ -42,6 +42,12 @@ as well as the logical operator `or`
 
 Precedence is defined with `(` and `)`.
 
+You can also use the `any` operator in combination with `eq false` to filter for items that do not contain a specific value.
+
+```sh
+/tasks?=lists/any(l: l/name eq ‘Draft’) eq false
+```
+
 ## Data types
 
 The data types DateTime and Guid have to be prefixed with the corresponding type identifier `datetime` and `guid`, respectively, e.g.

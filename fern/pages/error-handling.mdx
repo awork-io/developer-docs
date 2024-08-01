@@ -6,7 +6,7 @@ slug: error-handling
 
 In case a request to our API fails, the return value of the endpoints follows standard HTTP status code conventions.
 
-A detailed reason can be found in the response. Common codes indicating a client error are 400 (Bad Request) & 404 (Not Found).
+A detailed reason can be found in the response. Common codes indicating a client error are `400 BadRequest and `404 NotFound`.
 
 To give some further information on the cause of the error, the API also returns a standardized error object in the response body.
 
@@ -29,7 +29,7 @@ To give some further information on the cause of the error, the API also returns
 ```
 
 * `code`: A unique identifier for the error.
-* `description`: A human-readable explanation for the cause of the error.\
+* `description`: A human-readable explanation for the cause of the error.
 * `link`: A link to the corresponding documentation.
 * `details`: Further explanations or hints on fixing the request.
 * `validationErrors`: If the model validation failed, all violations are listed here.
@@ -39,7 +39,7 @@ To give some further information on the cause of the error, the API also returns
 | Error Code                     | Description                                                                                       |
 |--------------------------------|---------------------------------------------------------------------------------------------------|
 | `workspaceid-missing`          | The request is missing a valid team id. Most likely, your token is invalid.                       |
-| `not-found`                    | The requested resource could not be located.                                                     |
+| `not-found`                    | The requested resource could not be located.                                                      |
 | `entity-archived`              | The request tried to perform an operation with an archived entity.                                |
 | `duplication-violation`        | A property that requires a unique value detected a duplication.                                   |
 | `database-commit`              | The commit to the database failed. Your changes have not been committed!                          |
@@ -69,17 +69,17 @@ On each request to our API, you will receive a response with a HTTP status code 
 
 | Method | Status Code         | Description                                                     |
 |--------|---------------------|-----------------------------------------------------------------|
-| GET    | 200 (OK)            | Including the object(s)                                         |
-| POST   | 200 (OK)            | Including the newly created object                              |
-| POST   | 202 (Accepted)      | For batch or background operations                              |
-| POST   | 204 (No Content)    | For business operations without a return value                  |
-| PUT    | 200 (OK)            | Including the updated object                                    |
-| DELETE | 204 (No Content)    |                                                                 |
+| GET    | `200 OK`            | Including the object(s)                                         |
+| POST   | `200 OK`            | Including the newly created object                              |
+| POST   | `202 Accepted`      | For batch or background operations                              |
+| POST   | `204 NoContent`     | For business operations without a return value                  |
+| PUT    | `200 OK`            | Including the updated object                                    |
+| DELETE | `204 NoContent`     |                                                                 |
 
 ### Error Status Codes
 
 | Status Code         | Description                                                                |
 |---------------------|----------------------------------------------------------------------------|
-| 400 (Bad Request)   | When the request model is invalid or the operation is not allowed          |
-| 401 (Unauthorized)  | When the requesting user is lacking the necessary permissions for the request |
-| 404 (Not Found)     | When a requested resource does not exist                                   |
+| `400 BadRequest`    | When the request model is invalid or the operation is not allowed          |
+| `401 Unauthorized`  | When the requesting user is lacking the necessary permissions for the request |
+| `404 NotFound`      | When a requested resource does not exist                                   |
