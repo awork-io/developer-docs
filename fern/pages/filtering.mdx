@@ -9,41 +9,44 @@ The Awork API supports a wide range of filters that can be applied to most of ou
 A filter can be applied by adding a `filterby` expression to the request URL:
 
 ```sh
- /users?filterby=FirstName eq 'Sebastian'
+/users?filterby=firstName eq 'Sebastian'
 ```
 
 Important: Special characters (like `?`, `&` and `=`) within a string filter value need to be properly URL encoded.
 
 Correct:
 ```sh
-filterby=name eq 'awork %26 co'
+/companies?filterby=name eq 'awork %26 co'
 ```
 
 Incorrect:
 ```sh
-filterby=name eq 'awork & co'
+/companies?filterby=name eq 'awork & co'
 ```
 
-If you want to filter by a nested property, you can do this by separating the properties by `/`.
+If you want to filter by a nested property, you can do this by separating the properties by `/`, for example:
+```sh
+/projects?filterby=company/name eq 'awork'
+```
 
 ## Logical Operations
 
 You can invert the expression by using `not` before the statement
 
 ```sh
- /users?filterby=not FirstName eq 'Sebastian'
+/users?filterby=not firstName eq 'Sebastian'
 ```
 
 Furthermore, you can combine expressions using the logical operator `and`
 
 ```sh
-/projects?filterby=PlannedDuration le 200 and PlannedDuration gt 3.5 
+/projects?filterby=plannedDuration le 200 and plannedDuration gt 3.5 
 ```
 
 as well as the logical operator `or`
 
 ```sh
-/projects?filterby=PlannedDuration le 200 or PlannedDuration gt 300 
+/projects?filterby=plannedDuration le 200 or plannedDuration gt 300 
 ```
 
 Precedence is defined with `(` and `)`.
@@ -96,9 +99,9 @@ The data types DateTime and Guid have to be prefixed with the corresponding type
 
 ### Special Operator for the Current User
 
-| Expression | Description                  |
-| ---------- | ---------------------------- |
-| `eq me.id` | Filters for the current user |
+| Expression | Description                  | Example |
+| ---------- | ---------------------------- | ------- |
+| `me.id`    | Filters for the current user | `/users?filterby=id eq me.id` |
 
 ### Special Operators for Date and Time
 
