@@ -4,7 +4,7 @@ description: Learn how to filter the awork API responses.
 slug: filtering
 ---
 
-The awork API supports a huge set of filters that can be executed on the majority of our API endpoints.
+The Awork API supports a wide range of filters that can be applied to most of our API endpoints.
 
 A filter can be applied by adding a `filterby` expression to the request URL:
 
@@ -12,12 +12,12 @@ A filter can be applied by adding a `filterby` expression to the request URL:
  /users?filterby=FirstName eq 'Sebastian'
 ```
 
-Important: Special characters (like `?`, `&` and `=`) within a string filter value need to be properly url encoded.
+Important: Special characters (like `?`, `&` and `=`) within a string filter value need to be properly URL encoded.
 
 Correct: `filterby=name eq 'awork %26 co'`
 Incorrect: `filterby=name eq 'awork & co'`
 
-If you want to filter by a nested property, you can do this by separating the Properties by `/`.
+If you want to filter by a nested property, you can do this by separating the properties by `/`.
 
 
 ## Logical Operations
@@ -45,10 +45,10 @@ Precedence is defined with `(` and `)`.
 You can also use the `any` operator in combination with `eq false` to filter for items that do not contain a specific value.
 
 ```sh
-/tasks?=lists/any(l: l/name eq ‘Draft’) eq false
+/tasks?filterby=lists/any(l: l/name eq 'Draft') eq false
 ```
 
-## Data types
+## Data Types
 
 The data types DateTime and Guid have to be prefixed with the corresponding type identifier `datetime` and `guid`, respectively, e.g.
 
@@ -73,17 +73,20 @@ The data types DateTime and Guid have to be prefixed with the corresponding type
 
 | Operator   | Description                                                                                                 | Query                                                         |
 |------------|-------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
-| `eq`       | The 'eq' operator filters and returns the items which matches the filter term.                              | `/users?filterby=firstname eq 'Neil'`                         |
-| `ne`       | The 'ne' operator filters and returns the items which do not match the filter term.                         | `/users?filterby=firstname ne 'Neil'`                         |
-| `endswith` | The 'endswith' operator filters and returns the items which end with the filter term.                       | `/users?filterby=endswith(FirstName,'Neil')`                  |
-| `startswith` | The 'startswith' operator filters and returns the items which start with the string.                      | `/users?filterby=startswith(FirstName,'Neil')`                |
-| `contains` | The 'contains' operator filters and returns the items which contain the filter term.                        | `/users?filterby=substringof('Neil',FirstName)`               |
-| `gt`       | The 'gt' operator filters and returns the items which are greater than the filter term.                     | `/users?filterby=birthDate gt datetime'2018-04-03T00:00'`     |
-| `lt`       | The 'lt' operator filters and returns the items which are less than the filter term.                        | `/users?filterby=birthDate lt datetime'2018-04-03T00:00'`     |
-| `le`       | The 'le' operator filters and returns the items which are less than or equal to the filter term.            | `/users?filterby=birthDate le datetime'2018-04-03T00:00'`     |
-| `ge`       | The 'ge' operator filters and returns the items which are greater than or equal to the filter term.         | `/users?filterby=birthDate ge datetime'2018-04-03T00:00'`     |
-| `any`      | The any operator iterates through the main entity (Project), executes the condition and returns the filtered list of projects where any member with a FirstName 'Neil' exists. | `/projects?filterby=members/any(p: p/FirstName eq 'Neil')` |
-| `count`    | The count operator iterates through the main entity (Project), and returns the filtered list of projects that have less than 10 members. | `/projects?filterby=members/count() lt 10` |
+| `eq`       | The `eq` operator filters and returns the items which match the filter term.                                | `/users?filterby=firstName eq 'Neil'`                         |
+| `ne`       | The `ne` operator filters and returns the items which do not match the filter term.                         | `/users?filterby=firstName ne 'Neil'`                         |
+| `endswith` | The `endswith` operator filters and returns the items which end with the filter term.                       | `/users?filterby=endswith(firstName,'Neil')`                  |
+| `startswith` | The `startswith` operator filters and returns the items which start with the string.                      | `/users?filterby=startswith(firstName,'Neil')`                |
+| `substringof` | The `substringof` operator filters and returns the items which contain the filter term.                  | `/users?filterby=substringof('Neil',firstName)`               |
+| `gt`       | The `gt` operator filters and returns the items which are greater than the filter term.                     | `/users?filterby=birthDate gt datetime'2018-04-03T00:00'`     |
+| `lt`       | The `lt` operator filters and returns the items which are less than the filter term.                        | `/users?filterby=birthDate lt datetime'2018-04-03T00:00'`     |
+| `le`       | The `le` operator filters and returns the items which are less than or equal to the filter term.            | `/users?filterby=birthDate le datetime'2018-04-03T00:00'`     |
+| `ge`       | The `ge` operator filters and returns the items which are greater than or equal to the filter term.         | `/users?filterby=birthDate ge datetime'2018-04-03T00:00'`     |
+| `any`      | The `any` operator iterates through the main entity (Project), executes the condition and returns the filtered list of projects where any member with a first name of 'Neil' exists. | `/projects?filterby=members/any(p: p/firstName eq 'Neil')` |
+| `count`    | The `count` operator iterates through the main entity (Project), and returns the filtered list of projects that have less than 10 members. | `/projects?filterby=members/count() lt 10` |
+| `tolower`  | The `tolower` operator can be used to convert strings to lowercase, which can be helpful for string comparison. | `/projects?filterby=tolower(name) eq 'website'` |
+
+<Warning>Not all operators can be used in combination or nested.</Warning>
 
 ### Special Operator for the Current User
 
@@ -93,11 +96,13 @@ The data types DateTime and Guid have to be prefixed with the corresponding type
 
 ### Special Operators for Date and Time
 
-| Expression | Description                             |
-| ---------- | --------------------------------------- |
-| `lt now`   | Filters for less than current date-time |
-| `gt sow`   | Filters for greater than start of week  |
-| `gt eow`   | Filters for greater than end of week    |
-| `gt som`   | Filters for greater than start of month |
-| `gt eom`   | Filters for greater than end of month   |
-| `eq today` | Filters for today                       |
+| Expression  | Description                               | Example |
+| ----------- | ----------------------------------------- | ------- |
+| `now`       | Filters for less than current date-time   | `/tasks?filterby=dueOn lt now` |
+| `sow`       | Filters for greater than start of week    | `/tasks?filterby=dueOn gt sow` |
+| `eow`       | Filters for greater than end of week      | `/tasks?filterby=dueOn gt eow` |
+| `som`       | Filters for greater than start of month   | `/tasks?filterby=dueOn gt som` |
+| `eom`       | Filters for greater than end of month     | `/tasks?filterby=dueOn lt eom` |
+| `today`     | Filters for today                         | `/tasks?filterby=dueOn eq today`     |
+| `today-30d` | Filters for a relative date in the past   | `/tasks?filterby=dueOn gt today-30d` |
+| `today+5d`  | Filters for a relative date in the future | `/tasks?filterby=dueOn gt today+5d`  |
