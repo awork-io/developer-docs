@@ -14,11 +14,17 @@ A filter can be applied by adding a `filterby` expression to the request URL:
 
 Important: Special characters (like `?`, `&` and `=`) within a string filter value need to be properly URL encoded.
 
-Correct: `filterby=name eq 'awork %26 co'`
-Incorrect: `filterby=name eq 'awork & co'`
+Correct:
+```sh
+filterby=name eq 'awork %26 co'
+```
+
+Incorrect:
+```sh
+filterby=name eq 'awork & co'
+```
 
 If you want to filter by a nested property, you can do this by separating the properties by `/`.
-
 
 ## Logical Operations
 
@@ -58,9 +64,9 @@ The data types DateTime and Guid have to be prefixed with the corresponding type
 | Type       | Example                                    |
 |------------|--------------------------------------------|
 | **Null**   | null                                       |
-| **Boolean**| true\|false                                |
+| **Boolean**| true \| false                              |
 | **Byte**   | 0x22                                       |
-| **DateTime** | datetime'2000-12-12T12:00'                |
+| **DateTime** | datetime'2000-12-12T12:00'               |
 | **Decimal**| 2.345M                                     |
 | **Double** | 2.029                                      |
 | **Single** | 2.0f                                       |
