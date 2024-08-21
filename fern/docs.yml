@@ -106,7 +106,7 @@ navigation:
       - dashboards
       - page: Files & Images Overview
         path: ./pages/api/files.mdx
-        icon: files
+        icon: paperclip
       - files
       - projectFiles
       - taskFiles
@@ -119,6 +119,10 @@ navigation:
       - sharedFiles
       - temporaryFiles
       - images
+      - page: Custom Fields Overview
+        path: ./pages/api/customfields.mdx
+        icon: toggle-off
+      - customFields
       - page: Workload & Planning Overview
         path: ./pages/api/workload.mdx
         icon: briefcase

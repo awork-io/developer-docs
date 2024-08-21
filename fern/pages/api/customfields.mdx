@@ -1,0 +1,68 @@
+---
+title: Custom Fields
+description: Custom Fields API Reference.
+slug: customfields
+---
+
+Custom fields are fields in awork in which individual information for tasks can be stored. Custom fields are created at the workspace level, activated for a project and then used at the task level. The fields can then be found in the task details.
+
+## Types for fields
+
+The following types are available for custom fields:
+
+| Type            | Description                                | 
+| --------------- | ------------------------------------------ |
+| `text`          | A text input field.                        |
+| `number`        | A number input field.                      |
+| `date`          | Date selection.                            |
+| `datetime`      | Date and time selection.                   |
+| `select`        | Pre-defined selection options.             |
+| `coloredSelect` | Pre-defined selection options with colors. |
+| `link`          | A clickable URL input field.               |
+| `boolean`       | A checkbox.                                |
+
+## Creating a custom field
+
+To create a custom field, you need to send a POST request to the custom field definitions endpoint:
+
+```sh title="Create a text custom field"
+curl -X POST https://api.awork.com/api/v1/customfielddefinitions \
+     -H "Content-Type: application/json" \
+     -d '{
+            "name": "Service Level",
+            "type": "text",
+            "entity": "task"
+         }'
+```
+
+The response contains the `customFieldDefinitionId` which is required for the following requests.
+
+## Linking a custom field to a project
+
+Next, the custom field must be linked to a project before a value can be set for a task. To do so, you need to send a POST request to the project custom fields endpoint:
+
+```sh title="Link a custom field to a project"
+curl -X POST https://api.awork.com/api/v1/projects/projectId/linkcustomfielddefinition \
+     -H "Content-Type: application/json" \
+     -d '{
+            "customFieldDefinitionId": "123e4567-e89b-12d3-a456-426614174000",
+            "order": 1
+         }'
+```
+
+## Setting a custom field value for a task
+
+Finally, you can set a value for the custom field for a task. To do so, you need to send a POST request to the task's  `/setCustomFields` endpoint:
+
+```sh title="Set a custom field value for a task"
+curl -X POST https://api.awork.com/api/v1/tasks/taskId/setcustomfields \
+     -H "Content-Type: application/json" \
+     -d '[
+            {
+                "customFieldDefinitionId": "123e4567-e89b-12d3-a456-426614174000",
+                "textValue": "S1: Business Critical"
+            }
+         ]'
+```
+
+Learn more about [custom fields](https://support.awork.com/en/articles/6131260-the-planner-timeline-calendar).
