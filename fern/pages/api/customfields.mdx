@@ -4,7 +4,7 @@ description: Custom Fields API Reference.
 slug: customfields
 ---
 
-Custom fields are fields in awork in which individual information for tasks can be stored. Custom fields are created at the workspace level, activated for a project and then used at the task level. The fields can then be found in the task details.
+Custom fields are fields in awork in which individual information for tasks can be stored. Custom fields are created at the workspace level, activated for a project and then used at the task level. The field values can then be set and retrieved in the task details.
 
 ## Types for fields
 
@@ -35,14 +35,14 @@ curl -X POST https://api.awork.com/api/v1/customfielddefinitions \
          }'
 ```
 
-The response contains the `customFieldDefinitionId` which is required for the following requests.
+The response contains the `customFieldDefinitionId` which is required for the following requests. See the [API reference](apiv1/custom-fields/returns-all-custom-field-definitions) for more custom field types.
 
 ## Linking a custom field to a project
 
 Next, the custom field must be linked to a project before a value can be set for a task. To do so, you need to send a POST request to the project custom fields endpoint:
 
 ```sh title="Link a custom field to a project"
-curl -X POST https://api.awork.com/api/v1/projects/projectId/linkcustomfielddefinition \
+curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/linkcustomfielddefinition \
      -H "Content-Type: application/json" \
      -d '{
             "customFieldDefinitionId": "123e4567-e89b-12d3-a456-426614174000",
@@ -50,12 +50,14 @@ curl -X POST https://api.awork.com/api/v1/projects/projectId/linkcustomfielddefi
          }'
 ```
 
+Custom fields can be linked to projects and project templates. See the [API reference](apiv1/custom-fields/links-a-custom-field-definition-to-a-project) for more information.
+
 ## Setting a custom field value for a task
 
 Finally, you can set a value for the custom field for a task. To do so, you need to send a POST request to the task's  `/setCustomFields` endpoint:
 
 ```sh title="Set a custom field value for a task"
-curl -X POST https://api.awork.com/api/v1/tasks/taskId/setcustomfields \
+curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/setcustomfields \
      -H "Content-Type: application/json" \
      -d '[
             {
@@ -63,6 +65,30 @@ curl -X POST https://api.awork.com/api/v1/tasks/taskId/setcustomfields \
                 "textValue": "S1: Business Critical"
             }
          ]'
+```
+
+See the [API reference](apiv1/custom-fields/sets-the-custom-fields-for-a-task) for more information.
+
+## Getting the custom field values of a task
+
+To get the values of custom fields of a task, you simply need to fetch the task. The custom field values are included in the response:
+
+```sh title="Get the custom field values of a task"
+curl -X GET https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000 \
+     -H "Content-Type: application/json"
+```
+```json title="Response"
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "baseType": "projecttask",
+    "customFields": [
+        {
+            "customFieldDefinitionId": "123e4567-e89b-12d3-a456-426614174000",
+            "textValue": "S1: Business Critical"
+        }
+    ]
+    ...
+}
 ```
 
 Learn more about [custom fields](https://support.awork.com/en/articles/6131260-the-planner-timeline-calendar).
