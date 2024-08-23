@@ -4,22 +4,26 @@ description: Custom Fields API Reference.
 slug: customfields
 ---
 
-Custom fields are fields in awork in which individual information for tasks can be stored. Custom fields are created at the workspace level, activated for a project and then used at the task level. The field values can then be set and retrieved in the task details.
+Custom fields allow users to add custom properties to tasks via projects and project templates. Custom fields can be of different types, such as text, number, date, and more. Custom fields are created at the workspace level, activated for a project and then used at the task level. The field values can then be set and retrieved in the task details.
 
-## Types for fields
+Custom fields are a great way to store additional information in tasks, such as an external Id, which makes it a lot easier to build API integrations with other tools.
+
+<img src="/assets/api/customfields01.png" alt="Custom Fields" width="80%" align="center" />
+
+## Types of custom fields
 
 The following types are available for custom fields:
 
-| Type            | Description                                | 
-| --------------- | ------------------------------------------ |
-| `text`          | A text input field.                        |
-| `number`        | A number input field.                      |
-| `date`          | Date selection.                            |
-| `datetime`      | Date and time selection.                   |
-| `select`        | Pre-defined selection options.             |
-| `coloredSelect` | Pre-defined selection options with colors. |
-| `link`          | A clickable URL input field.               |
-| `boolean`       | A checkbox.                                |
+| Type            | Description                                          | 
+| --------------- | ---------------------------------------------------- |
+| `text`          | A text input field.                                  |
+| `number`        | A number input field.                                |
+| `date`          | A date selection.                                    |
+| `datetime`      | A date and time selection.                           |
+| `select`        | A list of pre-defined selection options.             |
+| `coloredSelect` | A list of pre-defined selection options with colors. |
+| `link`          | A clickable URL input field.                         |
+| `boolean`       | A checkbox.                                          |
 
 ## Creating a custom field
 
