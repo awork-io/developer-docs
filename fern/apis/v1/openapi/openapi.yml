@@ -3273,6 +3273,585 @@ paths:
         - v1
       x-access:
         any: 'true'
+  /customfielddefinitions:
+    get:
+      tags:
+        - CustomFields
+      summary: Returns all custom field definitions.
+      description: "The 'linkedProjectIds' property will only be included when the 'includeLinkedProjectIds' parameter is set to 'true'.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: includeLinkedProjectIds
+          in: query
+          description: Whether to also include the linked project ids.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+    post:
+      tags:
+        - CustomFields
+      summary: Creates a new custom field definition.
+      description: "Creates a new custom field definition. This custom field definition can then be linked to project templates and to tasks.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      requestBody:
+        description: >-
+          The model containing the details for creating a new custom field
+          definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldDefinitionPostForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /customfielddefinitions/{customFieldDefinitionId}/selectionoptions/{selectionOptionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: >-
+        Updates a custom field selection option for an existing custom field
+        definition.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: selectionOptionId
+          in: path
+          description: The id of the selection option.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The form to update the custom field selection option.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldSelectionOptionsForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+    delete:
+      tags:
+        - CustomFields
+      summary: >-
+        Deletes a custom field selection option for an existing custom field
+        definition.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: selectionOptionId
+          in: path
+          description: The id of the selection option.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /customfielddefinitions/{customFieldDefinitionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: Updates an existing custom field definition with the specified id.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to change the custom field definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldDefinitionPutForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+    delete:
+      tags:
+        - CustomFields
+      summary: Deletes the custom field definition with the specified id.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /tasktemplates/{taskTemplateId}/setcustomfields:
+    post:
+      tags:
+        - CustomFields
+      summary: Sets the custom fields for a task template.
+      description: "The required properties depend on the type of the custom field. Only task templates which are linked to a project template are allowed to have custom fields set.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: taskTemplateId
+          in: path
+          description: The id of the task template to set the custom fields for.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: >-
+          The model containing the details for setting the custom fields for a
+          task template.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CustomFieldPostForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projecttemplates/{projectTemplateId}/unlinkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Unlinks a custom field definition from a projectTemplate.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of projectTemplate.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: >-
+          The model to unlink the the custom field definition from a
+          projectTemplate
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projecttemplates/{projectTemplateId}/customfielddefinitions/{customFieldDefinitionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: Updates the order of a custom field definition for a project template.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of the project template.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: customFieldDefinitionId
+          in: path
+          description: The custom field definition id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to update the order of the custom field definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldOrderPutForm'
+      responses:
+        '200':
+          description: Success
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projects/{projectId}/linkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Links a custom field definition to a project.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to link the the custom field definition to a project
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+  /projecttemplates/{projectTemplateId}/linkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Links a custom field definition to a project template.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of project template.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to link the custom field definition to a project template
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /customfielddefinitions/{customFieldDefinitionId}/selectionoptions:
+    post:
+      tags:
+        - CustomFields
+      summary: >-
+        Creates a custom field selection option for an existing custom field
+        definition.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The form to create a custom field selection option.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldSelectionOptionsForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projects/{projectId}/unlinkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Unlinks a custom field definition from a project.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:read` permissions.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to unlink the the custom field definition from a project
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-master-data: read
+  /projecttemplates/{projectTemplateId}/customfielddefinitions:
+    get:
+      tags:
+        - CustomFields
+      summary: Returns all custom field definitions for a project template.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of the project template.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+  /tasks/{taskId}/setcustomfields:
+    post:
+      tags:
+        - CustomFields
+      summary: Sets the custom fields for a task.
+      description: "The required properties depend on the type of the custom field.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: taskId
+          in: path
+          description: The id of the task to set the custom fields for.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: >-
+          The model containing the details for setting the custom fields for a
+          task.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CustomFieldPostForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+  /projects/{projectId}/customfielddefinitions:
+    get:
+      tags:
+        - CustomFields
+      summary: Returns all custom field definitions for a project.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of the project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+  /projects/{projectId}/customfielddefinitions/{customFieldDefinitionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: Updates the order of a custom field definition for a project.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:write` permissions.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of the project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: customFieldDefinitionId
+          in: path
+          description: The custom field definition id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to update the order of the custom field definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldOrderPutForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldOrder'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-master-data: write
   /me/dashboards:
     get:
       tags:
@@ -8751,7 +9330,7 @@ paths:
       tags:
         - ProjectTimeBookings
       summary: Deletes a project time booking by id.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: timeBookingId
           in: path
@@ -8768,11 +9347,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     put:
       tags:
         - ProjectTimeBookings
       summary: Updates a given project time booking.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: timeBookingId
           in: path
@@ -8800,6 +9381,8 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /users/projecttimebookings:
     get:
       tags:
@@ -8807,7 +9390,7 @@ paths:
       summary: >-
         Returns the project time bookings in a specified time range for a list
         of users.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: userIds
           in: query
@@ -8845,12 +9428,14 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /projecttimebookings:
     post:
       tags:
         - ProjectTimeBookings
       summary: Creates a new project time booking for a given project and user.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       requestBody:
         description: The data to create a new project time booking.
         content:
@@ -8870,11 +9455,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     get:
       tags:
         - ProjectTimeBookings
       summary: Returns a list of project time bookings.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
@@ -8894,6 +9481,8 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /projects/trackedtime:
     get:
       tags:
@@ -12730,7 +13319,7 @@ paths:
       tags:
         - TaskSchedules
       summary: Returns a list of task schedules.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       responses:
         '200':
           description: Success
@@ -12745,11 +13334,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     post:
       tags:
         - TaskSchedules
       summary: Creates a new task schedule for a given task and a given user.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       requestBody:
         description: The data to create a new task schedule from.
         content:
@@ -12769,12 +13360,14 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /taskschedules/{taskScheduleId}:
     delete:
       tags:
         - TaskSchedules
       summary: Deletes a task schedule by id.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskScheduleId
           in: path
@@ -12791,11 +13384,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     put:
       tags:
         - TaskSchedules
       summary: Updates a given task schedule.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskScheduleId
           in: path
@@ -12823,11 +13418,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     get:
       tags:
         - TaskSchedules
       summary: Returns a task schedule by id.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskScheduleId
           in: path
@@ -12848,17 +13445,14 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /taskschedules/bytaskid/{taskId}:
     post:
       tags:
         - TaskSchedules
       summary: Creates task schedules from a task by id.
-      description: >-
-        Creates task schedules from a task by id. The task must have start and
-        due date and at least one assignee.
-                    If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees
-                    by setting the
-                    'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.
+      description: "Creates task schedules from a task by id. The task must have start and due date and at least one assignee.\n            If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees\n            by setting the\n            'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskId
           in: path
@@ -12881,6 +13475,8 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /tasks/tags:
     get:
       tags:
@@ -14480,7 +15076,7 @@ paths:
     post:
       tags:
         - Tasks
-      summary: Assignes a list of users to a given task
+      summary: Assigns a list of users to a given task
       description: "If a userId of an existing assignment is not present, the user will be unassigned from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskId
@@ -18639,584 +19235,6 @@ paths:
             - full_access
       x-api-versions:
         - v1
-  /customfielddefinitions:
-    get:
-      tags:
-        - CustomFields
-      summary: Returns all custom field definitions.
-      description: >-
-        The 'linkedProjectIds' property will only be included when the
-        'includeLinkedProjectIds' parameter is set to 'true'.
-      parameters:
-        - name: includeLinkedProjectIds
-          in: query
-          description: Whether to also include the linked project ids.
-          schema:
-            type: boolean
-            default: false
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: >-
-                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-    post:
-      tags:
-        - CustomFields
-      summary: Creates a new custom field definition.
-      description: "Creates a new custom field definition. This custom field definition can then be linked to project templates and to tasks.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      requestBody:
-        description: >-
-          The model containing the details for creating a new custom field
-          definition.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomFieldDefinitionPostForm'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomFieldDefinition'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /customfielddefinitions/{customFieldDefinitionId}/selectionoptions/{selectionOptionId}:
-    put:
-      tags:
-        - CustomFields
-      summary: >-
-        Updates a custom field selection option for an existing custom field
-        definition.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: customFieldDefinitionId
-          in: path
-          description: The id of the custom field definition.
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: selectionOptionId
-          in: path
-          description: The id of the selection option.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to update the custom field selection option.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomFieldSelectionOptionsForm'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomFieldDefinition'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-    delete:
-      tags:
-        - CustomFields
-      summary: >-
-        Deletes a custom field selection option for an existing custom field
-        definition.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: customFieldDefinitionId
-          in: path
-          description: The id of the custom field definition.
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: selectionOptionId
-          in: path
-          description: The id of the selection option.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /customfielddefinitions/{customFieldDefinitionId}:
-    put:
-      tags:
-        - CustomFields
-      summary: Updates an existing custom field definition with the specified id.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: customFieldDefinitionId
-          in: path
-          description: The id of the custom field definition.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to change the custom field definition.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomFieldDefinitionPutForm'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomFieldDefinition'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-    delete:
-      tags:
-        - CustomFields
-      summary: Deletes the custom field definition with the specified id.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: customFieldDefinitionId
-          in: path
-          description: The id of the custom field definition.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /tasktemplates/{taskTemplateId}/setcustomfields:
-    post:
-      tags:
-        - CustomFields
-      summary: Sets the custom fields for a task template.
-      description: "The required properties depend on the type of the custom field. Only task templates which are linked to a project template are allowed to have custom fields set.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: taskTemplateId
-          in: path
-          description: The id of the task template to set the custom fields for.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: >-
-          The model containing the details for setting the custom fields for a
-          task template.
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/CustomFieldPostForm'
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /projecttemplates/{projectTemplateId}/unlinkcustomfielddefinition:
-    post:
-      tags:
-        - CustomFields
-      summary: Unlinks a custom field definition from a projectTemplate.
-      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: projectTemplateId
-          in: path
-          description: The id of projectTemplate.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: >-
-          The model to unlink the the custom field definition from a
-          projectTemplate
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnlinkCustomFieldDefinitionForm'
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /projecttemplates/{projectTemplateId}/customfielddefinitions/{customFieldDefinitionId}:
-    put:
-      tags:
-        - CustomFields
-      summary: >-
-        Updates the order of a custom field definition for a project template.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: projectTemplateId
-          in: path
-          description: The id of the project template.
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: customFieldDefinitionId
-          in: path
-          description: The custom field definition id.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to update the order of the custom field definition.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomFieldOrderPutForm'
-      responses:
-        '200':
-          description: Success
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /projects/{projectId}/linkcustomfielddefinition:
-    post:
-      tags:
-        - CustomFields
-      summary: Links a custom field definition to a project.
-      description: >-
-        When the definition is unlinked from a task, all values of the custom
-        field will be removed from the task.
-      parameters:
-        - name: projectId
-          in: path
-          description: The id of project.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to link the the custom field definition to a project
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LinkCustomFieldDefinitionForm'
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-  /projecttemplates/{projectTemplateId}/linkcustomfielddefinition:
-    post:
-      tags:
-        - CustomFields
-      summary: Links a custom field definition to a project template.
-      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: projectTemplateId
-          in: path
-          description: The id of project template.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to link the custom field definition to a project template
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LinkCustomFieldDefinitionForm'
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /customfielddefinitions/{customFieldDefinitionId}/selectionoptions:
-    post:
-      tags:
-        - CustomFields
-      summary: >-
-        Creates a custom field selection option for an existing custom field
-        definition.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
-      parameters:
-        - name: customFieldDefinitionId
-          in: path
-          description: The id of the custom field definition.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to create a custom field selection option.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomFieldSelectionOptionsForm'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomFieldDefinition'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-manage-config: write
-  /projects/{projectId}/unlinkcustomfielddefinition:
-    post:
-      tags:
-        - CustomFields
-      summary: Unlinks a custom field definition from a project.
-      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:read` permissions.</Check>"
-      parameters:
-        - name: projectId
-          in: path
-          description: The id of project.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to unlink the the custom field definition from a project
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UnlinkCustomFieldDefinitionForm'
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-master-data: read
-  /projecttemplates/{projectTemplateId}/customfielddefinitions:
-    get:
-      tags:
-        - CustomFields
-      summary: Returns all custom field definitions for a project template.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin.</Check>"
-      parameters:
-        - name: projectTemplateId
-          in: path
-          description: The id of the project template.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: >-
-                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-  /tasks/{taskId}/setcustomfields:
-    post:
-      tags:
-        - CustomFields
-      summary: Sets the custom fields for a task.
-      description: "The required properties depend on the type of the custom field.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
-      parameters:
-        - name: taskId
-          in: path
-          description: The id of the task to set the custom fields for.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: >-
-          The model containing the details for setting the custom fields for a
-          task.
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/CustomFieldPostForm'
-      responses:
-        '200':
-          description: Success
-        '204':
-          description: No Content
-        '404':
-          description: Not Found
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        any: 'true'
-  /projects/{projectId}/customfielddefinitions:
-    get:
-      tags:
-        - CustomFields
-      summary: Returns all custom field definitions for a project.
-      description: ''
-      parameters:
-        - name: projectId
-          in: path
-          description: The id of the project.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: >-
-                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-  /projects/{projectId}/customfielddefinitions/{customFieldDefinitionId}:
-    put:
-      tags:
-        - CustomFields
-      summary: Updates the order of a custom field definition for a project.
-      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:write` permissions.</Check>"
-      parameters:
-        - name: projectId
-          in: path
-          description: The id of the project.
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: customFieldDefinitionId
-          in: path
-          description: The custom field definition id.
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: The model to update the order of the custom field definition.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomFieldOrderPutForm'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomFieldOrder'
-      security:
-        - oauth2:
-            - full_access
-      x-api-versions:
-        - v1
-      x-access:
-        admin: 'true'
-        project-master-data: write
 components:
   schemas:
     Account:
@@ -20367,10 +20385,6 @@ components:
           description: "In case of an adjust date operation, define the number (positive or negative) of days that will be added/subtracted to the task dates.\r\nIt can be a decimal number (fraction of day)"
           format: double
           nullable: true
-        adjustDatesOfDoneTasks:
-          type: boolean
-          description: If set to true, it will adjust the dates of the done tasks as well.
-          nullable: true
       additionalProperties: false
     Break:
       type: object
@@ -21474,7 +21488,7 @@ components:
           description: Imports the project tasks, task lists and task dependencies.
         referenceDate:
           type: string
-          description: "If provided, it will set the start/end dates of the project and tasks to be relative to this date.\r\nIn start or end dates of project/tasks are not available then no relative dates will be set."
+          description: "If provided, it will set the start/end dates of the project and tasks to be relative to this date.\r\nIf start or end dates of project/tasks are not available then no relative dates will be set."
           format: date-time
           nullable: true
       additionalProperties: false
@@ -21624,6 +21638,7 @@ components:
     CustomFieldDefinitionPutForm:
       required:
         - name
+        - type
       type: object
       properties:
         name:
@@ -21632,6 +21647,24 @@ components:
           type: string
           description: The name of the custom field definition.
           example: Ticket-Number
+        type:
+          minLength: 1
+          enum:
+            - text
+            - number
+            - date
+            - datetime
+            - select
+            - coloredSelect
+            - link
+            - boolean
+            - user
+          type: string
+          description: >-
+            The type of the custom field definition. When updating a custom
+            field definition, only the following changes are allowed: 'date' ↔
+            'datetime', 'select' ↔ 'coloredSelect'.
+          example: text
       additionalProperties: false
     CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds:
       type: object
@@ -21784,6 +21817,7 @@ components:
       description: Represents the form for posting custom field data.
     CustomFieldSelectionOption:
       required:
+        - order
         - value
       type: object
       properties:
@@ -21814,9 +21848,15 @@ components:
           description: The color of the selection option.
           nullable: true
           example: purple
+        order:
+          type: number
+          description: The order of the custom field selection option.
+          format: double
+          example: 0
       additionalProperties: false
     CustomFieldSelectionOptionsForm:
       required:
+        - order
         - value
       type: object
       properties:
@@ -21840,6 +21880,10 @@ components:
           description: The color of the selection option.
           nullable: true
           example: purple
+        order:
+          type: number
+          description: The order of the custom field selection option.
+          format: double
       additionalProperties: false
     Dashboard:
       type: object
@@ -21939,6 +21983,25 @@ components:
             type: string
             format: uuid
           description: The ids of the time entries, which should be deleted.
+          nullable: true
+      additionalProperties: false
+    DeletedEntityModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the deleted entity.
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the deleted entity.
+          nullable: true
+          example: Website Design
+        deletedOn:
+          type: string
+          description: The date the entity has been deleted.
+          format: date-time
           nullable: true
       additionalProperties: false
     EntityTimeTrackingStats:
@@ -22473,6 +22536,7 @@ components:
           type: number
           description: The order of the custom field definition.
           format: double
+          example: 1
       additionalProperties: false
       description: Represents a form for linking a custom field definition.
     ListAssignment:
@@ -24097,16 +24161,6 @@ components:
           type: integer
           description: The amount of time budgeted for the project in seconds.
           format: int32
-        relativeStartDate:
-          type: integer
-          description: "The relative start date and time of the project created from this template, in seconds,\r\nfrom the moment of creating the project."
-          format: int64
-          nullable: true
-        relativeDueDate:
-          type: integer
-          description: "The relative due date and time of the project created from this template, in seconds,\r\nfrom the moment of creating the project."
-          format: int64
-          nullable: true
       additionalProperties: false
       description: The project type model.
     ProjectTemplateForm:
@@ -24142,16 +24196,6 @@ components:
           format: uuid
           nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
-        relativeStartDate:
-          type: integer
-          description: "The relative start date and time of the project created from this template, in seconds,\r\nfrom the moment of creating the project."
-          format: int64
-          nullable: true
-        relativeDueDate:
-          type: integer
-          description: "The relative due date and time of the project created from this template, in seconds,\r\nfrom the moment of creating the project."
-          format: int64
-          nullable: true
       additionalProperties: false
       description: The POST / PUT project template model.
     ProjectType:
@@ -25556,7 +25600,6 @@ components:
             - projecttask
           type: string
           description: "The base type of the task.\r\nCan be 'private' for a private task or\r\n'projecttask' for a project task."
-          nullable: true
           example: projecttask
         taskStatusId:
           type: string
@@ -31439,7 +31482,6 @@ components:
             - private
             - projecttask
           type: string
-          nullable: true
         taskStatus:
           $ref: '#/components/schemas/DefaultTaskStatusModel'
         typeOfWorkId:
@@ -32257,6 +32299,10 @@ tags:
       details.
   - name: CompanyTags
     description: The endpoint to manage the tags.
+  - name: CustomFields
+    description: |-
+      Custom fields are used to extend tasks with additional information.
+              They can be used to store additional information. Custom fields definitions can be linked to project templates and to projects.
   - name: Dashboards
     description: >-
       The Dashboard Endpoints allow you to manage Dashboards and Widgets for
