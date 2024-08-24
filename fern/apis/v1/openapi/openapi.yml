@@ -3273,6 +3273,585 @@ paths:
         - v1
       x-access:
         any: 'true'
+  /customfielddefinitions:
+    get:
+      tags:
+        - CustomFields
+      summary: Returns all custom field definitions.
+      description: "The 'linkedProjectIds' property will only be included when the 'includeLinkedProjectIds' parameter is set to 'true'.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: includeLinkedProjectIds
+          in: query
+          description: Whether to also include the linked project ids.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+    post:
+      tags:
+        - CustomFields
+      summary: Creates a new custom field definition.
+      description: "Creates a new custom field definition. This custom field definition can then be linked to project templates and to tasks.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      requestBody:
+        description: >-
+          The model containing the details for creating a new custom field
+          definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldDefinitionPostForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /customfielddefinitions/{customFieldDefinitionId}/selectionoptions/{selectionOptionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: >-
+        Updates a custom field selection option for an existing custom field
+        definition.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: selectionOptionId
+          in: path
+          description: The id of the selection option.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The form to update the custom field selection option.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldSelectionOptionsForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+    delete:
+      tags:
+        - CustomFields
+      summary: >-
+        Deletes a custom field selection option for an existing custom field
+        definition.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: selectionOptionId
+          in: path
+          description: The id of the selection option.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /customfielddefinitions/{customFieldDefinitionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: Updates an existing custom field definition with the specified id.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to change the custom field definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldDefinitionPutForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+    delete:
+      tags:
+        - CustomFields
+      summary: Deletes the custom field definition with the specified id.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /tasktemplates/{taskTemplateId}/setcustomfields:
+    post:
+      tags:
+        - CustomFields
+      summary: Sets the custom fields for a task template.
+      description: "The required properties depend on the type of the custom field. Only task templates which are linked to a project template are allowed to have custom fields set.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: taskTemplateId
+          in: path
+          description: The id of the task template to set the custom fields for.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: >-
+          The model containing the details for setting the custom fields for a
+          task template.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CustomFieldPostForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projecttemplates/{projectTemplateId}/unlinkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Unlinks a custom field definition from a projectTemplate.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of projectTemplate.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: >-
+          The model to unlink the the custom field definition from a
+          projectTemplate
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projecttemplates/{projectTemplateId}/customfielddefinitions/{customFieldDefinitionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: Updates the order of a custom field definition for a project template.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of the project template.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: customFieldDefinitionId
+          in: path
+          description: The custom field definition id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to update the order of the custom field definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldOrderPutForm'
+      responses:
+        '200':
+          description: Success
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projects/{projectId}/linkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Links a custom field definition to a project.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to link the the custom field definition to a project
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+  /projecttemplates/{projectTemplateId}/linkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Links a custom field definition to a project template.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of project template.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to link the custom field definition to a project template
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /customfielddefinitions/{customFieldDefinitionId}/selectionoptions:
+    post:
+      tags:
+        - CustomFields
+      summary: >-
+        Creates a custom field selection option for an existing custom field
+        definition.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+      parameters:
+        - name: customFieldDefinitionId
+          in: path
+          description: The id of the custom field definition.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The form to create a custom field selection option.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldSelectionOptionsForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldDefinition'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-manage-config: write
+  /projects/{projectId}/unlinkcustomfielddefinition:
+    post:
+      tags:
+        - CustomFields
+      summary: Unlinks a custom field definition from a project.
+      description: "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:read` permissions.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to unlink the the custom field definition from a project
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlinkCustomFieldDefinitionForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-master-data: read
+  /projecttemplates/{projectTemplateId}/customfielddefinitions:
+    get:
+      tags:
+        - CustomFields
+      summary: Returns all custom field definitions for a project template.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin.</Check>"
+      parameters:
+        - name: projectTemplateId
+          in: path
+          description: The id of the project template.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+  /tasks/{taskId}/setcustomfields:
+    post:
+      tags:
+        - CustomFields
+      summary: Sets the custom fields for a task.
+      description: "The required properties depend on the type of the custom field.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: taskId
+          in: path
+          description: The id of the task to set the custom fields for.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: >-
+          The model containing the details for setting the custom fields for a
+          task.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CustomFieldPostForm'
+      responses:
+        '200':
+          description: Success
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+  /projects/{projectId}/customfielddefinitions:
+    get:
+      tags:
+        - CustomFields
+      summary: Returns all custom field definitions for a project.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of the project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        any: 'true'
+  /projects/{projectId}/customfielddefinitions/{customFieldDefinitionId}:
+    put:
+      tags:
+        - CustomFields
+      summary: Updates the order of a custom field definition for a project.
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:write` permissions.</Check>"
+      parameters:
+        - name: projectId
+          in: path
+          description: The id of the project.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: customFieldDefinitionId
+          in: path
+          description: The custom field definition id.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The model to update the order of the custom field definition.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomFieldOrderPutForm'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldOrder'
+      security:
+        - oauth2:
+            - full_access
+      x-api-versions:
+        - v1
+      x-access:
+        admin: 'true'
+        project-master-data: write
   /me/dashboards:
     get:
       tags:
@@ -8751,7 +9330,7 @@ paths:
       tags:
         - ProjectTimeBookings
       summary: Deletes a project time booking by id.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: timeBookingId
           in: path
@@ -8768,11 +9347,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     put:
       tags:
         - ProjectTimeBookings
       summary: Updates a given project time booking.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: timeBookingId
           in: path
@@ -8800,6 +9381,8 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /users/projecttimebookings:
     get:
       tags:
@@ -8807,7 +9390,7 @@ paths:
       summary: >-
         Returns the project time bookings in a specified time range for a list
         of users.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: userIds
           in: query
@@ -8845,12 +9428,14 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /projecttimebookings:
     post:
       tags:
         - ProjectTimeBookings
       summary: Creates a new project time booking for a given project and user.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       requestBody:
         description: The data to create a new project time booking.
         content:
@@ -8870,11 +9455,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     get:
       tags:
         - ProjectTimeBookings
       summary: Returns a list of project time bookings.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
@@ -8894,6 +9481,8 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /projects/trackedtime:
     get:
       tags:
@@ -11120,10 +11709,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskBundleForm'
+              $ref: '#/components/schemas/TaskBundleFromTaskListForm'
           application/*+json:
             schema:
-              $ref: '#/components/schemas/TaskBundleForm'
+              $ref: '#/components/schemas/TaskBundleFromTaskListForm'
       responses:
         '200':
           description: Success
@@ -12730,7 +13319,7 @@ paths:
       tags:
         - TaskSchedules
       summary: Returns a list of task schedules.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       responses:
         '200':
           description: Success
@@ -12745,11 +13334,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     post:
       tags:
         - TaskSchedules
       summary: Creates a new task schedule for a given task and a given user.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       requestBody:
         description: The data to create a new task schedule from.
         content:
@@ -12769,12 +13360,14 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /taskschedules/{taskScheduleId}:
     delete:
       tags:
         - TaskSchedules
       summary: Deletes a task schedule by id.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskScheduleId
           in: path
@@ -12791,11 +13384,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     put:
       tags:
         - TaskSchedules
       summary: Updates a given task schedule.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskScheduleId
           in: path
@@ -12823,11 +13418,13 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
     get:
       tags:
         - TaskSchedules
       summary: Returns a task schedule by id.
-      description: ''
+      description: "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskScheduleId
           in: path
@@ -12848,17 +13445,14 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /taskschedules/bytaskid/{taskId}:
     post:
       tags:
         - TaskSchedules
       summary: Creates task schedules from a task by id.
-      description: >-
-        Creates task schedules from a task by id. The task must have start and
-        due date and at least one assignee.
-                    If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees
-                    by setting the
-                    'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.
+      description: "Creates task schedules from a task by id. The task must have start and due date and at least one assignee.\n            If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees\n            by setting the\n            'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskId
           in: path
@@ -12881,6 +13475,8 @@ paths:
             - full_access
       x-api-versions:
         - v1
+      x-access:
+        any: 'true'
   /tasks/tags:
     get:
       tags:
@@ -14480,7 +15076,7 @@ paths:
     post:
       tags:
         - Tasks
-      summary: Assignes a list of users to a given task
+      summary: Assigns a list of users to a given task
       description: "If a userId of an existing assignment is not present, the user will be unassigned from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       parameters:
         - name: taskId
@@ -15373,11 +15969,11 @@ paths:
       summary: Creates a new time entry.
       description: "Creates a new time entry.\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       requestBody:
-        description: The model to create a time entry.
+        description: The form to create a time entry.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TimeTrackingTimesForm'
+              $ref: '#/components/schemas/TimeEntryPostForm'
       responses:
         '200':
           description: Success
@@ -15522,11 +16118,11 @@ paths:
             type: string
             format: uuid
       requestBody:
-        description: The model to update the time entry with the specified id.
+        description: The form to update the time entry with the specified id.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TimeTrackingTimesForm'
+              $ref: '#/components/schemas/TimeEntryPutForm'
       responses:
         '200':
           description: Success
@@ -19459,7 +20055,7 @@ components:
           description: >-
             If true, adjust the start/end dates of the tasks related to the
             project.
-        includeDoneTasks:
+        adjustDatesOfDoneTasks:
           type: boolean
           description: >-
             If true and
@@ -19788,10 +20384,6 @@ components:
           type: number
           description: "In case of an adjust date operation, define the number (positive or negative) of days that will be added/subtracted to the task dates.\r\nIt can be a decimal number (fraction of day)"
           format: double
-          nullable: true
-        adjustDatesOfDoneTasks:
-          type: boolean
-          description: If set to true, it will adjust the dates of the done tasks as well.
           nullable: true
       additionalProperties: false
     Break:
@@ -20847,6 +21439,11 @@ components:
           format: uuid
           nullable: true
           example: f76a7b32-f279-ec11-94f6-dc984040d6c9
+        referenceDate:
+          type: string
+          description: "If provided, it will make the start/end dates of the tasks relative to this date.\r\nIn start or end dates of project/tasks are not available then no relative dates will be set."
+          format: date-time
+          nullable: true
       additionalProperties: false
     CreateTaskStatusesForm:
       type: object
@@ -20889,6 +21486,11 @@ components:
         importTaskAndLists:
           type: boolean
           description: Imports the project tasks, task lists and task dependencies.
+        referenceDate:
+          type: string
+          description: "If provided, it will set the start/end dates of the project and tasks to be relative to this date.\r\nIf start or end dates of project/tasks are not available then no relative dates will be set."
+          format: date-time
+          nullable: true
       additionalProperties: false
     CustomField:
       type: object
@@ -20897,18 +21499,16 @@ components:
           type: string
           description: The custom field definition id.
           format: uuid
-          example: 641ef519-d7e6-ea11-af8c-0017fa100368
+          example: 123e4567-e89b-12d3-a456-426614174000
         userIdValue:
           type: string
           description: The the user id value.
           format: uuid
           nullable: true
-          example: 641ef519-d7e6-ea11-af8c-0017fa100368
+          example: 123e4567-e89b-12d3-a456-426614174000
         numberValue:
           type: number
-          description: >-
-            The number value. TODO ADD HERE EVERYHWERE OFR WHICH TYPE OF CUSTOM
-            FIELD THIS IS VALID
+          description: The number value.
           format: double
           nullable: true
           example: 123.45
@@ -20917,53 +21517,58 @@ components:
           description: The selection option id value.
           format: uuid
           nullable: true
-          example: 641ef519-d7e6-ea11-af8c-0017fa100368
+          example: 123e4567-e89b-12d3-a456-426614174000
         selectionOption:
           $ref: '#/components/schemas/CustomFieldSelectionOption'
         textValue:
           type: string
           description: The text value.
           nullable: true
-          example: Sample text
+          example: 'S1: Business Critical'
         dateValue:
           type: string
           description: The date value.
           format: date-time
           nullable: true
-          example: '2022-03-10T16:30:26.100Z'
         booleanValue:
           type: boolean
           description: The boolean value.
           nullable: true
           example: true
       additionalProperties: false
-      description: Represents the form for posting custom field data.
+      description: Represents the custom field value.
     CustomFieldDefinition:
       type: object
       properties:
         id:
           type: string
-          description: The id of the custom field defition.
+          description: The id of the custom field definition.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
-          description: The name of the custom field defition.
+          description: The name of the custom field definition.
           nullable: true
           example: Ticket-Number
         entity:
+          enum:
+            - task
           type: string
-          description: >-
-            The entity the custom field definition can be linked to. Can be only
-            'task'.
-          nullable: true
+          description: The entity the custom field definition can be linked to.
+          example: task
         type:
+          enum:
+            - text
+            - number
+            - date
+            - datetime
+            - select
+            - coloredSelect
+            - link
+            - boolean
+            - user
           type: string
-          description: >-
-            The type of the custom field definition. Can be 'text', 'number',
-            'date', 'datetime','select', 'coloredSelect', 'link', 'boolean',
-            'user'.
-          nullable: true
+          description: The type of the custom field definition.
           example: text
         createdOn:
           type: string
@@ -20998,31 +21603,42 @@ components:
           minLength: 1
           type: string
           description: The name of the custom field definition.
+          example: Ticket-Number
         type:
           minLength: 1
+          enum:
+            - text
+            - number
+            - date
+            - datetime
+            - select
+            - coloredSelect
+            - link
+            - boolean
+            - user
           type: string
-          description: >-
-            The type of the custom field definition. Can be 'text', 'number',
-            'date', 'datetime', 'select', 'coloredSelect', 'link', 'boolean',
-            'user'.
+          description: The type of the custom field definition.
+          example: text
         selectionOptions:
           type: array
           items:
             $ref: '#/components/schemas/CustomFieldSelectionOptionsForm'
           description: >-
             The selection options for the custom field definition. Can only be
-            used if the type is select.
+            used if the type is 'select'.
           nullable: true
         entity:
           minLength: 1
+          enum:
+            - task
           type: string
-          description: >-
-            The entity the custom field definition can be linked to. Can be only
-            'task'.
+          description: The entity the custom field definition can be linked to.
+          example: task
       additionalProperties: false
     CustomFieldDefinitionPutForm:
       required:
         - name
+        - type
       type: object
       properties:
         name:
@@ -21030,33 +21646,58 @@ components:
           minLength: 1
           type: string
           description: The name of the custom field definition.
+          example: Ticket-Number
+        type:
+          minLength: 1
+          enum:
+            - text
+            - number
+            - date
+            - datetime
+            - select
+            - coloredSelect
+            - link
+            - boolean
+            - user
+          type: string
+          description: >-
+            The type of the custom field definition. When updating a custom
+            field definition, only the following changes are allowed: 'date' ↔
+            'datetime', 'select' ↔ 'coloredSelect'.
+          example: text
       additionalProperties: false
     CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds:
       type: object
       properties:
         id:
           type: string
-          description: The id of the custom field defition.
+          description: The id of the custom field definition.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
-          description: The name of the custom field defition.
+          description: The name of the custom field definition.
           nullable: true
           example: Ticket-Number
         entity:
+          enum:
+            - task
           type: string
-          description: >-
-            The entity the custom field definition can be linked to. Can be only
-            'task'.
-          nullable: true
+          description: The entity the custom field definition can be linked to.
+          example: task
         type:
+          enum:
+            - text
+            - number
+            - date
+            - datetime
+            - select
+            - coloredSelect
+            - link
+            - boolean
+            - user
           type: string
-          description: >-
-            The type of the custom field definition. Can be 'text', 'number',
-            'date', 'datetime','select', 'coloredSelect', 'link', 'boolean',
-            'user'.
-          nullable: true
+          description: The type of the custom field definition.
           example: text
         createdOn:
           type: string
@@ -21091,6 +21732,8 @@ components:
             format: uuid
           description: The linked project ids for this custom field definition.
           nullable: true
+          example:
+            - 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
     CustomFieldOrder:
       type: object
@@ -21101,6 +21744,7 @@ components:
             The order of the custom field definition within a project template
             or a project.
           format: double
+          example: 1
       additionalProperties: false
     CustomFieldOrderPutForm:
       required:
@@ -21113,6 +21757,7 @@ components:
             The order of the custom field definition within a project template
             or a project.
           format: double
+          example: 1
       additionalProperties: false
     CustomFieldPostForm:
       required:
@@ -21123,47 +21768,56 @@ components:
           type: string
           description: The custom field definition id.
           format: uuid
-          example: 641ef519-d7e6-ea11-af8c-0017fa100368
+          example: 123e4567-e89b-12d3-a456-426614174000
         userIdValue:
           type: string
-          description: The the user id value.
+          description: The user id. The user id can be set for custom field type 'user'.
           format: uuid
           nullable: true
-          example: 641ef519-d7e6-ea11-af8c-0017fa100368
+          example: 123e4567-e89b-12d3-a456-426614174000
         numberValue:
           type: number
-          description: The number value. The number value can be set for type 'number'.
+          description: >-
+            The number value. The number value can be set for custom field type
+            'number'.
           format: double
           nullable: true
           example: 123.45
         selectionOptionIdValue:
           type: string
-          description: The selection option id value.
+          description: >-
+            The selection option id value. The id can be set for custom field
+            types 'select' and 'coloredSelect'.
           format: uuid
           nullable: true
-          example: 641ef519-d7e6-ea11-af8c-0017fa100368
+          example: 123e4567-e89b-12d3-a456-426614174000
         textValue:
           type: string
-          description: The text value. The text value can be set for type 'text', 'link'.
+          description: >-
+            The text value. The text value can be set for custom field types
+            'text' and 'link'.
           nullable: true
-          example: Sample text
+          example: A custom logo
         dateValue:
           type: string
           description: >-
-            The date value. The date value can be set for type 'date' and
-            'datetime'.
+            The date value. The date value can be set for custom field types
+            'date' and 'datetime'.
           format: date-time
           nullable: true
           example: '2022-03-10T16:30:26.100Z'
         booleanValue:
           type: boolean
-          description: The boolean value. The boolean value can be set for type 'boolean'.
+          description: >-
+            The boolean value. The boolean value can be set for custom field
+            type 'boolean'.
           nullable: true
           example: true
       additionalProperties: false
       description: Represents the form for posting custom field data.
     CustomFieldSelectionOption:
       required:
+        - order
         - value
       type: object
       properties:
@@ -21178,26 +21832,58 @@ components:
           description: >-
             The selection value which can be later used in a select custom
             field.
+          example: Website Design
         color:
+          enum:
+            - red
+            - orange
+            - yellow
+            - green
+            - cyan
+            - blue
+            - indigo
+            - purple
+            - steel
           type: string
           description: The color of the selection option.
           nullable: true
+          example: purple
+        order:
+          type: number
+          description: The order of the custom field selection option.
+          format: double
+          example: 0
       additionalProperties: false
     CustomFieldSelectionOptionsForm:
       required:
+        - order
         - value
       type: object
       properties:
         value:
           minLength: 1
           type: string
-          description: >-
-            The selection value which can be later used in a select custom
-            field.
+          description: The selection value which can be used in a select custom field.
+          example: Website Design
         color:
+          enum:
+            - red
+            - orange
+            - yellow
+            - green
+            - cyan
+            - blue
+            - indigo
+            - purple
+            - steel
           type: string
           description: The color of the selection option.
           nullable: true
+          example: purple
+        order:
+          type: number
+          description: The order of the custom field selection option.
+          format: double
       additionalProperties: false
     Dashboard:
       type: object
@@ -21297,6 +21983,25 @@ components:
             type: string
             format: uuid
           description: The ids of the time entries, which should be deleted.
+          nullable: true
+      additionalProperties: false
+    DeletedEntityModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the deleted entity.
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: The name of the deleted entity.
+          nullable: true
+          example: Website Design
+        deletedOn:
+          type: string
+          description: The date the entity has been deleted.
+          format: date-time
           nullable: true
       additionalProperties: false
     EntityTimeTrackingStats:
@@ -21831,6 +22536,7 @@ components:
           type: number
           description: The order of the custom field definition.
           format: double
+          example: 1
       additionalProperties: false
       description: Represents a form for linking a custom field definition.
     ListAssignment:
@@ -24486,6 +25192,42 @@ components:
           nullable: true
           example: f76a7b32-f279-ec11-94f6-dc984040d6c9
       additionalProperties: false
+    TaskBundleFromTaskListForm:
+      type: object
+      properties:
+        name:
+          type: string
+          description: >-
+            The name of the task bundle. Required if its not related to a task
+            bundle.
+          nullable: true
+          example: Project Kickoff
+        description:
+          type: string
+          description: The description of the task bundle.
+          nullable: true
+          example: >-
+            Includes all tasks related to getting this project off the ground
+            successfully. For the joy of work!
+        icon:
+          type: string
+          description: The icon of the task bundle.
+          nullable: true
+          example: arrow_forward
+        projectTemplateId:
+          type: string
+          description: >-
+            The project template id of the task bundle, only necessary for the
+            creation of an empty bundle for a project template.
+          format: uuid
+          nullable: true
+          example: f76a7b32-f279-ec11-94f6-dc984040d6c9
+        referenceDate:
+          type: string
+          description: "If provided, it will make the start/end dates of the tasks relative to this date.\r\nIn start or end dates of project/tasks are not available then no relative dates will be set."
+          format: date-time
+          nullable: true
+      additionalProperties: false
     TaskBundleRecurrencyForm:
       type: object
       properties:
@@ -24858,7 +25600,6 @@ components:
             - projecttask
           type: string
           description: "The base type of the task.\r\nCan be 'private' for a private task or\r\n'projecttask' for a project task."
-          nullable: true
           example: projecttask
         taskStatusId:
           type: string
@@ -26155,6 +26896,212 @@ components:
           nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
+    TimeEntryPostForm:
+      required:
+        - timezone
+        - typeOfWorkId
+        - userId
+      type: object
+      properties:
+        isBillable:
+          type: boolean
+          description: Whether the time tracking is billable or not.
+          example: true
+        isBilled:
+          type: boolean
+          description: Whether the time tracking is billed or not.
+          example: false
+        taskId:
+          type: string
+          description: The id of the task.
+          format: uuid
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        projectId:
+          type: string
+          description: The id of the project.
+          format: uuid
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        note:
+          type: string
+          description: The note of the time tracking.
+          nullable: true
+          example: I created a first draft for the new sitemap
+        startDateUtc:
+          type: string
+          description: The date (in UTC) when the time tracking was started.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T00:00:00Z'
+        startTimeUtc:
+          type: string
+          description: The time (in UTC) when the time tracking was started.
+          nullable: true
+          example: '09:21:00'
+        endDateUtc:
+          type: string
+          description: The date (in UTC) when the time tracking was stopped.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T18:21:05Z'
+        endTimeUtc:
+          type: string
+          description: "The time (in UTC) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set."
+          nullable: true
+          example: '11:45:00'
+        startDateLocal:
+          type: string
+          description: The date (in Local) when the time tracking was started.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T00:00:00'
+        startTimeLocal:
+          type: string
+          description: The time (in Local) when the time tracking was started.
+          nullable: true
+          example: '10:21:00'
+        endDateLocal:
+          type: string
+          description: The date (in Local) when the time tracking was stopped.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T17:21:05'
+        endTimeLocal:
+          type: string
+          description: "The time (in Local) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set."
+          nullable: true
+          example: '12:45:00'
+        timezone:
+          minLength: 1
+          type: string
+          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard."
+          example: Europe/Berlin
+        duration:
+          type: integer
+          description: "The duration of the time tracking in seconds.\r\nRequired when the time tracking has already been completed and EndTime has not been set."
+          format: int32
+          nullable: true
+          example: 8635
+        breakDuration:
+          type: integer
+          description: "The duration of the break in seconds.\r\nCannot be set via API."
+          format: int32
+          nullable: true
+        typeOfWorkId:
+          type: string
+          description: The id of the type of work.
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        userId:
+          type: string
+          description: The id of the user.
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+      additionalProperties: false
+    TimeEntryPutForm:
+      required:
+        - timezone
+        - typeOfWorkId
+      type: object
+      properties:
+        isBillable:
+          type: boolean
+          description: Whether the time tracking is billable or not.
+          example: true
+        isBilled:
+          type: boolean
+          description: Whether the time tracking is billed or not.
+          example: false
+        taskId:
+          type: string
+          description: The id of the task.
+          format: uuid
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        projectId:
+          type: string
+          description: The id of the project.
+          format: uuid
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+        note:
+          type: string
+          description: The note of the time tracking.
+          nullable: true
+          example: I created a first draft for the new sitemap
+        startDateUtc:
+          type: string
+          description: The date (in UTC) when the time tracking was started.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T00:00:00Z'
+        startTimeUtc:
+          type: string
+          description: The time (in UTC) when the time tracking was started.
+          nullable: true
+          example: '09:21:00'
+        endDateUtc:
+          type: string
+          description: The date (in UTC) when the time tracking was stopped.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T18:21:05Z'
+        endTimeUtc:
+          type: string
+          description: "The time (in UTC) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set."
+          nullable: true
+          example: '11:45:00'
+        startDateLocal:
+          type: string
+          description: The date (in Local) when the time tracking was started.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T00:00:00'
+        startTimeLocal:
+          type: string
+          description: The time (in Local) when the time tracking was started.
+          nullable: true
+          example: '10:21:00'
+        endDateLocal:
+          type: string
+          description: The date (in Local) when the time tracking was stopped.
+          format: date-time
+          nullable: true
+          example: '2022-03-01T17:21:05'
+        endTimeLocal:
+          type: string
+          description: "The time (in Local) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set."
+          nullable: true
+          example: '12:45:00'
+        timezone:
+          minLength: 1
+          type: string
+          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard."
+          example: Europe/Berlin
+        duration:
+          type: integer
+          description: "The duration of the time tracking in seconds.\r\nRequired when the time tracking has already been completed and EndTime has not been set."
+          format: int32
+          nullable: true
+          example: 8635
+        breakDuration:
+          type: integer
+          description: "The duration of the break in seconds.\r\nCannot be set via API."
+          format: int32
+          nullable: true
+        typeOfWorkId:
+          type: string
+          description: The id of the type of work.
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        userId:
+          type: string
+          description: "The id of the user.\r\nCan be null if the user was deleted."
+          format: uuid
+          nullable: true
+          example: 123e4567-e89b-12d3-a456-426614174000
+      additionalProperties: false
     TimeFrameModel:
       type: object
       properties:
@@ -26562,7 +27509,6 @@ components:
       required:
         - timezone
         - typeOfWorkId
-        - userId
       type: object
       properties:
         isBillable:
@@ -26657,8 +27603,9 @@ components:
           example: 123e4567-e89b-12d3-a456-426614174000
         userId:
           type: string
-          description: The id of the user.
+          description: "The id of the user.\r\nCan be null if the user was deleted."
           format: uuid
+          nullable: true
           example: 123e4567-e89b-12d3-a456-426614174000
         id:
           type: string
@@ -26834,109 +27781,6 @@ components:
         typeOfWorkId:
           type: string
           description: The id of the suggested type of work for the time entry.
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-      additionalProperties: false
-    TimeTrackingTimesForm:
-      required:
-        - timezone
-        - typeOfWorkId
-        - userId
-      type: object
-      properties:
-        isBillable:
-          type: boolean
-          description: Whether the time tracking is billable or not.
-          example: true
-        isBilled:
-          type: boolean
-          description: Whether the time tracking is billed or not.
-          example: false
-        taskId:
-          type: string
-          description: The id of the task.
-          format: uuid
-          nullable: true
-          example: 123e4567-e89b-12d3-a456-426614174000
-        projectId:
-          type: string
-          description: The id of the project.
-          format: uuid
-          nullable: true
-          example: 123e4567-e89b-12d3-a456-426614174000
-        note:
-          type: string
-          description: The note of the time tracking.
-          nullable: true
-          example: I created a first draft for the new sitemap
-        startDateUtc:
-          type: string
-          description: The date (in UTC) when the time tracking was started.
-          format: date-time
-          nullable: true
-          example: '2022-03-01T00:00:00Z'
-        startTimeUtc:
-          type: string
-          description: The time (in UTC) when the time tracking was started.
-          nullable: true
-          example: '09:21:00'
-        endDateUtc:
-          type: string
-          description: The date (in UTC) when the time tracking was stopped.
-          format: date-time
-          nullable: true
-          example: '2022-03-01T18:21:05Z'
-        endTimeUtc:
-          type: string
-          description: "The time (in UTC) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set."
-          nullable: true
-          example: '11:45:00'
-        startDateLocal:
-          type: string
-          description: The date (in Local) when the time tracking was started.
-          format: date-time
-          nullable: true
-          example: '2022-03-01T00:00:00'
-        startTimeLocal:
-          type: string
-          description: The time (in Local) when the time tracking was started.
-          nullable: true
-          example: '10:21:00'
-        endDateLocal:
-          type: string
-          description: The date (in Local) when the time tracking was stopped.
-          format: date-time
-          nullable: true
-          example: '2022-03-01T17:21:05'
-        endTimeLocal:
-          type: string
-          description: "The time (in Local) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set."
-          nullable: true
-          example: '12:45:00'
-        timezone:
-          minLength: 1
-          type: string
-          description: "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard."
-          example: Europe/Berlin
-        duration:
-          type: integer
-          description: "The duration of the time tracking in seconds.\r\nRequired when the time tracking has already been completed and EndTime has not been set."
-          format: int32
-          nullable: true
-          example: 8635
-        breakDuration:
-          type: integer
-          description: "The duration of the break in seconds.\r\nCannot be set via API."
-          format: int32
-          nullable: true
-        typeOfWorkId:
-          type: string
-          description: The id of the type of work.
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        userId:
-          type: string
-          description: The id of the user.
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
       additionalProperties: false
@@ -30461,9 +31305,6 @@ components:
           nullable: true
         hasImage:
           type: boolean
-        description:
-          type: string
-          nullable: true
         tags:
           type: array
           items:
@@ -30641,7 +31482,6 @@ components:
             - private
             - projecttask
           type: string
-          nullable: true
         taskStatus:
           $ref: '#/components/schemas/DefaultTaskStatusModel'
         typeOfWorkId:
@@ -31459,6 +32299,10 @@ tags:
       details.
   - name: CompanyTags
     description: The endpoint to manage the tags.
+  - name: CustomFields
+    description: |-
+      Custom fields are used to extend tasks with additional information.
+              They can be used to store additional information. Custom fields definitions can be linked to project templates and to projects.
   - name: Dashboards
     description: >-
       The Dashboard Endpoints allow you to manage Dashboards and Widgets for
