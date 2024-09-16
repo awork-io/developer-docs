@@ -1,2 +1,2 @@
 api:
-  path: apis/v1/openapi/openapi.yml
+  path: openapi/openapi.yml
