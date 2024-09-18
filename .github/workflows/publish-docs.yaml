@@ -16,10 +16,6 @@ jobs:
       - name: Install Fern CLI tool
         run: npm install -g fern-api && fern upgrade
 
-      - name: Replace placeholder with secret
-        run: |
-          sed -i 's/{{SEGMENT_WRITE_KEY}}/${{ secrets.SEGMENT_WRITE_KEY }}/g' fern/docs.yml
-
       - name: Publish Docs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}

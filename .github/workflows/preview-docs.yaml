@@ -13,14 +13,11 @@ jobs:
       - name: Install Fern CLI tool
         run: npm install -g fern-api && fern upgrade
 
-      - name: Replace placeholder with secret
-        run: |
-          sed -i 's/{{SEGMENT_WRITE_KEY}}/${{ secrets.SEGMENT_WRITE_KEY }}/g' fern/docs.yml
-
       - name: Generate preview URL
         id: generate-docs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          SEGMENT_WRITE_KEY: ${{ secrets.SEGMENT_WRITE_KEY }}
         run: |
           OUTPUT=$(fern generate --docs --preview 2>&1) || true
           echo "$OUTPUT"
