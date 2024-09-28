@@ -25678,6 +25678,14 @@
         "description": "Returns all time entries.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
+            "name": "searchReindex",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
             "$ref": "#/components/parameters/page"
           },
           {
@@ -33159,6 +33167,9 @@
           "project": {
             "$ref": "#/components/schemas/IDefaultNameModel"
           },
+          "task": {
+            "$ref": "#/components/schemas/IDefaultNameModel"
+          },
           "createdOn": {
             "type": "string",
             "description": "The date this object was created.",
@@ -33217,6 +33228,125 @@
         },
         "additionalProperties": false,
         "description": "The comment model."
+      },
+      "CommentEventModel": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "maxLength": 65000,
+            "minLength": 1,
+            "type": "string",
+            "description": "The message of the comment.",
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user who created the comment.\r\nOptional. If not set, defaults to the current user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "previews": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The preview URLs to show a preview for.",
+            "nullable": true,
+            "example": [
+              "https://www.awork.com/en/blog/automatic-project-management/"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the comment.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity of the comment.\r\nRequired.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityType": {
+            "type": "string",
+            "description": "The type of the entity of the comment.\r\nCan be \"projects\", \"tasks\".\r\nRequired.",
+            "nullable": true,
+            "example": "tasks"
+          },
+          "entity": {
+            "$ref": "#/components/schemas/IDefaultNameModel"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectForCommentEventModel"
+          },
+          "task": {
+            "$ref": "#/components/schemas/TaskForCommentEventModel"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this object was created.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this object.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ConnectedUserModel"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this object was last modified.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this object.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "mentions": {
+            "$ref": "#/components/schemas/Mentions"
+          },
+          "reactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reaction"
+            },
+            "description": "The reactions on a comment.",
+            "nullable": true
+          },
+          "formattedMessage": {
+            "type": "string",
+            "description": "The formatted and proccessed version of the comment message. E.g. mentions are in a human readable format.\r\nThe formatted comment message is styled with html.",
+            "nullable": true,
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "plainFormattedMessage": {
+            "type": "string",
+            "description": "The formatted and proccessed version of the comment message. E.g. mentions are in a human readable format.\r\nThe formatted comment message is not styled.",
+            "nullable": true,
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "resourceVersion": {
+            "type": "integer",
+            "description": "The version of the entity, updated on every modification, to the ticks in UTC.\r\nNot identical to UpdatedOn.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 637825154598057900
+          },
+          "isExternal": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       },
       "CommentForm": {
         "required": [
@@ -36155,6 +36285,12 @@
             "type": "string",
             "nullable": true
           },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
           "userId": {
             "type": "string",
             "description": "The id of the user of the private task. Null for project tasks.",
@@ -36468,6 +36604,17 @@
         "additionalProperties": false,
         "description": "This repeated model (copy of NestedTeamModel) is required to avoid a bug\r\nof the Automapper.Extensions.EspressionMapping library that throws an error if in the same expression\r\nwe apply a filter to 2 different models containing the same submodel (e.g: Teams contained in both Project, User and\r\nTasks))\r\nPlease do not remove it."
       },
+      "PermissionAssignee": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
       "PermissionFullModel": {
         "type": "object",
         "properties": {
@@ -36608,6 +36755,72 @@
             "example": [
               "read"
             ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionParentTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "assigneeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionProjectMember": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectRoleId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionTeam": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -37103,6 +37316,46 @@
             "type": "boolean",
             "description": "Set to true to delete also the related time trackings.\r\nIf it is set to false the related time trackings are still there, but\r\nthe project and task reference will be cleared.\r\nThat will also happen if no request body is present.",
             "example": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectForCommentEventModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionTeam"
+            },
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionProjectMember"
+            },
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "isExternal": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -37720,6 +37973,17 @@
           "isExternal": {
             "type": "boolean",
             "description": "Whether the project is external."
+          },
+          "isBillableByDefault": {
+            "type": "boolean",
+            "description": "Whether project times should be billable by default.",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created the project.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -39866,6 +40130,64 @@
             "description": "The id of the successor task template.",
             "format": "uuid",
             "example": "fc8e5a55-e96f-ec11-94f6-dc984040d6c7"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskForCommentEventModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectForCommentEventModel"
+          },
+          "parentTask": {
+            "$ref": "#/components/schemas/PermissionParentTask"
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionAssignee"
+            },
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -43947,12 +44269,12 @@
           },
           "updatedOn": {
             "type": "string",
-            "description": "The date when the entity was updated.",
+            "description": "The date when the entity was last updated.",
             "format": "date-time"
           },
           "updatedBy": {
             "type": "string",
-            "description": "the id of the user who updated the entity.",
+            "description": "The id of the user who last updated the entity.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -44232,6 +44554,30 @@
           "entityId": {
             "type": "string",
             "description": "The id of the entity that the widget is referencing.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The creation date.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created the entity.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date when the entity was last updated.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last updated the entity.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -47207,7 +47553,7 @@
           },
           "lastLogin": {
             "type": "string",
-            "description": "The date and time the current user last logged in with this workspace.",
+            "description": "The date and time the user last logged in with this workspace, or the workspace was last accessed.",
             "format": "date-time",
             "nullable": true
           },
@@ -47251,12 +47597,12 @@
           },
           "isTestWorkspace": {
             "type": "boolean",
-            "description": "Indicates if the workspace is a test workspace.",
+            "description": "Whether the workspace is a test workspace.",
             "example": false
           },
           "isApproved": {
             "type": "boolean",
-            "description": "Indicates if the user accepted the invitation to the workspace.",
+            "description": "Whether the user accepted the invitation to the workspace.",
             "example": true
           },
           "allowSSOLogin": {
@@ -47766,7 +48112,7 @@
     },
     {
       "name": "Dashboards",
-      "description": "The Dashboard Endpoints allow you to manage Dashboards and Widgets for users."
+      "description": "The dashboards endpoints allow you to work with user's dashboards."
     },
     {
       "name": "Permissions",
