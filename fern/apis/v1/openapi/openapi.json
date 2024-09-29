@@ -5368,6 +5368,222 @@
         }
       }
     },
+    "/customfielddefinitions/{customFieldDefinitionId}": {
+      "put": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Updates an existing custom field definition with the specified id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to change the custom field definition.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomFieldDefinitionPutForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomFieldDefinition"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      },
+      "delete": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Deletes the custom field definition with the specified id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      }
+    },
+    "/customfielddefinitions/{customFieldDefinitionId}/selectionoptions/{selectionOptionId}": {
+      "put": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Updates a custom field selection option for an existing custom field definition.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "selectionOptionId",
+            "in": "path",
+            "description": "The id of the selection option.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form to update the custom field selection option.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomFieldSelectionOptionsForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomFieldDefinition"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      },
+      "delete": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Deletes a custom field selection option for an existing custom field definition.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "selectionOptionId",
+            "in": "path",
+            "description": "The id of the selection option.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      }
+    },
     "/customfielddefinitions": {
       "get": {
         "tags": [
@@ -5456,28 +5672,18 @@
         }
       }
     },
-    "/customfielddefinitions/{customFieldDefinitionId}/selectionoptions/{selectionOptionId}": {
-      "delete": {
+    "/tasks/{taskId}/setcustomfields": {
+      "post": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Deletes a custom field selection option for an existing custom field definition.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "summary": "Sets the custom fields for a task.",
+        "description": "The required properties depend on the type of the custom field.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "customFieldDefinitionId",
+            "name": "taskId",
             "in": "path",
-            "description": "The id of the custom field definition.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "selectionOptionId",
-            "in": "path",
-            "description": "The id of the selection option.",
+            "description": "The id of the task to set the custom fields for.",
             "required": true,
             "schema": {
               "type": "string",
@@ -5485,6 +5691,134 @@
             }
           }
         ],
+        "requestBody": {
+          "description": "The model containing the details for setting the custom fields for a task.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CustomFieldPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/projecttemplates/{projectTemplateId}/customfielddefinitions/{customFieldDefinitionId}": {
+      "put": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Updates the order of a custom field definition for a project template.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "projectTemplateId",
+            "in": "path",
+            "description": "The id of the project template.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The custom field definition id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to update the order of the custom field definition.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomFieldOrderPutForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      }
+    },
+    "/projects/{projectId}/unlinkcustomfielddefinition": {
+      "post": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Unlinks a custom field definition from a project.",
+        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:read` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to unlink the the custom field definition from a project",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnlinkCustomFieldDefinitionForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -5505,14 +5839,16 @@
         ],
         "x-access": {
           "admin": "true",
-          "project-manage-config": "write"
+          "project-master-data": "read"
         }
-      },
-      "put": {
+      }
+    },
+    "/customfielddefinitions/{customFieldDefinitionId}/selectionoptions": {
+      "post": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Updates a custom field selection option for an existing custom field definition.",
+        "summary": "Creates a custom field selection option for an existing custom field definition.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "parameters": [
           {
@@ -5524,20 +5860,10 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "selectionOptionId",
-            "in": "path",
-            "description": "The id of the selection option.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
           }
         ],
         "requestBody": {
-          "description": "The form to update the custom field selection option.",
+          "description": "The form to create a custom field selection option.",
           "content": {
             "application/json": {
               "schema": {
@@ -5574,18 +5900,18 @@
         }
       }
     },
-    "/customfielddefinitions/{customFieldDefinitionId}": {
-      "delete": {
+    "/projects/{projectId}/customfielddefinitions": {
+      "get": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Deletes the custom field definition with the specified id.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "summary": "Returns all custom field definitions for a project.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "customFieldDefinitionId",
+            "name": "projectId",
             "in": "path",
-            "description": "The id of the custom field definition.",
+            "description": "The id of the project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -5593,64 +5919,13 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      },
-      "put": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Updates an existing custom field definition with the specified id.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "customFieldDefinitionId",
-            "in": "path",
-            "description": "The id of the custom field definition.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to change the custom field definition.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CustomFieldDefinitionPutForm"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinition"
+                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
                 }
               }
             }
@@ -5667,23 +5942,22 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
+          "any": "true"
         }
       }
     },
-    "/tasktemplates/{taskTemplateId}/setcustomfields": {
+    "/projects/{projectId}/linkcustomfielddefinition": {
       "post": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Sets the custom fields for a task template.",
-        "description": "The required properties depend on the type of the custom field. Only task templates which are linked to a project template are allowed to have custom fields set.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "summary": "Links a custom field definition to a project.",
+        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "taskTemplateId",
+            "name": "projectId",
             "in": "path",
-            "description": "The id of the task template to set the custom fields for.",
+            "description": "The id of project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -5692,14 +5966,11 @@
           }
         ],
         "requestBody": {
-          "description": "The model containing the details for setting the custom fields for a task template.",
+          "description": "The model to link the the custom field definition to a project",
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/CustomFieldPostForm"
-                }
+                "$ref": "#/components/schemas/LinkCustomFieldDefinitionForm"
               }
             }
           }
@@ -5723,8 +5994,53 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
+          "any": "true"
+        }
+      }
+    },
+    "/projecttemplates/{projectTemplateId}/customfielddefinitions": {
+      "get": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Returns all custom field definitions for a project template.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "projectTemplateId",
+            "in": "path",
+            "description": "The id of the project template.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -5848,18 +6164,18 @@
         }
       }
     },
-    "/customfielddefinitions/{customFieldDefinitionId}/selectionoptions": {
+    "/tasktemplates/{taskTemplateId}/setcustomfields": {
       "post": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Creates a custom field selection option for an existing custom field definition.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "summary": "Sets the custom fields for a task template.",
+        "description": "The required properties depend on the type of the custom field. Only task templates which are linked to a project template are allowed to have custom fields set.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "parameters": [
           {
-            "name": "customFieldDefinitionId",
+            "name": "taskTemplateId",
             "in": "path",
-            "description": "The id of the custom field definition.",
+            "description": "The id of the task template to set the custom fields for.",
             "required": true,
             "schema": {
               "type": "string",
@@ -5868,25 +6184,24 @@
           }
         ],
         "requestBody": {
-          "description": "The form to create a custom field selection option.",
+          "description": "The model containing the details for setting the custom fields for a task template.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CustomFieldSelectionOptionsForm"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CustomFieldPostForm"
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinition"
-                }
-              }
-            }
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -5955,321 +6270,6 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
-        }
-      }
-    },
-    "/projecttemplates/{projectTemplateId}/customfielddefinitions/{customFieldDefinitionId}": {
-      "put": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Updates the order of a custom field definition for a project template.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectTemplateId",
-            "in": "path",
-            "description": "The id of the project template.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "customFieldDefinitionId",
-            "in": "path",
-            "description": "The custom field definition id.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to update the order of the custom field definition.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CustomFieldOrderPutForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      }
-    },
-    "/tasks/{taskId}/setcustomfields": {
-      "post": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Sets the custom fields for a task.",
-        "description": "The required properties depend on the type of the custom field.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "The id of the task to set the custom fields for.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model containing the details for setting the custom fields for a task.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/CustomFieldPostForm"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/projecttemplates/{projectTemplateId}/customfielddefinitions": {
-      "get": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Returns all custom field definitions for a project template.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "projectTemplateId",
-            "in": "path",
-            "description": "The id of the project template.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/projects/{projectId}/customfielddefinitions": {
-      "get": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Returns all custom field definitions for a project.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/projects/{projectId}/unlinkcustomfielddefinition": {
-      "post": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Unlinks a custom field definition from a project.",
-        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:read` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to unlink the the custom field definition from a project",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UnlinkCustomFieldDefinitionForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-master-data": "read"
-        }
-      }
-    },
-    "/projects/{projectId}/linkcustomfielddefinition": {
-      "post": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Links a custom field definition to a project.",
-        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to link the the custom field definition to a project",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LinkCustomFieldDefinitionForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
         }
       }
     },
@@ -14996,28 +14996,33 @@
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       }
     },
-    "/projecttimebookings/{timeBookingId}": {
-      "delete": {
+    "/projecttimebookings": {
+      "post": {
         "tags": [
           "ProjectTimeBookings"
         ],
-        "summary": "Deletes a project time booking by id.",
+        "summary": "Creates a new project time booking for a given project and user.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeBookingId",
-            "in": "path",
-            "description": "The id of the project time booking.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
+        "requestBody": {
+          "description": "The data to create a new project time booking.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectTimeBookingForm"
+              }
             }
           }
-        ],
+        },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectTimeBooking"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -15034,41 +15039,36 @@
           "any": "true"
         }
       },
-      "put": {
+      "get": {
         "tags": [
           "ProjectTimeBookings"
         ],
-        "summary": "Updates a given project time booking.",
+        "summary": "Returns a list of project time bookings.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "timeBookingId",
-            "in": "path",
-            "description": "The id of the project time booking.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
           }
         ],
-        "requestBody": {
-          "description": "The updated data for the project time booking.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectTimeBookingForm"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProjectTimeBooking"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectTimeBooking"
+                  }
                 }
               }
             }
@@ -15158,15 +15158,27 @@
         }
       }
     },
-    "/projecttimebookings": {
-      "post": {
+    "/projecttimebookings/{timeBookingId}": {
+      "put": {
         "tags": [
           "ProjectTimeBookings"
         ],
-        "summary": "Creates a new project time booking for a given project and user.",
+        "summary": "Updates a given project time booking.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeBookingId",
+            "in": "path",
+            "description": "The id of the project time booking.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "requestBody": {
-          "description": "The data to create a new project time booking.",
+          "description": "The updated data for the project time booking.",
           "content": {
             "application/json": {
               "schema": {
@@ -15201,39 +15213,27 @@
           "any": "true"
         }
       },
-      "get": {
+      "delete": {
         "tags": [
           "ProjectTimeBookings"
         ],
-        "summary": "Returns a list of project time bookings.",
+        "summary": "Deletes a project time booking by id.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
+            "name": "timeBookingId",
+            "in": "path",
+            "description": "The id of the project time booking.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProjectTimeBooking"
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -21328,37 +21328,68 @@
         }
       }
     },
-    "/taskschedules/bytaskid/{taskId}": {
+    "/taskschedules": {
+      "get": {
+        "tags": [
+          "TaskSchedules"
+        ],
+        "summary": "Returns a list of task schedules.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskSchedule"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "post": {
         "tags": [
           "TaskSchedules"
         ],
-        "summary": "Creates task schedules from a task by id.",
-        "description": "Creates task schedules from a task by id. The task must have start and due date and at least one assignee.\n            If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees\n            by setting the\n            'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "The id of the task.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "createSchedulesForAllAssignees",
-            "in": "query",
-            "description": "Whether schedules should be created for all assignees of the task.",
-            "schema": {
-              "type": "boolean",
-              "default": false
+        "summary": "Creates a new task schedule for a given task and a given user.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "requestBody": {
+          "description": "The data to create a new task schedule from.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskScheduleForm"
+              }
             }
           }
-        ],
+        },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskSchedule"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -21513,68 +21544,37 @@
         }
       }
     },
-    "/taskschedules": {
+    "/taskschedules/bytaskid/{taskId}": {
       "post": {
         "tags": [
           "TaskSchedules"
         ],
-        "summary": "Creates a new task schedule for a given task and a given user.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "requestBody": {
-          "description": "The data to create a new task schedule from.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskScheduleForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskSchedule"
-                }
-              }
-            }
-          }
-        },
-        "security": [
+        "summary": "Creates task schedules from a task by id.",
+        "description": "Creates task schedules from a task by id. The task must have start and due date and at least one assignee.\n            If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees\n            by setting the\n            'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
           {
-            "oauth2": [
-              "full_access"
-            ]
+            "name": "taskId",
+            "in": "path",
+            "description": "The id of the task.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "createSchedulesForAllAssignees",
+            "in": "query",
+            "description": "Whether schedules should be created for all assignees of the task.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "TaskSchedules"
-        ],
-        "summary": "Returns a list of task schedules.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskSchedule"
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -24044,6 +24044,56 @@
         }
       }
     },
+    "/tasks/changelists": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Changes the lists of tasks.",
+        "description": "Adds tasks to lists, removes them and reorders tasks within lists.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "requestBody": {
+          "description": "The form to change the lists of tasks.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ChangeTaskListsForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChangeTaskListsForm"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/tasks/changesubtasks": {
       "post": {
         "tags": [
@@ -24107,56 +24157,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/tasks/changelists": {
-      "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Changes the lists of tasks.",
-        "description": "Adds tasks to lists, removes them and reorders tasks within lists.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "requestBody": {
-          "description": "The form to change the lists of tasks.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/ChangeTaskListsForm"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ChangeTaskListsForm"
-                  }
-                }
-              }
-            }
           }
         },
         "security": [
@@ -25627,6 +25627,71 @@
         }
       }
     },
+    "/timeentries/batch/{operation}": {
+      "post": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Edits multiple time entries using the specified operation.",
+        "description": "The user is only allowed to edit time entries they have permissions for.\n            Returns MultiStatus. Includes the list of successfully changed, not found, unauthorized, and invalid time entry ids.\n            Returns BadRequest if the validation of the form fails, f.e. the new type of work cannot be found.\n            \n            Supported Operations:\n            delete: Deletes all time entries. Only admins can delete already billed time entries.\n            setTypeOfWork: Changes the type of work for a list of time entries. TODO: check if only admins should be able to change\n            for billed.\n            setIsBillable: Changes the billability for a list of time entries. Already billed time entries can only be changed to\n            being unbillable by admins. In this case, the IsBilled flag is also set to false.\n            setIsBilled: Changes the billing status for a list of time entries. Only admins can change the billing status back to\n            unbilled for already billed time entries.\n            setProject: Changes the project for a list of time entries. Only admins can change the project for already billed time\n            entries. Setting the project unsets the previous project and task.\n            setTask: Changes the task for a list of time entries. Only admins can change the task for already billed time entries.\n            Setting the task automatically sets the project if that task is a project task.\n            setUser: Changes the user for a list of time entries. Only admins can change the user for already billed time entries.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "path",
+            "description": "The name of the operation to execute on the given time entries. Valid values are: delete,\r\nsetTypeOfWork, setIsBillable, setIsBilled, setProject, setTask, setUser.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form with additional info for the batch operation.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeEntryBatchOperationForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiStatusResult"
+                }
+              }
+            }
+          },
+          "207": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiStatusResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/timeentries": {
       "post": {
         "tags": [
@@ -25787,51 +25852,32 @@
         }
       }
     },
-    "/timeentries/batch/{operation}": {
+    "/timeentries/{timeEntryId}/removebreaks": {
       "post": {
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Edits multiple time entries using the specified operation.",
-        "description": "The user is only allowed to edit time entries they have permissions for.\n            Returns MultiStatus. Includes the list of successfully changed, not found, unauthorized, and invalid time entry ids.\n            Returns BadRequest if the validation of the form fails, f.e. the new type of work cannot be found.\n            \n            Supported Operations:\n            delete: Deletes all time entries. Only admins can delete already billed time entries.\n            setTypeOfWork: Changes the type of work for a list of time entries. TODO: check if only admins should be able to change\n            for billed.\n            setIsBillable: Changes the billability for a list of time entries. Already billed time entries can only be changed to\n            being unbillable by admins. In this case, the IsBilled flag is also set to false.\n            setIsBilled: Changes the billing status for a list of time entries. Only admins can change the billing status back to\n            unbilled for already billed time entries.\n            setProject: Changes the project for a list of time entries. Only admins can change the project for already billed time\n            entries. Setting the project unsets the previous project and task.\n            setTask: Changes the task for a list of time entries. Only admins can change the task for already billed time entries.\n            Setting the task automatically sets the project if that task is a project task.\n            setUser: Changes the user for a list of time entries. Only admins can change the user for already billed time entries.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Removes all finished breaks of the time entry.",
+        "description": "A currently running break is not removed.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "operation",
+            "name": "timeEntryId",
             "in": "path",
-            "description": "The name of the operation to execute on the given time entries. Valid values are: delete,\r\nsetTypeOfWork, setIsBillable, setIsBilled, setProject, setTask, setUser.",
+            "description": "The id of the time entry.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
-        "requestBody": {
-          "description": "The form with additional info for the batch operation.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TimeEntryBatchOperationForm"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MultiStatusResult"
-                }
-              }
-            }
-          },
-          "207": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MultiStatusResult"
+                  "$ref": "#/components/schemas/TimeTracking"
                 }
               }
             }
@@ -25853,43 +25899,6 @@
       }
     },
     "/timeentries/{timeEntryId}": {
-      "delete": {
-        "tags": [
-          "TimeEntries"
-        ],
-        "summary": "Deletes the time entry with the specified id.",
-        "description": "Deletes the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeEntryId",
-            "in": "path",
-            "description": "The id of the time entry.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
       "get": {
         "tags": [
           "TimeEntries"
@@ -25934,6 +25943,43 @@
           "any": "true"
         }
       },
+      "delete": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Deletes the time entry with the specified id.",
+        "description": "Deletes the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "put": {
         "tags": [
           "TimeEntries"
@@ -25962,52 +26008,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/timeentries/{timeEntryId}/removebreaks": {
-      "post": {
-        "tags": [
-          "TimeEntries"
-        ],
-        "summary": "Removes all finished breaks of the time entry.",
-        "description": "A currently running break is not removed.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeEntryId",
-            "in": "path",
-            "description": "The id of the time entry.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -26704,6 +26704,97 @@
         }
       }
     },
+    "/me/timetracking/resume": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Resumes a paused time tracking for a user.",
+        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The id of the user. Not required if the me route is used.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTracking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "owner": "true"
+        }
+      }
+    },
+    "/users/{userId}/timetracking/resume": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Resumes a paused time tracking for a user.",
+        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The id of the user. Not required if the me route is used.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTracking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "owner": "true"
+        }
+      }
+    },
     "/me/timetracking/start": {
       "post": {
         "tags": [
@@ -26869,97 +26960,6 @@
         ],
         "summary": "Pauses a running time tracking for a user.",
         "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "owner": "true"
-        }
-      }
-    },
-    "/me/timetracking/resume": {
-      "post": {
-        "tags": [
-          "TimeTracking"
-        ],
-        "summary": "Resumes a paused time tracking for a user.",
-        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "owner": "true"
-        }
-      }
-    },
-    "/users/{userId}/timetracking/resume": {
-      "post": {
-        "tags": [
-          "TimeTracking"
-        ],
-        "summary": "Resumes a paused time tracking for a user.",
-        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
