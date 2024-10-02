@@ -29840,6 +29840,15 @@
               "type": "boolean",
               "default": false
             }
+          },
+          {
+            "name": "ignoreCalendarEvents",
+            "in": "query",
+            "description": "Whether to ignore calendar events. Can significantly improve performance.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
         "responses": {
@@ -31375,6 +31384,10 @@
         },
         "additionalProperties": false
       },
+      "GuidList": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "IsFreeMailModel": {
         "required": [
           "email"
@@ -32038,7 +32051,7 @@
           },
           "location": {
             "type": "string",
-            "description": "The name of the location.",
+            "description": "The name of the location.\r\nIt will always be in the related country's language.",
             "nullable": true
           },
           "isDefault": {
@@ -32110,7 +32123,7 @@
           },
           "location": {
             "type": "string",
-            "description": "The name of the location.",
+            "description": "The name of the location.\r\nIt will always be in the related country's language.",
             "nullable": true
           },
           "isDefault": {
@@ -33540,6 +33553,49 @@
         "additionalProperties": false,
         "description": "The POST/PUT company model."
       },
+      "CompanyModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CompanyTagModel": {
         "type": "object",
         "properties": {
@@ -34735,239 +34791,6 @@
         },
         "additionalProperties": false
       },
-      "DefaultCompanyModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "hasImage": {
-            "type": "boolean"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultFileModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "entityId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "entityType": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "fileVersions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultFileVersionModel"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultFileVersionModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "width": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "height": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "version": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultOrderedTaskListModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "orderOfTask": {
-            "type": "number",
-            "format": "double"
-          },
-          "order": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultProjectModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectStatus": {
-            "$ref": "#/components/schemas/DefaultStatusModel"
-          },
-          "company": {
-            "$ref": "#/components/schemas/DefaultCompanyModel"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          },
-          "projectType": {
-            "$ref": "#/components/schemas/DefaultTypeModel"
-          },
-          "color": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "DefaultStatusModel": {
         "type": "object",
         "properties": {
@@ -35041,174 +34864,6 @@
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultTaskModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "baseType": {
-            "enum": [
-              "private",
-              "projecttask"
-            ],
-            "type": "string"
-          },
-          "taskStatus": {
-            "$ref": "#/components/schemas/DefaultTaskStatusModel"
-          },
-          "typeOfWorkId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "typeOfWork": {
-            "$ref": "#/components/schemas/DefaultTypeModel"
-          },
-          "assignees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserModel"
-            },
-            "nullable": true
-          },
-          "project": {
-            "$ref": "#/components/schemas/DefaultProjectModel"
-          },
-          "hasAttachment": {
-            "type": "boolean"
-          },
-          "reported": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultOrderedTaskListModel"
-            },
-            "nullable": true
-          },
-          "entityId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          },
-          "updatedByUser": {
-            "$ref": "#/components/schemas/UserModel"
-          },
-          "createdByUser": {
-            "$ref": "#/components/schemas/UserModel"
-          },
-          "attachments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultFileModel"
-            },
-            "nullable": true
-          },
-          "entityInformation": {
-            "nullable": true
-          },
-          "order": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "parentId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "isSubtask": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultTaskStatusModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "order": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -35891,11 +35546,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "GuidList": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "This class is used to bind a querystring list of Guid (as a comma separated list) to the List of Guid parameter in a\r\nminimal api endpoint."
       },
       "IDefaultNameModel": {
         "type": "object",
@@ -36899,11 +36549,6 @@
             "description": "Whether the user has an image.",
             "nullable": true,
             "example": true
-          },
-          "timeBudget": {
-            "type": "integer",
-            "description": "The project member capacity. This is actually fetched from a different endpoint and mapped here.",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -37861,26 +37506,6 @@
             "type": "string",
             "nullable": true
           },
-          "projectStatus": {
-            "$ref": "#/components/schemas/DefaultStatusModel"
-          },
-          "company": {
-            "$ref": "#/components/schemas/DefaultCompanyModel"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          },
-          "projectType": {
-            "$ref": "#/components/schemas/DefaultTypeModel"
-          },
-          "color": {
-            "type": "string",
-            "nullable": true
-          },
           "isExternal": {
             "type": "boolean",
             "description": "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
@@ -37910,6 +37535,29 @@
               "$ref": "#/components/schemas/ProjectTeamModel"
             },
             "nullable": true
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/DefaultStatusModel"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyModel"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "description": "The tags for this project.",
+            "nullable": true
+          },
+          "projectType": {
+            "$ref": "#/components/schemas/DefaultTypeModel"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the project for display purposes in awork.\r\nCan be null when no color assigned.",
+            "nullable": true,
+            "example": "purple"
           },
           "isPrivate": {
             "type": "boolean"
@@ -40192,6 +39840,65 @@
         },
         "additionalProperties": false
       },
+      "TaskFromRecurrency": {
+        "type": "object",
+        "properties": {
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "baseTaskId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "entityId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskOrderList"
+            },
+            "nullable": true
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NestedUserModelForTasks"
+            },
+            "nullable": true
+          },
+          "occurrences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeFrameModel"
+            },
+            "nullable": true
+          },
+          "isAProjectTask": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "TaskImportForm": {
         "type": "object",
         "properties": {
@@ -41891,61 +41598,6 @@
             "type": "boolean",
             "description": "Set to true to delete also the related time trackings.\r\nIf it is set to false the related time trackings are still there, but\r\nthe project and task reference will be cleared.\r\nThat will also happen if no request body is present.",
             "example": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TasksFromRecurrency": {
-        "type": "object",
-        "properties": {
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "baseTaskId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "baseType": {
-            "type": "string",
-            "nullable": true
-          },
-          "entityId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "plannedDuration": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TaskOrderList"
-            },
-            "nullable": true
-          },
-          "assignees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NestedUserModelForTasks"
-            },
-            "nullable": true
-          },
-          "occurrences": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TimeFrameModel"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -44017,7 +43669,8 @@
             "nullable": true
           },
           "hasImage": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "language": {
             "type": "string",
@@ -45100,6 +44753,48 @@
             "type": "string",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultTaskStatusModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -46616,6 +46311,47 @@
             "type": "string",
             "description": "The type of the weekly mail: briefing or summary.",
             "example": "summary"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultOrderedTaskListModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderOfTask": {
+            "type": "number",
+            "format": "double"
+          },
+          "order": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
