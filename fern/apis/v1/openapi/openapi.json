@@ -5368,31 +5368,42 @@
         }
       }
     },
-    "/customfielddefinitions": {
-      "get": {
+    "/customfielddefinitions/{customFieldDefinitionId}": {
+      "put": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Returns all custom field definitions.",
-        "description": "The 'linkedProjectIds' property will only be included when the 'includeLinkedProjectIds' parameter is set to 'true'.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Updates an existing custom field definition with the specified id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "parameters": [
           {
-            "name": "includeLinkedProjectIds",
-            "in": "query",
-            "description": "Whether to also include the linked project ids.",
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
             "schema": {
-              "type": "boolean",
-              "default": false
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
+        "requestBody": {
+          "description": "The model to change the custom field definition.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomFieldDefinitionPutForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
+                  "$ref": "#/components/schemas/CustomFieldDefinition"
                 }
               }
             }
@@ -5409,35 +5420,34 @@
           "v1"
         ],
         "x-access": {
-          "any": "true"
+          "admin": "true",
+          "project-manage-config": "write"
         }
       },
-      "post": {
+      "delete": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Creates a new custom field definition.",
-        "description": "Creates a new custom field definition. This custom field definition can then be linked to project templates and to tasks.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "requestBody": {
-          "description": "The model containing the details for creating a new custom field definition.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CustomFieldDefinitionPostForm"
-              }
+        "summary": "Deletes the custom field definition with the specified id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinition"
-                }
-              }
-            }
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -5574,31 +5584,62 @@
         }
       }
     },
-    "/customfielddefinitions/{customFieldDefinitionId}": {
-      "put": {
+    "/customfielddefinitions": {
+      "get": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Updates an existing custom field definition with the specified id.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "summary": "Returns all custom field definitions.",
+        "description": "The 'linkedProjectIds' property will only be included when the 'includeLinkedProjectIds' parameter is set to 'true'.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "customFieldDefinitionId",
-            "in": "path",
-            "description": "The id of the custom field definition.",
-            "required": true,
+            "name": "includeLinkedProjectIds",
+            "in": "query",
+            "description": "Whether to also include the linked project ids.",
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "boolean",
+              "default": false
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "post": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Creates a new custom field definition.",
+        "description": "Creates a new custom field definition. This custom field definition can then be linked to project templates and to tasks.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "requestBody": {
-          "description": "The model to change the custom field definition.",
+          "description": "The model containing the details for creating a new custom field definition.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CustomFieldDefinitionPutForm"
+                "$ref": "#/components/schemas/CustomFieldDefinitionPostForm"
               }
             }
           }
@@ -5629,61 +5670,20 @@
           "admin": "true",
           "project-manage-config": "write"
         }
-      },
-      "delete": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Deletes the custom field definition with the specified id.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "customFieldDefinitionId",
-            "in": "path",
-            "description": "The id of the custom field definition.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
       }
     },
-    "/tasktemplates/{taskTemplateId}/setcustomfields": {
+    "/tasks/{taskId}/setcustomfields": {
       "post": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Sets the custom fields for a task template.",
-        "description": "The required properties depend on the type of the custom field. Only task templates which are linked to a project template are allowed to have custom fields set.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "summary": "Sets the custom fields for a task.",
+        "description": "The required properties depend on the type of the custom field.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "taskTemplateId",
+            "name": "taskId",
             "in": "path",
-            "description": "The id of the task template to set the custom fields for.",
+            "description": "The id of the task to set the custom fields for.",
             "required": true,
             "schema": {
               "type": "string",
@@ -5692,7 +5692,7 @@
           }
         ],
         "requestBody": {
-          "description": "The model containing the details for setting the custom fields for a task template.",
+          "description": "The model containing the details for setting the custom fields for a task.",
           "content": {
             "application/json": {
               "schema": {
@@ -5710,59 +5710,9 @@
           },
           "204": {
             "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      }
-    },
-    "/projecttemplates/{projectTemplateId}/unlinkcustomfielddefinition": {
-      "post": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Unlinks a custom field definition from a projectTemplate.",
-        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectTemplateId",
-            "in": "path",
-            "description": "The id of projectTemplate.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to unlink the the custom field definition from a projectTemplate",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UnlinkCustomFieldDefinitionForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
           },
-          "204": {
-            "description": "No Content"
+          "404": {
+            "description": "Not Found"
           }
         },
         "security": [
@@ -5776,8 +5726,7 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
+          "any": "true"
         }
       }
     },
@@ -5823,168 +5772,6 @@
         "responses": {
           "200": {
             "description": "Success"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      }
-    },
-    "/projects/{projectId}/linkcustomfielddefinition": {
-      "post": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Links a custom field definition to a project.",
-        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to link the the custom field definition to a project",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LinkCustomFieldDefinitionForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/projecttemplates/{projectTemplateId}/linkcustomfielddefinition": {
-      "post": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Links a custom field definition to a project template.",
-        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectTemplateId",
-            "in": "path",
-            "description": "The id of project template.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to link the custom field definition to a project template",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LinkCustomFieldDefinitionForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      }
-    },
-    "/customfielddefinitions/{customFieldDefinitionId}/selectionoptions": {
-      "post": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Creates a custom field selection option for an existing custom field definition.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "customFieldDefinitionId",
-            "in": "path",
-            "description": "The id of the custom field definition.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The form to create a custom field selection option.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CustomFieldSelectionOptionsForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinition"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6056,18 +5843,75 @@
         }
       }
     },
-    "/projecttemplates/{projectTemplateId}/customfielddefinitions": {
+    "/customfielddefinitions/{customFieldDefinitionId}/selectionoptions": {
+      "post": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Creates a custom field selection option for an existing custom field definition.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form to create a custom field selection option.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomFieldSelectionOptionsForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomFieldDefinition"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      }
+    },
+    "/projects/{projectId}/customfielddefinitions": {
       "get": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Returns all custom field definitions for a project template.",
+        "summary": "Returns all custom field definitions for a project.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "projectTemplateId",
+            "name": "projectId",
             "in": "path",
-            "description": "The id of the project template.",
+            "description": "The id of the project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -6102,18 +5946,18 @@
         }
       }
     },
-    "/tasks/{taskId}/setcustomfields": {
+    "/projects/{projectId}/linkcustomfielddefinition": {
       "post": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Sets the custom fields for a task.",
-        "description": "The required properties depend on the type of the custom field.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Links a custom field definition to a project.",
+        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "taskId",
+            "name": "projectId",
             "in": "path",
-            "description": "The id of the task to set the custom fields for.",
+            "description": "The id of project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -6122,14 +5966,11 @@
           }
         ],
         "requestBody": {
-          "description": "The model containing the details for setting the custom fields for a task.",
+          "description": "The model to link the the custom field definition to a project",
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/CustomFieldPostForm"
-                }
+                "$ref": "#/components/schemas/LinkCustomFieldDefinitionForm"
               }
             }
           }
@@ -6140,9 +5981,6 @@
           },
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
           }
         },
         "security": [
@@ -6160,18 +5998,18 @@
         }
       }
     },
-    "/projects/{projectId}/customfielddefinitions": {
+    "/projecttemplates/{projectTemplateId}/customfielddefinitions": {
       "get": {
         "tags": [
           "CustomFields"
         ],
-        "summary": "Returns all custom field definitions for a project.",
+        "summary": "Returns all custom field definitions for a project template.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "projectId",
+            "name": "projectTemplateId",
             "in": "path",
-            "description": "The id of the project.",
+            "description": "The id of the project template.",
             "required": true,
             "schema": {
               "type": "string",
@@ -6270,6 +6108,168 @@
         "x-access": {
           "admin": "true",
           "project-master-data": "write"
+        }
+      }
+    },
+    "/projecttemplates/{projectTemplateId}/unlinkcustomfielddefinition": {
+      "post": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Unlinks a custom field definition from a projectTemplate.",
+        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "projectTemplateId",
+            "in": "path",
+            "description": "The id of projectTemplate.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to unlink the the custom field definition from a projectTemplate",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnlinkCustomFieldDefinitionForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      }
+    },
+    "/tasktemplates/{taskTemplateId}/setcustomfields": {
+      "post": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Sets the custom fields for a task template.",
+        "description": "The required properties depend on the type of the custom field. Only task templates which are linked to a project template are allowed to have custom fields set.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "taskTemplateId",
+            "in": "path",
+            "description": "The id of the task template to set the custom fields for.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model containing the details for setting the custom fields for a task template.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CustomFieldPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      }
+    },
+    "/projecttemplates/{projectTemplateId}/linkcustomfielddefinition": {
+      "post": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Links a custom field definition to a project template.",
+        "description": "When the definition is unlinked from a task, all values of the custom field will be removed from the task.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "projectTemplateId",
+            "in": "path",
+            "description": "The id of project template.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to link the custom field definition to a project template",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkCustomFieldDefinitionForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
         }
       }
     },
@@ -11971,6 +11971,55 @@
         }
       }
     },
+    "/projects/{projectId}/typeofwork": {
+      "get": {
+        "tags": [
+          "ProjectTasks"
+        ],
+        "summary": "Returns the type of work for the project with the specified id.\n            .",
+        "description": "The project can be a connected or a workspace project.\n            User must have at least 'read' permissions on the 'project-planning-data' feature.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TypeOfWork"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/projects/{projectId}/projecttasks/{taskId}/changeproject": {
       "post": {
         "tags": [
@@ -12016,55 +12065,6 @@
           },
           "204": {
             "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/projects/{projectId}/typeofwork": {
-      "get": {
-        "tags": [
-          "ProjectTasks"
-        ],
-        "summary": "Returns the type of work for the project with the specified id.\n            .",
-        "description": "The project can be a connected or a workspace project.\n            User must have at least 'read' permissions on the 'project-planning-data' feature.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TypeOfWork"
-                  }
-                }
-              }
-            }
           }
         },
         "security": [
@@ -14996,170 +14996,6 @@
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       }
     },
-    "/projecttimebookings/{timeBookingId}": {
-      "delete": {
-        "tags": [
-          "ProjectTimeBookings"
-        ],
-        "summary": "Deletes a project time booking by id.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeBookingId",
-            "in": "path",
-            "description": "The id of the project time booking.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "put": {
-        "tags": [
-          "ProjectTimeBookings"
-        ],
-        "summary": "Updates a given project time booking.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeBookingId",
-            "in": "path",
-            "description": "The id of the project time booking.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The updated data for the project time booking.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectTimeBookingForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProjectTimeBooking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/users/projecttimebookings": {
-      "get": {
-        "tags": [
-          "ProjectTimeBookings"
-        ],
-        "summary": "Returns the project time bookings in a specified time range for a list of users.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "userIds",
-            "in": "query",
-            "description": "The ids of the users to get the project time bookings for.",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/GuidList"
-            }
-          },
-          {
-            "name": "intervalStart",
-            "in": "query",
-            "description": "The start of the interval to filter by.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "example": "2024-5-13"
-          },
-          {
-            "name": "intervalEnd",
-            "in": "query",
-            "description": "The end of the interval to filter by.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "example": "2024-5-21"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GetProjectTimeBookingForUsersResult"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
     "/projecttimebookings": {
       "post": {
         "tags": [
@@ -15175,8 +15011,7 @@
                 "$ref": "#/components/schemas/ProjectTimeBookingForm"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -15237,6 +15072,168 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/users/projecttimebookings": {
+      "get": {
+        "tags": [
+          "ProjectTimeBookings"
+        ],
+        "summary": "Returns the project time bookings in a specified time range for a list of users.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "userIds",
+            "in": "query",
+            "description": "The ids of the users to get the project time bookings for.",
+            "schema": {
+              "$ref": "#/components/schemas/GuidList"
+            }
+          },
+          {
+            "name": "intervalStart",
+            "in": "query",
+            "description": "The start of the interval to filter by.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-5-13"
+          },
+          {
+            "name": "intervalEnd",
+            "in": "query",
+            "description": "The end of the interval to filter by.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-5-21"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetProjectTimeBookingForUsersResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/projecttimebookings/{timeBookingId}": {
+      "put": {
+        "tags": [
+          "ProjectTimeBookings"
+        ],
+        "summary": "Updates a given project time booking.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeBookingId",
+            "in": "path",
+            "description": "The id of the project time booking.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The updated data for the project time booking.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectTimeBookingForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectTimeBooking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "delete": {
+        "tags": [
+          "ProjectTimeBookings"
+        ],
+        "summary": "Deletes a project time booking by id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeBookingId",
+            "in": "path",
+            "description": "The id of the project time booking.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -21381,8 +21378,7 @@
                 "$ref": "#/components/schemas/TaskScheduleForm"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -21412,11 +21408,11 @@
       }
     },
     "/taskschedules/{taskScheduleId}": {
-      "delete": {
+      "get": {
         "tags": [
           "TaskSchedules"
         ],
-        "summary": "Deletes a task schedule by id.",
+        "summary": "Returns a task schedule by id.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
@@ -21431,8 +21427,15 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskSchedule"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -21475,8 +21478,7 @@
                 "$ref": "#/components/schemas/TaskSchedulePutForm"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -21504,11 +21506,11 @@
           "any": "true"
         }
       },
-      "get": {
+      "delete": {
         "tags": [
           "TaskSchedules"
         ],
-        "summary": "Returns a task schedule by id.",
+        "summary": "Deletes a task schedule by id.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
@@ -21523,15 +21525,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskSchedule"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -23855,6 +23850,50 @@
         }
       }
     },
+    "/tasks": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Creates a new task.",
+        "description": "Can be a project task or a user's private task.\n            To create a task, the user needs to be the assignee of the task or 'ProjectPlanning'\n            permissions in general or in the project the task is related to.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "requestBody": {
+          "description": "The model used to create a task.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeneralTaskPostForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/tasks/{taskId}": {
       "get": {
         "tags": [
@@ -23960,50 +23999,6 @@
         }
       }
     },
-    "/tasks": {
-      "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Creates a new task.",
-        "description": "Can be a project task or a user's private task.\n            To create a task, the user needs to be the assignee of the task or 'ProjectPlanning'\n            permissions in general or in the project the task is related to.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "requestBody": {
-          "description": "The model used to create a task.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GeneralTaskPostForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskModel"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
     "/tasks/{taskId}/copy": {
       "post": {
         "tags": [
@@ -24032,46 +24027,6 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/tasks/changesubtasks": {
-      "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Changes the parent task and the order of subtasks.",
-        "description": "Changes parent task and order of subtasks. If the parent task of a subtask changed, its lists, base type and entity\n            will change to match the parent ones.\n            It is not possible to change a task to subtask if the task already has subtasks.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "requestBody": {
-          "description": "The model used to change a subtask.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/ChangeSubtasksPostForm"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
           }
         },
         "security": [
@@ -24122,6 +24077,46 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/tasks/changesubtasks": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Changes the parent task and the order of subtasks.",
+        "description": "Changes parent task and order of subtasks. If the parent task of a subtask changed, its lists, base type and entity\n            will change to match the parent ones.\n            It is not possible to change a task to subtask if the task already has subtasks.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "requestBody": {
+          "description": "The model used to change a subtask.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ChangeSubtasksPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         },
         "security": [
@@ -25632,99 +25627,6 @@
         }
       }
     },
-    "/timeentries": {
-      "post": {
-        "tags": [
-          "TimeEntries"
-        ],
-        "summary": "Creates a new time entry.",
-        "description": "Creates a new time entry.\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "requestBody": {
-          "description": "The form to create a time entry.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TimeEntryPostForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "TimeEntries"
-        ],
-        "summary": "Returns all time entries.",
-        "description": "Returns all time entries.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeTracking"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
     "/timeentries/batch/{operation}": {
       "post": {
         "tags": [
@@ -25790,62 +25692,23 @@
         }
       }
     },
-    "/timeentries/{timeEntryId}": {
-      "delete": {
+    "/timeentries": {
+      "post": {
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Deletes the time entry with the specified id.",
-        "description": "Deletes the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeEntryId",
-            "in": "path",
-            "description": "The id of the time entry.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
+        "summary": "Creates a new time entry.",
+        "description": "Creates a new time entry.\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "requestBody": {
+          "description": "The form to create a time entry.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeEntryPostForm"
+              }
             }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
           }
         },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "TimeEntries"
-        ],
-        "summary": "Returns the time entries with the specified id.",
-        "description": "Returns the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs\n            to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeEntryId",
-            "in": "path",
-            "description": "The id of the time entry.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -25872,41 +25735,44 @@
           "any": "true"
         }
       },
-      "put": {
+      "get": {
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Updates the time entry with the specified id.",
-        "description": "Updates the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\n            Following combination of times and duration are allowed for already completed time entries:\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\n            - start time (local or utc) and duration\n            - end time (local or utc) and duration\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Returns all time entries.",
+        "description": "Returns all time entries.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "timeEntryId",
-            "in": "path",
-            "description": "The id of the time entry.",
-            "required": true,
+            "name": "searchReindex",
+            "in": "query",
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "boolean",
+              "default": false
             }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
           }
         ],
-        "requestBody": {
-          "description": "The form to update the time entry with the specified id.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TimeEntryPutForm"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTracking"
+                  }
                 }
               }
             }
@@ -26005,6 +25871,143 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTracking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/timeentries/{timeEntryId}": {
+      "get": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Returns the time entries with the specified id.",
+        "description": "Returns the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs\n            to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTracking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "delete": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Deletes the time entry with the specified id.",
+        "description": "Deletes the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Updates the time entry with the specified id.",
+        "description": "Updates the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\n            Following combination of times and duration are allowed for already completed time entries:\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\n            - start time (local or utc) and duration\n            - end time (local or utc) and duration\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form to update the time entry with the specified id.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeEntryPutForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -26608,13 +26611,106 @@
         }
       }
     },
-    "/me/timetracking/pause": {
+    "/me/timetracking/stop": {
       "post": {
         "tags": [
           "TimeTracking"
         ],
-        "summary": "Pauses a running time tracking for a user.",
-        "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
+        "summary": "Stops the currently running time tracking of the specified user.",
+        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The id of the user. Not required if the me route is used.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTracking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "owner": "true"
+        }
+      }
+    },
+    "/users/{userId}/timetracking/stop": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Stops the currently running time tracking of the specified user.",
+        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The id of the user. Not required if the me route is used.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTracking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "owner": "true"
+        }
+      }
+    },
+    "/me/timetracking/resume": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Resumes a paused time tracking for a user.",
+        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -26653,13 +26749,13 @@
         }
       }
     },
-    "/users/{userId}/timetracking/pause": {
+    "/users/{userId}/timetracking/resume": {
       "post": {
         "tags": [
           "TimeTracking"
         ],
-        "summary": "Pauses a running time tracking for a user.",
-        "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
+        "summary": "Resumes a paused time tracking for a user.",
+        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -26812,106 +26908,13 @@
         }
       }
     },
-    "/me/timetracking/stop": {
+    "/me/timetracking/pause": {
       "post": {
         "tags": [
           "TimeTracking"
         ],
-        "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or the creator.</Check>",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "owner": "true"
-        }
-      }
-    },
-    "/users/{userId}/timetracking/stop": {
-      "post": {
-        "tags": [
-          "TimeTracking"
-        ],
-        "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or the creator.</Check>",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "owner": "true"
-        }
-      }
-    },
-    "/me/timetracking/resume": {
-      "post": {
-        "tags": [
-          "TimeTracking"
-        ],
-        "summary": "Resumes a paused time tracking for a user.",
-        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
+        "summary": "Pauses a running time tracking for a user.",
+        "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -26950,13 +26953,13 @@
         }
       }
     },
-    "/users/{userId}/timetracking/resume": {
+    "/users/{userId}/timetracking/pause": {
       "post": {
         "tags": [
           "TimeTracking"
         ],
-        "summary": "Resumes a paused time tracking for a user.",
-        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
+        "summary": "Pauses a running time tracking for a user.",
+        "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check><b>Required Permissions:</b> The user must be the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -29795,7 +29798,6 @@
             "name": "userIds",
             "in": "query",
             "description": "The ids of the users to get the workload for.",
-            "required": true,
             "schema": {
               "$ref": "#/components/schemas/GuidList"
             }
@@ -29834,6 +29836,15 @@
             "name": "fetchDetails",
             "in": "query",
             "description": "(Optional - default: false) If set to true, the result will contain the hierarchy of elements that are contributing\r\nto the workload (projects, tasks, appointments).\r\nOtherwise it will return only the workload value.\r\nWorks only for single day queries.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "ignoreCalendarEvents",
+            "in": "query",
+            "description": "Whether to ignore calendar events. Can significantly improve performance.",
             "schema": {
               "type": "boolean",
               "default": false
@@ -31373,6 +31384,10 @@
         },
         "additionalProperties": false
       },
+      "GuidList": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "IsFreeMailModel": {
         "required": [
           "email"
@@ -31924,6 +31939,222 @@
         },
         "additionalProperties": false
       },
+      "AbsenceRegionCountry": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The ISO-3166-1 alpha-2 country code.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the country, e.g. \"Germany\".",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AbsenceRegionForm": {
+        "required": [
+          "countryCode",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string",
+            "description": "The name of the absence region. Should be unique."
+          },
+          "countryCode": {
+            "maxLength": 2,
+            "minLength": 1,
+            "type": "string",
+            "description": "The ISO 3166-1 alpha-2 country code. (e.g. 'DE' for Germany)"
+          },
+          "locationCode": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "The (optional) location code of the absence region.\r\nIt is in ISO 3166-2 format. (e.g. 'DE-BE' for Berlin, Germany)",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Indicates whether the absence region is the default absence region.\r\nA default absence region is automatically assigned to new employees."
+          }
+        },
+        "additionalProperties": false
+      },
+      "AbsenceRegionLocation": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The ISO-3166-2 location code.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the location, e.g. \"Berlin\".",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AbsenceRegionModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the absence region, as specified by the user.\r\nIt must be unique within the workspace.",
+            "nullable": true
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "The country code of the absence region.\r\nIt must be a valid ISO 3166-1 alpha-2 country code.",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "description": "The english name of the country.",
+            "nullable": true
+          },
+          "locationCode": {
+            "type": "string",
+            "description": "The location code of the absence region.\r\nIt is optional. It should be a valid ISO 3166-2 country subdivision code.",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "description": "The name of the location.\r\nIt will always be in the related country's language.",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Indicates whether the absence region is the default absence region.\r\nAny new user will be assigned to the default absence region."
+          },
+          "numberOfPublicHolidays": {
+            "type": "integer",
+            "description": "The number of public holidays in the absence region.",
+            "format": "int32"
+          },
+          "assignedUsers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The list of user ids assigned to the absence region.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AbsenceRegionModelWithHolidayDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the absence region, as specified by the user.\r\nIt must be unique within the workspace.",
+            "nullable": true
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "The country code of the absence region.\r\nIt must be a valid ISO 3166-1 alpha-2 country code.",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "description": "The english name of the country.",
+            "nullable": true
+          },
+          "locationCode": {
+            "type": "string",
+            "description": "The location code of the absence region.\r\nIt is optional. It should be a valid ISO 3166-2 country subdivision code.",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "description": "The name of the location.\r\nIt will always be in the related country's language.",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Indicates whether the absence region is the default absence region.\r\nAny new user will be assigned to the default absence region."
+          },
+          "numberOfPublicHolidays": {
+            "type": "integer",
+            "description": "The number of public holidays in the absence region.",
+            "format": "int32"
+          },
+          "assignedUsers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The list of user ids assigned to the absence region.",
+            "nullable": true
+          },
+          "publicHolidays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MinimalPublicHoliday"
+            },
+            "description": "The list of public holidays in the absence region.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AcceptInviteForm": {
         "required": [
           "externalWorkspaceId",
@@ -31993,24 +32224,26 @@
         "additionalProperties": false,
         "description": "Form to specify the options for adjusting the start/end dates of a project and related entities."
       },
+      "AdjustProjectTimeBookingDatesForm": {
+        "type": "object",
+        "properties": {
+          "daysOffset": {
+            "type": "integer",
+            "description": "The number of days (positive or negative) that will be added/subtracted the start/end dates of the time bookings.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "AggregatedTimes": {
         "type": "object",
         "properties": {
-          "day": {
-            "type": "integer",
-            "description": "The day of the month. Only set if AggregateBy in the form is 'day'.",
-            "format": "int32",
-            "nullable": true
-          },
-          "month": {
-            "type": "integer",
-            "description": "The month of the year. Always set.",
-            "format": "int32"
-          },
-          "year": {
-            "type": "integer",
-            "description": "The year. Always set.",
-            "format": "int32"
+          "date": {
+            "type": "string",
+            "description": "The date of the aggregated times in UTC.\r\nIf the AggregatedBy is monthly, the day is set to 1.",
+            "format": "date-time",
+            "readOnly": true,
+            "example": "2024-01-31T00:00:00Z"
           },
           "totalDuration": {
             "type": "integer",
@@ -32253,6 +32486,43 @@
             "description": "The gender of the user to be invited.\r\nCould be 'male', 'female', 'other'",
             "nullable": true,
             "example": "female"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssignUserToAbsenceRegionForm": {
+        "type": "object",
+        "properties": {
+          "regionId": {
+            "type": "string",
+            "description": "The id of the region to assign the users to.\r\nIf null, removes the user from any absence region.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssignUsersToAbsenceRegionForm": {
+        "required": [
+          "regionId",
+          "userIds"
+        ],
+        "type": "object",
+        "properties": {
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The list of userIds to assign to that region.\r\nProviding an empty list of user ids will remove all users from the absence region."
+          },
+          "regionId": {
+            "type": "string",
+            "description": "The id of the region to assign the users to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -32910,6 +33180,9 @@
           "project": {
             "$ref": "#/components/schemas/IDefaultNameModel"
           },
+          "task": {
+            "$ref": "#/components/schemas/IDefaultNameModel"
+          },
           "createdOn": {
             "type": "string",
             "description": "The date this object was created.",
@@ -32968,6 +33241,125 @@
         },
         "additionalProperties": false,
         "description": "The comment model."
+      },
+      "CommentEventModel": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "maxLength": 65000,
+            "minLength": 1,
+            "type": "string",
+            "description": "The message of the comment.",
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user who created the comment.\r\nOptional. If not set, defaults to the current user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "previews": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The preview URLs to show a preview for.",
+            "nullable": true,
+            "example": [
+              "https://www.awork.com/en/blog/automatic-project-management/"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the comment.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity of the comment.\r\nRequired.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityType": {
+            "type": "string",
+            "description": "The type of the entity of the comment.\r\nCan be \"projects\", \"tasks\".\r\nRequired.",
+            "nullable": true,
+            "example": "tasks"
+          },
+          "entity": {
+            "$ref": "#/components/schemas/IDefaultNameModel"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectForCommentEventModel"
+          },
+          "task": {
+            "$ref": "#/components/schemas/TaskForCommentEventModel"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this object was created.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this object.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ConnectedUserModel"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this object was last modified.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this object.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "mentions": {
+            "$ref": "#/components/schemas/Mentions"
+          },
+          "reactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reaction"
+            },
+            "description": "The reactions on a comment.",
+            "nullable": true
+          },
+          "formattedMessage": {
+            "type": "string",
+            "description": "The formatted and proccessed version of the comment message. E.g. mentions are in a human readable format.\r\nThe formatted comment message is styled with html.",
+            "nullable": true,
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "plainFormattedMessage": {
+            "type": "string",
+            "description": "The formatted and proccessed version of the comment message. E.g. mentions are in a human readable format.\r\nThe formatted comment message is not styled.",
+            "nullable": true,
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "resourceVersion": {
+            "type": "integer",
+            "description": "The version of the entity, updated on every modification, to the ticks in UTC.\r\nNot identical to UpdatedOn.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 637825154598057900
+          },
+          "isExternal": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       },
       "CommentForm": {
         "required": [
@@ -33160,6 +33552,49 @@
         },
         "additionalProperties": false,
         "description": "The POST/PUT company model."
+      },
+      "CompanyModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "CompanyTagModel": {
         "type": "object",
@@ -34236,6 +34671,166 @@
         },
         "additionalProperties": false
       },
+      "DayOff": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the absence entity, if available.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "deletedBy": {
+            "type": "string",
+            "description": "The id of the user that deleted the absence.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user that will have the day off.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startOn": {
+            "type": "string",
+            "description": "The start time of the day off.",
+            "format": "date-time",
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "endOn": {
+            "type": "string",
+            "description": "The end time of the day off.",
+            "format": "date-time",
+            "example": "2022-03-03T00:00:00Z"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the day off.\r\nIn case of public holidays, it will contain the name of the holiday in the local language.",
+            "nullable": true,
+            "example": "Neujahr"
+          },
+          "englishDescription": {
+            "type": "string",
+            "description": "In case of public holidays, it will contain the name of the holiday in English.\r\nNull if the day off is an absence.",
+            "nullable": true,
+            "example": "New Year's Day"
+          },
+          "externalProvider": {
+            "type": "string",
+            "description": "The external provider for the absence, if available.",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the day off.\r\nPossible values are: absence, holiday, workspaceAbsence.",
+            "nullable": true
+          },
+          "isReadOnly": {
+            "type": "boolean",
+            "description": "True means that this day off is read-only and cannot be edited/deleted by the user.",
+            "readOnly": true
+          },
+          "isHalfDayOnStart": {
+            "type": "boolean",
+            "description": "A user can be off for a full day or half day (morning or afternoon).\r\nFor a single day off, a true value means the user is off in the morning.\r\nFor multiple days off, a true value means the absence period starts in the afternoon of the first day.",
+            "readOnly": true
+          },
+          "isHalfDayOnEnd": {
+            "type": "boolean",
+            "description": "A user can be off for a full day or half day (morning or afternoon).\r\nFor a single day off, a true value means the user is off in the afternoon.\r\nFor multiple days off, a true value means the absence period ends on the morning of the last day.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DaysOffQueryForm": {
+        "type": "object",
+        "properties": {
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "from": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultStatusModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "DefaultTagModel": {
         "type": "object",
         "properties": {
@@ -34269,6 +34864,50 @@
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultTypeModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -34870,6 +35509,44 @@
         },
         "additionalProperties": false
       },
+      "GetProjectTimeBookingForUsersResult": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The user id to which the time bookings belong.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "timeBookings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectTimeBooking"
+            },
+            "description": "The list of time bookings of the user.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetWorkloadForUsersResult": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workloads": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "IDefaultNameModel": {
         "type": "object",
         "properties": {
@@ -35064,6 +35741,27 @@
         },
         "additionalProperties": false
       },
+      "MinimalPublicHoliday": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The date of the public holiday.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The english name of the public holiday.",
+            "nullable": true
+          },
+          "localName": {
+            "type": "string",
+            "description": "The local (native) name of the public holiday.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "MoveUserInRole": {
         "type": "object",
         "properties": {
@@ -35236,6 +35934,12 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "userId": {
             "type": "string",
@@ -35550,6 +36254,17 @@
         "additionalProperties": false,
         "description": "This repeated model (copy of NestedTeamModel) is required to avoid a bug\r\nof the Automapper.Extensions.EspressionMapping library that throws an error if in the same expression\r\nwe apply a filter to 2 different models containing the same submodel (e.g: Teams contained in both Project, User and\r\nTasks))\r\nPlease do not remove it."
       },
+      "PermissionAssignee": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
       "PermissionFullModel": {
         "type": "object",
         "properties": {
@@ -35694,6 +36409,72 @@
         },
         "additionalProperties": false
       },
+      "PermissionParentTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "assigneeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionProjectMember": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectRoleId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionTeam": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PlannedDurationModel": {
         "type": "object",
         "properties": {
@@ -35729,6 +36510,121 @@
             "description": "The planned effort of the user assigned to the task, in seconds.",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlannerProjectMemberModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectRoleId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user.",
+            "nullable": true,
+            "example": "Lisa"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the user.",
+            "nullable": true,
+            "example": "Smith"
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the user has an image.",
+            "nullable": true,
+            "example": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlanningSession": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user the planning session is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "planningSessionType": {
+            "type": "string",
+            "description": "The type of planning session. Can be 'private' or 'team'.",
+            "nullable": true
+          },
+          "forecastFrom": {
+            "type": "integer",
+            "description": "The number of days from which the more coarse forecast starts.",
+            "format": "int32",
+            "example": 7
+          },
+          "usersToPlan": {
+            "$ref": "#/components/schemas/UsersToPlan"
+          },
+          "tasksToPlan": {
+            "$ref": "#/components/schemas/TasksToPlan"
+          },
+          "projectsToPlan": {
+            "$ref": "#/components/schemas/ProjectsToPlan"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlanningSessionForm": {
+        "type": "object",
+        "properties": {
+          "forecastFrom": {
+            "type": "integer",
+            "description": "The number of days from which the more coarse forecast starts.",
+            "format": "int32",
+            "example": 7
+          },
+          "usersToPlan": {
+            "$ref": "#/components/schemas/UsersToPlanForm"
+          },
+          "tasksToPlan": {
+            "$ref": "#/components/schemas/TasksToPlanForm"
+          },
+          "projectsToPlan": {
+            "$ref": "#/components/schemas/ProjectsToPlanForm"
           }
         },
         "additionalProperties": false
@@ -36065,6 +36961,46 @@
             "type": "boolean",
             "description": "Set to true to delete also the related time trackings.\r\nIf it is set to false the related time trackings are still there, but\r\nthe project and task reference will be cleared.\r\nThat will also happen if no request body is present.",
             "example": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectForCommentEventModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionTeam"
+            },
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionProjectMember"
+            },
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "isExternal": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -36540,6 +37476,99 @@
         },
         "additionalProperties": false
       },
+      "ProjectModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the project.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the project.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlannerProjectMemberModel"
+            },
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectTeamModel"
+            },
+            "nullable": true
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/DefaultStatusModel"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyModel"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "description": "The tags for this project.",
+            "nullable": true
+          },
+          "projectType": {
+            "$ref": "#/components/schemas/DefaultTypeModel"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the project for display purposes in awork.\r\nCan be null when no color assigned.",
+            "nullable": true,
+            "example": "purple"
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the project has an image."
+          }
+        },
+        "additionalProperties": false
+      },
       "ProjectModelForTimeTrackings": {
         "type": "object",
         "properties": {
@@ -36592,6 +37621,17 @@
           "isExternal": {
             "type": "boolean",
             "description": "Whether the project is external."
+          },
+          "isBillableByDefault": {
+            "type": "boolean",
+            "description": "Whether project times should be billable by default.",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created the project.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -36968,6 +38008,17 @@
         "additionalProperties": false,
         "description": "A tag model used for the timetrackings ProjectModelForTimeTrackings.\r\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
       },
+      "ProjectTeamModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
       "ProjectTeamModelForTimeTrackings": {
         "type": "object",
         "properties": {
@@ -37105,6 +38156,125 @@
         "additionalProperties": false,
         "description": "The POST / PUT project template model."
       },
+      "ProjectTimeBooking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this project time booking is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this project time booking is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the project time booking.",
+            "format": "date",
+            "example": "2024-05-15"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date of the project time booking.",
+            "format": "date",
+            "example": "2024-05-18"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The planned duration, expressed in seconds, of this project time booking.",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "description": "The optional description for this project time booking.",
+            "nullable": true,
+            "example": "Blocker for a new project"
+          },
+          "laneOrder": {
+            "type": "integer",
+            "description": "The order in which this object should be shown in the timeline (row number).\r\nUsed by the awork web app.",
+            "format": "int32"
+          },
+          "isAnonymized": {
+            "type": "boolean",
+            "description": "This will be true if the user doesn't have access to the project.\r\nIn that case the description will be shadowed.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectTimeBookingForm": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this project time booking is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this project time booking is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of this project time booking.",
+            "format": "date",
+            "example": "2022-03-01"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date and time of this project time booking.",
+            "format": "date",
+            "example": "2022-03-02"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration (in seconds) of this project time booking.",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "description": "The optional name/description for this time booking.",
+            "nullable": true
+          },
+          "laneOrder": {
+            "type": "integer",
+            "description": "The order in which this object should be shown in the timeline (row number).\r\nThis value is used by the awork web app.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "ProjectType": {
         "type": "object",
         "properties": {
@@ -37198,6 +38368,64 @@
         },
         "additionalProperties": false,
         "description": "The POST / PUT project type model."
+      },
+      "ProjectsToPlan": {
+        "type": "object",
+        "properties": {
+          "selectedTeamIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "selectedProjectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "selectedProjectFilterNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectsToPlanForm": {
+        "type": "object",
+        "properties": {
+          "selectedProjectFilterNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "selectedTeamIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "selectedProjectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "PublicProjectTemplateAutomation": {
         "type": "object",
@@ -38554,6 +39782,123 @@
         },
         "additionalProperties": false
       },
+      "TaskForCommentEventModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectForCommentEventModel"
+          },
+          "parentTask": {
+            "$ref": "#/components/schemas/PermissionParentTask"
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionAssignee"
+            },
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskFromRecurrency": {
+        "type": "object",
+        "properties": {
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "baseTaskId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "entityId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskOrderList"
+            },
+            "nullable": true
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NestedUserModelForTasks"
+            },
+            "nullable": true
+          },
+          "occurrences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeFrameModel"
+            },
+            "nullable": true
+          },
+          "isAProjectTask": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "TaskImportForm": {
         "type": "object",
         "properties": {
@@ -39308,6 +40653,119 @@
             "format": "double",
             "nullable": true,
             "example": 3
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskSchedule": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this task schedule is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task this task schedule is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date and time of this task schedule.",
+            "format": "date-time",
+            "example": "2022-03-01T09:00:00Z"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date and time of this task schedule.",
+            "format": "date-time",
+            "example": "2022-03-01T10:00:00Z"
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "description": "The number of seconds of planned work.",
+            "format": "int32",
+            "example": 3600
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskScheduleForm": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task this task schedule is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date and time of this task schedule.",
+            "format": "date-time",
+            "example": "2022-03-01T09:00:00Z"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date and time of this task schedule.",
+            "format": "date-time",
+            "example": "2022-03-01T10:00:00Z"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this task schedule is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskSchedulePutForm": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task this task schedule is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date and time of this task schedule.",
+            "format": "date-time",
+            "example": "2022-03-01T09:00:00Z"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date and time of this task schedule.",
+            "format": "date-time",
+            "example": "2022-03-01T10:00:00Z"
           }
         },
         "additionalProperties": false
@@ -40144,56 +41602,45 @@
         },
         "additionalProperties": false
       },
-      "TasksFromRecurrency": {
+      "TasksToPlan": {
         "type": "object",
         "properties": {
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "baseTaskId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "baseType": {
-            "type": "string",
-            "nullable": true
-          },
-          "entityId": {
+          "taskViewId": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
-          "plannedDuration": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           },
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TaskOrderList"
-            },
+          "presetFilter": {
+            "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TasksToPlanForm": {
+        "type": "object",
+        "properties": {
+          "taskViewId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           },
-          "assignees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NestedUserModelForTasks"
-            },
-            "nullable": true
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           },
-          "occurrences": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TimeFrameModel"
-            },
+          "presetFilter": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -42205,6 +43652,51 @@
         "additionalProperties": false,
         "description": "The user in team model assigns accounts to teams."
       },
+      "UserModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "nullable": true
+          },
+          "isDeactivated": {
+            "type": "boolean"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/UserStatusModel"
+          }
+        },
+        "additionalProperties": false
+      },
       "UserModelForTimeTrackings": {
         "type": "object",
         "properties": {
@@ -42430,12 +43922,12 @@
           },
           "updatedOn": {
             "type": "string",
-            "description": "The date when the entity was updated.",
+            "description": "The date when the entity was last updated.",
             "format": "date-time"
           },
           "updatedBy": {
             "type": "string",
-            "description": "the id of the user who updated the entity.",
+            "description": "The id of the user who last updated the entity.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -42497,6 +43989,18 @@
         },
         "additionalProperties": false,
         "description": "The status of the user."
+      },
+      "UserStatusModel": {
+        "type": "object",
+        "properties": {
+          "isDeactivated": {
+            "type": "boolean"
+          },
+          "invitationAccepted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       },
       "UserTagModel": {
         "type": "object",
@@ -42605,6 +44109,66 @@
         },
         "additionalProperties": false
       },
+      "UsersToPlan": {
+        "type": "object",
+        "properties": {
+          "selectedUserIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "selectedTeamIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "selectedProjectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UsersToPlanForm": {
+        "type": "object",
+        "properties": {
+          "selectedUserIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "selectedTeamIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "selectedProjectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ValidateInvitationForm": {
         "required": [
           "inviteCode"
@@ -42643,6 +44207,30 @@
           "entityId": {
             "type": "string",
             "description": "The id of the entity that the widget is referencing.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The creation date.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created the entity.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date when the entity was last updated.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last updated the entity.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -42737,6 +44325,348 @@
             },
             "description": "A list of all widgets of the dashboard.",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadAppointments": {
+        "type": "object",
+        "properties": {
+          "providerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "calendarName": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadCompany": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadModel": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "The date of the calculated utilisation.",
+            "format": "date-time"
+          },
+          "duration": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "userCapacity": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadProjectInfo"
+            },
+            "nullable": true
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadTaskInfo"
+            },
+            "nullable": true
+          },
+          "appointments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadAppointments"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadProjectInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "company": {
+            "$ref": "#/components/schemas/WorkloadCompany"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadTaskInfo"
+            },
+            "nullable": true
+          },
+          "timeBookings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadProjectTimeBookingInfo"
+            },
+            "nullable": true
+          },
+          "isAnonymized": {
+            "type": "boolean",
+            "description": "This will be true if the user doesn't have access to the project.\r\nIn that case the Name and the ClientName will be shadowed.",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadProjectTimeBookingInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isAnonymized": {
+            "type": "boolean",
+            "description": "This will be true if the user doesn't have access to the project time booking.\r\nIn that case the Description will be shadowed.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadStatusModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Website Design and Implementation"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the status.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadTaskInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration of the planned effort of the user for this task.\r\nIncludes the duration of recurring tasks if the IsRecurring flag is set to true.",
+            "format": "int32"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/WorkloadStatusModel"
+          },
+          "taskSchedules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadTaskScheduleInfo"
+            },
+            "nullable": true
+          },
+          "isAnonymized": {
+            "type": "boolean",
+            "description": "This will be true if the user doesn't have access to the task.\r\nIn that case the Name and the Status will be shadowed.",
+            "nullable": true
+          },
+          "isRecurring": {
+            "type": "boolean",
+            "description": "Whether the task has a recurrency rule."
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadTaskScheduleInfo": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkspaceAbsenceForm": {
+        "required": [
+          "description",
+          "endOn",
+          "startOn"
+        ],
+        "type": "object",
+        "properties": {
+          "startOn": {
+            "type": "string",
+            "description": "The start time of the workspace absence.",
+            "format": "date-time",
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "endOn": {
+            "type": "string",
+            "description": "The end time of the workspace absence.",
+            "format": "date-time",
+            "example": "2022-03-03T00:00:00Z"
+          },
+          "description": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The description of the workspace absence.",
+            "example": "Company offsite"
+          },
+          "regionId": {
+            "type": "string",
+            "description": "(optional) The id of the absence region to limit the workspace absence to.\r\nIf not set, the workspace absence will apply to all users in the workspace.\r\nOtherwise, it will only apply to users in the specified absence region.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isHalfDayOnStart": {
+            "type": "boolean",
+            "description": "If it's true, and it's a single day absence means that the absence is for the first half of the workday.\r\nIf it's a multi day absence, it will start on the second half of the first day of the absence period."
+          },
+          "isHalfDayOnEnd": {
+            "type": "boolean",
+            "description": "If it's true, and it's a single day absence means that the absence is for the second half of the workday.\r\nIf it's a multi day absence it will end on the first half of the last day of the absence period."
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkspaceAbsenceModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startOn": {
+            "type": "string",
+            "description": "The start time of the workspace absence.",
+            "format": "date-time",
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "endOn": {
+            "type": "string",
+            "description": "The end time of the workspace absence.",
+            "format": "date-time",
+            "example": "2022-03-03T00:00:00Z"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the absence.",
+            "nullable": true,
+            "example": "Company offsite"
+          },
+          "regionId": {
+            "type": "string",
+            "description": "The (optional) regionId of the workspace absence.\r\nIf null, the absence is global for the entire workspace.\r\nOtherwise, it will be applied only to the users of the region.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "region": {
+            "type": "string",
+            "description": "The name of the region of the workspace absence.\r\nNull if the absence is global for the entire workspace.",
+            "nullable": true
+          },
+          "isReadOnly": {
+            "type": "boolean",
+            "description": "If it's true it means that this Absence is read-only and cannot be edited/deleted by the user.",
+            "readOnly": true
+          },
+          "isHalfDayOnStart": {
+            "type": "boolean",
+            "description": "If it's true and it's a single day absence means that the absence is for the first half of the workday.\r\nIf it's a multi day absence it started on the second half of the first day of the absence period.",
+            "readOnly": true
+          },
+          "isHalfDayOnEnd": {
+            "type": "boolean",
+            "description": "If it's true and it's a single day absence means that the absence is for the second half of the workday.\r\nIf it's a multi day absence it ended on the first half of the last day of the absence period.",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -44819,62 +46749,6 @@
         },
         "additionalProperties": false
       },
-      "UserModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "hasImage": {
-            "type": "boolean"
-          },
-          "language": {
-            "type": "string",
-            "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          },
-          "isDeactivated": {
-            "type": "boolean"
-          },
-          "birthDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "status": {
-            "$ref": "#/components/schemas/UserStatusModel"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserStatusModel": {
-        "type": "object",
-        "properties": {
-          "isDeactivated": {
-            "type": "boolean"
-          },
-          "invitationAccepted": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "AcceptInvitation": {
         "type": "object",
         "properties": {
@@ -45415,7 +47289,7 @@
           },
           "lastLogin": {
             "type": "string",
-            "description": "The date and time the current user last logged in with this workspace.",
+            "description": "The date and time the user last logged in with this workspace, or the workspace was last accessed.",
             "format": "date-time",
             "nullable": true
           },
@@ -45459,12 +47333,12 @@
           },
           "isTestWorkspace": {
             "type": "boolean",
-            "description": "Indicates if the workspace is a test workspace.",
+            "description": "Whether the workspace is a test workspace.",
             "example": false
           },
           "isApproved": {
             "type": "boolean",
-            "description": "Indicates if the user accepted the invitation to the workspace.",
+            "description": "Whether the user accepted the invitation to the workspace.",
             "example": true
           },
           "allowSSOLogin": {
@@ -45858,1256 +47732,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "AdjustProjectTimeBookingDatesForm": {
-        "type": "object",
-        "properties": {
-          "daysOffset": {
-            "type": "integer",
-            "description": "The number of days (positive or negative) that will be added/subtracted the start/end dates of the time bookings.",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultCompanyModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "hasImage": {
-            "type": "boolean"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultFileModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "entityId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "entityType": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "fileVersions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultFileVersionModel"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultFileVersionModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "width": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "height": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "version": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultProjectModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectStatus": {
-            "$ref": "#/components/schemas/DefaultStatusModel"
-          },
-          "company": {
-            "$ref": "#/components/schemas/DefaultCompanyModel"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          },
-          "projectType": {
-            "$ref": "#/components/schemas/DefaultTypeModel"
-          },
-          "color": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultStatusModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "isArchived": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultTaskModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "baseType": {
-            "enum": [
-              "private",
-              "projecttask"
-            ],
-            "type": "string"
-          },
-          "taskStatus": {
-            "$ref": "#/components/schemas/DefaultTaskStatusModel"
-          },
-          "typeOfWorkId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "typeOfWork": {
-            "$ref": "#/components/schemas/DefaultTypeModel"
-          },
-          "assignees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserModel"
-            },
-            "nullable": true
-          },
-          "project": {
-            "$ref": "#/components/schemas/DefaultProjectModel"
-          },
-          "hasAttachment": {
-            "type": "boolean"
-          },
-          "reported": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultOrderedTaskListModel"
-            },
-            "nullable": true
-          },
-          "entityId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          },
-          "updatedByUser": {
-            "$ref": "#/components/schemas/UserModel"
-          },
-          "createdByUser": {
-            "$ref": "#/components/schemas/UserModel"
-          },
-          "attachments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultFileModel"
-            },
-            "nullable": true
-          },
-          "entityInformation": {
-            "nullable": true
-          },
-          "order": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "parentId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "isSubtask": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DefaultTypeModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "icon": {
-            "type": "string",
-            "nullable": true
-          },
-          "isArchived": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetProjectTimeBookingForUsersResult": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "description": "The user id to which the time bookings belong.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "timeBookings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectTimeBooking"
-            },
-            "description": "The list of time bookings of the user.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetWorkloadForUsersResult": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "workloads": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkloadModel"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GuidList": {
-        "type": "object",
-        "additionalProperties": false,
-        "description": "This class is used to bind a querystring list of Guid (as a comma separated list) to the List of Guid parameter in a\r\nminimal api endpoint."
-      },
-      "PlanningSession": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user the planning session is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "planningSessionType": {
-            "type": "string",
-            "description": "The type of planning session. Can be 'private' or 'team'.",
-            "nullable": true
-          },
-          "forecastFrom": {
-            "type": "integer",
-            "description": "The number of days from which the more coarse forecast starts.",
-            "format": "int32",
-            "example": 7
-          },
-          "usersToPlan": {
-            "$ref": "#/components/schemas/UsersToPlan"
-          },
-          "tasksToPlan": {
-            "$ref": "#/components/schemas/TasksToPlan"
-          },
-          "projectsToPlan": {
-            "$ref": "#/components/schemas/ProjectsToPlan"
-          }
-        },
-        "additionalProperties": false
-      },
-      "PlanningSessionForm": {
-        "type": "object",
-        "properties": {
-          "forecastFrom": {
-            "type": "integer",
-            "description": "The number of days from which the more coarse forecast starts.",
-            "format": "int32",
-            "example": 7
-          },
-          "usersToPlan": {
-            "$ref": "#/components/schemas/UsersToPlanForm"
-          },
-          "tasksToPlan": {
-            "$ref": "#/components/schemas/TasksToPlanForm"
-          },
-          "projectsToPlan": {
-            "$ref": "#/components/schemas/ProjectsToPlanForm"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectStatus": {
-            "$ref": "#/components/schemas/DefaultStatusModel"
-          },
-          "company": {
-            "$ref": "#/components/schemas/DefaultCompanyModel"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultTagModel"
-            },
-            "nullable": true
-          },
-          "projectType": {
-            "$ref": "#/components/schemas/DefaultTypeModel"
-          },
-          "color": {
-            "type": "string",
-            "nullable": true
-          },
-          "isExternal": {
-            "type": "boolean",
-            "description": "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date of the project.",
-            "format": "date-time",
-            "nullable": true
-          },
-          "dueDate": {
-            "type": "string",
-            "description": "The due date of the project.",
-            "format": "date-time",
-            "nullable": true
-          },
-          "members": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectMemberModel"
-            },
-            "nullable": true
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectTeamModel"
-            },
-            "nullable": true
-          },
-          "isPrivate": {
-            "type": "boolean"
-          },
-          "hasImage": {
-            "type": "boolean",
-            "description": "Whether the project has an image."
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectTeamModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectTimeBooking": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "description": "The id of the project this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date of the project time booking.",
-            "format": "date",
-            "example": "2024-05-15"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end date of the project time booking.",
-            "format": "date",
-            "example": "2024-05-18"
-          },
-          "duration": {
-            "type": "integer",
-            "description": "The planned duration, expressed in seconds, of this project time booking.",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string",
-            "description": "The optional description for this project time booking.",
-            "nullable": true,
-            "example": "Blocker for a new project"
-          },
-          "laneOrder": {
-            "type": "integer",
-            "description": "The order in which this object should be shown in the timeline (row number).\r\nUsed by the awork web app.",
-            "format": "int32"
-          },
-          "isAnonymized": {
-            "type": "boolean",
-            "description": "This will be true if the user doesn't have access to the project.\r\nIn that case the description will be shadowed.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectTimeBookingForm": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "description": "The id of the user this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "description": "The id of the project this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date of this project time booking.",
-            "format": "date",
-            "example": "2022-03-01"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end date and time of this project time booking.",
-            "format": "date",
-            "example": "2022-03-02"
-          },
-          "duration": {
-            "type": "integer",
-            "description": "The duration (in seconds) of this project time booking.",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string",
-            "description": "The optional name/description for this time booking.",
-            "nullable": true
-          },
-          "laneOrder": {
-            "type": "integer",
-            "description": "The order in which this object should be shown in the timeline (row number).\r\nThis value is used by the awork web app.",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectsToPlan": {
-        "type": "object",
-        "properties": {
-          "selectedTeamIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          },
-          "selectedProjectIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          },
-          "selectedProjectFilterNames": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectsToPlanForm": {
-        "type": "object",
-        "properties": {
-          "selectedProjectFilterNames": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "selectedTeamIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          },
-          "selectedProjectIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskSchedule": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user this task schedule is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "taskId": {
-            "type": "string",
-            "description": "The id of the task this task schedule is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date and time of this task schedule.",
-            "format": "date-time",
-            "example": "2022-03-01T09:00:00Z"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end date and time of this task schedule.",
-            "format": "date-time",
-            "example": "2022-03-01T10:00:00Z"
-          },
-          "plannedDuration": {
-            "type": "integer",
-            "description": "The number of seconds of planned work.",
-            "format": "int32",
-            "example": 3600
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskScheduleForm": {
-        "type": "object",
-        "properties": {
-          "taskId": {
-            "type": "string",
-            "description": "The id of the task this task schedule is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date and time of this task schedule.",
-            "format": "date-time",
-            "example": "2022-03-01T09:00:00Z"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end date and time of this task schedule.",
-            "format": "date-time",
-            "example": "2022-03-01T10:00:00Z"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user this task schedule is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskSchedulePutForm": {
-        "type": "object",
-        "properties": {
-          "taskId": {
-            "type": "string",
-            "description": "The id of the task this task schedule is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date and time of this task schedule.",
-            "format": "date-time",
-            "example": "2022-03-01T09:00:00Z"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end date and time of this task schedule.",
-            "format": "date-time",
-            "example": "2022-03-01T10:00:00Z"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TasksToPlan": {
-        "type": "object",
-        "properties": {
-          "taskViewId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "presetFilter": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TasksToPlanForm": {
-        "type": "object",
-        "properties": {
-          "taskViewId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "presetFilter": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UsersToPlan": {
-        "type": "object",
-        "properties": {
-          "selectedUserIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          },
-          "selectedTeamIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          },
-          "selectedProjectIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UsersToPlanForm": {
-        "type": "object",
-        "properties": {
-          "selectedUserIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          },
-          "selectedTeamIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          },
-          "selectedProjectIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadAppointments": {
-        "type": "object",
-        "properties": {
-          "providerName": {
-            "type": "string",
-            "nullable": true
-          },
-          "calendarName": {
-            "type": "string",
-            "nullable": true
-          },
-          "duration": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadCompany": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "hasImage": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadModel": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "description": "The date of the calculated utilisation.",
-            "format": "date-time"
-          },
-          "duration": {
-            "type": "number",
-            "format": "float",
-            "readOnly": true
-          },
-          "userCapacity": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "projects": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkloadProjectInfo"
-            },
-            "nullable": true
-          },
-          "tasks": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkloadTaskInfo"
-            },
-            "nullable": true
-          },
-          "appointments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkloadAppointments"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadProjectInfo": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "company": {
-            "$ref": "#/components/schemas/WorkloadCompany"
-          },
-          "tasks": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkloadTaskInfo"
-            },
-            "nullable": true
-          },
-          "timeBookings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkloadProjectTimeBookingInfo"
-            },
-            "nullable": true
-          },
-          "isAnonymized": {
-            "type": "boolean",
-            "description": "This will be true if the user doesn't have access to the project.\r\nIn that case the Name and the ClientName will be shadowed.",
-            "nullable": true
-          },
-          "hasImage": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadProjectTimeBookingInfo": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "duration": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isAnonymized": {
-            "type": "boolean",
-            "description": "This will be true if the user doesn't have access to the project time booking.\r\nIn that case the Description will be shadowed.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadStatusModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the entity.",
-            "nullable": true,
-            "example": "Website Design and Implementation"
-          },
-          "type": {
-            "type": "string",
-            "description": "The type of the status.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadTaskInfo": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "duration": {
-            "type": "integer",
-            "description": "The duration of the planned effort of the user for this task.\r\nIncludes the duration of recurring tasks if the IsRecurring flag is set to true.",
-            "format": "int32"
-          },
-          "taskStatus": {
-            "$ref": "#/components/schemas/WorkloadStatusModel"
-          },
-          "taskSchedules": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkloadTaskScheduleInfo"
-            },
-            "nullable": true
-          },
-          "isAnonymized": {
-            "type": "boolean",
-            "description": "This will be true if the user doesn't have access to the task.\r\nIn that case the Name and the Status will be shadowed.",
-            "nullable": true
-          },
-          "isRecurring": {
-            "type": "boolean",
-            "description": "Whether the task has a recurrency rule."
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadTaskScheduleInfo": {
-        "type": "object",
-        "properties": {
-          "duration": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "from": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "to": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
       }
     },
     "parameters": {
@@ -47224,7 +47848,7 @@
     },
     {
       "name": "Dashboards",
-      "description": "The Dashboard Endpoints allow you to manage Dashboards and Widgets for users."
+      "description": "The dashboards endpoints allow you to work with user's dashboards."
     },
     {
       "name": "Permissions",
@@ -47263,6 +47887,10 @@
       "description": "The project templates endpoints allow you to define different templates for projects."
     },
     {
+      "name": "ProjectTimeBookings",
+      "description": "\nThe project time bookings are used as a simple way to book a user's time for a specific project in a specific time frame.\nThose bookings are then used in the workload to calculate the estimated load of a user."
+    },
+    {
       "name": "ProjectTypes",
       "description": "The project types endpoints allow you to define different types for projects.\n                             The project types contain the basic information of the project.\n                             This includes the project roles, statuses and status orders."
     },
@@ -47293,6 +47921,10 @@
     {
       "name": "TasksBatch",
       "description": "Controller that offers batch operations for tasks."
+    },
+    {
+      "name": "TaskSchedules",
+      "description": ""
     },
     {
       "name": "TaskTemplates",
@@ -47333,6 +47965,10 @@
     {
       "name": "UserTags",
       "description": "The endpoint to manage the tags."
+    },
+    {
+      "name": "Workload",
+      "description": ""
     },
     {
       "name": "Files",
@@ -47381,18 +48017,6 @@
     {
       "name": "Workspaces",
       "description": "The workspaces endpoints are used to manage the details of your workspace."
-    },
-    {
-      "name": "ProjectTimeBookings",
-      "description": "\nThe project time bookings are used as a simple way to book a user's time for a specific project in a specific time frame.\nThose bookings are then used in the workload to calculate the estimated load of a user."
-    },
-    {
-      "name": "TaskSchedules",
-      "description": ""
-    },
-    {
-      "name": "Workload",
-      "description": ""
     }
   ]
 }
