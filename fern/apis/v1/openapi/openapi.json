@@ -24,7 +24,7 @@
           "AbsenceRegions"
         ],
         "summary": "Gets all the absence regions.",
-        "description": "Gets all the absence regions of the workspace.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "Success",
@@ -357,7 +357,7 @@
           "AbsenceRegions"
         ],
         "summary": "Get an absence region by id.",
-        "description": "Get an absence region by id.\n            It will include the details of the public holidays for the country and location.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "description": "Get an absence region by id.\n            It will include the details of the public holidays for the country and location.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "absenceRegionId",
