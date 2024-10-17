@@ -43572,19 +43572,22 @@
         "description": "The task type model."
       },
       "TypeOfWorkForm": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
           "name": {
+            "minLength": 1,
             "type": "string",
-            "description": "The names of the task type.",
-            "nullable": true,
-            "example": "Sales Work"
+            "description": "The names of the type of work.",
+            "example": "Website Design"
           },
           "description": {
             "type": "string",
-            "description": "A short description of the task type.",
+            "description": "A short description of the type of work.",
             "nullable": true,
-            "example": "Tasks related to sales dept."
+            "example": "Creative Website Design"
           },
           "icon": {
             "type": "string",
