@@ -103,6 +103,8 @@ navigation:
       - userCapacity
       - userTags
       - absences
+      - absenceRegions
+      - workspaceAbsences
       - dashboards
       - page: Files & Images Overview
         path: ./pages/api/files.mdx
