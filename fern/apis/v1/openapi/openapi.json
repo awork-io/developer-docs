@@ -24,7 +24,7 @@
           "AbsenceRegions"
         ],
         "summary": "Gets all the absence regions.",
-        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\n            Any other user will only see themselves assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "Success",
@@ -59,7 +59,7 @@
           "AbsenceRegions"
         ],
         "summary": "Creates a new absence region.",
-        "description": "Creates a new absence region.\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\n            Admin or UserPlanningData(write) permissions are required to create an absence region.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Creates a new absence region.\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to create the absence region.",
           "content": {
@@ -264,7 +264,7 @@
           "AbsenceRegions"
         ],
         "summary": "Updates an absence region.",
-        "description": "Updates an absence region.\n            It is possible to update the name, country code, location code, and default status of an absence region.\n            The name of the absence region must be unique.\n            Admin or UserPlanningData(write) permissions are required to update an absence region.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Updates an absence region.\n            It is possible to update the name, country code, location code, and default status of an absence region.\n            The name of the absence region must be unique.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -319,7 +319,7 @@
           "AbsenceRegions"
         ],
         "summary": "Deletes an absence region.",
-        "description": "Deletes an absence region by id, unassigning all users from the absence region.\n            If the absence region is the default absence region, it will simply be deleted. (no default absence region)\n            Admin or UserPlanningData(write) permissions are required to delete an absence region.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Deletes an absence region by id, unassigning all users from the absence region.\n            If there are workspace absences related to the region, they will be deleted as well.\n            If the absence region is the default absence region, it will simply be deleted. (no default absence region).\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -357,7 +357,7 @@
           "AbsenceRegions"
         ],
         "summary": "Get an absence region by id.",
-        "description": "Get an absence region by id.\n            It will include the details of the public holidays for the country and location.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "description": "Get an absence region by id.\n            It will include the details of the public holidays for the country and location.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -26481,7 +26481,7 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Returns all time entries with a simplified model.",
+        "summary": "Returns all time entries with a simplified model.\n            The grouping options are: project, task, user, typeOfWork, all\n            The all options includes project, user, typeOfWork.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
@@ -30267,7 +30267,7 @@
           "WorkspaceAbsences"
         ],
         "summary": "Gets all workspace absences.",
-        "description": "Gets all workspace absences.\n            Admin or UserPlanningData(write) permissions are required to fetch workspace absences.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Gets all workspace absences. The result can be filtered, sorted, and paged.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -30317,7 +30317,7 @@
           "WorkspaceAbsences"
         ],
         "summary": "Creates a new workspace absence.",
-        "description": "Creates a new workspace absence.\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\n            Admin or UserPlanningData(write) permissions are required to create a workspace absence.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Creates a new workspace absence.\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to create the workspace absence.",
           "content": {
@@ -30362,7 +30362,7 @@
           "WorkspaceAbsences"
         ],
         "summary": "Deletes a workspace absence.",
-        "description": "Deletes a workspace absence.\n            Admin or UserPlanningData(write) permissions are required to delete a workspace absence.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Deletes a workspace absence.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "workspaceAbsenceId",
@@ -30400,7 +30400,7 @@
           "WorkspaceAbsences"
         ],
         "summary": "Updates a workspace absence.",
-        "description": "Updates a workspace absence.\n            Admin or UserPlanningData(write) permissions are required to edit a workspace absence.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Updates a workspace absence.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "workspaceAbsenceId",
@@ -31912,7 +31912,9 @@
           },
           "urlParams": {
             "type": "string",
-            "nullable": true
+            "description": "The URL params to add to the link for verification.\r\nUsed for user tracking.",
+            "nullable": true,
+            "example": "utm=true&campaign=email"
           }
         },
         "additionalProperties": false,
@@ -32514,12 +32516,14 @@
           "code": {
             "type": "string",
             "description": "The ISO-3166-1 alpha-2 country code.",
-            "nullable": true
+            "nullable": true,
+            "example": "DE"
           },
           "name": {
             "type": "string",
             "description": "The name of the country, e.g. \"Germany\".",
-            "nullable": true
+            "nullable": true,
+            "example": "Germany"
           }
         },
         "additionalProperties": false
@@ -32535,23 +32539,27 @@
             "maxLength": 255,
             "minLength": 1,
             "type": "string",
-            "description": "The name of the absence region. Should be unique."
+            "description": "The name of the absence region. Should be unique.",
+            "example": "Hamburg"
           },
           "countryCode": {
             "maxLength": 2,
             "minLength": 1,
             "type": "string",
-            "description": "The ISO 3166-1 alpha-2 country code. (e.g. 'DE' for Germany)"
+            "description": "The ISO 3166-1 alpha-2 country code. (e.g. 'DE' for Germany)",
+            "example": "DE"
           },
           "locationCode": {
             "maxLength": 25,
             "type": "string",
             "description": "The (optional) location code of the absence region.\r\nIt is in ISO 3166-2 format. (e.g. 'DE-BE' for Berlin, Germany)",
-            "nullable": true
+            "nullable": true,
+            "example": "DE-HH"
           },
           "isDefault": {
             "type": "boolean",
-            "description": "Indicates whether the absence region is the default absence region.\r\nA default absence region is automatically assigned to new employees."
+            "description": "Indicates whether the absence region is the default absence region.\r\nA default absence region is automatically assigned to new employees.",
+            "example": true
           }
         },
         "additionalProperties": false
@@ -32562,12 +32570,14 @@
           "code": {
             "type": "string",
             "description": "The ISO-3166-2 location code.",
-            "nullable": true
+            "nullable": true,
+            "example": "DE-HH"
           },
           "name": {
             "type": "string",
             "description": "The name of the location, e.g. \"Berlin\".",
-            "nullable": true
+            "nullable": true,
+            "example": "Hamburg"
           }
         },
         "additionalProperties": false
@@ -32601,36 +32611,43 @@
           "name": {
             "type": "string",
             "description": "The name of the absence region, as specified by the user.\r\nIt must be unique within the workspace.",
-            "nullable": true
+            "nullable": true,
+            "example": "Hamburg"
           },
           "countryCode": {
             "type": "string",
             "description": "The country code of the absence region.\r\nIt must be a valid ISO 3166-1 alpha-2 country code.",
-            "nullable": true
+            "nullable": true,
+            "example": "DE"
           },
           "country": {
             "type": "string",
             "description": "The english name of the country.",
-            "nullable": true
+            "nullable": true,
+            "example": "Germany"
           },
           "locationCode": {
             "type": "string",
             "description": "The location code of the absence region.\r\nIt is optional. It should be a valid ISO 3166-2 country subdivision code.",
-            "nullable": true
+            "nullable": true,
+            "example": "DE-HH"
           },
           "location": {
             "type": "string",
             "description": "The name of the location.\r\nIt will always be in the related country's language.",
-            "nullable": true
+            "nullable": true,
+            "example": "Hamburg"
           },
           "isDefault": {
             "type": "boolean",
-            "description": "Indicates whether the absence region is the default absence region.\r\nAny new user will be assigned to the default absence region."
+            "description": "Indicates whether the absence region is the default absence region.\r\nAny new user will be assigned to the default absence region.",
+            "example": true
           },
           "numberOfPublicHolidays": {
             "type": "integer",
             "description": "The number of public holidays in the absence region.",
-            "format": "int32"
+            "format": "int32",
+            "example": 10
           },
           "assignedUsers": {
             "type": "array",
@@ -32639,7 +32656,11 @@
               "format": "uuid"
             },
             "description": "The list of user ids assigned to the absence region.",
-            "nullable": true
+            "nullable": true,
+            "example": [
+              "7b356284-d22b-4f74-980d-0a548d3b6318",
+              "b37f07dd-6644-4271-9c8a-bb700cc21b63"
+            ]
           }
         },
         "additionalProperties": false
@@ -32673,36 +32694,43 @@
           "name": {
             "type": "string",
             "description": "The name of the absence region, as specified by the user.\r\nIt must be unique within the workspace.",
-            "nullable": true
+            "nullable": true,
+            "example": "Hamburg"
           },
           "countryCode": {
             "type": "string",
             "description": "The country code of the absence region.\r\nIt must be a valid ISO 3166-1 alpha-2 country code.",
-            "nullable": true
+            "nullable": true,
+            "example": "DE"
           },
           "country": {
             "type": "string",
             "description": "The english name of the country.",
-            "nullable": true
+            "nullable": true,
+            "example": "Germany"
           },
           "locationCode": {
             "type": "string",
             "description": "The location code of the absence region.\r\nIt is optional. It should be a valid ISO 3166-2 country subdivision code.",
-            "nullable": true
+            "nullable": true,
+            "example": "DE-HH"
           },
           "location": {
             "type": "string",
             "description": "The name of the location.\r\nIt will always be in the related country's language.",
-            "nullable": true
+            "nullable": true,
+            "example": "Hamburg"
           },
           "isDefault": {
             "type": "boolean",
-            "description": "Indicates whether the absence region is the default absence region.\r\nAny new user will be assigned to the default absence region."
+            "description": "Indicates whether the absence region is the default absence region.\r\nAny new user will be assigned to the default absence region.",
+            "example": true
           },
           "numberOfPublicHolidays": {
             "type": "integer",
             "description": "The number of public holidays in the absence region.",
-            "format": "int32"
+            "format": "int32",
+            "example": 10
           },
           "assignedUsers": {
             "type": "array",
@@ -32711,7 +32739,11 @@
               "format": "uuid"
             },
             "description": "The list of user ids assigned to the absence region.",
-            "nullable": true
+            "nullable": true,
+            "example": [
+              "7b356284-d22b-4f74-980d-0a548d3b6318",
+              "b37f07dd-6644-4271-9c8a-bb700cc21b63"
+            ]
           },
           "publicHolidays": {
             "type": "array",
@@ -33085,7 +33117,11 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "The list of userIds to assign to that region.\r\nProviding an empty list of user ids will remove all users from the absence region."
+            "description": "The list of userIds to assign to that region.\r\nProviding an empty list of user ids will remove all users from the absence region.",
+            "example": [
+              "7b356284-d22b-4f74-980d-0a548d3b6318",
+              "b37f07dd-6644-4271-9c8a-bb700cc21b63"
+            ]
           },
           "regionId": {
             "type": "string",
@@ -36316,17 +36352,20 @@
           "date": {
             "type": "string",
             "description": "The date of the public holiday.",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2024-12-25T00:00:00Z"
           },
           "name": {
             "type": "string",
             "description": "The english name of the public holiday.",
-            "nullable": true
+            "nullable": true,
+            "example": "Christmas Day"
           },
           "localName": {
             "type": "string",
             "description": "The local (native) name of the public holiday.",
-            "nullable": true
+            "nullable": true,
+            "example": "Erster Weihnachtstag"
           }
         },
         "additionalProperties": false
@@ -45160,11 +45199,13 @@
           },
           "isHalfDayOnStart": {
             "type": "boolean",
-            "description": "If it's true, and it's a single day absence means that the absence is for the first half of the workday.\r\nIf it's a multi day absence, it will start on the second half of the first day of the absence period."
+            "description": "If it's true, and it's a single day absence means that the absence is for the first half of the workday.\r\nIf it's a multi day absence, it will start on the second half of the first day of the absence period.",
+            "example": false
           },
           "isHalfDayOnEnd": {
             "type": "boolean",
-            "description": "If it's true, and it's a single day absence means that the absence is for the second half of the workday.\r\nIf it's a multi day absence it will end on the first half of the last day of the absence period."
+            "description": "If it's true, and it's a single day absence means that the absence is for the second half of the workday.\r\nIf it's a multi day absence it will end on the first half of the last day of the absence period.",
+            "example": false
           }
         },
         "additionalProperties": false
@@ -45223,7 +45264,8 @@
           "region": {
             "type": "string",
             "description": "The name of the region of the workspace absence.\r\nNull if the absence is global for the entire workspace.",
-            "nullable": true
+            "nullable": true,
+            "example": "Hamburg"
           },
           "isReadOnly": {
             "type": "boolean",
@@ -45233,12 +45275,14 @@
           "isHalfDayOnStart": {
             "type": "boolean",
             "description": "If it's true and it's a single day absence means that the absence is for the first half of the workday.\r\nIf it's a multi day absence it started on the second half of the first day of the absence period.",
-            "readOnly": true
+            "readOnly": true,
+            "example": false
           },
           "isHalfDayOnEnd": {
             "type": "boolean",
             "description": "If it's true and it's a single day absence means that the absence is for the second half of the workday.\r\nIf it's a multi day absence it ended on the first half of the last day of the absence period.",
-            "readOnly": true
+            "readOnly": true,
+            "example": false
           }
         },
         "additionalProperties": false
