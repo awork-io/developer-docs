@@ -11447,10 +11447,9 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "read"
+          "any": "true"
         },
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:read` permissions.</Check>"
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>"
       },
       "post": {
         "tags": [
