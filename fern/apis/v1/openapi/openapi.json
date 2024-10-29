@@ -19,6 +19,41 @@
   ],
   "paths": {
     "/absenceregions": {
+      "get": {
+        "tags": [
+          "AbsenceRegions"
+        ],
+        "summary": "Gets all the absence regions.",
+        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\n            Any other user will only see themselves assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AbsenceRegionModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "post": {
         "tags": [
           "AbsenceRegions"
@@ -60,41 +95,6 @@
         "x-access": {
           "admin": "true",
           "user-planning-data": "write"
-        }
-      },
-      "get": {
-        "tags": [
-          "AbsenceRegions"
-        ],
-        "summary": "Gets all the absence regions.",
-        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\n            Any other user will only see themselves assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AbsenceRegionModel"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
         }
       }
     },
@@ -314,6 +314,44 @@
           "user-planning-data": "write"
         }
       },
+      "delete": {
+        "tags": [
+          "AbsenceRegions"
+        ],
+        "summary": "Deletes an absence region.",
+        "description": "Deletes an absence region by id, unassigning all users from the absence region.\n            If there are workspace absences related to the region, they will be deleted as well.\n            If the absence region is the default absence region, it will simply be deleted. (no default absence region).\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "absenceRegionId",
+            "in": "path",
+            "description": "The id of the absence region to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "user-planning-data": "write"
+        }
+      },
       "get": {
         "tags": [
           "AbsenceRegions"
@@ -356,44 +394,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      },
-      "delete": {
-        "tags": [
-          "AbsenceRegions"
-        ],
-        "summary": "Deletes an absence region.",
-        "description": "Deletes an absence region by id, unassigning all users from the absence region.\n            If there are workspace absences related to the region, they will be deleted as well.\n            If the absence region is the default absence region, it will simply be deleted. (no default absence region).\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "absenceRegionId",
-            "in": "path",
-            "description": "The id of the absence region to delete.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "user-planning-data": "write"
         }
       }
     },
@@ -5836,6 +5836,47 @@
       }
     },
     "/customfielddefinitions/{customFieldDefinitionId}": {
+      "delete": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Deletes the custom field definition with the specified id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      },
       "put": {
         "tags": [
           "CustomFields"
@@ -5874,47 +5915,6 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      },
-      "delete": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Deletes the custom field definition with the specified id.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "customFieldDefinitionId",
-            "in": "path",
-            "description": "The id of the custom field definition.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
           }
         },
         "security": [
@@ -5991,6 +5991,57 @@
       }
     },
     "/customfielddefinitions/{customFieldDefinitionId}/selectionoptions/{selectionOptionId}": {
+      "delete": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Deletes a custom field selection option for an existing custom field definition.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "customFieldDefinitionId",
+            "in": "path",
+            "description": "The id of the custom field definition.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "selectionOptionId",
+            "in": "path",
+            "description": "The id of the selection option.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      },
       "put": {
         "tags": [
           "CustomFields"
@@ -6039,57 +6090,6 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      },
-      "delete": {
-        "tags": [
-          "CustomFields"
-        ],
-        "summary": "Deletes a custom field selection option for an existing custom field definition.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "customFieldDefinitionId",
-            "in": "path",
-            "description": "The id of the custom field definition.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "selectionOptionId",
-            "in": "path",
-            "description": "The id of the selection option.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "204": {
-            "description": "No Content"
           }
         },
         "security": [
@@ -15468,6 +15468,43 @@
       }
     },
     "/projecttimebookings/{timeBookingId}": {
+      "delete": {
+        "tags": [
+          "ProjectTimeBookings"
+        ],
+        "summary": "Deletes a project time booking by id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeBookingId",
+            "in": "path",
+            "description": "The id of the project time booking.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "put": {
         "tags": [
           "ProjectTimeBookings"
@@ -15506,43 +15543,6 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "delete": {
-        "tags": [
-          "ProjectTimeBookings"
-        ],
-        "summary": "Deletes a project time booking by id.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeBookingId",
-            "in": "path",
-            "description": "The id of the project time booking.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
           }
         },
         "security": [
@@ -21707,41 +21707,6 @@
       }
     },
     "/taskschedules": {
-      "get": {
-        "tags": [
-          "TaskSchedules"
-        ],
-        "summary": "Returns a list of task schedules.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskSchedule"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
       "post": {
         "tags": [
           "TaskSchedules"
@@ -21765,6 +21730,41 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TaskSchedule"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "get": {
+        "tags": [
+          "TaskSchedules"
+        ],
+        "summary": "Returns a list of task schedules.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskSchedule"
+                  }
                 }
               }
             }
@@ -26535,6 +26535,43 @@
       }
     },
     "/timeentries/{timeEntryId}": {
+      "delete": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Deletes the time entry with the specified id.",
+        "description": "Deletes the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "get": {
         "tags": [
           "TimeEntries"
@@ -26563,43 +26600,6 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "delete": {
-        "tags": [
-          "TimeEntries"
-        ],
-        "summary": "Deletes the time entry with the specified id.",
-        "description": "Deletes the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeEntryId",
-            "in": "path",
-            "description": "The id of the time entry.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
           }
         },
         "security": [
@@ -30261,49 +30261,6 @@
       }
     },
     "/workspaceabsences": {
-      "post": {
-        "tags": [
-          "WorkspaceAbsences"
-        ],
-        "summary": "Creates a new workspace absence.",
-        "description": "Creates a new workspace absence.\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "requestBody": {
-          "description": "The model to create the workspace absence.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WorkspaceAbsenceForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WorkspaceAbsenceModel"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "user-planning-data": "write"
-        }
-      },
       "get": {
         "tags": [
           "WorkspaceAbsences"
@@ -30353,9 +30310,90 @@
           "admin": "true",
           "user-planning-data": "write"
         }
+      },
+      "post": {
+        "tags": [
+          "WorkspaceAbsences"
+        ],
+        "summary": "Creates a new workspace absence.",
+        "description": "Creates a new workspace absence.\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "requestBody": {
+          "description": "The model to create the workspace absence.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceAbsenceForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceAbsenceModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "user-planning-data": "write"
+        }
       }
     },
     "/workspaceabsences/{workspaceAbsenceId}": {
+      "delete": {
+        "tags": [
+          "WorkspaceAbsences"
+        ],
+        "summary": "Deletes a workspace absence.",
+        "description": "Deletes a workspace absence.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "workspaceAbsenceId",
+            "in": "path",
+            "description": "The id of the workspace absence to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "user-planning-data": "write"
+        }
+      },
       "put": {
         "tags": [
           "WorkspaceAbsences"
@@ -30394,44 +30432,6 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "user-planning-data": "write"
-        }
-      },
-      "delete": {
-        "tags": [
-          "WorkspaceAbsences"
-        ],
-        "summary": "Deletes a workspace absence.",
-        "description": "Deletes a workspace absence.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "workspaceAbsenceId",
-            "in": "path",
-            "description": "The id of the workspace absence to delete.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
           }
         },
         "security": [
