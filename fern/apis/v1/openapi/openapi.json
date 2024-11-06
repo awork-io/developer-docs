@@ -33899,7 +33899,7 @@
             "$ref": "#/components/schemas/IDefaultNameModel"
           },
           "project": {
-            "$ref": "#/components/schemas/ProjectForCommentEventModel"
+            "$ref": "#/components/schemas/NestedProjectEventModel"
           },
           "task": {
             "$ref": "#/components/schemas/TaskForCommentEventModel"
@@ -36567,6 +36567,46 @@
         },
         "additionalProperties": false
       },
+      "NestedProjectEventModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionTeam"
+            },
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionProjectMember"
+            },
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "isExternal": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "NestedProjectModelForTasks": {
         "type": "object",
         "properties": {
@@ -37568,46 +37608,6 @@
             "type": "boolean",
             "description": "Set to true to delete also the related time trackings.\r\nIf it is set to false the related time trackings are still there, but\r\nthe project and task reference will be cleared.\r\nThat will also happen if no request body is present.",
             "example": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectForCommentEventModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PermissionTeam"
-            },
-            "nullable": true
-          },
-          "members": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PermissionProjectMember"
-            },
-            "nullable": true
-          },
-          "isPrivate": {
-            "type": "boolean"
-          },
-          "isExternal": {
-            "type": "boolean"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -40406,7 +40406,7 @@
             "nullable": true
           },
           "project": {
-            "$ref": "#/components/schemas/ProjectForCommentEventModel"
+            "$ref": "#/components/schemas/NestedProjectEventModel"
           },
           "parentTask": {
             "$ref": "#/components/schemas/PermissionParentTask"
