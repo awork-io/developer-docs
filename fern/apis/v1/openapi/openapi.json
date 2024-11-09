@@ -31867,39 +31867,6 @@
         "additionalProperties": false,
         "description": "The response when configuring MFA."
       },
-      "DefaultNameModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "EmailVerificationForm": {
         "type": "object",
         "properties": {
@@ -31918,23 +31885,6 @@
         },
         "additionalProperties": false,
         "description": "The verification email form."
-      },
-      "EventAndTranslationMapping": {
-        "type": "object",
-        "properties": {
-          "event": {
-            "type": "string",
-            "nullable": true
-          },
-          "translation": {
-            "type": "string",
-            "nullable": true
-          },
-          "initalSet": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
       },
       "ExternalAccount": {
         "type": "object",
@@ -31995,72 +31945,6 @@
         "additionalProperties": false,
         "description": "The response when configuring MFA."
       },
-      "MSTeamsResult": {
-        "type": "object",
-        "properties": {
-          "projectMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DefaultNameModel"
-            },
-            "nullable": true
-          },
-          "eventMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EventAndTranslationMapping"
-            },
-            "nullable": true
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "workspaceId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "workspaceName": {
-            "type": "string",
-            "nullable": true
-          },
-          "integrationId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "eventSelection": {
-            "$ref": "#/components/schemas/ProjectEventSelection"
-          },
-          "isOwnConnector": {
-            "type": "boolean"
-          },
-          "connectedProject": {
-            "$ref": "#/components/schemas/DefaultNameModel"
-          },
-          "systemHostname": {
-            "type": "string",
-            "nullable": true
-          },
-          "isConnectedToDifferentMSTeams": {
-            "type": "boolean"
-          },
-          "userIsPartOfChannel": {
-            "type": "boolean"
-          },
-          "isConnectedToDifferentProject": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "PasswordForgottenModel": {
         "type": "object",
         "properties": {
@@ -32097,23 +31981,6 @@
         },
         "additionalProperties": false,
         "description": "The model for a password reset request."
-      },
-      "ProjectEventSelection": {
-        "type": "object",
-        "properties": {
-          "selectedEvents": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "projectId": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "RegeneratePasswortResetTokenResponse": {
         "type": "object",
@@ -32204,6 +32071,108 @@
         "additionalProperties": false,
         "description": "The registration response."
       },
+      "SelectListGroup": {
+        "type": "object",
+        "properties": {
+          "disabled": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SelectListItem": {
+        "type": "object",
+        "properties": {
+          "disabled": {
+            "type": "boolean"
+          },
+          "group": {
+            "$ref": "#/components/schemas/SelectListGroup"
+          },
+          "selected": {
+            "type": "boolean"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SelectProjectViewModel": {
+        "required": [
+          "projectId"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientId": {
+            "type": "string",
+            "nullable": true
+          },
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "responseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "redirectUri": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "endpoint": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SelectListItem"
+            },
+            "nullable": true
+          },
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "systemHostname": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SendMFATokenModel": {
         "type": "object",
         "properties": {
@@ -32252,6 +32221,16 @@
             "description": "The provider the awork account should connect to.\r\nFor example 'google'.",
             "nullable": true,
             "example": "google"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SuccessViewModel": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
