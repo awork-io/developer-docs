@@ -1331,54 +1331,6 @@
         }
       }
     },
-    "/comments/{commentId}/allfiles": {
-      "get": {
-        "tags": [
-          "CommentFiles"
-        ],
-        "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the comment with the specified id.\r\nCurrently only allowed in projects comment.",
-        "parameters": [
-          {
-            "name": "commentId",
-            "in": "path",
-            "description": "The id of the comment.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExtendedFileInfo"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/comments/{commentId}/externalfiles": {
       "post": {
         "tags": [
@@ -2647,54 +2599,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/companies/{companyId}/allfiles": {
-      "get": {
-        "tags": [
-          "CompanyFiles"
-        ],
-        "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the company with the specified id.\r\nCurrently only allowed in projects company.",
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "description": "The id of the company.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExtendedFileInfo"
-                  }
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -8490,15 +8394,15 @@
     "/projects/{projectId}/allfiles": {
       "get": {
         "tags": [
-          "ProjectFiles"
+          "EntityFiles"
         ],
         "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the project with the specified id.\r\nCurrently only allowed in projects project.",
+        "description": "Returns all files of the project including the ones of tasks linked to that project, with the specified id.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "The id of the project.",
+            "description": "The id of the entity.",
             "required": true,
             "schema": {
               "type": "string",
@@ -8532,6 +8436,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15411,54 +15328,6 @@
         }
       }
     },
-    "/projecttemplates/{projecttemplateId}/allfiles": {
-      "get": {
-        "tags": [
-          "ProjectTemplateFiles"
-        ],
-        "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the projecttemplate with the specified id.\r\nCurrently only allowed in projects projecttemplate.",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "The id of the projecttemplate.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExtendedFileInfo"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/projecttemplates/{projecttemplateId}/deletetags": {
       "post": {
         "tags": [
@@ -20716,54 +20585,6 @@
         }
       }
     },
-    "/tasks/{taskId}/allfiles": {
-      "get": {
-        "tags": [
-          "TaskFiles"
-        ],
-        "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the task with the specified id.\r\nCurrently only allowed in projects task.",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "The id of the task.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExtendedFileInfo"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/tasks/{taskId}/checklistitems": {
       "get": {
         "tags": [
@@ -23479,54 +23300,6 @@
           "task-manage-config": "read"
         },
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `task-manage-config:read` permissions.</Check>"
-      }
-    },
-    "/tasktemplates/{tasktemplateId}/allfiles": {
-      "get": {
-        "tags": [
-          "TaskTemplateFiles"
-        ],
-        "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the tasktemplate with the specified id.\r\nCurrently only allowed in projects tasktemplate.",
-        "parameters": [
-          {
-            "name": "tasktemplateId",
-            "in": "path",
-            "description": "The id of the tasktemplate.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExtendedFileInfo"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/tasktemplates/{tasktemplateId}/externalfiles": {
@@ -26807,7 +26580,12 @@
             "in": "query",
             "description": "The ids of the users to get the project time bookings for.",
             "schema": {
-              "$ref": "#/components/schemas/GuidList"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "description": "A list of GUIDs provided as a comma-separated string in the query parameter"
             }
           },
           {
@@ -26911,9 +26689,14 @@
           {
             "name": "userIds",
             "in": "query",
-            "description": "The ids of the users to get the workload for.",
+            "description": "The ids of the users to get the workload for, as a comma-separated list of Guids.",
             "schema": {
-              "$ref": "#/components/schemas/GuidList"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "description": "A list of GUIDs provided as a comma-separated string in the query parameter"
             }
           },
           {
@@ -27309,54 +27092,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/users/{userId}/allfiles": {
-      "get": {
-        "tags": [
-          "UserFiles"
-        ],
-        "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the user with the specified id.\r\nCurrently only allowed in projects user.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExtendedFileInfo"
-                  }
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -30590,54 +30325,6 @@
         }
       }
     },
-    "/workspaces/{workspaceId}/allfiles": {
-      "get": {
-        "tags": [
-          "WorkspaceFiles"
-        ],
-        "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the workspace with the specified id.\r\nCurrently only allowed in projects workspace.",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "The id of the workspace.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExtendedFileInfo"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/workspaces/{workspaceId}/externalfiles": {
       "post": {
         "tags": [
@@ -31902,10 +31589,6 @@
             "example": "11112222333344445555"
           }
         },
-        "additionalProperties": false
-      },
-      "GuidList": {
-        "type": "object",
         "additionalProperties": false
       },
       "IsFreeMailModel": {
@@ -33881,7 +33564,7 @@
             "$ref": "#/components/schemas/NestedProjectEventModel"
           },
           "task": {
-            "$ref": "#/components/schemas/TaskForCommentEventModel"
+            "$ref": "#/components/schemas/NestedTaskEventModel"
           },
           "createdOn": {
             "type": "string",
@@ -36693,6 +36376,64 @@
             "nullable": true
           },
           "isArchived": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NestedTaskEventModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "project": {
+            "$ref": "#/components/schemas/NestedProjectEventModel"
+          },
+          "parentTask": {
+            "$ref": "#/components/schemas/PermissionParentTask"
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionAssignee"
+            },
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
             "type": "boolean"
           }
         },
@@ -40364,64 +40105,6 @@
             "description": "The id of the successor task template.",
             "format": "uuid",
             "example": "fc8e5a55-e96f-ec11-94f6-dc984040d6c7"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskForCommentEventModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "baseType": {
-            "type": "string",
-            "nullable": true
-          },
-          "project": {
-            "$ref": "#/components/schemas/NestedProjectEventModel"
-          },
-          "parentTask": {
-            "$ref": "#/components/schemas/PermissionParentTask"
-          },
-          "assignees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PermissionAssignee"
-            },
-            "nullable": true
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "parentId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "isExternal": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -48571,6 +48254,10 @@
     {
       "name": "WorkspaceAbsences",
       "description": "Use those endpoints to define workspace wide absences. A WorkspaceAbsence is an absence that is applied to all the users of the workspace. \n                  It is useful for defining company specific events/holidays, for example."
+    },
+    {
+      "name": "EntityFiles",
+      "description": "The entity file endpoints allow you to attach files to several entities."
     },
     {
       "name": "Files",
