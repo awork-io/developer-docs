@@ -33392,36 +33392,8 @@
         "additionalProperties": false
       },
       "Comment": {
-        "required": [
-          "message"
-        ],
         "type": "object",
         "properties": {
-          "message": {
-            "maxLength": 65000,
-            "minLength": 1,
-            "type": "string",
-            "description": "The message of the comment.",
-            "example": "Hey team, the customer loved the latest designs!"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user who created the comment.\r\nOptional. If not set, defaults to the current user.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "previews": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "The preview URLs to show a preview for.",
-            "nullable": true,
-            "example": [
-              "https://www.awork.com/en/blog/automatic-project-management/"
-            ]
-          },
           "id": {
             "type": "string",
             "description": "The id of the comment.",
@@ -33503,22 +33475,11 @@
             "format": "int64",
             "readOnly": true,
             "example": 637825154598057900
-          }
-        },
-        "additionalProperties": false,
-        "description": "The comment model."
-      },
-      "CommentEventModel": {
-        "required": [
-          "message"
-        ],
-        "type": "object",
-        "properties": {
+          },
           "message": {
-            "maxLength": 65000,
-            "minLength": 1,
             "type": "string",
             "description": "The message of the comment.",
+            "nullable": true,
             "example": "Hey team, the customer loved the latest designs!"
           },
           "userId": {
@@ -33539,6 +33500,17 @@
               "https://www.awork.com/en/blog/automatic-project-management/"
             ]
           },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the comment should be hidden to connect users."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The comment model."
+      },
+      "CommentEventModel": {
+        "type": "object",
+        "properties": {
           "id": {
             "type": "string",
             "description": "The id of the comment.",
@@ -33621,6 +33593,34 @@
             "readOnly": true,
             "example": 637825154598057900
           },
+          "message": {
+            "type": "string",
+            "description": "The message of the comment.",
+            "nullable": true,
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user who created the comment.\r\nOptional. If not set, defaults to the current user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "previews": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The preview URLs to show a preview for.",
+            "nullable": true,
+            "example": [
+              "https://www.awork.com/en/blog/automatic-project-management/"
+            ]
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the comment should be hidden to connect users."
+          },
           "isExternal": {
             "type": "boolean"
           }
@@ -33657,6 +33657,11 @@
             "example": [
               "https://www.awork.com/en/blog/automatic-project-management/"
             ]
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "(optional) Whether the comment is hidden for connect users.\r\nProviding a null value will not change the current state.\r\nBy default, comments are not hidden for connect users.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -36435,6 +36440,9 @@
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "isExternal": {
+            "type": "boolean"
+          },
+          "isHiddenForConnectUsers": {
             "type": "boolean"
           }
         },
@@ -40237,24 +40245,8 @@
         "additionalProperties": false
       },
       "TaskList": {
-        "required": [
-          "name"
-        ],
         "type": "object",
         "properties": {
-          "name": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The name of the list.",
-            "example": "Product and Marketing To-Dos"
-          },
-          "order": {
-            "type": "number",
-            "description": "The order of the list.",
-            "format": "double",
-            "nullable": true,
-            "example": 2
-          },
           "id": {
             "type": "string",
             "description": "The id of the task list.",
@@ -40289,6 +40281,23 @@
             "description": "The id of the user who last modified this task list.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the list.",
+            "nullable": true,
+            "example": "Product and Marketing To-Dos"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 2
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise."
           }
         },
         "additionalProperties": false
@@ -40304,6 +40313,11 @@
             "type": "string",
             "description": "The name of the list.",
             "example": "Product and Marketing To-Dos"
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise.\r\nIf null, no change will be made.",
+            "nullable": true
           },
           "order": {
             "type": "number",
@@ -40344,6 +40358,11 @@
             "description": "The name of the list.",
             "example": "Product and Marketing To-Dos"
           },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise.\r\nIf null, no change will be made.",
+            "nullable": true
+          },
           "order": {
             "type": "number",
             "description": "The order of the list.",
@@ -40365,6 +40384,11 @@
             "type": "string",
             "description": "The name of the list.",
             "example": "Product and Marketing To-Dos"
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise.\r\nIf null, no change will be made.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -40395,6 +40419,10 @@
             "description": "The order of the task list template, unique within the task bundle.",
             "format": "double",
             "example": 1
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list is not visible for external workspace users."
           }
         },
         "additionalProperties": false
@@ -40464,6 +40492,10 @@
           "isExternal": {
             "type": "boolean",
             "description": "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task is hidden for external workspace users. \r\nFalse otherwise."
           },
           "baseType": {
             "enum": [
@@ -40806,24 +40838,8 @@
         "additionalProperties": false
       },
       "TaskOrderList": {
-        "required": [
-          "name"
-        ],
         "type": "object",
         "properties": {
-          "name": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The name of the list.",
-            "example": "Product and Marketing To-Dos"
-          },
-          "order": {
-            "type": "number",
-            "description": "The order of the list.",
-            "format": "double",
-            "nullable": true,
-            "example": 2
-          },
           "id": {
             "type": "string",
             "description": "The id of the task list.",
@@ -40858,6 +40874,23 @@
             "description": "The id of the user who last modified this task list.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the list.",
+            "nullable": true,
+            "example": "Product and Marketing To-Dos"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 2
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise."
           },
           "orderOfTask": {
             "type": "number",
