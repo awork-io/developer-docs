@@ -38611,6 +38611,32 @@
         },
         "additionalProperties": false
       },
+      "ProjectTimeBookingsFromTaskForm": {
+        "type": "object",
+        "properties": {
+          "taskIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The ids of the tasks to create project time bookings for.",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project these project time bookings are for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Additional prompt for the AI to consider when creating the project time bookings.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ProjectType": {
         "type": "object",
         "properties": {
@@ -44691,6 +44717,13 @@
           },
           "userCapacity": {
             "type": "integer",
+            "description": "The total capacity of the user on this day.",
+            "format": "int32",
+            "nullable": true
+          },
+          "remainingUserCapacity": {
+            "type": "integer",
+            "description": "The remaining capacity of the user on this day.",
             "format": "int32",
             "nullable": true
           },
@@ -45207,6 +45240,10 @@
             "nullable": true,
             "example": null
           },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "Whether the file is hidden for connect users."
+          },
           "task": {
             "$ref": "#/components/schemas/SimpleTaskModel"
           }
@@ -45385,6 +45422,10 @@
             "description": "The file url of the external provider.",
             "nullable": true,
             "example": null
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "Whether the file is hidden for connect users."
           }
         },
         "additionalProperties": false,
