@@ -7120,7 +7120,10 @@
                   "items": {
                     "type": "string"
                   }
-                }
+                },
+                "example": [
+                  "https://www.awork.com"
+                ]
               }
             }
           }
@@ -7157,7 +7160,10 @@
                   "items": {
                     "type": "string"
                   }
-                }
+                },
+                "example": [
+                  "https://www.awork.com"
+                ]
               }
             }
           }
@@ -9831,7 +9837,7 @@
           "CustomFields"
         ],
         "summary": "Returns all custom field definitions for a project.",
-        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "description": "Permissions: The user either needs to have the project master data read permission or needs to have access to at least one task in the project.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -17208,7 +17214,10 @@
                   "items": {
                     "type": "string"
                   }
-                }
+                },
+                "example": [
+                  "https://www.awork.com"
+                ]
               }
             }
           }
@@ -38633,6 +38642,10 @@
             "type": "string",
             "description": "Additional prompt for the AI to consider when creating the project time bookings.",
             "nullable": true
+          },
+          "useAlgorithm": {
+            "type": "boolean",
+            "description": "Solve the problem algorithmically instead of using AI."
           }
         },
         "additionalProperties": false
@@ -45552,6 +45565,19 @@
           }
         },
         "additionalProperties": false
+      },
+      "GenerateExportForm": {
+        "type": "object",
+        "properties": {
+          "filterUrl": {
+            "type": "string",
+            "description": "The relative API URL with the option to append a filter.",
+            "nullable": true,
+            "example": "projects/123e4567-e89b-12d3-a456-426614174000/projecttasks"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Form with the details to generate an export."
       },
       "SimpleTaskModel": {
         "type": "object",
