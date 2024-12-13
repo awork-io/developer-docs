@@ -35997,7 +35997,7 @@
             "items": {
               "$ref": "#/components/schemas/ConnectedUserModel"
             },
-            "description": "All users, which has been mentioned on the comment.",
+            "description": "All users which have been mentioned in the comment.",
             "nullable": true
           },
           "everyUserHadPermissions": {
