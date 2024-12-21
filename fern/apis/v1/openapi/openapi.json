@@ -36046,6 +36046,44 @@
         },
         "additionalProperties": false
       },
+      "MinimalUserWithAbsenceRegionId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isDeactivated": {
+            "type": "boolean"
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "isExternal": {
+            "type": "boolean"
+          },
+          "absenceRegionId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
       "MoveUserInRole": {
         "type": "object",
         "properties": {
