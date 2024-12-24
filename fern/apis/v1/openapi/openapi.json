@@ -31285,6 +31285,10 @@
               "Email",
               "Authenticator"
             ]
+          },
+          "passwordlessEnabled": {
+            "type": "boolean",
+            "description": "Whether the account has passwordless login enabled."
           }
         },
         "additionalProperties": false,
@@ -31330,6 +31334,382 @@
         },
         "additionalProperties": false,
         "description": "The POST/PUT model for an account."
+      },
+      "Algorithm": {
+        "enum": [
+          -65535,
+          -259,
+          -258,
+          -257,
+          -47,
+          -39,
+          -38,
+          -37,
+          -36,
+          -35,
+          -8,
+          -7
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "AssertionOptions": {
+        "type": "object",
+        "properties": {
+          "challenge": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "timeout": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "rpId": {
+            "type": "string",
+            "nullable": true
+          },
+          "allowCredentials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicKeyCredentialDescriptor"
+            },
+            "nullable": true
+          },
+          "userVerification": {
+            "$ref": "#/components/schemas/UserVerificationRequirement"
+          },
+          "hints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicKeyCredentialHint"
+            },
+            "nullable": true
+          },
+          "extensions": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsClientInputs"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssertionResponse": {
+        "type": "object",
+        "properties": {
+          "authenticatorData": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "signature": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "clientDataJSON": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "userHandle": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AttestationConveyancePreference": {
+        "enum": [
+          "none",
+          "indirect",
+          "direct",
+          "enterprise"
+        ],
+        "type": "string"
+      },
+      "AttestationResponse": {
+        "type": "object",
+        "properties": {
+          "attestationObject": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "clientDataJSON": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "transports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthenticatorTransport"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AttestationStatementFormatIdentifier": {
+        "enum": [
+          "packed",
+          "tpm",
+          "android-key",
+          "android-safetynet",
+          "fido-u2f",
+          "apple",
+          "none"
+        ],
+        "type": "string"
+      },
+      "AuthenticationExtensionsClientInputs": {
+        "type": "object",
+        "properties": {
+          "example.extension.bool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "exts": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "uvm": {
+            "type": "boolean",
+            "nullable": true,
+            "writeOnly": true
+          },
+          "credProps": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "prf": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsPRFInputs"
+          },
+          "largeBlob": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsLargeBlobInputs"
+          },
+          "credentialProtectionPolicy": {
+            "$ref": "#/components/schemas/CredentialProtectionPolicy"
+          },
+          "enforceCredentialProtectionPolicy": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationExtensionsClientOutputs": {
+        "type": "object",
+        "properties": {
+          "example.extension.bool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "appid": {
+            "type": "boolean"
+          },
+          "exts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "uvm": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64"
+              }
+            },
+            "nullable": true
+          },
+          "credProps": {
+            "$ref": "#/components/schemas/CredentialPropertiesOutput"
+          },
+          "prf": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsPRFOutputs"
+          },
+          "largeBlob": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsLargeBlobOutputs"
+          },
+          "credProtect": {
+            "$ref": "#/components/schemas/CredentialProtectionPolicy"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationExtensionsLargeBlobInputs": {
+        "type": "object",
+        "properties": {
+          "support": {
+            "$ref": "#/components/schemas/LargeBlobSupport"
+          },
+          "read": {
+            "type": "boolean"
+          },
+          "write": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationExtensionsLargeBlobOutputs": {
+        "type": "object",
+        "properties": {
+          "supported": {
+            "type": "boolean"
+          },
+          "blob": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "written": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationExtensionsPRFInputs": {
+        "type": "object",
+        "properties": {
+          "eval": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsPRFValues"
+          },
+          "evalByCredential": {
+            "$ref": "#/components/schemas/StringAuthenticationExtensionsPRFValuesKeyValuePair"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationExtensionsPRFOutputs": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "results": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsPRFValues"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationExtensionsPRFValues": {
+        "required": [
+          "first"
+        ],
+        "type": "object",
+        "properties": {
+          "first": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "second": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticatorAssertionRawResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "rawId": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "response": {
+            "$ref": "#/components/schemas/AssertionResponse"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PublicKeyCredentialType"
+          },
+          "extensions": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsClientOutputs"
+          },
+          "clientExtensionResults": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsClientOutputs"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticatorAttachment": {
+        "enum": [
+          "platform",
+          "cross-platform"
+        ],
+        "type": "string"
+      },
+      "AuthenticatorAttestationRawResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "rawId": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/PublicKeyCredentialType"
+          },
+          "response": {
+            "$ref": "#/components/schemas/AttestationResponse"
+          },
+          "extensions": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsClientOutputs"
+          },
+          "clientExtensionResults": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsClientOutputs"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticatorSelection": {
+        "type": "object",
+        "properties": {
+          "authenticatorAttachment": {
+            "$ref": "#/components/schemas/AuthenticatorAttachment"
+          },
+          "residentKey": {
+            "$ref": "#/components/schemas/ResidentKeyRequirement"
+          },
+          "requireResidentKey": {
+            "type": "boolean",
+            "deprecated": true
+          },
+          "userVerification": {
+            "$ref": "#/components/schemas/UserVerificationRequirement"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticatorTransport": {
+        "enum": [
+          "usb",
+          "nfc",
+          "ble",
+          "smart-card",
+          "hybrid",
+          "internal"
+        ],
+        "type": "string"
       },
       "ChangePasswordForm": {
         "type": "object",
@@ -31563,6 +31943,85 @@
         "additionalProperties": false,
         "description": "The response when configuring MFA."
       },
+      "CredentialCreateOptions": {
+        "type": "object",
+        "properties": {
+          "rp": {
+            "$ref": "#/components/schemas/PublicKeyCredentialRpEntity"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Fido2User"
+          },
+          "challenge": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "pubKeyCredParams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PubKeyCredParam"
+            },
+            "nullable": true
+          },
+          "timeout": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "attestation": {
+            "$ref": "#/components/schemas/AttestationConveyancePreference"
+          },
+          "attestationFormats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttestationStatementFormatIdentifier"
+            },
+            "nullable": true
+          },
+          "authenticatorSelection": {
+            "$ref": "#/components/schemas/AuthenticatorSelection"
+          },
+          "hints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicKeyCredentialHint"
+            },
+            "nullable": true
+          },
+          "excludeCredentials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicKeyCredentialDescriptor"
+            },
+            "nullable": true
+          },
+          "extensions": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsClientInputs"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CredentialPropertiesOutput": {
+        "type": "object",
+        "properties": {
+          "rk": {
+            "type": "boolean"
+          },
+          "authenticatorDisplayName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CredentialProtectionPolicy": {
+        "enum": [
+          "userVerificationOptional",
+          "userVerificationOptionalWithCredentialIDList",
+          "userVerificationRequired"
+        ],
+        "type": "string"
+      },
       "EmailVerificationForm": {
         "type": "object",
         "properties": {
@@ -31600,6 +32059,25 @@
         },
         "additionalProperties": false
       },
+      "Fido2User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "IsFreeMailModel": {
         "required": [
           "email"
@@ -31613,6 +32091,13 @@
           }
         },
         "additionalProperties": false
+      },
+      "LargeBlobSupport": {
+        "enum": [
+          "required",
+          "preferred"
+        ],
+        "type": "string"
       },
       "MFAResponse": {
         "type": "object",
@@ -31673,6 +32158,103 @@
         },
         "additionalProperties": false,
         "description": "The model for a password reset request."
+      },
+      "PasswordlessLoginResult": {
+        "type": "object",
+        "properties": {
+          "credentialId": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "signCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isBackedUp": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email of the user.",
+            "nullable": true,
+            "example": "carla@ncnstn.com"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token used to log the user in.",
+            "nullable": true,
+            "example": "097654"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The result of a passwordless login."
+      },
+      "PubKeyCredParam": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/PublicKeyCredentialType"
+          },
+          "alg": {
+            "$ref": "#/components/schemas/Algorithm"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicKeyCredentialDescriptor": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/PublicKeyCredentialType"
+          },
+          "id": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "transports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthenticatorTransport"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicKeyCredentialHint": {
+        "enum": [
+          "security-key",
+          "client-device",
+          "hybrid"
+        ],
+        "type": "string"
+      },
+      "PublicKeyCredentialRpEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicKeyCredentialType": {
+        "enum": [
+          "public-key",
+          "invalid"
+        ],
+        "type": "string"
       },
       "RegeneratePasswortResetTokenResponse": {
         "type": "object",
@@ -31762,6 +32344,72 @@
         },
         "additionalProperties": false,
         "description": "The registration response."
+      },
+      "RegisteredPublicKeyCredential": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/PublicKeyCredentialType"
+          },
+          "id": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "publicKey": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "transports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthenticatorTransport"
+            },
+            "nullable": true
+          },
+          "signCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isBackupEligible": {
+            "type": "boolean"
+          },
+          "isBackedUp": {
+            "type": "boolean"
+          },
+          "aaGuid": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Fido2User"
+          },
+          "attestationFormat": {
+            "type": "string",
+            "nullable": true
+          },
+          "attestationObject": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "attestationClientDataJson": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResidentKeyRequirement": {
+        "enum": [
+          "required",
+          "preferred",
+          "discouraged"
+        ],
+        "type": "string"
       },
       "SelectListGroup": {
         "type": "object",
@@ -31917,6 +32565,19 @@
         },
         "additionalProperties": false
       },
+      "StringAuthenticationExtensionsPRFValuesKeyValuePair": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "$ref": "#/components/schemas/AuthenticationExtensionsPRFValues"
+          }
+        },
+        "additionalProperties": false
+      },
       "SuccessViewModel": {
         "type": "object",
         "properties": {
@@ -31957,6 +32618,14 @@
         },
         "additionalProperties": false,
         "description": "The token response contains the access and refresh tokens."
+      },
+      "UserVerificationRequirement": {
+        "enum": [
+          "required",
+          "preferred",
+          "discouraged"
+        ],
+        "type": "string"
       },
       "ValidateAccount": {
         "required": [
