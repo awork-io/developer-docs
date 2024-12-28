@@ -8398,7 +8398,7 @@
       }
     },
     "/projects/{projectId}/allfiles": {
-      "post": {
+      "get": {
         "tags": [
           "ProjectFiles"
         ],
