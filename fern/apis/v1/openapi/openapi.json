@@ -8400,10 +8400,10 @@
     "/projects/{projectId}/allfiles": {
       "get": {
         "tags": [
-          "EntityFiles"
+          "ProjectFiles"
         ],
         "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the project including the ones of tasks linked to that project, with the specified id.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "description": "Returns all files of the project including the ones of tasks linked to that project, with the specified id.",
         "parameters": [
           {
             "name": "projectId",
@@ -8442,19 +8442,6 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
         }
       }
     },
@@ -9717,6 +9704,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -20059,7 +20066,7 @@
           "Tasks"
         ],
         "summary": "Deletes several tasks.",
-        "description": "Deletes the specified tasks.\r\nBy default, the related time entries of these tasks loose the relation to the deleted tasks.\r\nIn order to delete the time entires as well, you need to set the 'DeleteTimeTrackings' property to true.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info> Returns `204 NoContent` if all tasks have been deleted successfully. Returns `207 MultiStatus` if at least one task could not be deleted, including the reasons.</Info>",
+        "description": "Deletes the specified tasks.\r\nBy default, the related time entries of these tasks loose the relation to the deleted tasks.\r\nIn order to delete the time entires as well, you need to set the 'DeleteTimeTrackings' property to true.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been deleted successfully. Returns `207 MultiStatus` if at least one task could not be deleted, including the reasons.</Info>",
         "requestBody": {
           "description": "The model to delete tasks.",
           "content": {
@@ -20078,6 +20085,29 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "207": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IErrorResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -21157,6 +21187,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -35976,6 +36026,43 @@
         "additionalProperties": false,
         "description": "Model to capture the time tracking statistics for an entity.\r\nIncludes the total tracked duration, total billable duration and total billed duration.\r\nThe total non-billable duration can be calculated by subtracting the total billable duration from the total tracked duration.\r\nThe total non-billed duration can be calculated by subtracting the total billed duration from the total billable duration."
       },
+      "ErrorResponse": {
+        "required": [
+          "code",
+          "description",
+          "link"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "link": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "validationErrors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationErrorResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ExtendedProjectStatusModel": {
         "type": "object",
         "properties": {
@@ -36507,6 +36594,43 @@
           },
           "name": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IErrorResponse": {
+        "required": [
+          "code",
+          "description",
+          "link"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "link": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "validationErrors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationErrorResponse"
+            },
             "nullable": true
           }
         },
@@ -42648,7 +42772,7 @@
           },
           "deleteTimeTrackings": {
             "type": "boolean",
-            "description": "Set to true to delete also the related time trackings.\r\nIf it is set to false the related time trackings are still there, but\r\nthe project and task reference will be cleared.\r\nThat will also happen if no request body is present.",
+            "description": "Set to true to also delete the related time trackings.\r\nIf it is set to false, the related time trackings will still be there, but\r\nthe project and task reference will be cleared.\r\nThis will also happen if no request body is present.",
             "example": true
           }
         },
@@ -45238,6 +45362,20 @@
         },
         "additionalProperties": false
       },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "property": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Widget": {
         "type": "object",
         "properties": {
@@ -46921,42 +47059,6 @@
         },
         "additionalProperties": false
       },
-      "ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "link": {
-            "type": "string",
-            "nullable": true
-          },
-          "stackTrace": {
-            "type": "string",
-            "nullable": true
-          },
-          "details": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "validationErrors": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ValidationErrorResponse"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Trigger": {
         "type": "object",
         "properties": {
@@ -46996,20 +47098,6 @@
             "description": "The value of the trigger value.",
             "nullable": true,
             "example": "Design"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ValidationErrorResponse": {
-        "type": "object",
-        "properties": {
-          "property": {
-            "type": "string",
-            "nullable": true
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -49069,10 +49157,6 @@
     {
       "name": "WorkspaceAbsences",
       "description": "Use those endpoints to define workspace wide absences. A WorkspaceAbsence is an absence that is applied to all the users of the workspace. \n                  It is useful for defining company specific events/holidays, for example."
-    },
-    {
-      "name": "EntityFiles",
-      "description": "The entity file endpoints allow you to attach files to several entities."
     },
     {
       "name": "Files",
