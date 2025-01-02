@@ -39327,6 +39327,12 @@
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "timeBudget": {
+            "type": "integer",
+            "description": "The amount of time budgeted for the project in seconds.\r\nIf null, the time budget will be unchanged.\r\nSet to 0 to remove the time budget.",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false,
