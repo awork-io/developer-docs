@@ -36059,6 +36059,10 @@
               "$ref": "#/components/schemas/ValidationErrorResponse"
             },
             "nullable": true
+          },
+          "traceId": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -36631,6 +36635,10 @@
             "items": {
               "$ref": "#/components/schemas/ValidationErrorResponse"
             },
+            "nullable": true
+          },
+          "traceId": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -39457,32 +39465,22 @@
         },
         "additionalProperties": false
       },
-      "ProjectTimeBookingsFromTaskForm": {
+      "ProjectTimeBookingsAutoFixForm": {
         "type": "object",
         "properties": {
-          "taskIds": {
+          "bookingIds": {
             "type": "array",
             "items": {
               "type": "string",
               "format": "uuid"
             },
-            "description": "The ids of the tasks to create project time bookings for.",
+            "description": "The ids of the bookings to fix.",
             "nullable": true
-          },
-          "projectId": {
-            "type": "string",
-            "description": "The id of the project these project time bookings are for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "prompt": {
             "type": "string",
             "description": "Additional prompt for the AI to consider when creating the project time bookings.",
             "nullable": true
-          },
-          "useAlgorithm": {
-            "type": "boolean",
-            "description": "Solve the problem algorithmically instead of using AI."
           }
         },
         "additionalProperties": false
