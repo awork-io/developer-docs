@@ -8064,30 +8064,6 @@
         }
       }
     },
-    "/projects/trackedtime": {
-      "get": {
-        "tags": [
-          "ProjectTimeEntries"
-        ],
-        "summary": "Gets the summed up tracked time duration for all projects and tasks.",
-        "description": "The projectName parameter defines the main project of which to fetch the time entries for the duration sum.\r\nSupported types are: 'projects' and 'tasks'",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeTrackingDurationAggregation"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/projects/welcomeproject": {
       "post": {
         "tags": [
@@ -12674,10 +12650,9 @@
     "/projects/{projectId}/trackedtime": {
       "get": {
         "tags": [
-          "ProjectTimeEntries"
+          "EntityTimeEntries"
         ],
-        "summary": "Gets the summed up tracked time duration for specified projects and tasks.",
-        "description": "The projectName parameter defines the main project of which to fetch the time entries for the duration sum.\r\nSupported types are: 'projects' and 'tasks'",
+        "summary": "Gets the summed up tracked time duration for specified projects.",
         "parameters": [
           {
             "name": "projectId",
@@ -12701,7 +12676,23 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true,
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-master-data": "read"
+        },
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-master-data:read` permissions.</Check>"
       }
     },
     "/projects/{projectId}/typeofwork": {
@@ -20256,30 +20247,6 @@
         }
       }
     },
-    "/tasks/trackedtime": {
-      "get": {
-        "tags": [
-          "TaskTimeEntries"
-        ],
-        "summary": "Gets the summed up tracked time duration for all projects and tasks.",
-        "description": "The taskName parameter defines the main task of which to fetch the time entries for the duration sum.\r\nSupported types are: 'projects' and 'tasks'",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeTrackingDurationAggregation"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/tasks/{entityId}/addtags": {
       "post": {
         "tags": [
@@ -22508,39 +22475,6 @@
                   "items": {
                     "$ref": "#/components/schemas/TimeTracking"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tasks/{taskId}/trackedtime": {
-      "get": {
-        "tags": [
-          "TaskTimeEntries"
-        ],
-        "summary": "Gets the summed up tracked time duration for specified projects and tasks.",
-        "description": "The taskName parameter defines the main task of which to fetch the time entries for the duration sum.\r\nSupported types are: 'projects' and 'tasks'",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "The id of the task.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTrackingDurationAggregation"
                 }
               }
             }
@@ -37928,6 +37862,10 @@
             "nullable": true,
             "example": "purple"
           },
+          "deductNonBillableHours": {
+            "type": "boolean",
+            "description": "Whether to deduct non-billable hours from project budgets."
+          },
           "projectStatusId": {
             "type": "string",
             "description": "The id of the project status.",
@@ -38075,6 +38013,10 @@
             "type": "boolean",
             "description": "True if this entity is coming from an external workspace (awork Connect).",
             "example": true
+          },
+          "isRetainer": {
+            "type": "boolean",
+            "description": "Whether the project is a retainer project.\r\nRetainer projects have at least one retainer with budgets."
           }
         },
         "additionalProperties": false,
@@ -38263,6 +38205,10 @@
             "description": "The color of the project for display purposes in awork.\r\nThe supported colors are defined by the awork frontend.\r\nCan be null when no color assigned.",
             "nullable": true,
             "example": "purple"
+          },
+          "deductNonBillableHours": {
+            "type": "boolean",
+            "description": "Whether to deduct non-billable hours from project budgets."
           },
           "projectStatusId": {
             "type": "string",
@@ -38894,6 +38840,10 @@
             "description": "The color of the project for display purposes in awork.\r\nThe supported colors are defined by the awork frontend.\r\nCan be null when no color assigned.",
             "nullable": true,
             "example": "purple"
+          },
+          "deductNonBillableHours": {
+            "type": "boolean",
+            "description": "Whether to deduct non-billable hours from project budgets."
           }
         },
         "additionalProperties": false,
@@ -40200,6 +40150,206 @@
             "description": "The timezone of the Recurrency Rule.",
             "nullable": true,
             "example": "Europe/Berlin"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Retainer": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "The start of the retainer contract.",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end of the retainer contract until new budgets will be created. Optional.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "syncProjectDates": {
+            "type": "boolean",
+            "description": "Whether the project start and due dates should be synced to the retainer start and end dates."
+          },
+          "timeBudget": {
+            "type": "integer",
+            "description": "The time budget per retainer period in seconds. The default budget amount for new budgets in this retainer.",
+            "format": "int32"
+          },
+          "retainerPeriod": {
+            "type": "string",
+            "description": "The period for new budgets in this retainer.\r\nCurrently only 'monthly' is supported.",
+            "nullable": true
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The timezone for when new budgets are created.",
+            "nullable": true
+          },
+          "rollOverUnderspentBudget": {
+            "type": "boolean",
+            "description": "Whether underspent budgets should be rolled over to the next period."
+          },
+          "rollOverOverspentBudget": {
+            "type": "boolean",
+            "description": "Whether overspent budgets should be rolled over to the next period."
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the retainer.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The project this retainer is associated with.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether the retainer belongs to an external project."
+          },
+          "retainerBudgets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetainerBudget"
+            },
+            "description": "The budgets for this retainer. Each budget period (month) gets its own budget.",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this retainer was created.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this retainer.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this retainer was last modified.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this retainer.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RetainerBudget": {
+        "type": "object",
+        "properties": {
+          "timeBudget": {
+            "type": "integer",
+            "description": "The budget for this retainer period in seconds.\r\nCurrently does not take the RollOverUnderspentBudget and RollOverOverspentBudget flags into account.",
+            "format": "int32"
+          },
+          "trackedDuration": {
+            "type": "integer",
+            "description": "The sum of tracked time in this retainer period.\r\nContains billable and non-billable hours if the DeductNonBillableHours flag is set to true.\r\nContains only billable hours if the DeductNonBillableHours flag is set to false.\r\nTime entries belong to the retainer period if their StartDate is between the StartDate and EndDate of the retainer period.",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start of the retainer period.",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end of the retainer period.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RetainerForm": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "The start of the retainer contract.",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end of the retainer contract until new budgets will be created. Optional.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "syncProjectDates": {
+            "type": "boolean",
+            "description": "Whether the project start and due dates should be synced to the retainer start and end dates."
+          },
+          "timeBudget": {
+            "type": "integer",
+            "description": "The time budget per retainer period in seconds. The default budget amount for new budgets in this retainer.",
+            "format": "int32"
+          },
+          "retainerPeriod": {
+            "type": "string",
+            "description": "The period for new budgets in this retainer.\r\nCurrently only 'monthly' is supported.",
+            "nullable": true
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The timezone for when new budgets are created.",
+            "nullable": true
+          },
+          "rollOverUnderspentBudget": {
+            "type": "boolean",
+            "description": "Whether underspent budgets should be rolled over to the next period."
+          },
+          "rollOverOverspentBudget": {
+            "type": "boolean",
+            "description": "Whether overspent budgets should be rolled over to the next period."
+          }
+        },
+        "additionalProperties": false
+      },
+      "RetainerPutForm": {
+        "type": "object",
+        "properties": {
+          "timeBudget": {
+            "type": "integer",
+            "description": "The budget per retainer period in seconds. All budgets in this retainer will have this amount.",
+            "format": "int32"
+          },
+          "rollOverUnderspentBudget": {
+            "type": "boolean",
+            "description": "Whether underspent budgets should be rolled over to the next period."
+          },
+          "rollOverOverspentBudget": {
+            "type": "boolean",
+            "description": "Whether overspent budgets should be rolled over to the next period."
+          }
+        },
+        "additionalProperties": false
+      },
+      "RetainerSetDatesForm": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "The start of the retainer contract.",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end of the retainer contract until new budgets will be created. Optional.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "syncProjectDates": {
+            "type": "boolean",
+            "description": "Whether the project start and due dates should be synced to the retainer start and end dates."
           }
         },
         "additionalProperties": false
@@ -49037,6 +49187,10 @@
     {
       "name": "Dashboards",
       "description": "The dashboards endpoints allow you to work with user's dashboards."
+    },
+    {
+      "name": "EntityTimeEntries",
+      "description": "The endpoints allow access to time entires and tracked times on specific entities like 'projects' and 'tasks'."
     },
     {
       "name": "Permissions",
