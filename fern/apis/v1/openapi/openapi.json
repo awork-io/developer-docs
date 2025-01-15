@@ -40342,7 +40342,7 @@
         "properties": {
           "timeBudget": {
             "type": "integer",
-            "description": "The budget for this retainer period in seconds.\r\nCurrently does not take the RollOverUnderspentBudget and RollOverOverspentBudget flags into account.",
+            "description": "The budget for this retainer period in seconds.\r\nBased on the carry over option selected in the retainer settings, the timebudget is adjusted by the carry over from the previous period.",
             "format": "int32"
           },
           "trackedDuration": {
@@ -40352,12 +40352,12 @@
           },
           "startDate": {
             "type": "string",
-            "description": "The start of the retainer period.",
+            "description": "The start of the retainer period in UTC.",
             "format": "date-time"
           },
           "endDate": {
             "type": "string",
-            "description": "The end of the retainer period.",
+            "description": "The end of the retainer period in UTC.",
             "format": "date-time"
           }
         },
