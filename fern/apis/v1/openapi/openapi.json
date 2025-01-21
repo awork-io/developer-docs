@@ -20536,12 +20536,11 @@
           "Tasks"
         ],
         "summary": "Updates the task with the specified id.",
-        "description": "To update the task, the user needs to be the assignee of the task or 'ProjectPlanning'\r\npermissions in general or in the project the task is related to.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "description": "To update the task, the user needs to be the assignee of the task or 'ProjectPlanning'\n            permissions in general or in the project the task is related to.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "taskId",
             "in": "path",
-            "description": "The id of the task.",
             "required": true,
             "schema": {
               "type": "string",
@@ -20550,14 +20549,8 @@
           }
         ],
         "requestBody": {
-          "description": "The model used to update the task with the specified id.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GeneralTaskForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/GeneralTaskForm"
               }
@@ -21260,6 +21253,44 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/tasks/{taskId}/deleterecurrency": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Deletes a recurrency rule for an existing task.",
+        "description": "To delete a recurrency, the user needs to be the assignee of the task or 'ProjectPlanning'\r\npermissions in general or in the project the task is related to.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -22361,6 +22392,58 @@
                 "items": {
                   "$ref": "#/components/schemas/PlannedEffortForm"
                 }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/tasks/{taskId}/setrecurrency": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "To add or update a recurrency rule for an existing task.",
+        "description": "To delete a recurrency, the user needs to be the assignee of the task or 'ProjectPlanning'\r\npermissions in general or in the project the task is related to. The following properties are copied to the new task:\r\nName, Description\r\nChecklist items, Attachments, Watchers, Assignee, Initial status, Tags, Type of Work, Priority, Estimate.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskRecurrencyForm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskRecurrencyForm"
               }
             }
           }
@@ -36446,12 +36529,15 @@
         "additionalProperties": false
       },
       "GetNextOccurrenceForm": {
+        "required": [
+          "recurrencyRule"
+        ],
         "type": "object",
         "properties": {
           "recurrencyRule": {
+            "minLength": 1,
             "type": "string",
             "description": "The recurrence rule as cron expression. We support all expressions which cronos supports\r\n(https://github.com/HangfireIO/Cronos).\r\nThe number of occurrences is limited to 24 a day.",
-            "nullable": true,
             "example": "\"0 0 1 * * ?\""
           },
           "recurrencyInterval": {
@@ -40249,7 +40335,7 @@
         "properties": {
           "timeBudget": {
             "type": "integer",
-            "description": "The budget for this retainer period in seconds.\r\nCurrently does not take the RollOverUnderspentBudget and RollOverOverspentBudget flags into account.",
+            "description": "The budget for this retainer period in seconds.\r\nBased on the carry over option selected in the retainer settings, the timebudget is adjusted by the carry over from the previous period.",
             "format": "int32"
           },
           "trackedDuration": {
@@ -40259,12 +40345,12 @@
           },
           "startDate": {
             "type": "string",
-            "description": "The start of the retainer period.",
+            "description": "The start of the retainer period in UTC.",
             "format": "date-time"
           },
           "endDate": {
             "type": "string",
-            "description": "The end of the retainer period.",
+            "description": "The end of the retainer period in UTC.",
             "format": "date-time"
           }
         },
@@ -41927,12 +42013,15 @@
         "additionalProperties": false
       },
       "TaskRecurrencyForm": {
+        "required": [
+          "recurrencyRule"
+        ],
         "type": "object",
         "properties": {
           "recurrencyRule": {
+            "minLength": 1,
             "type": "string",
             "description": "The recurrence rule as cron expression. We support all expressions which cronos supports\r\n(https://github.com/HangfireIO/Cronos).\r\nThe number of occurrences is limited to 24 a day.",
-            "nullable": true,
             "example": "\"0 0 1 * * ?\""
           },
           "recurrencyInterval": {
