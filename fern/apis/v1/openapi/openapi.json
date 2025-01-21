@@ -20546,14 +20546,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "clearLiveEditingDocument",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
           }
         ],
         "requestBody": {
