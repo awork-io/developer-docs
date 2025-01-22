@@ -40243,6 +40243,24 @@
       "Retainer": {
         "type": "object",
         "properties": {
+          "timeBudget": {
+            "type": "integer",
+            "description": "The time budget per retainer period in seconds. The default budget amount for new budgets in this retainer.",
+            "format": "int32"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The timezone for when new budgets are created.",
+            "nullable": true
+          },
+          "rollOverUnderspentBudget": {
+            "type": "boolean",
+            "description": "Whether underspent budgets should be rolled over to the next period."
+          },
+          "rollOverOverspentBudget": {
+            "type": "boolean",
+            "description": "Whether overspent budgets should be rolled over to the next period."
+          },
           "startDate": {
             "type": "string",
             "description": "The start of the retainer contract.",
@@ -40258,34 +40276,16 @@
             "type": "boolean",
             "description": "Whether the project start and due dates should be synced to the retainer start and end dates."
           },
-          "timeBudget": {
-            "type": "integer",
-            "description": "The time budget per retainer period in seconds. The default budget amount for new budgets in this retainer.",
-            "format": "int32"
-          },
-          "retainerPeriod": {
-            "type": "string",
-            "description": "The period for new budgets in this retainer.\r\nCurrently only 'monthly' is supported.",
-            "nullable": true
-          },
-          "timezone": {
-            "type": "string",
-            "description": "The timezone for when new budgets are created.",
-            "nullable": true
-          },
-          "rollOverUnderspentBudget": {
-            "type": "boolean",
-            "description": "Whether underspent budgets should be rolled over to the next period."
-          },
-          "rollOverOverspentBudget": {
-            "type": "boolean",
-            "description": "Whether overspent budgets should be rolled over to the next period."
-          },
           "id": {
             "type": "string",
             "description": "The id of the retainer.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "retainerPeriod": {
+            "type": "string",
+            "description": "The period for new budgets in this retainer.\r\nCurrently only 'monthly' is supported.",
+            "nullable": true
           },
           "projectId": {
             "type": "string",
@@ -40359,30 +40359,10 @@
       "RetainerForm": {
         "type": "object",
         "properties": {
-          "startDate": {
-            "type": "string",
-            "description": "The start of the retainer contract.",
-            "format": "date-time"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end of the retainer contract until new budgets will be created. Optional.",
-            "format": "date-time",
-            "nullable": true
-          },
-          "syncProjectDates": {
-            "type": "boolean",
-            "description": "Whether the project start and due dates should be synced to the retainer start and end dates."
-          },
           "timeBudget": {
             "type": "integer",
             "description": "The time budget per retainer period in seconds. The default budget amount for new budgets in this retainer.",
             "format": "int32"
-          },
-          "retainerPeriod": {
-            "type": "string",
-            "description": "The period for new budgets in this retainer.\r\nCurrently only 'monthly' is supported.",
-            "nullable": true
           },
           "timezone": {
             "type": "string",
@@ -40396,32 +40376,7 @@
           "rollOverOverspentBudget": {
             "type": "boolean",
             "description": "Whether overspent budgets should be rolled over to the next period."
-          }
-        },
-        "additionalProperties": false
-      },
-      "RetainerPutForm": {
-        "type": "object",
-        "properties": {
-          "timeBudget": {
-            "type": "integer",
-            "description": "The budget per retainer period in seconds. All budgets in this retainer will have this amount.",
-            "format": "int32"
           },
-          "rollOverUnderspentBudget": {
-            "type": "boolean",
-            "description": "Whether underspent budgets should be rolled over to the next period."
-          },
-          "rollOverOverspentBudget": {
-            "type": "boolean",
-            "description": "Whether overspent budgets should be rolled over to the next period."
-          }
-        },
-        "additionalProperties": false
-      },
-      "RetainerSetDatesForm": {
-        "type": "object",
-        "properties": {
           "startDate": {
             "type": "string",
             "description": "The start of the retainer contract.",
