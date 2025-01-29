@@ -7539,8 +7539,8 @@
         "tags": [
           "ProjectRoles"
         ],
-        "summary": "Returns all project roles.",
-        "description": "Returns all project roles.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Returns all project roles of a user.",
+        "description": "Returns all project roles of the specified user.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -16776,7 +16776,7 @@
           "ProjectTypes"
         ],
         "summary": "Deletes the project type with the specified id.",
-        "description": "Deletes the project type with the specified id.\r\nIf an id of a new type is provided, projects will be updated to reference the new type\r\nIf no id of type is provided, the type if removed from the projects.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "description": "Deletes the project type with the specified id.\r\nIf an id of a new type is provided, projects will be updated to reference the new type.\r\nIf no id of a new type is provided, the type will be removed from the projects.\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "parameters": [
           {
             "name": "projectTypeId",
@@ -35962,7 +35962,8 @@
         "type": "object",
         "properties": {
           "name": {
-            "minLength": 1,
+            "maxLength": 255,
+            "minLength": 0,
             "type": "string"
           }
         },
@@ -36356,12 +36357,15 @@
         "type": "object",
         "properties": {
           "name": {
-            "minLength": 1,
+            "maxLength": 1000,
+            "minLength": 0,
             "type": "string",
-            "description": "The name of the task. Max allowed length: 25000 characters.",
+            "description": "The name of the task. Max allowed length: 1000 characters.",
             "example": "Create logo concept"
           },
           "description": {
+            "maxLength": 25000,
+            "minLength": 0,
             "type": "string",
             "description": "The description of the task. Max allowed length: 25000 characters.",
             "nullable": true,
@@ -36419,12 +36423,15 @@
         "type": "object",
         "properties": {
           "name": {
-            "minLength": 1,
+            "maxLength": 1000,
+            "minLength": 0,
             "type": "string",
-            "description": "The name of the task. Max allowed length: 25000 characters.",
+            "description": "The name of the task. Max allowed length: 1000 characters.",
             "example": "Create logo concept"
           },
           "description": {
+            "maxLength": 25000,
+            "minLength": 0,
             "type": "string",
             "description": "The description of the task. Max allowed length: 25000 characters.",
             "nullable": true,
@@ -37883,7 +37890,7 @@
             "maxLength": 1000,
             "minLength": 0,
             "type": "string",
-            "description": "The name of the Project. Max allowed length: 25000 characters.",
+            "description": "The name of the Project. Max allowed length: 1000 characters.",
             "example": "Website Design"
           },
           "isPrivate": {
@@ -38227,7 +38234,7 @@
             "maxLength": 1000,
             "minLength": 0,
             "type": "string",
-            "description": "The name of the Project. Max allowed length: 25000 characters.",
+            "description": "The name of the Project. Max allowed length: 1000 characters.",
             "example": "Website Design"
           },
           "isPrivate": {
@@ -38862,7 +38869,7 @@
             "maxLength": 1000,
             "minLength": 0,
             "type": "string",
-            "description": "The name of the Project. Max allowed length: 25000 characters.",
+            "description": "The name of the Project. Max allowed length: 1000 characters.",
             "example": "Website Design"
           },
           "isPrivate": {
@@ -40848,7 +40855,8 @@
         "type": "object",
         "properties": {
           "name": {
-            "minLength": 1,
+            "maxLength": 255,
+            "minLength": 0,
             "type": "string"
           },
           "color": {
@@ -41499,12 +41507,15 @@
         "type": "object",
         "properties": {
           "name": {
-            "minLength": 1,
+            "maxLength": 1000,
+            "minLength": 0,
             "type": "string",
-            "description": "The name of the task. Max allowed length: 25000 characters.",
+            "description": "The name of the task. Max allowed length: 1000 characters.",
             "example": "Create logo concept"
           },
           "description": {
+            "maxLength": 25000,
+            "minLength": 0,
             "type": "string",
             "description": "The description of the task. Max allowed length: 25000 characters.",
             "nullable": true,
