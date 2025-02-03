@@ -1514,6 +1514,49 @@
         }
       }
     },
+    "/comments/{commentId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file comment from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/comments/{commentId}/files/byurl": {
       "post": {
         "tags": [
@@ -3204,6 +3247,49 @@
         }
       }
     },
+    "/companies/{companyId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file company from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/companies/{companyId}/files/byurl": {
       "post": {
         "tags": [
@@ -4357,6 +4443,40 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
+        }
+      }
+    },
+    "/files/generateuploadurl": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Generates a URL to upload a file to.",
+        "description": "Generates a URL that can be used to upload a file. Use the returned upload id to create a file entry. See  for more information.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerateUploadUrlResponseModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -10211,6 +10331,49 @@
         }
       }
     },
+    "/projects/{projectId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file project from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/projects/{projectId}/files/byurl": {
       "post": {
         "tags": [
@@ -15558,6 +15721,49 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/projecttemplates/{projecttemplateId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file projecttemplate from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "projecttemplateId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
           }
         }
       }
@@ -21491,6 +21697,49 @@
         }
       }
     },
+    "/tasks/{taskId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file task from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tasks/{taskId}/files/byurl": {
       "post": {
         "tags": [
@@ -23557,6 +23806,49 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/tasktemplates/{tasktemplateId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file tasktemplate from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "tasktemplateId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
           }
         }
       }
@@ -27986,6 +28278,49 @@
         }
       }
     },
+    "/users/{userId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file user from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users/{userId}/files/byurl": {
       "post": {
         "tags": [
@@ -30580,6 +30915,49 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/workspaces/{workspaceId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file workspace from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
           }
         }
       }
@@ -36018,6 +36396,96 @@
             "description": "The date the entity has been deleted.",
             "format": "date-time",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentForm": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the document."
+          },
+          "emoji": {
+            "maxLength": 25,
+            "minLength": 0,
+            "type": "string",
+            "description": "The emoji of the document.",
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the document is private."
+          },
+          "content": {
+            "type": "string",
+            "description": "The actual content of the document.",
+            "format": "binary",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the document.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the document.",
+            "nullable": true
+          },
+          "currentDocumentVersionId": {
+            "type": "string",
+            "description": "The id of the current document version.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "emoji": {
+            "type": "string",
+            "description": "The emoji of the document.",
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the document is private."
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether the document belongs to an external project."
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this document was created.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this document.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this document was last modified.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this document.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -46633,6 +47101,49 @@
         "additionalProperties": false,
         "description": "Form with the details to generate an export."
       },
+      "GenerateUploadUrlResponseModel": {
+        "required": [
+          "uploadId",
+          "uploadURL"
+        ],
+        "type": "object",
+        "properties": {
+          "uploadId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The id of the temporary container that the file will be uploaded to.",
+            "example": "1a2b3c4d5e6f7g8h9i0j"
+          },
+          "uploadURL": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The URL that the client should upload the file to.",
+            "example": "https://blob.awork.com/upload"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PostMigrateGuestFilesForm": {
+        "type": "object",
+        "properties": {
+          "taskIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The task ids to migrate the user private files from.",
+            "nullable": true
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The new workspace id to migrate the user private files to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
       "SimpleTaskModel": {
         "type": "object",
         "properties": {
@@ -46968,6 +47479,33 @@
           },
           "user": {
             "$ref": "#/components/schemas/DefaultModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UploadByUploadIdForm": {
+        "required": [
+          "fileName",
+          "uploadId"
+        ],
+        "type": "object",
+        "properties": {
+          "uploadId": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The id of the temporary container that the file will be uploaded to.",
+            "example": "1a2b3c4d5e6f7g8h9i0j"
+          },
+          "fileName": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The name of the file that will be uploaded.",
+            "example": "Pitch.ppt"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the file.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -49374,6 +49912,10 @@
     {
       "name": "Files",
       "description": "The file endpoints to get non shared and non temporay files."
+    },
+    {
+      "name": "FileUpload",
+      "description": "These endpoints can be used to upload files to the workspace."
     },
     {
       "name": "Images",

@@ -92,6 +92,7 @@ navigation:
       - timeReports
       - projectTimeEntries
       - taskTimeEntries
+      - entityTimeEntries
       - page: Companies Overview
         path: ./pages/api/companies.mdx
         icon: crown
@@ -111,6 +112,7 @@ navigation:
         path: ./pages/api/files.mdx
         icon: paperclip
       - files
+      - fileUpload
       - projectFiles
       - taskFiles
       - companyFiles

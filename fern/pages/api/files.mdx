@@ -6,14 +6,41 @@ slug: files
 
 awork allows you to upload files and images to tasks, projects, comments and many other entities.
 
-## Upload a file
+## Upload a file to a task
 
-Uploading a file is easy. You can upload files up to 1000MB in size.
+Uploading a file takes three steps.
+1. Generate upload URL
+2. Upload the file
+3. Link it with an entity such as a task
 
-```sh title="Request"
-curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/files \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'File=@/path/to/file.png'
+```sh title="Generate Upload URL"
+curl -X POST https://api.awork.com/api/v1/files/generateUploadURL \
+  -H 'Content-Type: application/json'
+```
+
+The response will look like this:
+```json
+{
+  "uploadUrl": "https://upload.awork.com/...",
+  "uploadId": "123e4567-e89b-12d3-a456-426614174000"
+}
+```
+
+Then use the returned `uploadUrl` to upload the file:
+```sh title="Upload File"
+curl -X PUT https://upload.awork.com/... \
+  -H 'Content-Type: image/png' \
+  --data-binary @/path/to/file.png
+```
+
+Once that is done, link the uploaded file with a task:
+```sh title="Link File with Task"
+curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/files/byUploadId \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "uploadId": "123e4567-e89b-12d3-a456-426614174000",
+        "fileName": "file.png"
+      }'
 ```
 
 ## Upload a profile image
