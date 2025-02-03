@@ -119,7 +119,27 @@ The request body will contain the event metadata as well as the entity that trig
         "id": "7936d6b8-3345-4770-83c8-2c8c2ed12414",
         "firstName": "Carla",
         "lastName": "Creative"
-    }
+    },
+    "changes": [
+        {
+            "property": "ClosedBy",
+            "new": "a56c2b28-9dab-4f1a-b0b1-70aec2a68326"
+        },
+        {
+            "property": "ClosedOn",
+            "new": "02/02/2025 17:34:39"
+        },
+        {
+            "property": "TaskStatusId",
+            "old": "9481af0f-9307-467f-b2e1-f8586e9cd0da",
+            "new": "784e6fec-6c9a-ed11-bf7a-38563d6e68b8"
+        },
+        {
+            "property": "UpdatedOn",
+            "old": "01/22/2025 16:23:06",
+            "new": "02/02/2025 17:34:39"
+        }
+    ],
 }
 ```
 
@@ -133,6 +153,7 @@ The request body will contain the event metadata as well as the entity that trig
 | `entityLink`      | The weblink to the entity that triggered the event, or the closest entity that has a weblink, where available.                                                                                               |
 | `traceId`         | An awork-internal id for support purposes.                                                                                                                                                                  |
 | `triggeredBy`     | The id, first and last name of the user that triggered the event.                                                                                                                                           |
+| `changes`         | A list of changes, including property name, old and new value. Not always available!                                                                                                                                     |
 
 ## Responding to a Webhook
 
