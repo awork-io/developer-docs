@@ -1514,49 +1514,6 @@
         }
       }
     },
-    "/comments/{commentId}/files/byuploadid": {
-      "post": {
-        "tags": [
-          "FileUpload"
-        ],
-        "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file comment from the uploaded file by providing the upload id.",
-        "parameters": [
-          {
-            "name": "commentId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UploadByUploadIdForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/comments/{commentId}/files/byurl": {
       "post": {
         "tags": [
@@ -3243,49 +3200,6 @@
           },
           "400": {
             "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/companies/{companyId}/files/byuploadid": {
-      "post": {
-        "tags": [
-          "FileUpload"
-        ],
-        "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file company from the uploaded file by providing the upload id.",
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UploadByUploadIdForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
           }
         }
       }
@@ -15725,49 +15639,6 @@
         }
       }
     },
-    "/projecttemplates/{projecttemplateId}/files/byuploadid": {
-      "post": {
-        "tags": [
-          "FileUpload"
-        ],
-        "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file projecttemplate from the uploaded file by providing the upload id.",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UploadByUploadIdForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/projecttemplates/{projecttemplateId}/files/byurl": {
       "post": {
         "tags": [
@@ -25969,13 +25840,13 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Returns all time entries with a simplified model.\n            The grouping options are: project, task, user, typeOfWork, all\n            The all options includes project, user, typeOfWork.",
+        "summary": "Retrieves all time entries with a simplified model based on the grouping parameter.",
         "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "grouping",
             "in": "query",
-            "description": "The group by param.",
+            "description": "The group-by parameter.",
             "schema": {
               "type": "string"
             }
@@ -26065,8 +25936,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Returns the time entries with the specified id.",
-        "description": "Returns the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs\n            to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Get a time entry by id.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -26128,7 +25999,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TimeEntryPutForm"
+                "$ref": "#/components/schemas/TimeTrackingPutForm"
               }
             }
           }
@@ -26165,8 +26036,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Removes all finished breaks of the time entry.",
-        "description": "A currently running break is not removed.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Handles removing all finished breaks from a time entry.",
+        "description": "\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -28274,49 +28145,6 @@
           },
           "400": {
             "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/users/{userId}/files/byuploadid": {
-      "post": {
-        "tags": [
-          "FileUpload"
-        ],
-        "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file user from the uploaded file by providing the upload id.",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UploadByUploadIdForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
           }
         }
       }
@@ -30915,49 +30743,6 @@
           },
           "400": {
             "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/workspaces/{workspaceId}/files/byuploadid": {
-      "post": {
-        "tags": [
-          "FileUpload"
-        ],
-        "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file workspace from the uploaded file by providing the upload id.",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UploadByUploadIdForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
           }
         }
       }
@@ -37061,6 +36846,28 @@
             },
             "description": "The list of time bookings of the user.",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetUsersAvailabilityResult": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The id of the user.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "totalCapacity": {
+            "type": "integer",
+            "description": "The total capacity of the user (expressed in seconds) in the provided timeframe.",
+            "format": "int32"
+          },
+          "usedCapacity": {
+            "type": "integer",
+            "description": "The used capacity of the user (expressed in seconds) in the provided timeframe.",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -43822,130 +43629,6 @@
         },
         "additionalProperties": false
       },
-      "TimeEntryPutForm": {
-        "required": [
-          "timezone",
-          "typeOfWorkId"
-        ],
-        "type": "object",
-        "properties": {
-          "isBillable": {
-            "type": "boolean",
-            "description": "Whether the time tracking is billable or not.",
-            "example": true
-          },
-          "isBilled": {
-            "type": "boolean",
-            "description": "Whether the time tracking is billed or not.",
-            "example": false
-          },
-          "taskId": {
-            "type": "string",
-            "description": "The id of the task.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "description": "The id of the project.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "note": {
-            "type": "string",
-            "description": "The note of the time tracking.",
-            "nullable": true,
-            "example": "I created a first draft for the new sitemap"
-          },
-          "startDateUtc": {
-            "type": "string",
-            "description": "The date (in UTC) when the time tracking was started.",
-            "format": "date-time",
-            "nullable": true,
-            "example": "2022-03-01T00:00:00Z"
-          },
-          "startTimeUtc": {
-            "type": "string",
-            "description": "The time (in UTC) when the time tracking was started.",
-            "nullable": true,
-            "example": "09:21:00"
-          },
-          "endDateUtc": {
-            "type": "string",
-            "description": "The date (in UTC) when the time tracking was stopped.",
-            "format": "date-time",
-            "nullable": true,
-            "example": "2022-03-01T18:21:05Z"
-          },
-          "endTimeUtc": {
-            "type": "string",
-            "description": "The time (in UTC) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set.",
-            "nullable": true,
-            "example": "11:45:00"
-          },
-          "startDateLocal": {
-            "type": "string",
-            "description": "The date (in Local) when the time tracking was started.",
-            "format": "date-time",
-            "nullable": true,
-            "example": "2022-03-01T00:00:00"
-          },
-          "startTimeLocal": {
-            "type": "string",
-            "description": "The time (in Local) when the time tracking was started.",
-            "nullable": true,
-            "example": "10:21:00"
-          },
-          "endDateLocal": {
-            "type": "string",
-            "description": "The date (in Local) when the time tracking was stopped.",
-            "format": "date-time",
-            "nullable": true,
-            "example": "2022-03-01T17:21:05"
-          },
-          "endTimeLocal": {
-            "type": "string",
-            "description": "The time (in Local) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set.",
-            "nullable": true,
-            "example": "12:45:00"
-          },
-          "timezone": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
-            "example": "Europe/Berlin"
-          },
-          "duration": {
-            "type": "integer",
-            "description": "The duration of the time tracking in seconds.\r\nRequired when the time tracking has already been completed and EndTime has not been set.",
-            "format": "int32",
-            "nullable": true,
-            "example": 8635
-          },
-          "breakDuration": {
-            "type": "integer",
-            "description": "The duration of the break in seconds.\r\nCannot be set via API.",
-            "format": "int32",
-            "nullable": true
-          },
-          "typeOfWorkId": {
-            "type": "string",
-            "description": "The id of the type of work.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user.\r\nCan be null if the user was deleted.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
       "TimeFrameModel": {
         "type": "object",
         "properties": {
@@ -44659,6 +44342,130 @@
           "taskId": {
             "type": "string",
             "description": "The id of the task this duration aggregation is for.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeTrackingPutForm": {
+        "required": [
+          "timezone",
+          "typeOfWorkId"
+        ],
+        "type": "object",
+        "properties": {
+          "isBillable": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billable or not.",
+            "example": true
+          },
+          "isBilled": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billed or not.",
+            "example": false
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "note": {
+            "type": "string",
+            "description": "The note of the time tracking.",
+            "nullable": true,
+            "example": "I created a first draft for the new sitemap"
+          },
+          "startDateUtc": {
+            "type": "string",
+            "description": "The date (in UTC) when the time tracking was started.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "startTimeUtc": {
+            "type": "string",
+            "description": "The time (in UTC) when the time tracking was started.",
+            "nullable": true,
+            "example": "09:21:00"
+          },
+          "endDateUtc": {
+            "type": "string",
+            "description": "The date (in UTC) when the time tracking was stopped.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T18:21:05Z"
+          },
+          "endTimeUtc": {
+            "type": "string",
+            "description": "The time (in UTC) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set.",
+            "nullable": true,
+            "example": "11:45:00"
+          },
+          "startDateLocal": {
+            "type": "string",
+            "description": "The date (in Local) when the time tracking was started.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T00:00:00"
+          },
+          "startTimeLocal": {
+            "type": "string",
+            "description": "The time (in Local) when the time tracking was started.",
+            "nullable": true,
+            "example": "10:21:00"
+          },
+          "endDateLocal": {
+            "type": "string",
+            "description": "The date (in Local) when the time tracking was stopped.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T17:21:05"
+          },
+          "endTimeLocal": {
+            "type": "string",
+            "description": "The time (in Local) when the time tracking was stopped.\r\nRequired when the time tracking has already been completed and Duration has not been set.",
+            "nullable": true,
+            "example": "12:45:00"
+          },
+          "timezone": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "example": "Europe/Berlin"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration of the time tracking in seconds.\r\nRequired when the time tracking has already been completed and EndTime has not been set.",
+            "format": "int32",
+            "nullable": true,
+            "example": 8635
+          },
+          "breakDuration": {
+            "type": "integer",
+            "description": "The duration of the break in seconds.\r\nCannot be set via API.",
+            "format": "int32",
+            "nullable": true
+          },
+          "typeOfWorkId": {
+            "type": "string",
+            "description": "The id of the type of work.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user.\r\nCan be null if the user was deleted.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -49875,7 +49682,7 @@
     },
     {
       "name": "TimeEntries",
-      "description": "The endpoints can be used for general operations on existing time entries.\n                             A time entry can be linked to a task and / or project, although it can also be created for the user themselves without any entity link.\n                             If the time entry is linked to a project it is also indirectly linked to the company of that project.\n                             Similarly, the time entry is automatically linked to the project of the the task."
+      "description": "There are some endpoints which have a V2 version. For those the V1 endpoints will be deprecated in the future. Please use the V2 endpoints instead.\n                    The endpoints can be used for general operations on existing time entries.\n                    A time entry can be linked to a task and / or project, although it can also be created for the user themselves without any entity link.\n                    If the time entry is linked to a project it is also indirectly linked to the company of that project.\n                    Similarly, the time entry is automatically linked to the project of the the task."
     },
     {
       "name": "TimeReports",
@@ -49883,7 +49690,7 @@
     },
     {
       "name": "TimeTracking",
-      "description": "The endpoints can be used to start or stop an actual time tracking. As well as to get the last time tracking of a user."
+      "description": "These endpoints will be deprecated and removed in the future. Please use the V2 endpoints for the TimeTracking feature instead.\n                These endpoints can be used to start, stop, pause or resume a time tracking as well as to get the last time tracking of a user."
     },
     {
       "name": "TypeOfWork",
