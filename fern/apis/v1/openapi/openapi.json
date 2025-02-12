@@ -36185,32 +36185,12 @@
         },
         "additionalProperties": false
       },
-      "DocumentForm": {
-        "required": [
-          "name"
-        ],
+      "DocumentContentForm": {
         "type": "object",
         "properties": {
-          "name": {
-            "maxLength": 1000,
-            "minLength": 0,
-            "type": "string",
-            "description": "The name of the document."
-          },
-          "emoji": {
-            "maxLength": 25,
-            "minLength": 0,
-            "type": "string",
-            "description": "The emoji of the document.",
-            "nullable": true
-          },
-          "isPrivate": {
-            "type": "boolean",
-            "description": "Whether the document is private."
-          },
           "content": {
             "type": "string",
-            "description": "The actual content of the document.",
+            "description": "The content of the document.",
             "format": "binary",
             "nullable": true
           }
@@ -36271,6 +36251,71 @@
             "description": "The id of the user who last modified this document.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentPostForm": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the document."
+          },
+          "emoji": {
+            "maxLength": 25,
+            "minLength": 0,
+            "type": "string",
+            "description": "The emoji of the document.",
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the document is private."
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the document.",
+            "format": "binary",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentPutForm": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the document."
+          },
+          "emoji": {
+            "maxLength": 25,
+            "minLength": 0,
+            "type": "string",
+            "description": "The emoji of the document.",
+            "nullable": true
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the document is private."
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the document.",
+            "format": "binary",
+            "nullable": true,
+            "deprecated": true
           }
         },
         "additionalProperties": false
