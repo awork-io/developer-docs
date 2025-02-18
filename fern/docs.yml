@@ -8,8 +8,8 @@ instances:
         branch: main
 colors:
   accentPrimary:
-    dark: "#4D9AFF"
-    light: "#4D9AFF"
+    dark: "#66B2FF"
+    light: "#003B73"
   background:
     dark: "#141622"
     light: "#F2F9FF"
