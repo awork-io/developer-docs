@@ -16,10 +16,10 @@ You can set the number of items that you would like to retrieve from the API via
 | `page`      | integer | The current page number                                          |
 | `pageSize`  | integer | How many items should be returned on each page, maximum of 1000  |
 
-For example, if you want to get the first 50 users, you would make a request to the following URL: `GET /users?page=1&pageSize=50`.
+For example, if you want to get the first 50 users, you would make the following request:
 
-```sh title="Request"
-curl https://api.awork.com/api/v1/users?page=1&pageSize=50
+```sh
+GET /users?page=1&pageSize=50
 ```
 
 ## Response Headers

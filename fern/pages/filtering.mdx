@@ -57,12 +57,24 @@ You can also use the `any` operator in combination with `eq false` to filter for
 /tasks?filterby=lists/any(l: l/name eq 'Draft') eq false
 ```
 
+## Combining Filtering and Ordering
+
+You can combine filtering and ordering by adding the `orderby` parameter to the URL.
+
+```sh
+/projects?filterby=duration le 6000 and duration gt 1000&orderby=duration desc
+```
+
 ## Data Types
 
 The data types DateTime and Guid have to be prefixed with the corresponding type identifier `datetime` and `guid`, respectively, e.g.
 
-* `/users?filterby=birthDate ge datetime'2018-04-03T00:00'`
-* `/users?filterby=id eq guid'12345678-aaaa-bbbb-cccc-ddddeeeeffff'`
+```sh title="Filter by DateTime"
+/users?filterby=birthDate ge datetime'2018-04-03T00:00'
+```
+```sh title="Filter by Guid"
+/users?filterby=id eq guid'12345678-aaaa-bbbb-cccc-ddddeeeeffff'
+```
 
 | Type       | Example                                    |
 |------------|--------------------------------------------|

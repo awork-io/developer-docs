@@ -25,3 +25,11 @@ If you want to order by a nested property, you can do this by separating the Pro
 ```sh
 /projects?orderby=ProjectStatus/Type desc
 ```
+
+## Combining Filtering and Ordering
+
+You can combine filtering and ordering by adding the `orderby` parameter to the URL.
+
+```sh
+/projects?filterby=duration le 6000 and duration gt 1000&orderby=duration desc
+```
