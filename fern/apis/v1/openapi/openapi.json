@@ -59,7 +59,7 @@
           "AbsenceRegions"
         ],
         "summary": "Creates a new absence region.",
-        "description": "Creates a new absence region.\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Creates a new absence region.\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to create the absence region.",
           "content": {
@@ -95,6 +95,9 @@
         "x-access": {
           "admin": "true",
           "user-planning-data": "write"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
         }
       }
     },
@@ -449,7 +452,7 @@
           "Absences"
         ],
         "summary": "Creates a new absence.",
-        "description": "User planning data permissions are required if the calling user\r\nis not the owner of the absence or admin.\r\nThe startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date.",
+        "description": "User planning data permissions are required if the calling user\r\nis not the owner of the absence or admin.\r\nThe startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>",
         "requestBody": {
           "description": "The absence to create.",
           "content": {
@@ -486,7 +489,10 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
+        }
       }
     },
     "/absences/{absenceId}": {
@@ -7843,7 +7849,7 @@
           "ProjectRoles"
         ],
         "summary": "Creates, updates or deletes a permission of a project role with the specified id.",
-        "description": "Creates, updates or deletes a permission of the project role.\r\nIf the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\nthe permission will be updated. If the 'AccessLevels' property of the model is empty,\r\nthe permission will be deleted.\r\nThe permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "description": "Creates, updates or deletes a permission of the project role.\r\nIf the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\nthe permission will be updated. If the 'AccessLevels' property of the model is empty,\r\nthe permission will be deleted.\r\nThe permission will be created if it does not exist.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -7896,6 +7902,9 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
         }
       }
     },
@@ -8508,7 +8517,7 @@
           "ProjectAutomations"
         ],
         "summary": "Creates a new automation for the specified project.",
-        "description": "Creates a new automation for the project with the specified id.\r\nThe user needs to be the owner of the project or have 'write' permissions of\r\nthe feature 'project-master-data' globally or in the project.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Creates a new automation for the project with the specified id.\r\nThe user needs to be the owner of the project or have 'write' permissions of\r\nthe feature 'project-master-data' globally or in the project.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -8560,6 +8569,9 @@
         ],
         "x-access": {
           "any": "true"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
         }
       }
     },
@@ -17017,7 +17029,7 @@
           "Roles"
         ],
         "summary": "Creates a new role.",
-        "description": "Creates a new role.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "description": "Creates a new role.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "requestBody": {
           "description": "The model used to create a role.",
           "content": {
@@ -17058,6 +17070,9 @@
         "x-access": {
           "admin": "true",
           "workspace-manage-config": "write"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
         }
       }
     },
@@ -24576,7 +24591,7 @@
           "Teams"
         ],
         "summary": "Creates a new team.",
-        "description": "Creates a new team.\r\nNo validations are done for color and icon property, can be any string.\r\nThrows IllegalOperationException if team with the same name already exists.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
+        "description": "Creates a new team.\r\nNo validations are done for color and icon property, can be any string.\r\nThrows IllegalOperationException if team with the same name already exists.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
         "requestBody": {
           "description": "The team to create.",
           "content": {
@@ -24616,6 +24631,9 @@
         ],
         "x-access": {
           "admin": "true"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
         }
       }
     },
@@ -26057,231 +26075,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/timereports": {
-      "get": {
-        "tags": [
-          "TimeReports"
-        ],
-        "summary": "Returns all time reports of a user.",
-        "description": "Returns time reports the user created as well as the shared time reports of\r\nother users.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeReport"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "post": {
-        "tags": [
-          "TimeReports"
-        ],
-        "summary": "Creates a new time report.",
-        "description": "Creates a new time report.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "requestBody": {
-          "description": "The model to create the time report.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TimeReportForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TimeReportForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeReport"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/timereports/{timeReportId}": {
-      "delete": {
-        "tags": [
-          "TimeReports"
-        ],
-        "summary": "Deletes a time report.",
-        "description": "Deletes the time report of the specified id.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeReportId",
-            "in": "path",
-            "description": "The id of the time report.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "TimeReports"
-        ],
-        "summary": "Returns time reports of the specified id.",
-        "description": "<param name=\"timeReportId\">The id of the time report.</param>\r\n            Returns time reports of the specified id.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeReportId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeReport"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "put": {
-        "tags": [
-          "TimeReports"
-        ],
-        "summary": "Updates a time report.",
-        "description": "Updates the time report of the specified id.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "timeReportId",
-            "in": "path",
-            "description": "The id of the time report.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to update the time report.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TimeReportForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TimeReportForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeReport"
                 }
               }
             }
@@ -30290,7 +30083,7 @@
           "WorkspaceAbsences"
         ],
         "summary": "Creates a new workspace absence.",
-        "description": "Creates a new workspace absence.\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Creates a new workspace absence.\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to create the workspace absence.",
           "content": {
@@ -30326,6 +30119,9 @@
         "x-access": {
           "admin": "true",
           "user-planning-data": "write"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
         }
       }
     },
@@ -36436,6 +36232,21 @@
             "type": "string",
             "description": "The name of the document space.",
             "nullable": true
+          },
+          "emoji": {
+            "maxLength": 25,
+            "minLength": 0,
+            "type": "string",
+            "description": "The emoji of the document space.",
+            "nullable": true
+          },
+          "color": {
+            "maxLength": 14,
+            "minLength": 0,
+            "type": "string",
+            "description": "The color of the document space for display purposes in the app.\r\nCan be null when no color assigned.",
+            "nullable": true,
+            "example": "purple"
           }
         },
         "additionalProperties": false
@@ -36470,6 +36281,17 @@
             "type": "string",
             "description": "The name of the document space.",
             "nullable": true
+          },
+          "emoji": {
+            "type": "string",
+            "description": "The emoji of the document space.",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the document space for display purposes in the app.\r\nCan be null when no color assigned.",
+            "nullable": true,
+            "example": "purple"
           }
         },
         "additionalProperties": false
@@ -49876,10 +49698,6 @@
     {
       "name": "TimeEntries",
       "description": "There are some endpoints which have a V2 version. For those the V1 endpoints will be deprecated in the future.\n                    Please use the V2 endpoints instead.\n                    The endpoints can be used for general operations on existing time entries.\n                    A time entry can be linked to a task and / or project, although it can also be created for the user themselves without any entity link.\n                    If the time entry is linked to a project it is also indirectly linked to the company of that project.\n                    Similarly, the time entry is automatically linked to the project of the the task."
-    },
-    {
-      "name": "TimeReports",
-      "description": "The endpoints to manage the time reports."
     },
     {
       "name": "TimeTracking",
