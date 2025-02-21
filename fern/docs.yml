@@ -180,3 +180,6 @@ layout:
 analytics:
   segment:
     write-key: ${SEGMENT_WRITE_KEY}
+
+experimental:
+  openapi-parser-v2: true
