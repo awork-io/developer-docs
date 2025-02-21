@@ -1,3 +1,3 @@
 api:
   path: openapi/openapi.json
-  origin: https://awork-function-swaggercombine-global.azurewebsites.net/api/swagger-combine
+  origin: https://awork-function-swaggercombine-global.azurewebsites.net/api/swagger-combine?version=v1

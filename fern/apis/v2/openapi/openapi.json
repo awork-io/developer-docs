@@ -1,0 +1,180 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "awork API",
+    "version": "1.3.0",
+    "description": "This is the API documentation for awork.",
+    "termsOfService": "https://www.awork.com/legal-and-privacy/privacy-policy-awork-app",
+    "contact": {
+      "name": "awork Support",
+      "url": "https://support.awork.com",
+      "email": "support@awork.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.awork.com/api/v2",
+      "description": "awork Production"
+    }
+  ],
+  "paths": {
+    "/absenceregions": {
+      "get": {
+        "tags": [
+          "AbsenceRegions"
+        ],
+        "summary": "Gets all the absence regions.",
+        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\n            Any other user will only see themselves assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AbsenceRegionModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "post": {
+        "tags": [
+          "AbsenceRegions"
+        ],
+        "summary": "Creates a new absence region.",
+        "description": "Creates a new absence region.\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "requestBody": {
+          "description": "The model to create the absence region.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbsenceRegionForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbsenceRegionModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "user-planning-data": "write"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "parameters": {
+      "page": {
+        "name": "page",
+        "in": "query",
+        "description": "Page number for pagination",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "pageSize": {
+        "name": "pageSize",
+        "in": "query",
+        "description": "Number of items per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 10
+        }
+      },
+      "orderby": {
+        "name": "orderby",
+        "in": "query",
+        "description": "The properties to order by",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "filterby": {
+        "name": "filterby",
+        "in": "query",
+        "description": "The filter expression to filter by",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://api.awork.com/accounts/authorize",
+            "tokenUrl": "https://api.awork.com/accounts/token",
+            "scopes": {
+              "full_access": "Grants full access",
+              "offline_access": "Grants continued access with a refresh token"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearer": [
+        "full_access",
+        "offline_access"
+      ]
+    },
+    {
+      "oauth2": [
+        "full_access",
+        "offline_access"
+      ]
+    }
+  ],
+  "tags": []
+}
