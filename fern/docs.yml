@@ -1,11 +1,11 @@
 instances:
-  - url: https://aworkapi.docs.buildwithfern.com
-    custom-domain: developers.awork.com
-    edit-this-page:
-      github:
-        owner: awork-io
-        repo: developer-docs
-        branch: main
+- url: https://aworkapi.docs.buildwithfern.com
+  custom-domain: developers.awork.com
+  edit-this-page:
+    github:
+      owner: awork-io
+      repo: developer-docs
+      branch: main
 colors:
   accentPrimary:
     dark: "#66B2FF"
@@ -15,164 +15,177 @@ colors:
     light: "#F2F9FF"
 favicon: ./assets/favicon.ico
 logo:
-    light: ./assets/logo_dark.png
-    dark: ./assets/logo_light.png
-    height: 30
-    href: https://www.awork.com/
+  light: ./assets/logo_dark.png
+  dark: ./assets/logo_light.png
+  height: 30
+  href: https://www.awork.com/
 title: awork API | Documentation
 navigation:
-  - section: Overview
-    contents: 
-      - page: Introduction 
-        path: ./pages/introduction.mdx
-      - page: Getting Started
-        path: ./pages/getting-started.mdx
-      - page: Authentication
-        path: ./pages/authentication.mdx
-      - page: Error Handling
-        path: ./pages/error-handling.mdx
-      - page: Pagination
-        path: ./pages/pagination.mdx
-      - page: Filtering
-        path: ./pages/filtering.mdx
-      - page: Ordering
-        path: ./pages/ordering.mdx
-      - page: Rate Limits
-        path: ./pages/rate-limits.mdx
-      - page: Permissions
-        path: ./pages/permissions.mdx
-      - page: Webhooks
-        path: ./pages/webhooks.mdx
-      - page: Changelog
-        path: ./pages/changelog.mdx
-      - page: Support
-        path: ./pages/support.mdx
-  - api: API Reference
-    api-name: v1
-    paginated: true
-    display-errors: true
-    summary: ./apis/v1/summary.mdx
-    slug: apiv1
-    layout:
-      - page: Projects Overview
-        path: ./pages/api/projects.mdx
-        icon: diagram-project
-      - projects
-      - projectTypes
-      - projectStatuses
-      - projectRoles
-      - projectComments
-      - projectTags
-      - projectMilestones
-      - projectAutomations
-      - projectActions
-      - projectTimeBookings
-      - autopilot
-      - page: Tasks Overview
-        path: ./pages/api/tasks.mdx
-        icon: list-check
-      - tasks
-      - taskLists
-      - taskViews
-      - projectTasks
-      - privateTasks
-      - assignedTasks
-      - checklistItems
-      - taskComments
-      - taskTags
-      - taskDependencies
-      - taskSchedules
-      - tasksBatch
-      - typeOfWork
-      - page: Time Tracking Overview
-        path: ./pages/api/timetracking.mdx
-        icon: timer
-      - timeEntries
-      - timeTracking
-      - timeReports
-      - projectTimeEntries
-      - taskTimeEntries
-      - entityTimeEntries
-      - page: Companies Overview
-        path: ./pages/api/companies.mdx
-        icon: crown
-      - companies
-      - companyTags
-      - page: Users Overview
-        path: ./pages/api/users.mdx
-        icon: users
-      - users
-      - userCapacity
-      - userTags
-      - absences
-      - absenceRegions
-      - workspaceAbsences
-      - dashboards
-      - page: Files & Images Overview
-        path: ./pages/api/files.mdx
-        icon: paperclip
-      - files
-      - fileUpload
-      - projectFiles
-      - taskFiles
-      - companyFiles
-      - commentFiles
-      - userFiles
-      - workspaceFiles
-      - projectTemplateFiles
-      - taskTemplateFiles
-      - sharedFiles
-      - temporaryFiles
-      - images
-      - page: Custom Fields Overview
-        path: ./pages/api/customfields.mdx
-        icon: toggle-off
-      - customFields
-      - page: Workload & Planning Overview
-        path: ./pages/api/workload.mdx
-        icon: briefcase
-      - workload
-      - page: Project Templates Overview
-        path: ./pages/api/projecttemplates.mdx
-        icon: box
-      - projectTemplates
-      - taskBundles
-      - taskTemplates
-      - taskDependencyTemplates
-      - projectTemplateTags
-      - projectMilestoneTemplates
-      - projectTemplateAutomations
-      - projectTemplateActions
-      - page: Login & Access Overview
-        path: ./pages/api/login.mdx
-        icon: key
-      - accounts
-      - invitations
-      - permissions
-      - roles
-      - teams
-      - workspaces
-      - page: API Management Overview
-        path: ./pages/api/api.mdx
-        icon: code
-      - apiUsers
-      - webhooks
-      - clientApplications
-      # Reenable others when there are uncategorized endpoints
-      # - page: Others
-      #   path: ./pages/api/others.mdx
-      #   icon: angles-right
+- section: Overview
+  contents:
+  - page: Introduction
+    path: ./pages/introduction.mdx
+  - page: Getting Started
+    path: ./pages/getting-started.mdx
+  - page: Authentication
+    path: ./pages/authentication.mdx
+  - page: Error Handling
+    path: ./pages/error-handling.mdx
+  - page: Pagination
+    path: ./pages/pagination.mdx
+  - page: Filtering
+    path: ./pages/filtering.mdx
+  - page: Ordering
+    path: ./pages/ordering.mdx
+  - page: Rate Limits
+    path: ./pages/rate-limits.mdx
+  - page: Permissions
+    path: ./pages/permissions.mdx
+  - page: Webhooks
+    path: ./pages/webhooks.mdx
+  - page: Versioning
+    path: ./pages/versioning.mdx
+  - page: Changelog
+    path: ./pages/changelog.mdx
+  - page: Support
+    path: ./pages/support.mdx
+- api: API v1 Reference
+  api-name: v1
+  paginated: true
+  display-errors: true
+  summary: ./apis/v1/summary.mdx
+  slug: apiv1
+  layout:
+  - page: Projects Overview
+    path: ./pages/api/projects.mdx
+    icon: diagram-project
+  - projects
+  - projectTypes
+  - projectStatuses
+  - projectRoles
+  - projectComments
+  - projectTags
+  - projectMilestones
+  - projectAutomations
+  - projectActions
+  - projectTimeBookings
+  - autopilot
+  - page: Tasks Overview
+    path: ./pages/api/tasks.mdx
+    icon: list-check
+  - tasks
+  - taskLists
+  - taskViews
+  - projectTasks
+  - privateTasks
+  - assignedTasks
+  - checklistItems
+  - taskComments
+  - taskTags
+  - taskDependencies
+  - taskSchedules
+  - tasksBatch
+  - typeOfWork
+  - page: Time Tracking Overview
+    path: ./pages/api/timetracking.mdx
+    icon: timer
+  - timeEntries
+  - timeTracking
+  - timeReports
+  - projectTimeEntries
+  - taskTimeEntries
+  - entityTimeEntries
+  - page: Companies Overview
+    path: ./pages/api/companies.mdx
+    icon: crown
+  - companies
+  - companyTags
+  - page: Users Overview
+    path: ./pages/api/users.mdx
+    icon: users
+  - users
+  - userCapacity
+  - userTags
+  - absences
+  - absenceRegions
+  - workspaceAbsences
+  - dashboards
+  - page: Files & Images Overview
+    path: ./pages/api/files.mdx
+    icon: paperclip
+  - files
+  - fileUpload
+  - projectFiles
+  - taskFiles
+  - companyFiles
+  - commentFiles
+  - userFiles
+  - workspaceFiles
+  - projectTemplateFiles
+  - taskTemplateFiles
+  - sharedFiles
+  - temporaryFiles
+  - images
+  - page: Custom Fields Overview
+    path: ./pages/api/customfields.mdx
+    icon: toggle-off
+  - customFields
+  - page: Workload & Planning Overview
+    path: ./pages/api/workload.mdx
+    icon: briefcase
+  - workload
+  - page: Project Templates Overview
+    path: ./pages/api/projecttemplates.mdx
+    icon: box
+  - projectTemplates
+  - taskBundles
+  - taskTemplates
+  - taskDependencyTemplates
+  - projectTemplateTags
+  - projectMilestoneTemplates
+  - projectTemplateAutomations
+  - projectTemplateActions
+  - page: Login & Access Overview
+    path: ./pages/api/login.mdx
+    icon: key
+  - accounts
+  - invitations
+  - permissions
+  - roles
+  - teams
+  - workspaces
+  - page: API Management Overview
+    path: ./pages/api/api.mdx
+    icon: code
+  - apiUsers
+  - webhooks
+  - clientApplications
+  # Reenable others when there are uncategorized endpoints
+  # - page: Others
+  #   path: ./pages/api/others.mdx
+  #   icon: angles-right
+- api: API v2 Reference
+  api-name: v2
+  paginated: true
+  display-errors: true
+  summary: ./apis/v2/summary.mdx
+  slug: apiv2
+  layout:
+  - page: Time Tracking Overview
+    path: ./pages/api/v2/timetracking.mdx
+    icon: timer
+  - timeTracking
 
 navbar-links:
-  - type: secondary
-    text: Support
-    url: https://support.awork.com
-  - type: secondary
-    text: Developer Forum
-    url: https://community.awork.com/c/developer-forum/17
-  - type: primary
-    text: Login
-    url: https://app.awork.com
+- type: secondary
+  text: Support
+  url: https://support.awork.com
+- type: secondary
+  text: Developer Forum
+  url: https://community.awork.com/c/developer-forum/17
+- type: primary
+  text: Login
+  url: https://app.awork.com
 layout:
   searchbar-placement: header
   tabs-placement: header
