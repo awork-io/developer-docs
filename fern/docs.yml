@@ -174,7 +174,7 @@ navigation:
   - page: Time Tracking Overview
     path: ./pages/api/v2/timetracking.mdx
     icon: timer
-  - absenceregions # change this when the endpoint is available
+  - timeTracking
 
 navbar-links:
 - type: secondary

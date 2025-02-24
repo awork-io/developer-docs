@@ -18,13 +18,227 @@
     }
   ],
   "paths": {
-    "/absenceregions": {
+    "/me/timetracking/pause": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Pauses a running time tracking for a user.",
+        "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\">The user must be the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The id of the user. Not required if the me route is used.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "owner": "true"
+        }
+      }
+    },
+    "/me/timetracking/resume": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Resumes a paused time tracking for a user.",
+        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\">The user must be the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The id of the user. Not required if the me route is used.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "owner": "true"
+        }
+      }
+    },
+    "/me/timetracking/start": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Starts a new time tracking for a user.",
+        "description": "If there is already a running/paused time tracking it will be stopped automatically in order to start the new one.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The id of the user. Not required if the me route is used.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to start a time tracking.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartTimeTrackingForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "admin": "true",
+          "owner": "true"
+        }
+      }
+    },
+    "/me/timetracking/stop": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Stops the currently running time tracking of the specified user.",
+        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The id of the user. Not required if the me route is used.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "admin": "true",
+          "owner": "true"
+        }
+      }
+    },
+    "/timeentries": {
       "get": {
         "tags": [
-          "AbsenceRegions"
+          "TimeEntries"
         ],
-        "summary": "Gets all the absence regions.",
-        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\n            Any other user will only see themselves assigned to the regions.\r\n\r\n<Check><b>Required Permissions:</b> Any authenticated user.</Check>",
+        "summary": "Returns all time entries.",
+        "description": "Returns all time entries.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "searchReindex",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -33,7 +247,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AbsenceRegionModel"
+                    "$ref": "#/components/schemas/TimeEntry"
                   }
                 }
               }
@@ -48,7 +262,7 @@
           }
         ],
         "x-api-versions": [
-          "v1"
+          "v2"
         ],
         "x-access": {
           "any": "true"
@@ -56,16 +270,16 @@
       },
       "post": {
         "tags": [
-          "AbsenceRegions"
+          "TimeEntries"
         ],
-        "summary": "Creates a new absence region.",
-        "description": "Creates a new absence region.\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Check><b>Required Permissions:</b> The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "summary": "Creates a new time entry.",
+        "description": "Creates a new time entry.\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
-          "description": "The model to create the absence region.",
+          "description": "The form to create a time entry.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AbsenceRegionForm"
+                "$ref": "#/components/schemas/TimeEntryForm"
               }
             }
           }
@@ -76,7 +290,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AbsenceRegionModel"
+                  "$ref": "#/components/schemas/TimeEntry"
                 }
               }
             }
@@ -90,17 +304,1370 @@
           }
         ],
         "x-api-versions": [
-          "v1"
+          "v2"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/timeentries/simplified": {
+      "get": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Retrieves all time entries with a simplified model based on the grouping parameter.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "grouping",
+            "in": "query",
+            "description": "The group-by parameter.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimplifiedTimeEntry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/timeentries/{timeEntryId}": {
+      "get": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Get a time entry by id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Updates the time entry with the specified id.",
+        "description": "Updates the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\n            Following combination of times and duration are allowed for already completed time entries:\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\n            - start time (local or utc) and duration\n            - end time (local or utc) and duration\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form to update the time entry with the specified id.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeEntryForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/timeentries/{timeEntryId}/removebreaks": {
+      "post": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Handles removing all finished breaks from a time entry.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeEntryId",
+            "in": "path",
+            "description": "The id of the time entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/users/{userId}/timetracking/pause": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Pauses a running time tracking for a user.",
+        "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\">The user must be the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The id of the user. Not required if the me route is used.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "owner": "true"
+        }
+      }
+    },
+    "/users/{userId}/timetracking/resume": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Resumes a paused time tracking for a user.",
+        "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\">The user must be the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The id of the user. Not required if the me route is used.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "owner": "true"
+        }
+      }
+    },
+    "/users/{userId}/timetracking/start": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Starts a new time tracking for a user.",
+        "description": "If there is already a running/paused time tracking it will be stopped automatically in order to start the new one.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The id of the user. Not required if the me route is used.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to start a time tracking.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartTimeTrackingForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
         ],
         "x-access": {
           "admin": "true",
-          "user-planning-data": "write"
+          "owner": "true"
+        }
+      }
+    },
+    "/users/{userId}/timetracking/stop": {
+      "post": {
+        "tags": [
+          "TimeTracking"
+        ],
+        "summary": "Stops the currently running time tracking of the specified user.",
+        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The id of the user. Not required if the me route is used.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "admin": "true",
+          "owner": "true"
         }
       }
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "Break": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "The start date and time of the break in UTC. Required.",
+            "format": "date-time",
+            "example": "2022-01-01T12:00:00Z"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration of the break in seconds. Required when the end date is set.\r\nWhen a time tracking is paused, it has at least one break with a start date and no duration or end date.",
+            "format": "int32",
+            "nullable": true,
+            "example": 3600
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date and time of the break in UTC. Required when the duration is set and the break is finished.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-01-01T13:00:00Z"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The break model. Shows when a time tracking was paused."
+      },
+      "NestedBaseTypeModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NestedCompanyModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NestedModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NestedStatusModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NestedTaskStatusModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NestedTypeModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NestedUserModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/NestedStatusModel"
+          },
+          "company": {
+            "$ref": "#/components/schemas/NestedCompanyModel"
+          },
+          "projectType": {
+            "$ref": "#/components/schemas/NestedTypeModel"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectTagModelForTimeTrackings"
+            },
+            "description": "The tags of the project.",
+            "nullable": true,
+            "deprecated": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectTeamModelForTimeTrackings"
+            },
+            "description": "The teams of the project.",
+            "nullable": true,
+            "deprecated": true
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the project is private.",
+            "example": false
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the project has an image.",
+            "example": true
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether the project is external."
+          },
+          "isBillableByDefault": {
+            "type": "boolean",
+            "description": "Whether project times should be billable by default.",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created the project.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectTagModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the tag.",
+            "nullable": true,
+            "example": "Design"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the tag.",
+            "nullable": true,
+            "example": "purple"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A tag model used for the timetrackings ProjectModelForTimeTrackings.\r\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+      },
+      "ProjectTeamModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimplifiedCompanyModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "hasImage": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimplifiedProjectModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          },
+          "company": {
+            "$ref": "#/components/schemas/SimplifiedCompanyModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimplifiedTaskModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "correlationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "taskStatusId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/NestedTaskStatusModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimplifiedTimeEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the time entry.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isBillable": {
+            "type": "boolean",
+            "description": "Whether the time entry is billable or not.",
+            "example": true
+          },
+          "isBilled": {
+            "type": "boolean",
+            "description": "Whether the time entry is billed or not.",
+            "example": false
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration of the time entry in seconds. Not set if the time entry is still running.",
+            "format": "int32",
+            "nullable": true,
+            "example": 8635
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date and time of the time entry. Required.\r\nIf the time entry is date only, the time should be 00:00:00.",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date and time of the time entry. Not set if the time entry is still running.\r\nIf the time entry is date only, it should be the same as the start date.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "task": {
+            "$ref": "#/components/schemas/SimplifiedTaskModel"
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/SimplifiedProjectModel"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "user": {
+            "$ref": "#/components/schemas/NestedUserModel"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "typeOfWork": {
+            "$ref": "#/components/schemas/NestedBaseTypeModel"
+          },
+          "typeOfWorkId": {
+            "type": "string",
+            "description": "The id of the type of work.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this time entry.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date of the creation of this time entry.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The simplified time entry model."
+      },
+      "StartTimeTrackingForm": {
+        "required": [
+          "timezone",
+          "typeOfWorkId"
+        ],
+        "type": "object",
+        "properties": {
+          "isBillable": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billable or not.",
+            "example": true
+          },
+          "isBilled": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billed or not.",
+            "example": false
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "note": {
+            "type": "string",
+            "description": "The note of the time tracking.",
+            "nullable": true,
+            "example": "I created a first draft for the new sitemap"
+          },
+          "typeOfWorkId": {
+            "type": "string",
+            "description": "The id of the type of work of the time tracking.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "timezone": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "example": "Europe/London"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "description": "The base type of the task.\r\nCan be 'private' for a private task or\r\n'projecttask' for a project task.",
+            "nullable": true,
+            "example": "projecttask"
+          },
+          "taskStatusId": {
+            "type": "string",
+            "description": "The id of the status for this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "typeOfWorkId": {
+            "type": "string",
+            "description": "The id of the type of work of this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectModelForTimeTrackings"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this task is assigned to.\r\nOnly set if this is a project task.\r\nIn this case, it is equal to the EntityId.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "description": "The expected planned workload of the task, in seconds.",
+            "format": "int32",
+            "nullable": true,
+            "example": 21600
+          },
+          "closedOn": {
+            "type": "string",
+            "description": "The date the task was set to closed.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/NestedTaskStatusModel"
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NestedUserModel"
+            },
+            "description": "The list of assigned users of this task, or empty if no user is assigned.",
+            "nullable": true,
+            "deprecated": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskTagModelForTimeTrackings"
+            },
+            "description": "The list of tags.",
+            "nullable": true,
+            "deprecated": true
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "correlationId": {
+            "type": "string",
+            "description": "The correlation id between parent and subtasks, meaning it's either the ParentId or its own Id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The id of the parent task this of this subtask.\r\nOnly set if this is a subtask.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentTask": {
+            "$ref": "#/components/schemas/NestedModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskTagModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the tag.",
+            "nullable": true,
+            "example": "Design"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the tag.",
+            "nullable": true,
+            "example": "purple"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A tag model used for the timetrackings TaskModelForTimeTrackings.\r\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+      },
+      "TimeEntry": {
+        "required": [
+          "timezone",
+          "typeOfWorkId"
+        ],
+        "type": "object",
+        "properties": {
+          "isBillable": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billable or not.",
+            "example": true
+          },
+          "isBilled": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billed or not.",
+            "example": false
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "note": {
+            "type": "string",
+            "description": "The note of the time tracking.",
+            "nullable": true,
+            "example": "I created a first draft for the new sitemap"
+          },
+          "isDateOnly": {
+            "type": "boolean",
+            "description": "Whether the time entry is a date only entry."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The date and time when the time entry was started in UTC. Required.",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The date and time when the time entry ends in UTC. Not set if the time entry is still running.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "timezone": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "example": "Europe/Berlin"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration of the time tracking in seconds.\r\nRequired when the time entry is not running.",
+            "format": "int32",
+            "nullable": true,
+            "example": 8635
+          },
+          "typeOfWorkId": {
+            "type": "string",
+            "description": "The id of the type of work.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user.\r\nCan be null if the user was deleted.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the time tracking.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "breakDuration": {
+            "type": "integer",
+            "description": "The duration of the break in seconds.\r\nCannot be set via API.",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this time tracking.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this time tracking was created.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last updated this time tracking.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this time tracking was last modified.",
+            "format": "date-time"
+          },
+          "typeOfWork": {
+            "$ref": "#/components/schemas/NestedTypeModel"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserModelForTimeTrackings"
+          },
+          "task": {
+            "$ref": "#/components/schemas/TaskModelForTimeTrackings"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectModelForTimeTrackings"
+          },
+          "breaks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Break"
+            },
+            "description": "The breaks of the time tracking.",
+            "nullable": true
+          },
+          "resourceVersion": {
+            "type": "integer",
+            "description": "The version of the entity, updated on every modification, to the ticks in UTC.\r\nNot identical to UpdatedOn.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 637825154598057900
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if this entity is coming from an external workspace (awork Connect).",
+            "example": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeEntryForm": {
+        "required": [
+          "timezone",
+          "typeOfWorkId"
+        ],
+        "type": "object",
+        "properties": {
+          "isBillable": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billable or not.",
+            "example": true
+          },
+          "isBilled": {
+            "type": "boolean",
+            "description": "Whether the time tracking is billed or not.",
+            "example": false
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "note": {
+            "type": "string",
+            "description": "The note of the time tracking.",
+            "nullable": true,
+            "example": "I created a first draft for the new sitemap"
+          },
+          "isDateOnly": {
+            "type": "boolean",
+            "description": "Whether the time entry is a date only entry."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The date and time when the time entry was started in UTC. Required.",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The date and time when the time entry ends in UTC. Not set if the time entry is still running.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "timezone": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "example": "Europe/Berlin"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration of the time tracking in seconds.\r\nRequired when the time entry is not running.",
+            "format": "int32",
+            "nullable": true,
+            "example": 8635
+          },
+          "typeOfWorkId": {
+            "type": "string",
+            "description": "The id of the type of work.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user.\r\nCan be null if the user was deleted.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTagModelForTimeTrackings"
+            },
+            "description": "The tags of the user.",
+            "nullable": true,
+            "deprecated": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTeamModelForTimeTrackings"
+            },
+            "description": "The teams of the user.",
+            "nullable": true,
+            "deprecated": true
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether the user is external."
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserTagModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the tag.",
+            "nullable": true,
+            "example": "Design"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the tag.",
+            "nullable": true,
+            "example": "purple"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A tag model used for the timetrackings UserModelForTimeTrackings.\r\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+      },
+      "UserTeamModelForTimeTrackings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "parameters": {
       "page": {
         "name": "page",
@@ -176,5 +1743,14 @@
       ]
     }
   ],
-  "tags": []
+  "tags": [
+    {
+      "name": "TimeEntries",
+      "description": "There are some endpoints which have a V2 version. For those the V1 endpoints will be deprecated in the future.\n                    Please use the V2 endpoints instead.\n                    The endpoints can be used for general operations on existing time entries.\n                    A time entry can be linked to a task and / or project, although it can also be created for the user themselves without any entity link.\n                    If the time entry is linked to a project it is also indirectly linked to the company of that project.\n                    Similarly, the time entry is automatically linked to the project of the the task."
+    },
+    {
+      "name": "TimeTracking",
+      "description": "The v1 versions of these endpoints will be deprecated at some point. Please migrate to the V2 versions.\n                These endpoints can be used to start, stop, pause or resume a time tracking as well as to get the last time tracking of a user."
+    }
+  ]
 }
