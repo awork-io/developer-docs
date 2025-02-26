@@ -634,7 +634,7 @@
           "Accounts"
         ],
         "summary": "Updates the account with the specified id.",
-        "description": "Updates the account with the specified id.\r\nDoes not update the external account of the user.\r\nUse the 'accounts/connectToSocialAccount' or 'accounts/disconnectToSocialAccount' endpoints instead.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Updates the account with the specified id.\r\nDoes not update the external account of the user.\r\nUse the 'accounts/connectToSocialAccount' or 'accounts/disconnectToSocialAccount' endpoints instead.\r\nIf the email of the account is changed, the email will not be changed immediately but a verification email will be sent to the new email address.\r\nThe email will only be changed after the user has verified the new email address.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "accountId",
@@ -1764,8 +1764,8 @@
         "tags": [
           "CommentFiles"
         ],
-        "summary": "Copys the file to a new comment.",
-        "description": "Copys the file to a new comment (meta and content).",
+        "summary": "Copies the file to a new comment.",
+        "description": "Copies the file to a new comment (meta and content).",
         "parameters": [
           {
             "name": "commentId",
@@ -3454,8 +3454,8 @@
         "tags": [
           "CompanyFiles"
         ],
-        "summary": "Copys the file to a new company.",
-        "description": "Copys the file to a new company (meta and content).",
+        "summary": "Copies the file to a new company.",
+        "description": "Copies the file to a new company (meta and content).",
         "parameters": [
           {
             "name": "companyId",
@@ -6912,7 +6912,7 @@
           "TimeEntries"
         ],
         "summary": "Returns the last time entry of a specified user.",
-        "description": "The last time entry is always the last one that was started.\r\nTime entries which are started in the future are ignored.\r\nIf a time entry does not have a start time, 12.00 am is automatically assumed as the start time\r\nfor comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "description": "The last time entry is always the last one that was started.\n            Time entries which are started in the future are ignored.\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -6930,7 +6930,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTracking"
+                  }
                 }
               }
             }
@@ -8192,7 +8195,7 @@
           "Projects"
         ],
         "summary": "Updates the project with the specified id.",
-        "description": "Updates the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
+        "description": "Updates the project with the specified id.\r\nSpecial handling for retainer projects:\r\nIf the project has at least one Retainer, the IsRetainer flag is automatically set to true.\r\nFor retainer projects, the TimeBudget cannot be set. Instead the TimeBudget is the sum of all retainer budgets.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -10544,8 +10547,8 @@
         "tags": [
           "ProjectFiles"
         ],
-        "summary": "Copys the file to a new project.",
-        "description": "Copys the file to a new project (meta and content).",
+        "summary": "Copies the file to a new project.",
+        "description": "Copies the file to a new project (meta and content).",
         "parameters": [
           {
             "name": "projectId",
@@ -15895,8 +15898,8 @@
         "tags": [
           "ProjectTemplateFiles"
         ],
-        "summary": "Copys the file to a new projecttemplate.",
-        "description": "Copys the file to a new projecttemplate (meta and content).",
+        "summary": "Copies the file to a new projecttemplate.",
+        "description": "Copies the file to a new projecttemplate (meta and content).",
         "parameters": [
           {
             "name": "projecttemplateId",
@@ -21870,8 +21873,8 @@
         "tags": [
           "TaskFiles"
         ],
-        "summary": "Copys the file to a new task.",
-        "description": "Copys the file to a new task (meta and content).",
+        "summary": "Copies the file to a new task.",
+        "description": "Copies the file to a new task (meta and content).",
         "parameters": [
           {
             "name": "taskId",
@@ -23983,8 +23986,8 @@
         "tags": [
           "TaskTemplateFiles"
         ],
-        "summary": "Copys the file to a new tasktemplate.",
-        "description": "Copys the file to a new tasktemplate (meta and content).",
+        "summary": "Copies the file to a new tasktemplate.",
+        "description": "Copies the file to a new tasktemplate (meta and content).",
         "parameters": [
           {
             "name": "tasktemplateId",
@@ -28186,8 +28189,8 @@
         "tags": [
           "UserFiles"
         ],
-        "summary": "Copys the file to a new user.",
-        "description": "Copys the file to a new user (meta and content).",
+        "summary": "Copies the file to a new user.",
+        "description": "Copies the file to a new user (meta and content).",
         "parameters": [
           {
             "name": "userId",
@@ -29357,7 +29360,7 @@
           "TimeEntries"
         ],
         "summary": "Returns the last time entry of a specified user.",
-        "description": "The last time entry is always the last one that was started.\r\nTime entries which are started in the future are ignored.\r\nIf a time entry does not have a start time, 12.00 am is automatically assumed as the start time\r\nfor comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "description": "The last time entry is always the last one that was started.\n            Time entries which are started in the future are ignored.\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -29376,7 +29379,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTracking"
+                  }
                 }
               }
             }
@@ -30787,8 +30793,8 @@
         "tags": [
           "WorkspaceFiles"
         ],
-        "summary": "Copys the file to a new workspace.",
-        "description": "Copys the file to a new workspace (meta and content).",
+        "summary": "Copies the file to a new workspace.",
+        "description": "Copies the file to a new workspace (meta and content).",
         "parameters": [
           {
             "name": "workspaceId",
@@ -37146,6 +37152,96 @@
         },
         "additionalProperties": false
       },
+      "MinimalChecklistProjectWithTeams": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the project.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the project.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the project for display purposes in awork.\r\nCan be null when no color assigned.",
+            "nullable": true,
+            "example": "purple"
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "True if the project is private."
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the project has an image."
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/DefaultStatusModel"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectTeamModel"
+            },
+            "description": "The teams of the project.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MinimalChecklistUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The firstname of the user.",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The lastname of the user.",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the user has an image."
+          }
+        },
+        "additionalProperties": false
+      },
       "MinimalPublicHoliday": {
         "type": "object",
         "properties": {
@@ -38061,6 +38157,131 @@
         },
         "additionalProperties": false
       },
+      "PlannerAnalyzerOptionalParameters": {
+        "type": "object",
+        "properties": {
+          "teamIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "taskViewIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlannerChecklist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the checklist.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user that the checklist belongs to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "timeRangeInDays": {
+            "type": "integer",
+            "description": "The time range in days that the checklist is for.",
+            "format": "int32"
+          },
+          "fromDate": {
+            "type": "string",
+            "description": "The day that the checklist analysis starts from.",
+            "format": "date"
+          },
+          "toDate": {
+            "type": "string",
+            "description": "The day that the checklist analysis ends on.",
+            "format": "date"
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/PlannerAnalyzerOptionalParameters"
+          },
+          "checklistItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlannerChecklistItem"
+            },
+            "description": "The list of items for the checklist.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlannerChecklistItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the checklist item.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "plannerChecklistId": {
+            "type": "string",
+            "description": "The id of the checklist that the item belongs to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the checklist item.\r\nIt depends on the analyzer that created the item.\r\nE.g. \"upcoming-project-deadlines-milestones\", \"upcoming-tasks-deadlines\", etc.",
+            "nullable": true
+          },
+          "isChecked": {
+            "type": "boolean",
+            "description": "Whether the item is checked or not."
+          },
+          "values": {
+            "type": "string",
+            "description": "This represents the json serialized values of the item.\r\nThe specific properties of the values depend on the type of the item.",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "description": "(optional) The id of the user this checklistItem refers to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "user": {
+            "$ref": "#/components/schemas/MinimalChecklistUser"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "(optional) The id of the project this checklistItem refers to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/MinimalChecklistProjectWithTeams"
+          },
+          "taskViewId": {
+            "type": "string",
+            "description": "(optional) The id of the task view this checklistItem refers to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
       "PlannerProjectMemberModel": {
         "type": "object",
         "properties": {
@@ -38172,6 +38393,40 @@
           },
           "projectsToPlan": {
             "$ref": "#/components/schemas/ProjectsToPlanForm"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PostPlannerChecklistParameters": {
+        "required": [
+          "timeRangeInDays"
+        ],
+        "type": "object",
+        "properties": {
+          "timeRangeInDays": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The number of days that we will consider (from today) for the planner analysis.\r\nAt least 1 day is required.",
+            "format": "int32"
+          },
+          "teamIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "(optional) Filter the analysis to only include tasks/projects from these teams.",
+            "nullable": true
+          },
+          "taskFilterIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "(optional) Create, for each task filter, a checklist item.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -39820,6 +40075,15 @@
             "type": "string",
             "description": "Additional prompt for the AI to consider when creating the project time bookings.",
             "nullable": true
+          },
+          "mode": {
+            "enum": [
+              "quick",
+              "full"
+            ],
+            "type": "string",
+            "description": "Which mode to use for the auto fix.\r\nDefault is quick.\r\nquick: uses a single AI call to generate a quick fix.\r\nfull: uses an iterative approach to generate a fix, which is more accurate but slower.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -40459,6 +40723,16 @@
             "format": "double",
             "nullable": true,
             "example": 2
+          }
+        },
+        "additionalProperties": false
+      },
+      "PutCheckPlannerChecklistItemParameters": {
+        "type": "object",
+        "properties": {
+          "isChecked": {
+            "type": "boolean",
+            "description": "The checked value to set."
           }
         },
         "additionalProperties": false

@@ -18,6 +18,55 @@
     }
   ],
   "paths": {
+    "/me/timeentries/last": {
+      "get": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Returns the last time entry of a specified user.",
+        "description": "The last time entry is always the last one that was started.\n            Time entries which are started in the future are ignored.\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The id of the user. Not required if the me route is used.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeEntry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "admin": "true",
+          "owner": "true"
+        }
+      }
+    },
     "/me/timetracking/pause": {
       "post": {
         "tags": [
@@ -513,6 +562,56 @@
         ],
         "x-access": {
           "any": "true"
+        }
+      }
+    },
+    "/users/{userId}/timeentries/last": {
+      "get": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Returns the last time entry of a specified user.",
+        "description": "The last time entry is always the last one that was started.\n            Time entries which are started in the future are ignored.\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The id of the user. Not required if the me route is used.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeEntry"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "admin": "true",
+          "owner": "true"
         }
       }
     },
