@@ -35,6 +35,21 @@ curl -X POST "https://api.awork.com/api/v1/projects" \
          }'
 ```
 
+### Working with retainer projects
+
+Retainer projects are project which have at least one retainer budget. They have the `isRetainer` property set to `true`. The `timebudget` property of a retainer project cannot be updated manually but instead shows the sum of all timebudgets of all retainer budgets of the project.
+In order to turn a retainer project back to a normal project, all retainer budgets have to be deleted.
+
+### Calculated properties
+
+The following properties are calculated and cannot be set manually:
+- `trackedDuration` -> The sum of the `duration` of all time entries of the project. If the `deductNonBillableHours` property of the project is set to `false`, only time entries with `isBillable` set to `true` are included in the calculation.
+- `plannedDuration` -> The sum of plannedDuration of all tasks of the project.
+- `tasksCount` -> The number of tasks of the project.
+- `tasksDoneCount` -> The number of tasks of the project which are done.
+- Special case for `timebudget`: The `timebudget` property of a retainer project cannot be updated manually but instead shows the sum of all timebudgets of all retainer budgets of the project.
+
+
 ## Get more help
 
 Make sure to check out our dedicated support page on [getting started with projects](https://support.awork.com/en/articles/5336228-create-your-first-project) in awork.
