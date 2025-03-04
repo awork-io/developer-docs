@@ -32054,6 +32054,10 @@
         ],
         "type": "string"
       },
+      "ETag": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "EmailVerificationForm": {
         "type": "object",
         "properties": {
@@ -32614,6 +32618,97 @@
         "type": "object",
         "properties": {
           "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TableAuditEventEntity": {
+        "type": "object",
+        "properties": {
+          "partitionKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "rowKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "eTag": {
+            "$ref": "#/components/schemas/ETag"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "correlationId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "impersonatingUserId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "traceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "websocketConnectionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "eventType": {
+            "type": "string",
+            "nullable": true
+          },
+          "entityType": {
+            "type": "string",
+            "nullable": true
+          },
+          "entityId": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientId": {
+            "type": "string",
+            "nullable": true
+          },
+          "property": {
+            "type": "string",
+            "nullable": true
+          },
+          "old": {
+            "type": "string",
+            "nullable": true
+          },
+          "new": {
+            "type": "string",
+            "nullable": true
+          },
+          "callStack": {
             "type": "string",
             "nullable": true
           }
