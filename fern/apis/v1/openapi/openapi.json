@@ -32054,10 +32054,6 @@
         ],
         "type": "string"
       },
-      "ETag": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "EmailVerificationForm": {
         "type": "object",
         "properties": {
@@ -32624,29 +32620,9 @@
         },
         "additionalProperties": false
       },
-      "TableAuditEventEntity": {
+      "TableAuditEventModel": {
         "type": "object",
         "properties": {
-          "partitionKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "rowKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "eTag": {
-            "$ref": "#/components/schemas/ETag"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "workspaceId": {
             "type": "string",
             "format": "uuid",
@@ -35713,6 +35689,7 @@
         "type": "object",
         "properties": {
           "value": {
+            "maxLength": 255,
             "minLength": 1,
             "type": "string",
             "description": "The selection value which can be used in a select custom field.",
@@ -40157,6 +40134,13 @@
       "ProjectTimeBookingsAutoFixForm": {
         "type": "object",
         "properties": {
+          "autofixId": {
+            "type": "string",
+            "description": "A unique id to track the autofix process, provided by the client.\r\nWill be returned in the websocket events related to this autofix process.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
           "bookingIds": {
             "type": "array",
             "items": {
@@ -40164,6 +40148,15 @@
               "format": "uuid"
             },
             "description": "The ids of the bookings to fix.",
+            "nullable": true
+          },
+          "taskIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The ids of the tasks to fix.",
             "nullable": true
           },
           "prompt": {
