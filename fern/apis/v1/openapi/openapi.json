@@ -8357,7 +8357,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BaseTagModel"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BaseTagModel"
+                  }
                 }
               }
             }
@@ -11908,7 +11911,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TaskReorderingResult"
+                    "$ref": "#/components/schemas/ReorderingResult"
                   }
                 }
               }
@@ -12322,7 +12325,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TaskReorderingResult"
+                    "$ref": "#/components/schemas/ReorderingResult"
                   }
                 }
               }
@@ -15416,7 +15419,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BaseTagModel"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BaseTagModel"
+                  }
                 }
               }
             }
@@ -18909,7 +18915,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TaskReorderingResult"
+                    "$ref": "#/components/schemas/ReorderingResult"
                   }
                 }
               }
@@ -19976,7 +19982,7 @@
           "Tasks"
         ],
         "summary": "Changes statuses of tasks.",
-        "description": "Changes statuses of several tasks.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info> Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>",
+        "description": "Changes statuses of several tasks.\r\n            \r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info> Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>",
         "requestBody": {
           "description": "The model to change statuses.",
           "content": {
@@ -20107,7 +20113,7 @@
           "Tasks"
         ],
         "summary": "Changes the type of work for a batch of tasks.",
-        "description": "Changes the type of work for a batch of tasks and their related time entries.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private tasks, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>",
+        "description": "Changes the type of work for a batch of tasks and their related time entries.\r\n            \r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private tasks, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been changed successfully. Returns `207 MultiStatus` if at least one task could not be changed, including the reasons.</Info>",
         "requestBody": {
           "description": "The model to change types.",
           "content": {
@@ -20152,7 +20158,7 @@
           "Tasks"
         ],
         "summary": "Deletes several tasks.",
-        "description": "Deletes the specified tasks.\r\nBy default, the related time entries of these tasks loose the relation to the deleted tasks.\r\nIn order to delete the time entires as well, you need to set the 'DeleteTimeTrackings' property to true.\r\n\r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been deleted successfully. Returns `207 MultiStatus` if at least one task could not be deleted, including the reasons.</Info>",
+        "description": "Deletes the specified tasks.\r\nBy default, the related time entries of these tasks loose the relation to the deleted tasks.\r\nIn order to delete the time entires as well, you need to set the 'DeleteTimeTrackings' property to true.\r\n            \r\n<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, `write` permissions on the `project-planning-data` feature are required. For a user's private task, no special permissions are required.</Check><Info>Returns `204 NoContent` if all tasks have been deleted successfully. Returns `207 MultiStatus` if at least one task could not be deleted, including the reasons.</Info>",
         "requestBody": {
           "description": "The model to delete tasks.",
           "content": {
@@ -22745,7 +22751,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TaskReorderingResult"
+                    "$ref": "#/components/schemas/ReorderingResult"
                   }
                 }
               }
@@ -34005,7 +34011,7 @@
           "taskLists": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TaskReorderingResult"
+              "$ref": "#/components/schemas/ReorderingResult"
             },
             "description": "The lists the task should be moved to."
           }
@@ -36141,6 +36147,12 @@
           "isPrivate": {
             "type": "boolean",
             "description": "Whether the document is private."
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the document in either the list of private docs,\r\nthe referenced document space or in the referenced project.",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -36205,6 +36217,12 @@
           "isExternal": {
             "type": "boolean",
             "description": "Whether the document belongs to an external project."
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the document in either the list of private docs,\r\nthe referenced document space or in the referenced project.",
+            "format": "double",
+            "nullable": true
           },
           "createdOn": {
             "type": "string",
@@ -36280,6 +36298,12 @@
             "type": "boolean",
             "description": "Whether the document is private."
           },
+          "order": {
+            "type": "number",
+            "description": "The order of the document in either the list of private docs,\r\nthe referenced document space or in the referenced project.",
+            "format": "double",
+            "nullable": true
+          },
           "content": {
             "type": "string",
             "description": "The content of the document.",
@@ -36325,6 +36349,12 @@
             "description": "The color of the document space for display purposes in the app.\r\nCan be null when no color assigned.",
             "nullable": true,
             "example": "purple"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the document space in the list of document spaces.",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -36370,6 +36400,12 @@
             "description": "The color of the document space for display purposes in the app.\r\nCan be null when no color assigned.",
             "nullable": true,
             "example": "purple"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the document space in the list of document spaces.",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -40905,6 +40941,28 @@
         },
         "additionalProperties": false
       },
+      "ReorderingResult": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the list to move the task to or to change the order for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the task in the list.\r\nIf null, the task is moved to the end of the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 3
+          }
+        },
+        "additionalProperties": false
+      },
       "Retainer": {
         "type": "object",
         "properties": {
@@ -42680,28 +42738,6 @@
             "description": "The timezone of the Recurrency Rule. If not set, will use the requesting user's timezone.",
             "nullable": true,
             "example": "Europe/Berlin"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskReorderingResult": {
-        "required": [
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The id of the list to move the task to or to change the order for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "order": {
-            "type": "number",
-            "description": "The order of the task in the list.\r\nIf null, the task is moved to the end of the list.",
-            "format": "double",
-            "nullable": true,
-            "example": 3
           }
         },
         "additionalProperties": false
