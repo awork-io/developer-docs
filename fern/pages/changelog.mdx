@@ -20,6 +20,20 @@ This section shows upcoming changes.
 
 This section shows you recent changes that are already live in our API.
 
+### Updated: Time Tracking v2 🚨
+
+In order to improve the time tracking experience in awork, especially around date handling and timezones, we have released a new version of the time tracking API. The new version can be found here: [Time Tracking v2](timetrackingv2). Please migrate to the new endpoints as soon as possible, as the old endpoints will be removed in the future after a longer deprecation period.
+
+The main changes are:
+- The `startDate` and `endDate` fields now combine date and time components, removing the StartDateUtc and StartTimeUtc fields. There are no more local date and time fields, the `startDate` and `endDate` fields are always in UTC. The combination now allows filtering on the time component of the date as well which was previously not possible as we don't support filtering on TimeSpans in the API.
+- A new property `isDateOnly` has been added to the TimeEntry model to show whether the time entry is a date only entry or not as this cannot be done by not specifying the StartTimeUtc anymore. Date only time entries are required to have a duration > 0.
+
+### New: Retainer projects 🚀
+
+Retainer budgets have been a highly requested feature in awork that we are finally releasing. Retainer budgets help you manage recurring time budgets for projects. As part of the release, the Project model gets a new property `isRetainer` which is set to `true` if the project has at least one retainer budget. Managing retainers is currently only possible via the web app.
+
+<Note>The `timebudget` property of a retainer project cannot be updated manually but instead shows the sum of all timebudgets of all retainer budgets of the project.</Note>
+
 ### New: Custom Fields 🚀
 
 Custom fields is one of the most highly requested features in awork. They allow users to add custom properties to tasks via projects and project templates. Custom fields can be of different types, such as text, number, date, and more.
