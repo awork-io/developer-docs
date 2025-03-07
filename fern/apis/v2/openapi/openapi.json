@@ -259,6 +259,100 @@
         }
       }
     },
+    "/projects/{projectId}/timeentries": {
+      "get": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Returns all time entries of a specified project.",
+        "description": "The projectName parameter defines the main project of which to fetch the time entries.\n            Supported types are: 'projects' and 'tasks'.",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}/timeentries": {
+      "get": {
+        "tags": [
+          "TimeEntries"
+        ],
+        "summary": "Returns all time entries of a specified task.",
+        "description": "The taskName parameter defines the main task of which to fetch the time entries.\n            Supported types are: 'projects' and 'tasks'.",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/timeentries": {
       "get": {
         "tags": [
