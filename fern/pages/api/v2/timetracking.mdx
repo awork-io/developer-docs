@@ -4,4 +4,89 @@ description: Time Tracking API Reference.
 slug: timetrackingv2
 ---
 
-Time Tracking v2
+This is the v2 version of the Time Entries API. Please make sure to use the v2 route as shown in the examples.
+
+## Changes to the v2 version
+
+The TimeEntry model has been changed to allow for more flexibility when working with dates and times. The following changes have been made:
+
+- The `startDate` and `endDate` fields now combine date and time components, no more StartDateUtc and StartTimeUtc. Both dates are stored in UTC. The timezone on the time entry is only used to display in which timezone the time entry was created. There are no more local date and time fields.
+- A new property `isDateOnly` has been added to the TimeEntry model to show whether the time entry is a date only entry or not as this cannot be done by not specifying the StartTimeUtc anymore. Date only time entries are required to have a duration > 0.
+
+## How to work with time tracking
+
+Time Tracking in awork is based on Time Entries. Time Entries are created for a specific project and task and are always assigned to a user. The only way a user of a time entry can be not set is if the user was deleted without his/her time entries. In this case the userId will be set to null.
+There are two ways to create time entries: manually or using the timer.
+
+### Creating a time entry manually
+
+There are multiple ways to create time entries. The easiest way is by specifying the `startDate` and `duration`. The only other required fields for creating a time entry are the `timezone`, `typeOfWorkId` and `userId`.
+
+```sh title="Request" {4-8}
+curl -X POST "https://api.awork.com/api/v2/timeentries" \
+     -H "Content-Type: application/json" \
+     -d '{
+            "timezone": "Europe/Berlin",
+            "userId": "123e4567-e89b-12d3-a456-426614174000",
+            "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+            "startDate": "2024-05-14T10:00:00Z",
+            "duration": 3600
+         }'
+```
+
+Alternatively, you can also specify the `startDate` and `endDate` fields to create a time entry for a specific time range.
+If you specify both `duration`and `endDate`, the `endDate` takes precedence and will be used to calculate the `duration`.
+
+Additionally, you can assign the time entry to a specific project and task by providing the `projectId` and `taskId` fields.
+
+```sh title="Request" {7-8}
+curl -X POST "https://api.awork.com/api/v2/timeentries" \
+     -H "Content-Type: application/json" \
+     -d '{
+            "timezone": "Europe/Berlin",
+            "userId": "123e4567-e89b-12d3-a456-426614174000",
+            "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+            "projectId": "123e4567-e89b-12d3-a456-426614174000",
+            "taskId": "123e4567-e89b-12d3-a456-426614174000",
+            "startDate": "2024-05-14T10:00:00Z",
+            "duration": 3600
+         }'
+```
+
+### Using the timer
+
+The timer is a convenient way to track time while working on a task or project. To start the timer, you need to make a request to `POST /v2/users/:userId/timetracking/start`.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-426614174000/timetracking/start \
+     -H "Content-Type: application/json" \
+     -d '{
+            "timezone": "Europe/Berlin",
+            "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000",
+         }'
+```
+
+To find the currently running time entry of a user, you can use the `GET /v2/users/:userId/timeentries/last` endpoint and check whether the returned time entry has a duration of 0, which indicates that the timer is running. If the duration is > 0, no timer is running.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-426614174000/timeentries/last
+```
+
+You can additionally specify the project and task to start the timer for. You can then also pause, resume and stop the timer. There can only be one active timer per user. Timers are automatically stopped after 24h or when the time entry reaches the maximum allowed time for that user and day.
+
+See the [Tracking Times](https://support.awork.com/en/articles/5366812-tracking-times) for more details on how the timer works.
+
+### Working with breaks
+
+When using the timer, the timer can also be paused. This will create a break entry for the time the timer was paused. When the timer is resumed, the `endDate` of the break entry will be set and the `breakDuration`on the time entry will be updated. The `breakDuration` is the sum of all break entries for the time entry. When a time entry has a `breakDuration`, the `breakDuration` will have an influence on the duration calculations:
+
+- If the `startDate` and `duration` are specified, the `endDate` will be calculated as `startDate + duration + breakDuration`
+- If the `startDate` and `endDate` are specified, the `duration` will be calculated as `endDate - startDate - breakDuration`
+
+Breaks cannot be created/updated/deleted manually. They are only created when the timer is paused and resumed.
+
+If you want to remove the breaks, you can do so by making a request to `POST /v2/timeentries/:timeEntryId/breaks/remove`.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v2/timeentries/123e4567-e89b-12d3-a456-426614174000/removeBreaks
+```
