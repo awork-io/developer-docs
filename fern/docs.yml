@@ -164,17 +164,17 @@ navigation:
   # - page: Others
   #   path: ./pages/api/others.mdx
   #   icon: angles-right
-- api: API v2 Reference
-  api-name: v2
-  paginated: true
-  display-errors: true
-  summary: ./apis/v2/summary.mdx
-  slug: apiv2
-  layout:
-  - page: Time Tracking Overview
-    path: ./pages/api/v2/timetracking.mdx
-    icon: timer
-  - timeTracking
+# - api: API v2 Reference
+#   api-name: v2
+#   paginated: true
+#   display-errors: true
+#   summary: ./apis/v2/summary.mdx
+#   slug: apiv2
+#   layout:
+#   - page: Time Tracking Overview
+#     path: ./pages/api/v2/timetracking.mdx
+#     icon: timer
+#   - timeTracking
 
 navbar-links:
 - type: secondary
