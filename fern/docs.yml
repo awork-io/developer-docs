@@ -69,6 +69,7 @@ navigation:
   - projectAutomations
   - projectActions
   - projectTimeBookings
+  - retainers
   - autopilot
   - page: Tasks Overview
     path: ./pages/api/tasks.mdx
@@ -92,9 +93,6 @@ navigation:
   - timeEntries
   - timeTracking
   - timeReports
-  - projectTimeEntries
-  - taskTimeEntries
-  - entityTimeEntries
   - page: Companies Overview
     path: ./pages/api/companies.mdx
     icon: crown
