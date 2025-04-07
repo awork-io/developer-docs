@@ -22,7 +22,8 @@ This section shows you recent changes that are already live in our API.
 
 ### New: Retainer projects 🚀
 
-Retainer budgets have been a highly requested feature in awork that we are finally releasing. Retainer budgets help you manage recurring time budgets for projects. As part of the release, the Project model gets a new property `isRetainer` which is set to `true` if the project has at least one retainer budget. Managing retainers is currently only possible via the web app.
+Retainer budgets have been a highly requested feature in awork that we are finally releasing. Retainer budgets help you manage recurring time budgets for projects. As part of the release, the Project model gets a new property `isRetainer` which is set to `true` if the project has at least one retainer budget. You can retrieve the retainers of a project via the new `GET /projects/{projectId}/retainers` endpoint.
+Managing retainers is currently only possible via the web app.
 
 <Note>The `timebudget` property of a retainer project cannot be updated manually but instead shows the sum of all timebudgets of all retainer budgets of the project.</Note>
 
