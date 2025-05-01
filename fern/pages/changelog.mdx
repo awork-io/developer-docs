@@ -20,6 +20,10 @@ This section shows upcoming changes.
 
 This section shows you recent changes that are already live in our API.
 
+### Edge security update 🔐
+
+We updated our edge security configuration, which might lead to some invalid or suspicious requests to be blocked with a `403 Forbidden` status code. Please check your API request if this is the case. Should you need any help, please contact us in the developer forum and provide us with the `X-Edge-Ref` and `Trace-Id` header values where available.
+
 ### New: Retainer projects 🚀
 
 Retainer budgets have been a highly requested feature in awork that we are finally releasing. Retainer budgets help you manage recurring time budgets for projects. As part of the release, the Project model gets a new property `isRetainer` which is set to `true` if the project has at least one retainer budget. You can retrieve the retainers of a project via the new `GET /projects/{projectId}/retainers` endpoint.

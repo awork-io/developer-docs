@@ -8,13 +8,19 @@ slug: support
 
 These Developer Docs should contain all details you need to successfully build apps and integrations with the awork API. We're happy to answer your questions in our [awork Community Developer Forum.](https://community.awork.com/c/developer-forum/17)
 
-Please create a separate issue for each question. If you have issues with a particular request, please include as much detail as possible. Most importantly, we need the **Trace-Id** to be able to help you quickly.
+Please create a separate issue for each question. If you have issues with a particular request, please include as much detail as possible. Most importantly, we need the **Trace-Id** and **Edge Ref** to be able to help you quickly.
+
+## Finding the Edge Ref
+
+The **Edge Ref** is an identifier added by our edge provider that can identify a request before it appears in our systems.
+
+- The `X-Edge-Ref` header is available in the API response. It is therefore recommended to log this header value for failed requests.
 
 ## Finding the Trace-Id
 
-The **Trace-Id** is an awork-internal identifier that can identify a request. With this id, we can look up a particular request and use this to investigate potential issues and provide support.
+The **Trace-Id** is an awork-internal identifier that can identify an operation. With this id, we can look up a particular request and use this to investigate potential issues and provide support.
 
-- The `Trace-Id` is returned as a header in the response. It is therefore recommended to log the `Trace-Id` for failed requests.
+- The `Trace-Id` header is returned in the majority of API responses. It is therefore recommended to log this header value for failed requests.
 - The `traceId` property can be found in the error response body.
 - The `traceId` property is also set in the webhook event metadata.
 
