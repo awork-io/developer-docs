@@ -68,7 +68,7 @@ navigation:
   - projectMilestones
   - projectAutomations
   - projectActions
-  - projectTimeBookings
+  - timeBookings
   - retainers
   - autopilot
   - page: Tasks Overview
@@ -117,6 +117,7 @@ navigation:
   - taskFiles
   - companyFiles
   - commentFiles
+  - documentFiles
   - userFiles
   - workspaceFiles
   - projectTemplateFiles
