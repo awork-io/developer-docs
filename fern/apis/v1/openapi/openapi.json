@@ -4366,6 +4366,1079 @@
         }
       }
     },
+    "/documents/{documentId}/comments": {
+      "delete": {
+        "tags": [
+          "DocumentComments"
+        ],
+        "summary": "Deletes all comments of the specified document.",
+        "description": "Deletes all comments of the specified document.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Returns all comments of the document with the specified id.",
+        "description": "Returns all comments of the document with the specified id. The user needs read permissions on the document.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentComments"
+        ],
+        "summary": "Creates a new comment on the document with the specified id.",
+        "description": "Creates a new comment on the document with the specified id.\r\nThe user needs read permissions on the document to create a comment.\r\nA user can only create a comment for him/herself, except for admins and api users.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model used to create a comment.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentForm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/comments/{commentId}": {
+      "delete": {
+        "tags": [
+          "DocumentComments"
+        ],
+        "summary": "Deletes the comment with the specified id on the document with the specified id.",
+        "description": "Deletes the comment with the specified id on the document with the specified id.\r\nThe delete includes the reactions of the comment.\r\nIf there are any replies to the comment, they will be deleted as well.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "The id of the workspace.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "DocumentComments"
+        ],
+        "summary": "Returns the comment with the specified id of the document with the specified id.",
+        "description": "Returns the comment with the specified id of the document with the specified id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "The id of the comments.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentComments"
+        ],
+        "summary": "Updates the comment with the specified id on the document with the specified id.",
+        "description": "Updates the comment with the specified id on the document with the specified id.\r\nInReplyToCommentId is not allowed to be changed.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "The id of the comment.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model used to update the comment with the specified id.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentPutForm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentPutForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/comments/{commentId}/react": {
+      "post": {
+        "tags": [
+          "DocumentComments"
+        ],
+        "summary": "Updates the reactions of the comment with the specified id on the document with the specified id.",
+        "description": "Updates the reactions of the comment with the specified id on the document with the specified id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "The id of the comment.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model used to update the reactions of the comment with the specified id.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReactionForm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReactionForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/externalfiles": {
+      "post": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Endpoint to batch create external files without uploading.",
+        "description": "Endpoint to create file infos with batch operation.\r\nCreated file infos don't have a version.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "List of file forms.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalFileForm"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalFileForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files": {
+      "delete": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Deletes the files of the specified document.",
+        "description": "Deletes the metadata and the different versions of the files.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Returns all files of the document with the specified id.",
+        "description": "Returns all file metadata of the document with the specified id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FileInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Creates a new document file for the document with the specified id..",
+        "description": "Uploads a new document file for the document with the specified id.\r\nUse this to upload a file as a form value along with the basic file meta data.\r\nThe file size must not exceed 1GB.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "File"
+                ],
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file document from the uploaded file by providing the upload id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/byurl": {
+      "post": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Uploads a new file by providing an url.",
+        "description": "The file needs to be a public available url.\r\nThe file size must not exceed 100MB.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document the file is linked to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The url, name and description of the file.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilePostForm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilePostForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/{fileId}": {
+      "delete": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Deletes the document file with the specified id.",
+        "description": "Deletes the metadata and the different versions of the file.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Returns the file with the specified id of the document with the specified id.",
+        "description": "Returns the file metadata of the document with the specified id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Updates the metadata of the document file with the specified id.",
+        "description": "Updates the metadata of the document file with the specified id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to update the file with the specified id.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FileInfoUpdateForm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FileInfoUpdateForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/{fileId}/download": {
+      "get": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Returns the content of the document file with the specified id.",
+        "description": "Returns the content of the document file. Uses the latest file version.\r\nIf the document file is an image and the width and height are set,\r\nthe image will be resized before it is returned.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "description": "Set width to resize.",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "Set height to resize.",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "crop",
+            "in": "query",
+            "description": "Whether to crop the image when resizing it.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/{fileId}/shareurl": {
+      "get": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Returns an url to share the file.",
+        "description": "Returns a url to share the file.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/{fileId}/versions": {
+      "get": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Returns all file versions of the specified document file.",
+        "description": "Returns all file versions of the specified document file.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FileVersion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Uploads a new version of the document file with the specified id.",
+        "description": "Uploads a new version of an document file.\r\nUse this to upload a file as a form value along with the basic file meta data.\r\nThe file size must not exceed 1GB.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "File"
+                ],
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/{fileId}/versions/{versionId}": {
+      "get": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Returns the document file version with the specified id.",
+        "description": "Returns the document file version with the specified id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "versionId",
+            "in": "path",
+            "description": "The id of the file version.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{documentId}/files/{fileId}/versions/{versionId}/download": {
+      "get": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Returns the content of the document file version with the specified id.",
+        "description": "Returns the content of the document file version with the specified id.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "versionId",
+            "in": "path",
+            "description": "The id of the file version.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/File"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/files/generateuploadurl": {
       "post": {
         "tags": [
@@ -8195,7 +9268,7 @@
           "Projects"
         ],
         "summary": "Updates the project with the specified id.",
-        "description": "Updates the project with the specified id.\r\nSpecial handling for retainer projects:\r\nIf the project has at least one Retainer, the IsRetainer flag is automatically set to true.\r\nFor retainer projects, the TimeBudget cannot be set. Instead the TimeBudget is the sum of all retainer budgets.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
+        "description": "Updates the project with the specified id.\r\nSpecial handling for retainer projects:\r\nIf the project has at least one Retainer, the IsRetainer flag is automatically set to true.\r\nFor retainer projects, the TimeBudget cannot be set. Instead the TimeBudget is the sum of all retainer budgets.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -8256,7 +9329,7 @@
           "Projects"
         ],
         "summary": "Adds a project member to the project with the specified id.",
-        "description": "Adds a project member to the project with the specified id.\r\nThe new project member can also be set as a responsible project member, but only if no other member of this project is responsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be added.\r\nA project role is available when they are connected to the specified project type of the project.\r\nA user can only be added to the project once.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
+        "description": "Adds a project member to the project with the specified id.\r\nThe new project member can also be set as a responsible project member, but only if no other member of this project is responsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be added.\r\nA project role is available when they are connected to the specified project type of the project.\r\nA user can only be added to the project once.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -9385,7 +10458,7 @@
           "Projects"
         ],
         "summary": "Changes the project type of the project with the specified id.",
-        "description": "Changes the project type of the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
+        "description": "Changes the project type of the project with the specified id.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -9440,7 +10513,7 @@
           "Projects"
         ],
         "summary": "Changes the status of the project with the specified id.",
-        "description": "Changes the status of the project with the specified id.\r\nThe project status must be associated with the project type used by the project.\r\nThis potentially adds task bundles to the project and informs the project members about the status change.\r\nIf the project is already in the specified status, nothing happens.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
+        "description": "Changes the status of the project with the specified id.\r\nThe project status must be associated with the project type used by the project.\r\nThis potentially adds task bundles to the project and informs the project members about the status change.\r\nIf the project is already in the specified status, nothing happens.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -9515,10 +10588,10 @@
       },
       "get": {
         "tags": [
-          "ProjectComments"
+          "Comments"
         ],
         "summary": "Returns all comments of the project with the specified id.",
-        "description": "Returns all comments of the project with the specified id.",
+        "description": "Returns all comments of the project with the specified id. The user needs read permissions on the project.",
         "parameters": [
           {
             "name": "projectId",
@@ -9612,7 +10685,7 @@
           "ProjectComments"
         ],
         "summary": "Deletes the comment with the specified id on the project with the specified id.",
-        "description": "Deletes the comment with the specified id on the project with the specified id.\r\nThe delete includes the reactions of the comment.",
+        "description": "Deletes the comment with the specified id on the project with the specified id.\r\nThe delete includes the reactions of the comment.\r\nIf there are any replies to the comment, they will be deleted as well.",
         "parameters": [
           {
             "name": "projectId",
@@ -9687,7 +10760,7 @@
           "ProjectComments"
         ],
         "summary": "Updates the comment with the specified id on the project with the specified id.",
-        "description": "Updates the comment with the specified id on the project with the specified id.",
+        "description": "Updates the comment with the specified id on the project with the specified id.\r\nInReplyToCommentId is not allowed to be changed.",
         "parameters": [
           {
             "name": "projectId",
@@ -9715,12 +10788,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentForm"
+                "$ref": "#/components/schemas/CommentPutForm"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentForm"
+                "$ref": "#/components/schemas/CommentPutForm"
               }
             }
           }
@@ -9985,7 +11058,7 @@
           "Projects"
         ],
         "summary": "Deletes the project with the specified id.",
-        "description": "Deletes the project with the specified id.\r\nIn the default case the related tasks of this project will also be deleted and the related time entries of this project and all tasks loose the relation to the deleted project and tasks.\r\nTo delete the time entries as well, you can set the `deleteTimeTrackings` property of the request to `true`.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
+        "description": "Deletes the project with the specified id.\r\nIn the default case the related tasks of this project will also be deleted and the related time entries of this project and all tasks loose the relation to the deleted project and tasks.\r\nTo delete the time entries as well, you can set the `deleteTimeTrackings` property of the request to `true`.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -11058,7 +12131,7 @@
           "Projects"
         ],
         "summary": "Returns the project members of the project with the specified id.",
-        "description": "Returns the project members of the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `read` permissions of the feature `project-master-data`.</Check>",
+        "description": "Returns the project members of the project with the specified id.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `read` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -11518,7 +12591,7 @@
           "Projects"
         ],
         "summary": "Removes a project member from the project with the specified id.",
-        "description": "Removes a project member from the project with the specified id.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
+        "description": "Removes a project member from the project with the specified id.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -11572,7 +12645,7 @@
           "Retainers"
         ],
         "summary": "Endpoint to get all retainers for a project.",
-        "description": "The user must have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The user must have the ProjectMasterData read permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -11625,15 +12698,116 @@
         "x-access": {
           "any": "true"
         }
+      },
+      "post": {
+        "tags": [
+          "Retainers"
+        ],
+        "summary": "Endpoint to create a new retainer for a project.",
+        "description": "As soon as a retainer is created for a project, the project will be marked as a retainer project.\n            Based on the Start and End dates of the retainer, the retainer budgets will be created automatically.\n            Retainers cannot overlap. There can only be one active retainer per project at a time (no end date and/or including the current date).\n            \n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project to create the retainer for.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form to create a new retainer.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetainerForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Retainer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
       }
     },
     "/projects/{projectId}/retainers/{retainerId}": {
+      "delete": {
+        "tags": [
+          "Retainers"
+        ],
+        "summary": "Endpoint to delete a retainer for a project. Deletes all related retainer budgets.",
+        "description": "The user must have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "retainerId",
+            "in": "path",
+            "description": "The id of the retainer to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "get": {
         "tags": [
           "Retainers"
         ],
         "summary": "Endpoint to get a retainer for a project by id.",
-        "description": "The user must have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The user must have the ProjectMasterData read permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -11656,6 +12830,70 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Retainer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Retainers"
+        ],
+        "summary": "Endpoint to update the retainer for a project.",
+        "description": "The end date of the retainer can only be updated via the POST /setDates endpoint.\n            The start date, the retainer period, and the timezone can not be updated. Delete the retainer and create a new one instead.\n            \n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "retainerId",
+            "in": "path",
+            "description": "The id of the retainer.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form to update the retainer.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetainerForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -12966,7 +14204,7 @@
           "Projects"
         ],
         "summary": "Updates the role of a project member of the project with the specified id.",
-        "description": "Changes the role of a project member.\r\nThe project member can also be set as a responsible project member, but only if no other member of this project is\r\nresponsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be updated.\r\nA project role is available when they are connected to the specified project type of the project.\r\n\r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
+        "description": "Changes the role of a project member.\r\nThe project member can also be set as a responsible project member, but only if no other member of this project is\r\nresponsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be updated.\r\nA project role is available when they are connected to the specified project type of the project.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -16502,9 +17740,9 @@
     "/projecttimebookings": {
       "get": {
         "tags": [
-          "ProjectTimeBookings"
+          "TimeBookings"
         ],
-        "summary": "Returns a list of project time bookings.",
+        "summary": "Returns a list of time bookings.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
@@ -16528,7 +17766,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProjectTimeBooking"
+                    "$ref": "#/components/schemas/TimeBooking"
                   }
                 }
               }
@@ -16551,16 +17789,16 @@
       },
       "post": {
         "tags": [
-          "ProjectTimeBookings"
+          "TimeBookings"
         ],
-        "summary": "Creates a new project time booking for a given project and user.",
+        "summary": "Creates a new time booking for a given project and user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
-          "description": "The data to create a new project time booking.",
+          "description": "The data to create a new time booking.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProjectTimeBookingForm"
+                "$ref": "#/components/schemas/TimeBookingForm"
               }
             }
           }
@@ -16571,7 +17809,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProjectTimeBooking"
+                  "$ref": "#/components/schemas/TimeBooking"
                 }
               }
             }
@@ -16595,15 +17833,15 @@
     "/projecttimebookings/{timeBookingId}": {
       "delete": {
         "tags": [
-          "ProjectTimeBookings"
+          "TimeBookings"
         ],
-        "summary": "Deletes a project time booking by id.",
+        "summary": "Deletes a time booking by id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "timeBookingId",
             "in": "path",
-            "description": "The id of the project time booking.",
+            "description": "The id of the time booking.",
             "required": true,
             "schema": {
               "type": "string",
@@ -16632,15 +17870,15 @@
       },
       "put": {
         "tags": [
-          "ProjectTimeBookings"
+          "TimeBookings"
         ],
-        "summary": "Updates a given project time booking.",
+        "summary": "Updates a given time booking.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "timeBookingId",
             "in": "path",
-            "description": "The id of the project time booking.",
+            "description": "The id of the time booking.",
             "required": true,
             "schema": {
               "type": "string",
@@ -16649,11 +17887,11 @@
           }
         ],
         "requestBody": {
-          "description": "The updated data for the project time booking.",
+          "description": "The updated data for the time booking.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProjectTimeBookingForm"
+                "$ref": "#/components/schemas/TimeBookingForm"
               }
             }
           }
@@ -16664,7 +17902,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProjectTimeBooking"
+                  "$ref": "#/components/schemas/TimeBooking"
                 }
               }
             }
@@ -21123,10 +22361,10 @@
       },
       "get": {
         "tags": [
-          "TaskComments"
+          "Comments"
         ],
         "summary": "Returns all comments of the task with the specified id.",
-        "description": "Returns all comments of the task with the specified id.",
+        "description": "Returns all comments of the task with the specified id. The user needs read permissions on the task.",
         "parameters": [
           {
             "name": "taskId",
@@ -21220,7 +22458,7 @@
           "TaskComments"
         ],
         "summary": "Deletes the comment with the specified id on the task with the specified id.",
-        "description": "Deletes the comment with the specified id on the task with the specified id.\r\nThe delete includes the reactions of the comment.",
+        "description": "Deletes the comment with the specified id on the task with the specified id.\r\nThe delete includes the reactions of the comment.\r\nIf there are any replies to the comment, they will be deleted as well.",
         "parameters": [
           {
             "name": "taskId",
@@ -21295,7 +22533,7 @@
           "TaskComments"
         ],
         "summary": "Updates the comment with the specified id on the task with the specified id.",
-        "description": "Updates the comment with the specified id on the task with the specified id.",
+        "description": "Updates the comment with the specified id on the task with the specified id.\r\nInReplyToCommentId is not allowed to be changed.",
         "parameters": [
           {
             "name": "taskId",
@@ -21323,12 +22561,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentForm"
+                "$ref": "#/components/schemas/CommentPutForm"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentForm"
+                "$ref": "#/components/schemas/CommentPutForm"
               }
             }
           }
@@ -25529,6 +26767,192 @@
         }
       }
     },
+    "/timebookings": {
+      "get": {
+        "tags": [
+          "TimeBookings"
+        ],
+        "summary": "Returns a list of time bookings.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeBooking"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "post": {
+        "tags": [
+          "TimeBookings"
+        ],
+        "summary": "Creates a new time booking for a given project and user.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "requestBody": {
+          "description": "The data to create a new time booking.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeBookingForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeBooking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/timebookings/{timeBookingId}": {
+      "delete": {
+        "tags": [
+          "TimeBookings"
+        ],
+        "summary": "Deletes a time booking by id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeBookingId",
+            "in": "path",
+            "description": "The id of the time booking.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "TimeBookings"
+        ],
+        "summary": "Updates a given time booking.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "timeBookingId",
+            "in": "path",
+            "description": "The id of the time booking.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The updated data for the time booking.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeBookingForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeBooking"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/timeentries": {
       "get": {
         "tags": [
@@ -26739,15 +28163,15 @@
     "/users/projecttimebookings": {
       "get": {
         "tags": [
-          "ProjectTimeBookings"
+          "TimeBookings"
         ],
-        "summary": "Returns the project time bookings in a specified time range for a list of users.",
+        "summary": "Returns the time bookings in a specified time range for a list of users.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userIds",
             "in": "query",
-            "description": "The ids of the users to get the project time bookings for.",
+            "description": "The ids of the users to get the time bookings for.",
             "schema": {
               "type": "array",
               "items": {
@@ -26788,7 +28212,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/GetProjectTimeBookingForUsersResult"
+                    "$ref": "#/components/schemas/GetTimeBookingForUsersResult"
                   }
                 }
               }
@@ -26826,6 +28250,80 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/BaseTagModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/users/timebookings": {
+      "get": {
+        "tags": [
+          "TimeBookings"
+        ],
+        "summary": "Returns the time bookings in a specified time range for a list of users.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "userIds",
+            "in": "query",
+            "description": "The ids of the users to get the time bookings for.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "description": "A list of GUIDs provided as a comma-separated string in the query parameter"
+            }
+          },
+          {
+            "name": "intervalStart",
+            "in": "query",
+            "description": "The start of the interval to filter by.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-5-13"
+          },
+          {
+            "name": "intervalEnd",
+            "in": "query",
+            "description": "The end of the interval to filter by.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2024-5-21"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetTimeBookingForUsersResult"
                   }
                 }
               }
@@ -33401,7 +34899,7 @@
         "additionalProperties": false,
         "description": "Form to specify the options for adjusting the start/end dates of a project and related entities."
       },
-      "AdjustProjectTimeBookingDatesForm": {
+      "AdjustTimeBookingDatesForm": {
         "type": "object",
         "properties": {
           "daysOffset": {
@@ -33850,6 +35348,13 @@
           "newProjectId": {
             "type": "string",
             "description": "The id of the new project to move the tasks to. Needed if operation is 'movetoproject'.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "newParentTaskId": {
+            "type": "string",
+            "description": "The id of the task that will be the new parent of the selected tasks. Needed if operation is 'moveundertask'.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -34394,6 +35899,9 @@
           "task": {
             "$ref": "#/components/schemas/IDefaultNameModel"
           },
+          "document": {
+            "$ref": "#/components/schemas/IDefaultNameModel"
+          },
           "createdOn": {
             "type": "string",
             "description": "The date this object was created.",
@@ -34476,6 +35984,18 @@
           "isHiddenForConnectUsers": {
             "type": "boolean",
             "description": "True if the comment should be hidden to connect users."
+          },
+          "isResolved": {
+            "type": "boolean",
+            "description": "Whether the comment has been resolved.\r\nOnly available for comments on documents.",
+            "nullable": true
+          },
+          "inReplyToCommentId": {
+            "type": "string",
+            "description": "The parent comment this comment is a reply to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false,
@@ -34511,6 +36031,9 @@
           "task": {
             "$ref": "#/components/schemas/NestedTaskEventModel"
           },
+          "document": {
+            "$ref": "#/components/schemas/NestedDocumentEventModel"
+          },
           "createdOn": {
             "type": "string",
             "description": "The date this object was created.",
@@ -34593,6 +36116,18 @@
           "isHiddenForConnectUsers": {
             "type": "boolean",
             "description": "True if the comment should be hidden to connect users."
+          },
+          "isResolved": {
+            "type": "boolean",
+            "description": "Whether the comment has been resolved.\r\nOnly available for comments on documents.",
+            "nullable": true
+          },
+          "inReplyToCommentId": {
+            "type": "string",
+            "description": "The parent comment this comment is a reply to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "isExternal": {
             "type": "boolean"
@@ -34634,6 +36169,62 @@
           "isHiddenForConnectUsers": {
             "type": "boolean",
             "description": "(optional) Whether the comment is hidden for connect users.\r\nProviding a null value will not change the current state.\r\nBy default, comments are not hidden for connect users.",
+            "nullable": true
+          },
+          "isResolved": {
+            "type": "boolean",
+            "description": "Whether the comment has been resolved.\r\nOnly available for comments on documents.",
+            "nullable": true
+          },
+          "inReplyToCommentId": {
+            "type": "string",
+            "description": "The parent comment this comment is a reply to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommentPutForm": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "maxLength": 65000,
+            "minLength": 1,
+            "type": "string",
+            "description": "The message of the comment.",
+            "example": "Hey team, the customer loved the latest designs!"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user who created the comment.\r\nOptional. If not set, defaults to the current user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "previews": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The preview URLs to show a preview for.",
+            "nullable": true,
+            "example": [
+              "https://www.awork.com/en/blog/automatic-project-management/"
+            ]
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "(optional) Whether the comment is hidden for connect users.\r\nProviding a null value will not change the current state.\r\nBy default, comments are not hidden for connect users.",
+            "nullable": true
+          },
+          "isResolved": {
+            "type": "boolean",
+            "description": "Whether the comment has been resolved.\r\nOnly available for comments on documents.",
             "nullable": true
           }
         },
@@ -35873,6 +37464,7 @@
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "textValue": {
+            "maxLength": 750,
             "type": "string",
             "description": "The text value. The text value can be set for custom field types 'text' and 'link'.",
             "nullable": true,
@@ -36491,8 +38083,6 @@
       },
       "DocumentMentionForm": {
         "required": [
-          "positionEnd",
-          "positionStart",
           "userId"
         ],
         "type": "object",
@@ -36502,16 +38092,6 @@
             "description": "The id of the user this mention references.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "positionStart": {
-            "type": "integer",
-            "description": "The exact position of where in the document the user mention has started.",
-            "format": "int32"
-          },
-          "positionEnd": {
-            "type": "integer",
-            "description": "The exact position of where in the document the user mention has ended.",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -36641,6 +38221,25 @@
           },
           "inheritedWorkspaceAccessFromDocument": {
             "$ref": "#/components/schemas/PermissionInheritedWorkspaceAccessFromDocument"
+          },
+          "movedToTrashOn": {
+            "type": "string",
+            "description": "The date the document has been moved to the trash",
+            "format": "date-time",
+            "nullable": true
+          },
+          "movedToTrashBy": {
+            "type": "string",
+            "description": "The id of the user that moved the document to the trash.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "rootDocumentCreatedBy": {
+            "type": "string",
+            "description": "The user id of the creator of the root document of this document's document tree.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -37538,7 +39137,7 @@
         },
         "additionalProperties": false
       },
-      "GetProjectTimeBookingForUsersResult": {
+      "GetTimeBookingForUsersResult": {
         "type": "object",
         "properties": {
           "userId": {
@@ -37550,7 +39149,7 @@
           "timeBookings": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ProjectTimeBooking"
+              "$ref": "#/components/schemas/TimeBooking"
             },
             "description": "The list of time bookings of the user.",
             "nullable": true
@@ -38193,6 +39792,80 @@
         },
         "additionalProperties": false
       },
+      "NestedDocumentEventModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "rootDocumentCreatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "documentSpaceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "documentSpace": {
+            "$ref": "#/components/schemas/PermissionDocumentSpace"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/NestedProjectEventModel"
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "isExternal": {
+            "type": "boolean"
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean"
+          },
+          "workspaceAccessLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionDocumentContributor"
+            },
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionDocumentToTeam"
+            },
+            "nullable": true
+          },
+          "inheritedWorkspaceAccessFromDocumentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedWorkspaceAccessFromDocument": {
+            "$ref": "#/components/schemas/PermissionInheritedWorkspaceAccessFromDocument"
+          }
+        },
+        "additionalProperties": false
+      },
       "NestedModel": {
         "type": "object",
         "properties": {
@@ -38666,6 +40339,35 @@
         },
         "additionalProperties": false
       },
+      "PermissionDocumentContributor": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedFromDocumentContributorId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedDocumentContributor": {
+            "$ref": "#/components/schemas/PermissionInheritedDocumentContributor"
+          },
+          "accessLevel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PermissionDocumentSpace": {
         "type": "object",
         "properties": {
@@ -38690,6 +40392,35 @@
             "items": {
               "$ref": "#/components/schemas/PermissionEntityToTeam"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionDocumentToTeam": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "teamId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedFromDocumentToTeamId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedDocumentToTeam": {
+            "$ref": "#/components/schemas/PermissionInheritedDocumentToTeam"
+          },
+          "accessLevel": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -39053,9 +40784,6 @@
               "format": "uuid"
             },
             "nullable": true
-          },
-          "calculateOverbookedPerDay": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -39308,11 +41036,6 @@
               "format": "uuid"
             },
             "description": "(optional) Create, for each task filter, a checklist item.",
-            "nullable": true
-          },
-          "calculateOverbookedPerDay": {
-            "type": "boolean",
-            "description": "(optional, default = true) Calculate the overbooked users per day (instead of time frame average).",
             "nullable": true
           }
         },
@@ -40837,125 +42560,6 @@
         "additionalProperties": false,
         "description": "The POST / PUT project template model."
       },
-      "ProjectTimeBooking": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "description": "The id of the project this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date of the project time booking.",
-            "format": "date",
-            "example": "2024-05-15"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end date of the project time booking.",
-            "format": "date",
-            "example": "2024-05-18"
-          },
-          "duration": {
-            "type": "integer",
-            "description": "The planned duration, expressed in seconds, of this project time booking.",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string",
-            "description": "The optional description for this project time booking.",
-            "nullable": true,
-            "example": "Blocker for a new project"
-          },
-          "laneOrder": {
-            "type": "integer",
-            "description": "The order in which this object should be shown in the timeline (row number).\r\nUsed by the awork web app.",
-            "format": "int32"
-          },
-          "isAnonymized": {
-            "type": "boolean",
-            "description": "This will be true if the user doesn't have access to the project.\r\nIn that case the description will be shadowed.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProjectTimeBookingForm": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "description": "The id of the user this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "description": "The id of the project this project time booking is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date of this project time booking.",
-            "format": "date",
-            "example": "2022-03-01"
-          },
-          "endDate": {
-            "type": "string",
-            "description": "The end date and time of this project time booking.",
-            "format": "date",
-            "example": "2022-03-02"
-          },
-          "duration": {
-            "type": "integer",
-            "description": "The duration (in seconds) of this project time booking.",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string",
-            "description": "The optional name/description for this time booking.",
-            "nullable": true
-          },
-          "laneOrder": {
-            "type": "integer",
-            "description": "The order in which this object should be shown in the timeline (row number).\r\nThis value is used by the awork web app.",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "ProjectType": {
         "type": "object",
         "properties": {
@@ -41751,14 +43355,12 @@
           "timeBudget": {
             "type": "integer",
             "description": "The time budget per retainer period in seconds. The default budget amount for new budgets in this retainer.",
-            "format": "int32",
-            "example": 3600
+            "format": "int32"
           },
           "timezone": {
             "type": "string",
             "description": "The timezone for when new budgets are created.",
-            "nullable": true,
-            "example": "Europe/Berlin"
+            "nullable": true
           },
           "rollOverUnderspentBudget": {
             "type": "boolean",
@@ -41766,21 +43368,18 @@
           },
           "rollOverOverspentBudget": {
             "type": "boolean",
-            "description": "Whether overspent budgets should be rolled over to the next period.",
-            "example": true
+            "description": "Whether overspent budgets should be rolled over to the next period."
           },
           "startDate": {
             "type": "string",
             "description": "The start of the retainer contract.",
-            "format": "date-time",
-            "example": "2025-04-01T00:00:00Z"
+            "format": "date-time"
           },
           "endDate": {
             "type": "string",
             "description": "The end of the retainer contract until new budgets will be created. Optional.",
             "format": "date-time",
-            "nullable": true,
-            "example": "2025-04-30T00:00:00Z"
+            "nullable": true
           },
           "syncProjectDates": {
             "type": "boolean",
@@ -41795,8 +43394,7 @@
           "retainerPeriod": {
             "type": "string",
             "description": "The period for new budgets in this retainer.\r\nCurrently only 'monthly' is supported.",
-            "nullable": true,
-            "example": "monthly"
+            "nullable": true
           },
           "projectId": {
             "type": "string",
@@ -41819,8 +43417,7 @@
           "createdOn": {
             "type": "string",
             "description": "The date this retainer was created.",
-            "format": "date-time",
-            "example": "2025-04-01T00:00:00Z"
+            "format": "date-time"
           },
           "createdBy": {
             "type": "string",
@@ -41831,8 +43428,7 @@
           "updatedOn": {
             "type": "string",
             "description": "The date this retainer was last modified.",
-            "format": "date-time",
-            "example": "2025-04-01T00:00:00Z"
+            "format": "date-time"
           },
           "updatedBy": {
             "type": "string",
@@ -41855,26 +43451,22 @@
           "timeBudget": {
             "type": "integer",
             "description": "The budget for this retainer period in seconds.\r\nBased on the carry over option selected in the retainer settings, the timebudget is adjusted by the carry over from the previous period.",
-            "format": "int32",
-            "example": 3600
+            "format": "int32"
           },
           "trackedDuration": {
             "type": "integer",
             "description": "The sum of tracked time in this retainer period.\r\nContains billable and non-billable hours if the DeductNonBillableHours flag is set to true.\r\nContains only billable hours if the DeductNonBillableHours flag is set to false.\r\nTime entries belong to the retainer period if their StartDate is between the StartDate and EndDate of the retainer period.",
-            "format": "int32",
-            "example": 1800
+            "format": "int32"
           },
           "startDate": {
             "type": "string",
             "description": "The start of the retainer period in UTC.",
-            "format": "date-time",
-            "example": "2025-04-01T00:00:00Z"
+            "format": "date-time"
           },
           "endDate": {
             "type": "string",
             "description": "The end of the retainer period in UTC.",
-            "format": "date-time",
-            "example": "2025-04-30T00:00:00Z"
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -44035,6 +45627,13 @@
             "nullable": true,
             "example": 1
           },
+          "laneOrder": {
+            "type": "integer",
+            "description": "The lane order defines the vertical position in the planner.",
+            "format": "int32",
+            "nullable": true,
+            "example": 2
+          },
           "id": {
             "type": "string",
             "description": "The Id of the task template.",
@@ -44192,6 +45791,13 @@
             "format": "double",
             "nullable": true,
             "example": 1
+          },
+          "laneOrder": {
+            "type": "integer",
+            "description": "The lane order defines the vertical position in the planner.",
+            "format": "int32",
+            "nullable": true,
+            "example": 2
           }
         },
         "additionalProperties": false
@@ -44665,6 +46271,127 @@
             "description": "The color of the team.",
             "nullable": true,
             "example": "purple"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeBooking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this time booking is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "(optional) The id of the project this time booking is for.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the time booking.",
+            "format": "date",
+            "example": "2024-05-15"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date of the time booking.",
+            "format": "date",
+            "example": "2024-05-18"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The planned duration, expressed in seconds, of this time booking.",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "description": "The optional description for this time booking.",
+            "nullable": true,
+            "example": "Blocker for a new project"
+          },
+          "laneOrder": {
+            "type": "integer",
+            "description": "The order in which this object should be shown in the timeline (row number).\r\nUsed by the awork web app.",
+            "format": "int32"
+          },
+          "isAnonymized": {
+            "type": "boolean",
+            "description": "This will be true if the user doesn't have access to the project.\r\nIn that case the description will be shadowed.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeBookingForm": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this time booking is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "(optional) The id of the project this time booking is for.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of this time booking.",
+            "format": "date",
+            "example": "2022-03-01"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date and time of this time booking.",
+            "format": "date",
+            "example": "2022-03-02"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration (in seconds) of this time booking.",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "description": "The optional name/description for this time booking.",
+            "nullable": true
+          },
+          "laneOrder": {
+            "type": "integer",
+            "description": "The order in which this object should be shown in the timeline (row number).\r\nThis value is used by the awork web app.",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -47311,7 +49038,7 @@
           "timeBookings": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/WorkloadProjectTimeBookingInfo"
+              "$ref": "#/components/schemas/WorkloadTimeBookingInfo"
             },
             "nullable": true
           },
@@ -47322,30 +49049,6 @@
           },
           "hasImage": {
             "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "WorkloadProjectTimeBookingInfo": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "duration": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isAnonymized": {
-            "type": "boolean",
-            "description": "This will be true if the user doesn't have access to the project time booking.\r\nIn that case the Description will be shadowed.",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -47426,6 +49129,30 @@
           "to": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkloadTimeBookingInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isAnonymized": {
+            "type": "boolean",
+            "description": "This will be true if the user doesn't have access to the project of time booking (if related to a project).\r\nIn that case the Description will be shadowed.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -50112,7 +51839,7 @@
           "type": {
             "maxLength": 25,
             "type": "string",
-            "description": "The workspace type. Optional.",
+            "description": "The workspace type / industry set during onboarding. Optional.",
             "nullable": true,
             "example": "creative-agency"
           },
@@ -50135,14 +51862,21 @@
           "selfAttribution": {
             "maxLength": 100,
             "type": "string",
-            "description": "The way the workspace noticed awork, set during the onboarding.",
+            "description": "The way the workspace creator learned awork, set during the onboarding. Optional.",
             "nullable": true
           },
           "previousTool": {
             "maxLength": 100,
             "type": "string",
-            "description": "The project management tool used before awork, set during the onboarding.",
+            "description": "The project management tool used before awork, set during the onboarding. Optional.",
             "nullable": true
+          },
+          "department": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "The workspace creator's department, set during the onboarding. Optional.",
+            "nullable": true,
+            "example": "15"
           },
           "allowSocialLogin": {
             "type": "boolean",
@@ -50339,7 +52073,7 @@
           "type": {
             "maxLength": 25,
             "type": "string",
-            "description": "The workspace type. Optional.",
+            "description": "The workspace type / industry set during onboarding. Optional.",
             "nullable": true,
             "example": "creative-agency"
           },
@@ -50362,14 +52096,21 @@
           "selfAttribution": {
             "maxLength": 100,
             "type": "string",
-            "description": "The way the workspace noticed awork, set during the onboarding.",
+            "description": "The way the workspace creator learned awork, set during the onboarding. Optional.",
             "nullable": true
           },
           "previousTool": {
             "maxLength": 100,
             "type": "string",
-            "description": "The project management tool used before awork, set during the onboarding.",
+            "description": "The project management tool used before awork, set during the onboarding. Optional.",
             "nullable": true
+          },
+          "department": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "The workspace creator's department, set during the onboarding. Optional.",
+            "nullable": true,
+            "example": "15"
           }
         },
         "additionalProperties": false,
@@ -50406,7 +52147,7 @@
           "type": {
             "maxLength": 25,
             "type": "string",
-            "description": "The workspace type. Optional.",
+            "description": "The workspace type / industry set during onboarding. Optional.",
             "nullable": true,
             "example": "creative-agency"
           },
@@ -50429,14 +52170,21 @@
           "selfAttribution": {
             "maxLength": 100,
             "type": "string",
-            "description": "The way the workspace noticed awork, set during the onboarding.",
+            "description": "The way the workspace creator learned awork, set during the onboarding. Optional.",
             "nullable": true
           },
           "previousTool": {
             "maxLength": 100,
             "type": "string",
-            "description": "The project management tool used before awork, set during the onboarding.",
+            "description": "The project management tool used before awork, set during the onboarding. Optional.",
             "nullable": true
+          },
+          "department": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "The workspace creator's department, set during the onboarding. Optional.",
+            "nullable": true,
+            "example": "15"
           },
           "allowSocialLogin": {
             "type": "boolean",
@@ -50818,6 +52566,10 @@
       "description": "The checklist items endpoints can be used for managing the checklist items of a task."
     },
     {
+      "name": "Comments",
+      "description": "The comment endpoints allow you to work with entity comments."
+    },
+    {
       "name": "Companies",
       "description": "The company endpoints allow you to add and manage companies and their details."
     },
@@ -50870,16 +52622,12 @@
       "description": "The project templates endpoints allow you to define different templates for projects."
     },
     {
-      "name": "ProjectTimeBookings",
-      "description": "\nThe project time bookings are used as a simple way to book a user's time for a specific project in a specific time frame.\nThose bookings are then used in the workload to calculate the estimated load of a user."
-    },
-    {
       "name": "ProjectTypes",
       "description": "The project types endpoints allow you to define different types for projects.\n                             The project types contain the basic information of the project.\n                             This includes the project roles, statuses and status orders."
     },
     {
       "name": "Retainers",
-      "description": "Retainers are used for projects with recurring budgets. Currently only hourly based recurring budgets are supported."
+      "description": "Retainers are used for projects with recurring budgets. Currently only hourly based monthly recurring budgets are supported."
     },
     {
       "name": "Roles",
@@ -50924,6 +52672,10 @@
     {
       "name": "Teams",
       "description": "The teams endpoints are used to manage the details of your team."
+    },
+    {
+      "name": "TimeBookings",
+      "description": "The time bookings are used as a simple way to book a user's time for a specific time frame.\nIt can be related to a project or not.\nThose bookings are then used in the workload to calculate the estimated load of a user."
     },
     {
       "name": "TimeEntries",
