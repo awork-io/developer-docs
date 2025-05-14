@@ -9045,12 +9045,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProjectForm"
+                "$ref": "#/components/schemas/ExtendedProjectForm"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ProjectForm"
+                "$ref": "#/components/schemas/ExtendedProjectForm"
               }
             }
           }
@@ -34866,6 +34866,32 @@
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "referenceDateType": {
+            "enum": [
+              "today",
+              "start",
+              "end",
+              "custom"
+            ],
+            "type": "string",
+            "description": "(optional, default = TODAY) Defines the starting date from which the reference date is calculated.\r\nThe reference date is the date from which the Start/DueOn date of a task is calculated, based on the ReferenceDateAnchor.",
+            "nullable": true
+          },
+          "referenceDateAnchor": {
+            "enum": [
+              "starts_on_reference_date",
+              "ends_on_reference_date"
+            ],
+            "type": "string",
+            "description": "(optional, default = START) Defines what the reference date represents for the schedule (start of first task or end of last task).",
+            "nullable": true
+          },
+          "customReferenceDate": {
+            "type": "string",
+            "description": "(optional) The custom reference date when ReferenceDateType is set to 'custom'.",
+            "format": "date",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -38659,6 +38685,135 @@
         },
         "additionalProperties": false
       },
+      "ExtendedProjectForm": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the Project. Max allowed length: 1000 characters.",
+            "example": "Website Design"
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether this is a private project only visible to members and the creator.\r\nDefaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public.",
+            "example": false
+          },
+          "description": {
+            "maxLength": 25000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The project description. Max allowed length: 25000 characters.",
+            "nullable": true,
+            "example": "Sitemap, design, assets and implementation of the new online presence."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the project.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the project.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-05-01T00:00:00Z"
+          },
+          "companyId": {
+            "type": "string",
+            "description": "The id of the company.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "timeBudget": {
+            "type": "integer",
+            "description": "The time budget the project has, in seconds.",
+            "format": "int32",
+            "nullable": true,
+            "example": 576000
+          },
+          "isBillableByDefault": {
+            "type": "boolean",
+            "description": "Whether project times should be billable by default.",
+            "nullable": true,
+            "example": true
+          },
+          "projectTypeId": {
+            "type": "string",
+            "description": "The id of the project type of this project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "color": {
+            "maxLength": 14,
+            "minLength": 0,
+            "type": "string",
+            "description": "The color of the project for display purposes in awork.\r\nThe supported colors are defined by the awork frontend.\r\nCan be null when no color assigned.",
+            "nullable": true,
+            "example": "purple"
+          },
+          "deductNonBillableHours": {
+            "type": "boolean",
+            "description": "Whether to deduct non-billable hours from project budgets."
+          },
+          "projectStatusId": {
+            "type": "string",
+            "description": "The id of the project status.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectTemplateId": {
+            "type": "string",
+            "description": "The id of the template which is used to create the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "publicProjectTemplateId": {
+            "type": "string",
+            "description": "The id of the public template which is used to create the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "referenceDateType": {
+            "enum": [
+              "today",
+              "start",
+              "end",
+              "custom"
+            ],
+            "type": "string",
+            "description": "(optional, default = TODAY) Defines the starting date from which the reference date is calculated.\r\nThe reference date is the date from which the Start/DueOn date of a task is calculated, based on the ReferenceDateAnchor.",
+            "nullable": true
+          },
+          "referenceDateAnchor": {
+            "enum": [
+              "starts_on_reference_date",
+              "ends_on_reference_date"
+            ],
+            "type": "string",
+            "description": "(optional, default = START) Defines what the reference date represents for the schedule (start of first task or end of last task).",
+            "nullable": true
+          },
+          "customReferenceDate": {
+            "type": "string",
+            "description": "(optional) The custom reference date when ReferenceDateType is set to 'custom'.",
+            "format": "date",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ExtendedProjectStatusModel": {
         "type": "object",
         "properties": {
@@ -41385,110 +41540,6 @@
         },
         "additionalProperties": false
       },
-      "ProjectForm": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "maxLength": 1000,
-            "minLength": 0,
-            "type": "string",
-            "description": "The name of the Project. Max allowed length: 1000 characters.",
-            "example": "Website Design"
-          },
-          "isPrivate": {
-            "type": "boolean",
-            "description": "Whether this is a private project only visible to members and the creator.\r\nDefaults to false.\r\nCan only be changed from public to private if no times have been tracked on this project.\r\nCan always be made public.",
-            "example": false
-          },
-          "description": {
-            "maxLength": 25000,
-            "minLength": 0,
-            "type": "string",
-            "description": "The project description. Max allowed length: 25000 characters.",
-            "nullable": true,
-            "example": "Sitemap, design, assets and implementation of the new online presence."
-          },
-          "startDate": {
-            "type": "string",
-            "description": "The start date of the project.",
-            "format": "date-time",
-            "nullable": true,
-            "example": "2022-03-01T00:00:00Z"
-          },
-          "dueDate": {
-            "type": "string",
-            "description": "The due date of the project.",
-            "format": "date-time",
-            "nullable": true,
-            "example": "2022-05-01T00:00:00Z"
-          },
-          "companyId": {
-            "type": "string",
-            "description": "The id of the company.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "timeBudget": {
-            "type": "integer",
-            "description": "The time budget the project has, in seconds.",
-            "format": "int32",
-            "nullable": true,
-            "example": 576000
-          },
-          "isBillableByDefault": {
-            "type": "boolean",
-            "description": "Whether project times should be billable by default.",
-            "nullable": true,
-            "example": true
-          },
-          "projectTypeId": {
-            "type": "string",
-            "description": "The id of the project type of this project.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "color": {
-            "maxLength": 14,
-            "minLength": 0,
-            "type": "string",
-            "description": "The color of the project for display purposes in awork.\r\nThe supported colors are defined by the awork frontend.\r\nCan be null when no color assigned.",
-            "nullable": true,
-            "example": "purple"
-          },
-          "deductNonBillableHours": {
-            "type": "boolean",
-            "description": "Whether to deduct non-billable hours from project budgets."
-          },
-          "projectStatusId": {
-            "type": "string",
-            "description": "The id of the project status.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectTemplateId": {
-            "type": "string",
-            "description": "The id of the template which is used to create the project.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "publicProjectTemplateId": {
-            "type": "string",
-            "description": "The id of the public template which is used to create the project.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false,
-        "description": "POST model for projects."
-      },
       "ProjectFormForTasks": {
         "type": "object",
         "properties": {
@@ -43987,6 +44038,10 @@
           },
           "newTag": {
             "$ref": "#/components/schemas/TagForm"
+          },
+          "shouldMerge": {
+            "type": "boolean",
+            "nullable": true
           }
         },
         "additionalProperties": false
