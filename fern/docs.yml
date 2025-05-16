@@ -60,75 +60,79 @@ navigation:
     path: ./pages/api/projects.mdx
     icon: diagram-project
   - projects
-  - projectTypes
-  - projectStatuses
-  - projectRoles
-  - projectComments
-  - projectTags
-  - projectMilestones
-  - projectAutomations
-  - projectActions
-  - timeBookings
+  - projecttypes
+  - projectstatuses
+  - projectroles
+  - projectcomments
+  - projecttags
+  - projectmilestones
+  - projectautomations
+  - projectactions
+  - timebookings
   - retainers
   - autopilot
   - page: Tasks Overview
     path: ./pages/api/tasks.mdx
     icon: list-check
   - tasks
-  - taskLists
-  - taskViews
-  - projectTasks
-  - privateTasks
-  - assignedTasks
-  - checklistItems
-  - taskComments
-  - taskTags
-  - taskDependencies
-  - taskSchedules
-  - tasksBatch
-  - typeOfWork
+  - tasklists
+  - taskviews
+  - projecttasks
+  - privatetasks
+  - assignedtasks
+  - checklistitems
+  - taskcomments
+  - tasktags
+  - taskdependencies
+  - taskschedules
+  - tasksbatch
+  - typeofwork
   - page: Time Tracking Overview
     path: ./pages/api/timetracking.mdx
     icon: timer
-  - timeEntries
-  - timeTracking
-  - timeReports
+  - timeentries
+  - timetracking
+  - timereports
+  - page: Documents Overview
+    path: ./pages/api/documents.mdx
+    icon: note
+  - documentcomments
   - page: Companies Overview
     path: ./pages/api/companies.mdx
     icon: crown
   - companies
-  - companyTags
+  - companytags
   - page: Users Overview
     path: ./pages/api/users.mdx
     icon: users
   - users
-  - userCapacity
-  - userTags
+  - usercapacity
+  - usertags
   - absences
-  - absenceRegions
-  - workspaceAbsences
+  - absenceregions
+  - workspaceabsences
   - dashboards
   - page: Files & Images Overview
     path: ./pages/api/files.mdx
     icon: paperclip
   - files
-  - fileUpload
-  - projectFiles
-  - taskFiles
-  - companyFiles
-  - commentFiles
-  - documentFiles
-  - userFiles
-  - workspaceFiles
-  - projectTemplateFiles
-  - taskTemplateFiles
-  - sharedFiles
-  - temporaryFiles
+  - fileupload
+  - projectfiles
+  - taskfiles
+  - companyfiles
+  - commentfiles
+  - documentfiles
+  - userfiles
+  - workspacefiles
+  - projecttemplatefiles
+  - tasktemplatefiles
+  - sharedfiles
+  - temporaryfiles
   - images
   - page: Custom Fields Overview
     path: ./pages/api/customfields.mdx
     icon: toggle-off
-  - customFields
+  - customfields
   - page: Workload & Planning Overview
     path: ./pages/api/workload.mdx
     icon: briefcase
@@ -136,14 +140,14 @@ navigation:
   - page: Project Templates Overview
     path: ./pages/api/projecttemplates.mdx
     icon: box
-  - projectTemplates
-  - taskBundles
-  - taskTemplates
-  - taskDependencyTemplates
-  - projectTemplateTags
-  - projectMilestoneTemplates
-  - projectTemplateAutomations
-  - projectTemplateActions
+  - projecttemplates
+  - taskbundles
+  - tasktemplates
+  - taskdependencytemplates
+  - projecttemplatetags
+  - projectmilestonetemplates
+  - projecttemplateautomations
+  - projecttemplateactions
   - page: Login & Access Overview
     path: ./pages/api/login.mdx
     icon: key
@@ -156,9 +160,9 @@ navigation:
   - page: API Management Overview
     path: ./pages/api/api.mdx
     icon: code
-  - apiUsers
+  - apiusers
   - webhooks
-  - clientApplications
+  - clientapplications
   # Reenable others when there are uncategorized endpoints
   # - page: Others
   #   path: ./pages/api/others.mdx
