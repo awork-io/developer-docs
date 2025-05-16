@@ -25981,7 +25981,7 @@
           "Teams"
         ],
         "summary": "Deletes the team with the specified id.",
-        "description": "Deletes the team with the specified id.\r\nDeletes all related UserInTeamEntities and ProjectInTeamEntities as well.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
+        "description": "Deletes the team with the specified id.\r\nDeletes all related UserInTeamEntities, ProjectInTeamEntities, DocumentToTeamEntities and DocumentSpaceToTeamEntities as well.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
         "parameters": [
           {
             "name": "teamId",
