@@ -4393,7 +4393,7 @@
       },
       "get": {
         "tags": [
-          "Comments"
+          "DocumentComments"
         ],
         "summary": "Returns all comments of the document with the specified id.",
         "description": "Returns all comments of the document with the specified id. The user needs read permissions on the document.",
@@ -10588,7 +10588,7 @@
       },
       "get": {
         "tags": [
-          "Comments"
+          "ProjectComments"
         ],
         "summary": "Returns all comments of the project with the specified id.",
         "description": "Returns all comments of the project with the specified id. The user needs read permissions on the project.",
@@ -22361,7 +22361,7 @@
       },
       "get": {
         "tags": [
-          "Comments"
+          "TaskComments"
         ],
         "summary": "Returns all comments of the task with the specified id.",
         "description": "Returns all comments of the task with the specified id. The user needs read permissions on the task.",
@@ -52619,10 +52619,6 @@
     {
       "name": "ChecklistItems",
       "description": "The checklist items endpoints can be used for managing the checklist items of a task."
-    },
-    {
-      "name": "Comments",
-      "description": "The comment endpoints allow you to work with entity comments."
     },
     {
       "name": "Companies",
