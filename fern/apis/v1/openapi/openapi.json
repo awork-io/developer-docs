@@ -4366,6 +4366,301 @@
         }
       }
     },
+    "/documents": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns all documents.",
+        "description": "To retrieve a document, the user has to at least have 'read' permissions for the document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "includeTrashedDocuments",
+            "in": "query",
+            "description": "Whether to also include trashed documents.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Adds a new document and also creates an initial version of its content.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentPostForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documents/trash/{documentId}/restore": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Restores the document with the specified id from the trash.",
+        "description": "Please note that, after a successful response, this method will trigger a number of events that will\n            eventually update/recreate the document and the related entities such as document versions or its content.\n            Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document to restore.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "alsoRestoreChildren",
+            "in": "query",
+            "description": "Whether all children of this document should be restored.",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documents/{documentId}": {
+      "delete": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Deletes a document with the specified id, moving it to the trash section.\n            \n            The document itself is deleted synchronously, while its children and related entities\n            are deleted asynchronously in the background if  is true.\n            If  is false, the children's parent references are updated to point to the deleted document's parent.\n            Required Permissions: The user has at least `manage` permissions for this document.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "alsoDeleteChildren",
+            "in": "query",
+            "description": "Whether all children of this document should be deleted.",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns the document with the specified id.",
+        "description": "Required Permissions: The user has at least `read` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Updates the document with the specified id.",
+        "description": "Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The document to update.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/documents/{documentId}/comments": {
       "delete": {
         "tags": [
@@ -4685,6 +4980,338 @@
           "204": {
             "description": "No Content"
           }
+        }
+      }
+    },
+    "/documents/{documentId}/content": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns the content of the current version of an the document with the specified id.",
+        "description": "Required Permissions: The user has at least `read` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "streamAsFile",
+            "in": "query",
+            "description": "Whether the document's content should be streamed as a file.\r\n            By default, the document's content is returned in a model containing a property 'Content' holding the content as a string.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Updates the content of the document with the specified id.",
+        "description": "Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentContentForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documents/{documentId}/contributors": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Adds a list of document contributors to a document with the specified id.",
+        "description": "Recalculation of permissions for related entities considering the new document contributors\n            will be done in the background asynchronously.\n            Required Permissions: The user has at least `manage` permissions for this document.Adding document contributors will affect their access to the document.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The contributors.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContributorPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinimalContributorModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documents/{documentId}/contributors/{documentContributorId}": {
+      "delete": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Deletes the document contributor with the specified id.",
+        "description": "Deletes the specific document contributor from a document. This operation cannot be performed on inherited document contributors, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document contributor.\n            Required Permissions: The user has at least `manage` permissions for this document.Deleting a document contributor will affect their access to the document.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document to remove the contributor from, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentContributorId",
+            "in": "path",
+            "description": "The document contributor to remove, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Updates the document contributor with the specified id.",
+        "description": "Updates the specific document contributor of a document.\n            There will be recalculation of permissions for related entities considering the updated document contributor.\n            Required Permissions: The user has at least `manage` permissions for this document.Updating a document contributor will affect their access to the document.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentContributorId",
+            "in": "path",
+            "description": "The document contributor id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContributorForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalContributorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documents/{documentId}/duplicate": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Duplicates a document along its content, permissions, and children and descendants (document tree).",
+        "description": "Required Permissions: The user has at least `read` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id to of the document to duplicate.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -5436,6 +6063,887 @@
               }
             }
           }
+        }
+      }
+    },
+    "/documents/{documentId}/teams": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Adds a list of document teams to a document with the specified id.",
+        "description": "Recalculation of permissions for related entities considering the new document teams\n            will be done in the background asynchronously.\n            Required Permissions: The user has at least `manage` permissions for this document.Adding document teams will affect their access to the document.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The forms.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityToTeamPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documents/{documentId}/teams/{documentToTeamId}": {
+      "delete": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Deletes the document team with the specified id.",
+        "description": "Deletes the specific document team from a document. This operation cannot be performed on inherited document teams, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document team.\n            Required Permissions: The user has at least `manage` permissions for this document.Deleting a document team will affect their access to the document.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document to remove a document to team-connection from, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentToTeamId",
+            "in": "path",
+            "description": "The document to team to remove, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Updates the document team with the specified id.",
+        "description": "Updates the specific document team of a document.\n            There will be recalculation of permissions for related entities considering the updated document team.\n            Required Permissions: The user has at least `manage` permissions for this document.Updating a document team will affect their access to the document.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentToTeamId",
+            "in": "path",
+            "description": "The document to team id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityToTeamForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documentspaces": {
+      "get": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Returns all document spaces.",
+        "description": "To retrieve a document space, the user has to at least have 'read' permissions for the document space.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentSpaceModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Adds a new document space.",
+        "description": "Required Permissions: The user has to be an admin.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "requestBody": {
+          "description": "The document space to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentSpaceForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentSpaceModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documentspaces/{documentSpaceId}": {
+      "delete": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Deletes the document space with the specified id.",
+        "description": "Corresponding documents and their related entities will be unrecoverably deleted in the background asynchronously.\n            Required Permissions: The user has to be an admin.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentSpaceModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "get": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Returns the document space with the specified id.",
+        "description": "Required Permissions: The user has at least `read` permissions for this document space.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Updates the document space with the specified id.",
+        "description": "Required Permissions: The user has to be an admin.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Professional plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The document space to update.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentSpaceForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentSpaceModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "professional"
+        }
+      }
+    },
+    "/documentspaces/{documentSpaceId}/contributors": {
+      "post": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Adds a list of document space contributors to a document space with the specified id.",
+        "description": "Required Permissions: The user has to be an admin.Adding document space contributors will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The contributor forms.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContributorPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalContributorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documentspaces/{documentSpaceId}/contributors/{documentSpaceContributorId}": {
+      "delete": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Deletes the document space contributor with the specified id.",
+        "description": "Deletes the specific document space contributor from a document space.\n            Required Permissions: The user has to be an admin.Deleting a document space contributor will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space to remove the contributor from, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentSpaceContributorId",
+            "in": "path",
+            "description": "The document space contributor to remove, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Updates the document space contributor with the specified id.",
+        "description": "Updates the specific document space contributor of a document space.\n            Required Permissions: The user has to be an admin.Updating a document space contributor will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentSpaceContributorId",
+            "in": "path",
+            "description": "The document space contributor id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContributorForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalContributorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documentspaces/{documentSpaceId}/documents": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns all documents that belong to the document space with the specified id.",
+        "description": "To retrieve a document, the user has to at least have 'read' permissions for the document within the document space.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documentspaces/{documentSpaceId}/documents/trash": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns all deleted documents of the document space with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documentspaces/{documentSpaceId}/teams": {
+      "post": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Adds a list of document space teams to a document space with the specified id.",
+        "description": "Required Permissions: The user has to be an admin.Adding document space teams will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The forms.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityToTeamPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documentspaces/{documentSpaceId}/teams/{documentSpaceToTeamId}": {
+      "delete": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Deletes the document space team with the specified id.",
+        "description": "Deletes the specific document space team from a document space.\n            Required Permissions: The user has to be an admin.Deleting a document space team will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space to remove a document space to team-connection from, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentSpaceToTeamId",
+            "in": "path",
+            "description": "The document space to team to remove, specified by its identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentSpaces"
+        ],
+        "summary": "Updates the document space team with the specified id.",
+        "description": "Updates the specific document space team of a document space.\n            Required Permissions: The user has to be an admin.Updating a document space team will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "documentSpaceId",
+            "in": "path",
+            "description": "The document space id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentSpaceToTeamId",
+            "in": "path",
+            "description": "The document space to team id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The form.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityToTeamForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -7169,6 +8677,108 @@
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
       }
     },
+    "/me/privatedocuments": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns the requesting user's private documents.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/privatedocuments/trash": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns the requesting user's private deleted documents.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/me/privatetasks": {
       "get": {
         "tags": [
@@ -7525,6 +9135,57 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/TaskModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/shareddocuments": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns all documents that were shared with the requesting user.",
+        "description": "This includes documents where the user has been explicitly granted permissions,\n            is part of a team with read permissions, or is part of the workspace with read permissions.\n            Excludes documents where the user already has permissions from the space they're in,\n            the project they're in, or when they're the user's own private documents.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
                   }
                 }
               }
@@ -11030,7 +12691,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomFieldOrder"
+                  "$ref": "#/components/schemas/CustomFieldOrderForm"
                 }
               }
             }
@@ -11150,6 +12811,128 @@
           "204": {
             "description": "No Content"
           }
+        }
+      }
+    },
+    "/projects/{projectId}/documents": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Endpoint to get all documents that belong to a specific project.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The project id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/projects/{projectId}/documents/trash": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Endpoint to get all deleted documents that belong to a specific project.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The project id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -37429,7 +39212,7 @@
         },
         "additionalProperties": false
       },
-      "CustomFieldOrder": {
+      "CustomFieldOrderForm": {
         "type": "object",
         "properties": {
           "order": {
@@ -52635,6 +54418,14 @@
     {
       "name": "Dashboards",
       "description": "The dashboards endpoints allow you to work with user's dashboards."
+    },
+    {
+      "name": "Documents",
+      "description": "The documents endpoints allow you to create and manage documents, their versions and related entities such as contributors or connected teams."
+    },
+    {
+      "name": "DocumentSpaces",
+      "description": "The document spaces endpoints allow you to create and manage document spaces and related entities such as contributors or connected teams."
     },
     {
       "name": "Permissions",

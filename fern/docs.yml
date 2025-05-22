@@ -96,6 +96,8 @@ navigation:
   - page: Documents Overview
     path: ./pages/api/documents.mdx
     icon: note
+  - documents
+  - documentspaces
   - documentcomments
   - page: Companies Overview
     path: ./pages/api/companies.mdx
