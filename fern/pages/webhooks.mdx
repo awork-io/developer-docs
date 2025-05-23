@@ -4,63 +4,72 @@ description: Learn how to configure and receive webhooks in awork.
 slug: webhooks
 ---
 
-Webhooks allow application developers to receive and react to changes happening in awork without constantly polling and checking.
+Webhooks allow application developers to receive and react to changes happening in awork without constantly polling and checking for updates. They are a powerful way to integrate awork with your own applications or third-party services.
 
-A webhook is triggered for an entire workspace. For example on the `project-added` webhook, you receive events for all projects created in your workspace, no matter who created it or which team it belongs to. This means that user permissions and roles are not checked and have to be evaluated by the developer, if relevant.
+A webhook is triggered for an entire workspace. For example, on the `project-added` webhook, you receive events for all projects created in your workspace, regardless of who created them or which team they belong to. This means that user permissions and roles are not checked and must be evaluated by you, the developer, if relevant.
 
 ## Configuration
 
-To configure a webhook, go to your awork workspace, navigate to _Settings_ > _Integrations_, then open the _Integration Library_ and select _Webhooks_.
+To configure a webhook in awork:
 
-You are then asked to provide a name and the URL for the webhook. Authorization information is optional and can be added to the webhook request as a header where you can specify the header name and value.
+1. Go to your awork workspace.
+2. Navigate to **Settings** > **Integrations**.
+3. Open the **Integration Library** and select **Webhooks**.
+
+You will be prompted to provide:
+- A **name** for the webhook.
+- The **URL** where the webhook should send requests.
+- Optional **authorization information**, which can be added as a header. Specify the header name and value if needed.
 
 <Frame caption="An example of a webhook configuration in awork">
     <img src="/assets/api/webhooks01.png" alt="Webhook Config" />
 </Frame>
 
-Finally, select the events you want this webhook to trigger on. The following event types are supported:
+Next, select the events you want this webhook to trigger on. The following event types are supported:
 
-| Event Type                |
-| ------------------------- |
-| `absence_added`           |
-| `absence_deleted`         |
-| `absence_updated`         |
-| `company_added`           |
-| `company_deleted`         |
-| `company_type_changed`    |
-| `company_updated`         |
-| `project_added`           |
-| `project_comment_added`   |
-| `project_deleted`         |
-| `projectmember_added`     |
-| `projectmember_deleted`   |
-| `project_status_changed`  |
-| `project_type_changed`    |
-| `project_updated`         |
-| `task_added`              |
-| `taskassignment_added`    |
-| `taskassignment_deleted`  |
-| `task_comment_added`      |
-| `task_deleted`            |
-| `tasklist_added`          |
-| `tasklist_deleted`        |
-| `tasklist_updated`        |
-| `task_status_changed`     |
-| `task_type_changed`       |
-| `task_updated`            |
-| `timetracking_added`      |
-| `timetracking_deleted`    |
-| `timetracking_type_changed` |
-| `timetracking_updated`    |
-| `user_activation_changed` |
-| `user_added`              |
-| `user_deleted`            |
-| `user_status_changed`     |
-| `user_updated`            |
+| Event Type                | Description                                                                 |
+| ------------------------- | --------------------------------------------------------------------------- |
+| `absence_added`           | Triggered when an absence is added.                                        |
+| `absence_deleted`         | Triggered when an absence is deleted.                                      |
+| `absence_updated`         | Triggered when an absence is updated.                                      |
+| `company_added`           | Triggered when a company is added.                                         |
+| `company_deleted`         | Triggered when a company is deleted.                                       |
+| `company_type_changed`    | Triggered when a company's type is changed.                                |
+| `company_updated`         | Triggered when a company is updated.                                       |
+| `project_added`           | Triggered when a project is added.                                         |
+| `project_comment_added`   | Triggered when a comment is added to a project.                            |
+| `project_deleted`         | Triggered when a project is deleted.                                       |
+| `projectmember_added`     | Triggered when a project member is added.                                  |
+| `projectmember_deleted`   | Triggered when a project member is removed.                                |
+| `project_status_changed`  | Triggered when a project's status changes.                                 |
+| `project_type_changed`    | Triggered when a project's type changes.                                   |
+| `project_updated`         | Triggered when a project is updated.                                       |
+| `task_added`              | Triggered when a task is added.                                            |
+| `taskassignment_added`    | Triggered when a task is assigned.                                         |
+| `taskassignment_deleted`  | Triggered when a task assignment is removed.                               |
+| `task_comment_added`      | Triggered when a comment is added to a task.                               |
+| `task_deleted`            | Triggered when a task is deleted.                                          |
+| `tasklist_added`          | Triggered when a task list is added.                                       |
+| `tasklist_deleted`        | Triggered when a task list is deleted.                                     |
+| `tasklist_updated`        | Triggered when a task list is updated.                                     |
+| `task_status_changed`     | Triggered when a task's status changes.                                    |
+| `task_type_changed`       | Triggered when a task's type changes.                                      |
+| `task_updated`            | Triggered when a task is updated.                                          |
+| `timetracking_added`      | Triggered when a time tracking entry is added.                             |
+| `timetracking_deleted`    | Triggered when a time tracking entry is deleted.                           |
+| `timetracking_type_changed` | Triggered when a time tracking type changes.                              |
+| `timetracking_updated`    | Triggered when a time tracking entry is updated.                           |
+| `user_activation_changed` | Triggered when a user's activation status changes.                        |
+| `user_added`              | Triggered when a user is added.                                            |
+| `user_deleted`            | Triggered when a user is deleted.                                          |
+| `user_status_changed`     | Triggered when a user's status changes.                                    |
+| `user_updated`            | Triggered when a user is updated.                                          |
 
-You can now trigger a test event to your configured URL.
+Once configured, you can trigger a test event to your webhook URL to ensure everything is working as expected.
 
-For more details, please take a look at our [Help Center](https://support.awork.com/en/articles/5415462-webhooks).
+### Testing Your Webhook
+
+To test your webhook, you can use tools like [Beeceptor](https://beeceptor.com/) or [Pipedream](https://pipedream.com/requestbin). These tools allow you to inspect incoming webhook requests and verify the payload structure.
 
 ## Receiving a Webhook
 
