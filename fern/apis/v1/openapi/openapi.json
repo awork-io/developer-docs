@@ -36345,13 +36345,6 @@
             "nullable": true,
             "example": "Workation by the beach"
           },
-          "externalProvider": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "description": "The external provider for the absence.",
-            "nullable": true
-          },
           "isHalfDayOnStart": {
             "type": "boolean",
             "description": "If it's true and it's a single day absence means that the absence to create is for the first half of the workday.\r\nIf it's a multi day absence it started on the second half of the first day of the absence period."
@@ -44341,6 +44334,10 @@
             "type": "integer",
             "description": "The amount of time budgeted for the project in seconds.",
             "format": "int32"
+          },
+          "hasRelativeTasks": {
+            "type": "boolean",
+            "description": "True if any of the tasks of the template has relative dates."
           }
         },
         "additionalProperties": false,
@@ -44794,6 +44791,11 @@
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "hasRelativeTasks": {
+            "type": "boolean",
+            "description": "True if any of the tasks of the public template has a relative date.",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -45902,6 +45904,11 @@
             },
             "description": "The task templates within this task bundle.",
             "nullable": true
+          },
+          "hasRelativeTasks": {
+            "type": "boolean",
+            "description": "True if any of the tasks in the bundle has relative dates.",
+            "readOnly": true
           }
         },
         "additionalProperties": false
