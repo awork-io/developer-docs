@@ -50,6 +50,48 @@ The following properties are calculated and cannot be set manually:
 - `tasksDoneCount` -> The number of tasks of the project which are done.
 - Special case for `timebudget`: The `timebudget` property of a retainer project cannot be updated manually but instead shows the sum of all timebudgets of all retainer budgets of the project.
 
+## Project Comments
+
+Project comments allow for discussions and communication about projects. You can add comments to a project using the following endpoint:
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/comments \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "This is a comment on the project"
+  }'
+```
+
+### Mentioning Users in Comments
+
+You can mention users in comments by using a special syntax with the user's Id. When a user is mentioned, they will receive a notification based on their notification settings.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/comments \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "<p>~[userId:123e4567-e89b-12d3-a456-426614174000] Take a look at this project</p>"
+  }'
+```
+
+The syntax for mentioning a user is: `~[userId:{userId}]` where `{userId}` is the Id of the user you want to mention.
+
+### Notifying Project Members
+
+In addition to mentioning specific users, you can notify all members of a project:
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/comments \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "<p>~[project] This will notify all users in this project</p>"
+  }'
+```
+
+You can use:
+- `~[project]` to notify all members of this project
+- `~[workspace]` to notify all users in the workspace
+
 ## Get more help
 
 Make sure to check out our dedicated support page on [getting started with projects](https://support.awork.com/en/articles/5336228-create-your-first-project) in awork.

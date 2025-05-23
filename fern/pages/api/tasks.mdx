@@ -88,3 +88,46 @@ curl -X POST https://api.awork.com/api/v1/tasks/changelists \
 	}
 ]'
 ```
+
+## Task Comments
+
+Task comments allow for discussions and communication about tasks. You can add comments to a task using the following endpoint:
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/comments \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "This is a comment on the task"
+  }'
+```
+
+### Mentioning Users in Comments
+
+You can mention users in comments by using a special syntax with the user's Id. When a user is mentioned, they will receive a notification based on their notification settings.
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/comments \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "<p>~[userId:123e4567-e89b-12d3-a456-426614174000] Take a look at this task</p>"
+  }'
+```
+
+The syntax for mentioning a user is: `~[userId:{userId}]` where `{userId}` is the Id of the user you want to mention.
+
+### Notifying Task or Project Watchers
+
+In addition to mentioning specific users, you can notify all users watching a task or project:
+
+```sh title="Request"
+curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/comments \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": "<p>~[task] This will notify all users watching this task</p>"
+  }'
+```
+
+You can use:
+- `~[task]` to notify all users watching the task
+- `~[project]` to notify all users watching the project the task belongs to
+- `~[workspace]` to notify all users in the workspace
