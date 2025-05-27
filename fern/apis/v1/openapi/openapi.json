@@ -4520,8 +4520,8 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Deletes a document with the specified id, moving it to the trash section.\n            \n            The document itself is deleted synchronously, while its children and related entities\n            are deleted asynchronously in the background if  is true.\n            If  is false, the children's parent references are updated to point to the deleted document's parent.\n            Required Permissions: The user has at least `manage` permissions for this document.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Deletes a document with the specified id, moving it to the trash section.",
+        "description": "The document itself is deleted synchronously, while its children and related entities\n            are deleted asynchronously in the background if  is true.\n            If  is false, the children's parent references are updated to point to the deleted document's parent.\n            Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "documentId",
