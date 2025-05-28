@@ -30,6 +30,7 @@ Then use the returned `uploadUrl` to upload the file:
 ```sh title="Upload File"
 curl -X PUT https://upload.awork.com/... \
   -H 'Content-Type: image/png' \
+  -H 'x-ms-blob-type: BlockBlob' \
   --data-binary @/path/to/file.png
 ```
 
