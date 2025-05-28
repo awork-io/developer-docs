@@ -2923,7 +2923,7 @@
           "Companies"
         ],
         "summary": "Deletes the company with the specified id.",
-        "description": "There are several ways to delete a company.\n            Look into the property description of the post model to get detailed information.\n            If the post is executed without a model, the default process 'delete-only-company' will be executed.\n            For the operation 'delete-all-without-timeentries' project-master-data write permissions are required on all projects of the company.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
+        "description": "There are several ways to delete a company.\n            Look into the property description of the post model to get detailed information.\n            <br />If the post is executed without a model, the default process 'delete-only-company' will be executed.\n            <br />For the operation 'delete-all-without-timeentries' project-master-data write permissions are required on all projects of the company.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -4473,7 +4473,7 @@
           "Documents"
         ],
         "summary": "Restores the document with the specified id from the trash.",
-        "description": "Please note that, after a successful response, this method will trigger a number of events that will\n            eventually update/recreate the document and the related entities such as document versions or its content.\n            Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Please note that, after a successful response, this method will trigger a number of events that will\n            eventually update/recreate the document and the related entities such as document versions or its content.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4521,7 +4521,7 @@
           "Documents"
         ],
         "summary": "Deletes a document with the specified id, moving it to the trash section.",
-        "description": "The document itself is deleted synchronously, while its children and related entities\n            are deleted asynchronously in the background if  is true.\n            If  is false, the children's parent references are updated to point to the deleted document's parent.\n            Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The document itself is deleted synchronously, while its children and related entities\n            are deleted asynchronously in the background if <paramref name=\"alsoDeleteChildren\" /> is true.\n            If <paramref name=\"alsoDeleteChildren\" /> is false, the children's parent references are updated to point to the deleted document's parent.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4567,7 +4567,7 @@
           "Documents"
         ],
         "summary": "Returns the document with the specified id.",
-        "description": "Required Permissions: The user has at least `read` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4611,7 +4611,7 @@
           "Documents"
         ],
         "summary": "Updates the document with the specified id.",
-        "description": "Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4989,7 +4989,7 @@
           "Documents"
         ],
         "summary": "Returns the content of the current version of an the document with the specified id.",
-        "description": "Required Permissions: The user has at least `read` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -5042,7 +5042,7 @@
           "Documents"
         ],
         "summary": "Updates the content of the document with the specified id.",
-        "description": "Required Permissions: The user has at least `manage` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -5097,7 +5097,7 @@
           "Documents"
         ],
         "summary": "Adds a list of document contributors to a document with the specified id.",
-        "description": "Recalculation of permissions for related entities considering the new document contributors\n            will be done in the background asynchronously.\n            Required Permissions: The user has at least `manage` permissions for this document.Adding document contributors will affect their access to the document.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Recalculation of permissions for related entities considering the new document contributors\n            will be done in the background asynchronously.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Adding document contributors will affect their access to the document.\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -5159,7 +5159,7 @@
           "Documents"
         ],
         "summary": "Deletes the document contributor with the specified id.",
-        "description": "Deletes the specific document contributor from a document. This operation cannot be performed on inherited document contributors, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document contributor.\n            Required Permissions: The user has at least `manage` permissions for this document.Deleting a document contributor will affect their access to the document.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Deletes the specific document contributor from a document. This operation cannot be performed on inherited document contributors, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document contributor.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Deleting a document contributor will affect their access to the document.\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -5216,7 +5216,7 @@
           "Documents"
         ],
         "summary": "Updates the document contributor with the specified id.",
-        "description": "Updates the specific document contributor of a document.\n            There will be recalculation of permissions for related entities considering the updated document contributor.\n            Required Permissions: The user has at least `manage` permissions for this document.Updating a document contributor will affect their access to the document.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Updates the specific document contributor of a document.\n            There will be recalculation of permissions for related entities considering the updated document contributor.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Updating a document contributor will affect their access to the document.\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -5282,7 +5282,7 @@
           "Documents"
         ],
         "summary": "Duplicates a document along its content, permissions, and children and descendants (document tree).",
-        "description": "Required Permissions: The user has at least `read` permissions for this document.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -5504,7 +5504,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file document from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file document from the uploaded file by providing the upload id.",
         "parameters": [
           {
             "name": "documentId",
@@ -6072,7 +6072,7 @@
           "Documents"
         ],
         "summary": "Adds a list of document teams to a document with the specified id.",
-        "description": "Recalculation of permissions for related entities considering the new document teams\n            will be done in the background asynchronously.\n            Required Permissions: The user has at least `manage` permissions for this document.Adding document teams will affect their access to the document.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Recalculation of permissions for related entities considering the new document teams\n            will be done in the background asynchronously.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Adding document teams will affect their access to the document.\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -6134,7 +6134,7 @@
           "Documents"
         ],
         "summary": "Deletes the document team with the specified id.",
-        "description": "Deletes the specific document team from a document. This operation cannot be performed on inherited document teams, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document team.\n            Required Permissions: The user has at least `manage` permissions for this document.Deleting a document team will affect their access to the document.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Deletes the specific document team from a document. This operation cannot be performed on inherited document teams, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document team.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Deleting a document team will affect their access to the document.\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -6181,7 +6181,7 @@
           "Documents"
         ],
         "summary": "Updates the document team with the specified id.",
-        "description": "Updates the specific document team of a document.\n            There will be recalculation of permissions for related entities considering the updated document team.\n            Required Permissions: The user has at least `manage` permissions for this document.Updating a document team will affect their access to the document.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Updates the specific document team of a document.\n            There will be recalculation of permissions for related entities considering the updated document team.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Updating a document team will affect their access to the document.\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -6296,7 +6296,7 @@
           "DocumentSpaces"
         ],
         "summary": "Adds a new document space.",
-        "description": "Required Permissions: The user has to be an admin.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check>",
         "requestBody": {
           "description": "The document space to create.",
           "content": {
@@ -6340,7 +6340,7 @@
           "DocumentSpaces"
         ],
         "summary": "Deletes the document space with the specified id.",
-        "description": "Corresponding documents and their related entities will be unrecoverably deleted in the background asynchronously.\n            Required Permissions: The user has to be an admin.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Corresponding documents and their related entities will be unrecoverably deleted in the background asynchronously.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6384,7 +6384,7 @@
           "DocumentSpaces"
         ],
         "summary": "Returns the document space with the specified id.",
-        "description": "Required Permissions: The user has at least `read` permissions for this document space.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document space.</Check>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6428,7 +6428,7 @@
           "DocumentSpaces"
         ],
         "summary": "Updates the document space with the specified id.",
-        "description": "Required Permissions: The user has to be an admin.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Professional plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check>\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Professional plan or higher.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6487,7 +6487,7 @@
           "DocumentSpaces"
         ],
         "summary": "Adds a list of document space contributors to a document space with the specified id.",
-        "description": "Required Permissions: The user has to be an admin.Adding document space contributors will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Adding document space contributors will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6546,7 +6546,7 @@
           "DocumentSpaces"
         ],
         "summary": "Deletes the document space contributor with the specified id.",
-        "description": "Deletes the specific document space contributor from a document space.\n            Required Permissions: The user has to be an admin.Deleting a document space contributor will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Deletes the specific document space contributor from a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Deleting a document space contributor will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6593,7 +6593,7 @@
           "DocumentSpaces"
         ],
         "summary": "Updates the document space contributor with the specified id.",
-        "description": "Updates the specific document space contributor of a document space.\n            Required Permissions: The user has to be an admin.Updating a document space contributor will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Updates the specific document space contributor of a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Updating a document space contributor will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6781,7 +6781,7 @@
           "DocumentSpaces"
         ],
         "summary": "Adds a list of document space teams to a document space with the specified id.",
-        "description": "Required Permissions: The user has to be an admin.Adding document space teams will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Adding document space teams will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6840,7 +6840,7 @@
           "DocumentSpaces"
         ],
         "summary": "Deletes the document space team with the specified id.",
-        "description": "Deletes the specific document space team from a document space.\n            Required Permissions: The user has to be an admin.Deleting a document space team will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Deletes the specific document space team from a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Deleting a document space team will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6887,7 +6887,7 @@
           "DocumentSpaces"
         ],
         "summary": "Updates the document space team with the specified id.",
-        "description": "Updates the specific document space team of a document space.\n            Required Permissions: The user has to be an admin.Updating a document space team will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Updates the specific document space team of a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Updating a document space team will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6953,7 +6953,7 @@
           "FileUpload"
         ],
         "summary": "Generates a URL to upload a file to.",
-        "description": "Generates a URL that can be used to upload a file. Use the returned upload id to create a file entry. See  for more information.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Generates a URL that can be used to upload a file. Use the returned upload id to create a file entry. See <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostUploadByUploadId\" /> for more information.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -13125,7 +13125,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file project from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file project from the uploaded file by providing the upload id.",
         "parameters": [
           {
             "name": "projectId",
@@ -24711,7 +24711,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file task from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file task from the uploaded file by providing the upload id.",
         "parameters": [
           {
             "name": "taskId",
@@ -26823,7 +26823,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the  endpoint, this endpoint can be used to create a file tasktemplate from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file tasktemplate from the uploaded file by providing the upload id.",
         "parameters": [
           {
             "name": "tasktemplateId",
@@ -40879,6 +40879,7 @@
           "isPrio": {
             "type": "boolean",
             "description": "Whether this task is marked as priority.",
+            "nullable": true,
             "example": true
           },
           "startOn": {
@@ -40905,6 +40906,7 @@
             "type": "integer",
             "description": "The expected planned workload of the task, in seconds.",
             "format": "int32",
+            "nullable": true,
             "example": 21600
           }
         },
@@ -40913,10 +40915,7 @@
       "GeneralTaskPostForm": {
         "required": [
           "baseType",
-          "entityId",
-          "name",
-          "taskStatusId",
-          "typeOfWorkId"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -40938,6 +40937,7 @@
           "isPrio": {
             "type": "boolean",
             "description": "Whether this task is marked as priority.",
+            "nullable": true,
             "example": true
           },
           "startOn": {
@@ -40964,18 +40964,21 @@
             "type": "integer",
             "description": "The expected planned workload of the task, in seconds.",
             "format": "int32",
+            "nullable": true,
             "example": 21600
           },
           "typeOfWorkId": {
             "type": "string",
             "description": "The id of the type of work for this task.",
             "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "taskStatusId": {
             "type": "string",
             "description": "The id of the status for this task.",
             "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "order": {
@@ -40996,6 +40999,7 @@
             "type": "string",
             "description": "The id of the entity the task is related to.",
             "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "baseType": {
@@ -46477,6 +46481,7 @@
           "isPrio": {
             "type": "boolean",
             "description": "Whether this task is marked as priority.",
+            "nullable": true,
             "example": true
           },
           "startOn": {
@@ -46503,6 +46508,7 @@
             "type": "integer",
             "description": "The expected planned workload of the task, in seconds.",
             "format": "int32",
+            "nullable": true,
             "example": 21600
           },
           "id": {
@@ -53301,6 +53307,11 @@
             "description": "The awork connect invite code.",
             "nullable": true
           },
+          "passcode": {
+            "type": "string",
+            "description": "The bot prevention passcode.",
+            "nullable": true
+          },
           "email": {
             "type": "string",
             "description": "The email of the user to be invited.",
@@ -53476,6 +53487,11 @@
           "connectInviteCode": {
             "type": "string",
             "description": "The awork connect invite code.",
+            "nullable": true
+          },
+          "passcode": {
+            "type": "string",
+            "description": "The bot prevention passcode.",
             "nullable": true
           },
           "provider": {
@@ -54604,7 +54620,7 @@
     },
     {
       "name": "Autopilot",
-      "description": "The autopilot endpoints allow you to manage the awork autopilot for projects."
+      "description": "These endpoints allow you to manage the awork autopilot for projects."
     },
     {
       "name": "Invitations",
