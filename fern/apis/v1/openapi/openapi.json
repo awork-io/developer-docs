@@ -46481,7 +46481,6 @@
           "isPrio": {
             "type": "boolean",
             "description": "Whether this task is marked as priority.",
-            "nullable": true,
             "example": true
           },
           "startOn": {
@@ -46501,14 +46500,12 @@
           "laneOrder": {
             "type": "integer",
             "description": "The lane order defines the vertical position in the task board.",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "plannedDuration": {
             "type": "integer",
             "description": "The expected planned workload of the task, in seconds.",
             "format": "int32",
-            "nullable": true,
             "example": 21600
           },
           "id": {
