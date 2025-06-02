@@ -4,4 +4,135 @@ description: Documents API Reference.
 slug: documents
 ---
 
-Documents are project notes, your wiki and personal notes in awork.
+Documents (Docs) provide a collaborative space for creating, sharing, and managing content.
+They allow teams to maintain a central knowledge base, create project documentation, and collaborate on content in real-time.
+
+## Types of Documents
+There are three primary types of documents in awork:
+- Space documents - Spaces can be seen as folders within a workspace. These are where docs are managed and organized within a specific workspace. You can create multiple spaces within one workspace, and each doc can only exist in one space at a time. Docs can be moved from spaces to spaces or even into a project. 
+- Project documents - Project docs are connected to a specific project and can only be accessed through that project. These docs are always linked to the project and will remain there until they are moved to a space or made private. This ensures that all project-related docs are easily accessible and organized within the project. Project docs have special features regarding that project, like linking a task to a doc for status tracking.
+- Private documents - Private docs are similar to private projects in that they can only be seen by you until you choose to share them with another user or move them to a space or project. These docs are only accessible to you and are not visible to anyone else in your workspace. 
+
+
+## Working with Documents
+
+### Creating a Document
+To create a new document, you need to provide at least a name. Documents must be created using `multipart/form-data` (not JSON) to allow proper handling of the document content.
+Documents can be created in a document space, within a project, or as private documents.
+A document can always either belong to a space, a project or be private.
+
+If you don't specify a space id or project id, the document will be created as a private document by default:
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents" \
+     -H "Content-Type: multipart/form-data" \
+     -F "Name=My New Document" \
+     -F "Content= This is good content."
+```
+
+#### Creating a Document in a Space
+To create a document in a document space, include the `documentSpaceId`:
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents" \
+     -H "Content-Type: multipart/form-data" \
+     -F "Name=My New Document" \
+     -F "DocumentSpaceId=123e4567-e89b-12d3-a456-426614174000" \
+     -F "Content= This is good content."
+```
+
+#### Creating a Document in a Project
+To create a document in a project, include the `projectId``:
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents" \
+     -H "Content-Type: multipart/form-data" \
+     -F "Name=My New Document" \
+     -F "ProjectId=123e4567-e89b-12d3-a456-426614174000" \
+     -F "Content= This is good content."
+```
+
+#### Creating a Private Document
+Private documents are only visible to you and users you explicitly share them with:
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents" \
+     -H "Content-Type: multipart/form-data" \
+     -F "Name=My Private Document" \
+     -F "IsPrivate=true" \
+     -F "Content= This is good content."
+```
+
+### Permissions and Sharing
+Documents can be shared with specific users or teams, and different access levels can be assigned. Documents can also be shared with the whole workspace by setting the `workspaceAccessLevel` on a document.
+
+#### Sharing a Document with Users
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000/contributors" \
+     -H "Content-Type: application/json" \
+     -d '[
+           {
+             "UserId": "123e4567-e89b-12d3-a456-426614174000",
+             "AccessLevel": "manage"
+           },
+           {
+             "UserId": "456e7890-e89b-12d3-a456-426614174000",
+             "AccessLevel": "read"
+           }
+         ]'
+```
+
+#### Sharing a Document with Teams
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000/teams" \
+     -H "Content-Type: application/json" \
+     -d '[
+           {
+             "TeamId": "123e4567-e89b-12d3-a456-426614174000",
+             "AccessLevel": "manage"
+           }
+         ]'
+```
+
+### Document Structure and Nesting
+Documents can be nested within other documents, creating a hierarchical structure. To create a nested document, specify the parent document id:
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents" \
+     -H "Content-Type: multipart/form-data" \
+     -F "Name=Nested Document" \
+     -F "ParentId=123e4567-e89b-12d3-a456-426614174000" \
+     -F "Content= This is good content."
+```
+
+### Document Trash Management
+Documents can be moved to trash and later restored or permanently deleted.
+
+#### Deleting a Document, moving it to the Trash
+
+```sh title="Request"
+curl -X DELETE "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000"
+```
+
+#### Restoring a Document from the Trash
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documents/trash/123e4567-e89b-12d3-a456-426614174000/restore"
+```
+
+## Document Spaces
+Document spaces provide a way to organize workspace-wide documents. They act as containers for related documents and can have their own permission settings.
+
+### Creating a Document Space
+
+```sh title="Request"
+curl -X POST "https://api.awork.com/api/v1/documentSpaces" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "Name": "Marketing Team",
+           "Emoji": "📚",
+           "Color": "purple",
+           "WorkspaceAccessLevel": "read"
+         }'
+```
