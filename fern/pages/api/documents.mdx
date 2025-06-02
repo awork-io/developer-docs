@@ -7,7 +7,6 @@ slug: documents
 Documents (Docs) provide a collaborative space for creating, sharing, and managing content.
 They allow teams to maintain a central knowledge base, create project documentation, and collaborate on content in real-time.
 
-
 ## Types of Documents
 There are three primary types of documents in awork:
 - Space documents - Spaces can be seen as folders within a workspace. These are where docs are managed and organized within a specific workspace. You can create multiple spaces within one workspace, and each doc can only exist in one space at a time. Docs can be moved from spaces to spaces or even into a project. 
@@ -18,14 +17,17 @@ There are three primary types of documents in awork:
 ## Working with Documents
 
 ### Creating a Document
-To create a new document, you need to provide at least a name. Documents can be created in a document space, within a project, or as private documents.
+To create a new document, you need to provide at least a name. Documents must be created using `multipart/form-data` (not JSON) to allow proper handling of the document content.
+Documents can be created in a document space, within a project, or as private documents.
 A document can always either belong to a space, a project or be private.
+
+If you don't specify a space id or project id, the document will be created as a private document by default:
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My New Document" \
-     -F "Content=@document.json"
+     -F "Content= This is good content."
 ```
 
 #### Creating a Document in a Space
@@ -36,7 +38,7 @@ curl -X POST "https://api.awork.com/api/v1/documents" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My New Document" \
      -F "DocumentSpaceId=123e4567-e89b-12d3-a456-426614174000" \
-     -F "Content=@document.json"
+     -F "Content= This is good content."
 ```
 
 #### Creating a Document in a Project
@@ -47,7 +49,7 @@ curl -X POST "https://api.awork.com/api/v1/documents" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My New Document" \
      -F "ProjectId=123e4567-e89b-12d3-a456-426614174000" \
-     -F "Content=@document.json"
+     -F "Content= This is good content."
 ```
 
 #### Creating a Private Document
@@ -58,7 +60,7 @@ curl -X POST "https://api.awork.com/api/v1/documents" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My Private Document" \
      -F "IsPrivate=true" \
-     -F "Content=@document.json"
+     -F "Content= This is good content."
 ```
 
 ### Permissions and Sharing
@@ -94,14 +96,14 @@ curl -X POST "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426
 ```
 
 ### Document Structure and Nesting
-Documents can be nested within other documents, creating a hierarchical structure. To create a nested document, specify the parent document ID:
+Documents can be nested within other documents, creating a hierarchical structure. To create a nested document, specify the parent document id:
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=Nested Document" \
      -F "ParentId=123e4567-e89b-12d3-a456-426614174000" \
-     -F "Content=@document.json"
+     -F "Content= This is good content."
 ```
 
 ### Document Trash Management
