@@ -10984,6 +10984,55 @@
         }
       }
     },
+    "/projects/{projectId}/activities": {
+      "get": {
+        "tags": [
+          "Activities"
+        ],
+        "summary": "Returns all activities of the project with the specified id.",
+        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\nThis contains changes to first-level properties of the project, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\nThis does not include activities of sub-entities, like tasks of a project or comments on a task.",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/projects/{projectId}/addprojectmember": {
       "post": {
         "tags": [
@@ -20934,6 +20983,76 @@
         "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>"
       }
     },
+    "/search": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Matches the entities to a search term and returns the ranked results.",
+        "description": "Matches the entities to a search term and returns the ranked results.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "searchTerm",
+            "in": "query",
+            "description": "The term to search for. Max. 50 characters. Required.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "searchTypes",
+            "in": "query",
+            "description": "Comma-separated list of types to search for, or 'all'. \r\nOptional. Default: all types.\r\n\r\nValid values are:\r\n<list type=\"bullet\"><item><description>comment</description></item><item><description>company</description></item><item><description>dashboardnote</description></item><item><description>project</description></item><item><description>task</description></item><item><description>timeentry</description></item><item><description>timereport</description></item><item><description>user</description></item><item><description>tasklist</description></item><item><description>file</description></item><item><description>document</description></item></list>",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "Count of top results. Optional. Default: 20.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "includeClosedAndStuck",
+            "in": "query",
+            "description": "If true, it will add to the results (if the searched entity has that) entities\r\nwhose status is closed, stuck and done. Otherwise, they will be filtered. Optional. Default: true",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResults"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/sharedfiles": {
       "get": {
         "tags": [
@@ -23795,6 +23914,55 @@
         ],
         "x-access": {
           "any": "true"
+        }
+      }
+    },
+    "/tasks/{taskId}/activities": {
+      "get": {
+        "tags": [
+          "Activities"
+        ],
+        "summary": "Returns all activities of the task with the specified id.",
+        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\nThis contains changes to first-level properties of the task, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\nThis does not include activities of sub-entities, like tasks of a project or comments on a task.",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "The id of the task.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityModel"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -53257,6 +53425,2878 @@
         },
         "additionalProperties": false
       },
+      "ActivityModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityType": {
+            "type": "string",
+            "description": "The type of the entity",
+            "nullable": true,
+            "example": "timetracking"
+          },
+          "entityId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entity": {
+            "$ref": "#/components/schemas/NestedModel"
+          },
+          "createdBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "eventType": {
+            "type": "string",
+            "description": "The type of the event of this activity log (e.g: added, updated, deleted)",
+            "nullable": true,
+            "example": "updated"
+          },
+          "eventDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "changedProperty": {
+            "type": "string",
+            "description": "The name of the property that has changed.",
+            "nullable": true,
+            "example": "StartOn"
+          },
+          "oldPropertyValue": {
+            "type": "string",
+            "description": "The previous value of the updated property (as string).",
+            "nullable": true,
+            "example": "2022-03-11T14:00:05.100Z"
+          },
+          "newPropertyValue": {
+            "type": "string",
+            "description": "The new value for the property (as string).",
+            "nullable": true,
+            "example": "2022-03-15T11:30:00.100Z"
+          },
+          "oldProperty": {
+            "description": "The old property value, if the property is a complex object.\r\nThis is used to store the old value of the property when it is an object, like a user or a task.",
+            "nullable": true,
+            "example": {
+              "name": "To do",
+              "type": "todo",
+              "id": "12345678-1234-1234-1234-123456789012"
+            }
+          },
+          "newProperty": {
+            "description": "The new property value, if the property is a complex object.\r\nThis is used to store the new value of the property when it is an object, like a user or a task.",
+            "nullable": true,
+            "example": {
+              "name": "In progress",
+              "type": "progress",
+              "id": "12345678-1234-1234-1234-123456789013"
+            }
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user that performed the action that created this activity log entry.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "user": {
+            "$ref": "#/components/schemas/NestedUserModel"
+          },
+          "parentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/BasicNameModel"
+          },
+          "taskId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "task": {
+            "$ref": "#/components/schemas/NameModel"
+          },
+          "assignedUserId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "readOnly": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "assignedUser": {
+            "$ref": "#/components/schemas/NestedUserModel"
+          },
+          "unassignedUserId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "readOnly": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "unassignedUser": {
+            "$ref": "#/components/schemas/NestedUserModel"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "memberId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "readOnly": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "member": {
+            "$ref": "#/components/schemas/NestedUserModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The model to retrieve activities for main entities.\r\nIncludes additional/aggregated properties for easier access to the most important information."
+      },
+      "BasicNameModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Website design"
+          },
+          "projectTypeIcon": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectCompanyProfileImageUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ITimeline": {
+        "type": "object",
+        "properties": {
+          "aggregation": {
+            "type": "string",
+            "nullable": true
+          },
+          "aggregationDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActivityModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ITimelineTimelineResponse": {
+        "type": "object",
+        "properties": {
+          "timelines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ITimeline"
+            },
+            "description": "The list of all time lines in the time span.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MinimalActivityModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "eventDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NameModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BaseTaskEntity": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the task. Max allowed length: 25000 characters.\r\nRequired.",
+            "nullable": true,
+            "example": "Create logo concept"
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the parent task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The user id this task belongs to in case this is a private task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user that created this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this task is part of.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The id of the parent task of this task, if this task is a subtask.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentTask": {
+            "$ref": "#/components/schemas/ParentTaskEntity"
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskAssignmentEntity"
+            },
+            "description": "The assignees of the task.",
+            "nullable": true
+          },
+          "baseType": {
+            "type": "string",
+            "description": "The base type of the task.",
+            "nullable": true,
+            "example": "projecttask"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this task is external."
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommentSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "message": {
+            "type": "string",
+            "description": "The message of this comment.",
+            "nullable": true,
+            "example": "The new design proposals are ready!"
+          },
+          "entityType": {
+            "enum": [
+              "tasks",
+              "projects",
+              "documents"
+            ],
+            "type": "string",
+            "description": "The type of the entity that this comment is attached to."
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity that this comment is attached to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "task": {
+            "$ref": "#/components/schemas/BaseTaskEntity"
+          },
+          "document": {
+            "$ref": "#/components/schemas/DocumentEntity"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this comment is external."
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user who created this comment.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "Whether this comment is hidden for connect users."
+          },
+          "isResolved": {
+            "type": "boolean",
+            "description": "Whether the comment has been resolved.\r\nOnly available for comments on documents.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommentSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/CommentSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommentSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommentSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanySearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The company name.",
+            "nullable": true,
+            "example": "NCNSTN Brand Design"
+          },
+          "industry": {
+            "type": "string",
+            "description": "The company's industry. Optional.",
+            "nullable": true,
+            "example": "Brand Agency"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tags of the company.",
+            "nullable": true,
+            "example": [
+              "Brand Agency"
+            ]
+          },
+          "companyContactInfos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactInfoEntity"
+            },
+            "description": "The contact infos of this company.",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the user has an image.",
+            "nullable": true,
+            "example": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanySearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/CompanySearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanySearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanySearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContactInfoEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this contact info.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "value": {
+            "type": "string",
+            "description": "The value of the contact info.",
+            "nullable": true,
+            "example": null
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the contact info. Possible values are: 'phone', 'email', 'address', 'custom'.",
+            "nullable": true,
+            "example": "address"
+          },
+          "subType": {
+            "type": "string",
+            "description": "The subtype of the contact info, Possible values are:\r\nphone: [ 'central', 'other' ]\r\nemail: [ 'central', 'invoice', 'other' ]\r\naddress: [ 'central', 'invoice', 'other' ] url: [ 'primary', 'other']",
+            "nullable": true,
+            "example": "central"
+          },
+          "isAddress": {
+            "type": "boolean",
+            "description": "Flags whether this contact info is an address. If it's an address, the address fields are required.",
+            "example": true
+          },
+          "addressLine1": {
+            "type": "string",
+            "description": "The first address line of the contact info.",
+            "nullable": true,
+            "example": "Torstrasse 140"
+          },
+          "addressLine2": {
+            "type": "string",
+            "description": "The second address line of the contact info.",
+            "nullable": true,
+            "example": "Hof A"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "The zipcode of the contact info.",
+            "nullable": true,
+            "example": "10119"
+          },
+          "city": {
+            "type": "string",
+            "description": "The city of the contact info.",
+            "nullable": true,
+            "example": "Berlin"
+          },
+          "state": {
+            "type": "string",
+            "description": "The state of the contact info.",
+            "nullable": true,
+            "example": null
+          },
+          "country": {
+            "type": "string",
+            "description": "The 2 letter iso code of the country.",
+            "nullable": true,
+            "example": "DE"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContributorEntity": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "accessLevel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardNoteSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the dashboard widget note.",
+            "nullable": true,
+            "example": "Reminders for today"
+          },
+          "note": {
+            "type": "string",
+            "description": "The note of the dashboard widget note.",
+            "nullable": true,
+            "example": "Ask the client about the new logo."
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user the dashboard note belongs to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardNoteSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/DashboardNoteSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardNoteSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DashboardNoteSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentContributorEntity": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "accessLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedFromDocumentContributorId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedDocumentContributor": {
+            "$ref": "#/components/schemas/InheritedDocumentContributorEntity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentEntity": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the document.",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the document. This is indexed for search and highlighting but not returned in search results.",
+            "nullable": true
+          },
+          "documentSpaceId": {
+            "type": "string",
+            "description": "The id of the document space.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "documentSpace": {
+            "$ref": "#/components/schemas/DocumentSpaceEntity"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The id of the document's parent document.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "emoji": {
+            "type": "string",
+            "description": "The emoji of the document.",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this document references.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the document is private."
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether the document belongs to an external project."
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "Whether the document is hidden for connect users."
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentContributorEntity"
+            },
+            "description": "The contributors of this document.",
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentToTeamEntity"
+            },
+            "description": "The teams this document is connected to.",
+            "nullable": true
+          },
+          "workspaceAccessLevel": {
+            "type": "string",
+            "description": "Determines the level of access to this document granted to all workspace users.\r\nCan be either not set (no access), `read`, or `manage`.",
+            "nullable": true
+          },
+          "inheritedWorkspaceAccessFromDocumentId": {
+            "type": "string",
+            "description": "The id of the document the workspace access level permission has been inherited from.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedWorkspaceAccessFromDocument": {
+            "$ref": "#/components/schemas/InheritedWorkspaceAccessFromDocumentEntity"
+          },
+          "rootDocumentCreatedBy": {
+            "type": "string",
+            "description": "The user id of the creator of the root document of this document's document tree.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the document.",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the document. This is indexed for search and highlighting but not returned in search results.",
+            "nullable": true
+          },
+          "documentSpaceId": {
+            "type": "string",
+            "description": "The id of the document space.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "documentSpace": {
+            "$ref": "#/components/schemas/DocumentSpaceEntity"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The id of the document's parent document.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "emoji": {
+            "type": "string",
+            "description": "The emoji of the document.",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this document references.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether the document is private."
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether the document belongs to an external project."
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "Whether the document is hidden for connect users."
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentContributorEntity"
+            },
+            "description": "The contributors of this document.",
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentToTeamEntity"
+            },
+            "description": "The teams this document is connected to.",
+            "nullable": true
+          },
+          "workspaceAccessLevel": {
+            "type": "string",
+            "description": "Determines the level of access to this document granted to all workspace users.\r\nCan be either not set (no access), `read`, or `manage`.",
+            "nullable": true
+          },
+          "inheritedWorkspaceAccessFromDocumentId": {
+            "type": "string",
+            "description": "The id of the document the workspace access level permission has been inherited from.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedWorkspaceAccessFromDocument": {
+            "$ref": "#/components/schemas/InheritedWorkspaceAccessFromDocumentEntity"
+          },
+          "rootDocumentCreatedBy": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/DocumentSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentSpaceEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "workspaceAccessLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContributorEntity"
+            },
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityToTeamEntity"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentToTeamEntity": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "accessLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedFromDocumentToTeamId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "inheritedDocumentToTeam": {
+            "$ref": "#/components/schemas/InheritedDocumentToTeamEntity"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntityAccessForm": {
+        "type": "object",
+        "properties": {
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity that was accessed.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "accessedOn": {
+            "type": "string",
+            "description": "The date and time the entity was accessed by the user.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T14:21:00Z"
+          },
+          "entityType": {
+            "type": "string",
+            "description": "The tpye of the entity that has been accessed.\r\nValid values: 'company', 'project', 'task' and 'user'",
+            "nullable": true,
+            "example": "task"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EntityToTeamEntity": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "accessLevel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FileSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the file.",
+            "nullable": true,
+            "example": "Logo for concept."
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user that has created the file.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityType": {
+            "type": "string",
+            "description": "The type of the entity that this file is attached to.",
+            "nullable": true
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity that this file is attached to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "task": {
+            "$ref": "#/components/schemas/BaseTaskEntity"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this file is external."
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "Whether this comment is hidden for connect users."
+          }
+        },
+        "additionalProperties": false
+      },
+      "FileSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/FileSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "FileSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FileSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InheritedDocumentContributorEntity": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "accessLevel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InheritedDocumentToTeamEntity": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "accessLevel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InheritedWorkspaceAccessFromDocumentEntity": {
+        "type": "object",
+        "properties": {
+          "workspaceAccessLevel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParentTaskEntity": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the task. Max allowed length: 25000 characters.\r\nRequired.",
+            "nullable": true,
+            "example": "Create logo concept"
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the parent task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The user id this task belongs to in case this is a private task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user that created this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "assigneeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The user ids this task is assigned to.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this project.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Project. Required. Max allowed length: 25000 characters.",
+            "nullable": true,
+            "example": "Website Design"
+          },
+          "company": {
+            "type": "string",
+            "description": "The company this project is for.",
+            "nullable": true,
+            "example": "Productivity Inc."
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether this is a private project only visible to members and the creator.",
+            "example": false
+          },
+          "isBillableByDefault": {
+            "type": "boolean",
+            "description": "Whether project times should be billable by default.",
+            "nullable": true,
+            "example": true
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/ProjectStatusEntity"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user that created this project.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamEntity"
+            },
+            "description": "The teams this project belongs to.",
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectMemberEntity"
+            },
+            "description": "The members of this project.",
+            "nullable": true
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this project is external."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectMemberEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this project member.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user that is member of this project.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user.",
+            "nullable": true,
+            "example": "Carla"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the user.",
+            "nullable": true,
+            "example": "Creative"
+          },
+          "projectRoleName": {
+            "type": "string",
+            "description": "The project role name of the project member.",
+            "nullable": true,
+            "example": "Project Manager"
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the user has an image.",
+            "nullable": true,
+            "example": true
+          },
+          "projectRoleId": {
+            "type": "string",
+            "description": "The id of the project role.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Project. Required. Max allowed length: 25000 characters.",
+            "nullable": true,
+            "example": "Website Design"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the project. Max allowed length: 25000 characters.",
+            "nullable": true,
+            "example": "Design a new website that reflects the new brand identity."
+          },
+          "projectTypeId": {
+            "type": "string",
+            "description": "The id of the project type of this project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectStatusId": {
+            "type": "string",
+            "description": "The id of the project status.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether this is a private project only visible to members and the creator.",
+            "example": false
+          },
+          "isOpen": {
+            "type": "boolean",
+            "description": "Whether this project is not closed.",
+            "example": true
+          },
+          "isBillableByDefault": {
+            "type": "boolean",
+            "description": "Whether project times should be billable by default.",
+            "nullable": true,
+            "example": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tags of this project.",
+            "nullable": true,
+            "example": [
+              "Design"
+            ]
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "description": "The total planned time of the project, in seconds.\r\nThe time is calculated as te sum of the planned duration by all project tasks.",
+            "format": "int32",
+            "nullable": true,
+            "example": 432000
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the project.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-05-01T00:00:00Z"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the project.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanySearchModel"
+          },
+          "projectType": {
+            "$ref": "#/components/schemas/ProjectTypeEntity"
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/ProjectStatusEntity"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectMemberEntity"
+            },
+            "description": "The members of this project.",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the project has an image.",
+            "nullable": true,
+            "example": true
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user that created this project.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamEntity"
+            },
+            "description": "The teams this project belongs to.",
+            "nullable": true
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this project is external."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/ProjectSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectStatusEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this project status.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the project status.",
+            "nullable": true,
+            "example": "In Progress"
+          },
+          "type": {
+            "type": "string",
+            "description": "The general type of this project status.",
+            "nullable": true,
+            "example": "progress"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectTypeEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the type.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the project type.",
+            "nullable": true,
+            "example": "Brand Strategy"
+          },
+          "icon": {
+            "type": "string",
+            "description": "The identifier of the project type icon.",
+            "nullable": true,
+            "example": "award"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchResults": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The overall number of hits.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 15
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The highest overall search score.",
+            "format": "double",
+            "readOnly": true,
+            "example": 0.9
+          },
+          "top": {
+            "type": "array",
+            "items": {},
+            "description": "The best search matches accross all types ordered descending by their score.",
+            "nullable": true,
+            "example": [
+              {
+                "type": "task",
+                "score": 28,
+                "entity": {
+                  "baseType": "projecttask",
+                  "name": "Website Design"
+                }
+              }
+            ]
+          },
+          "commentHits": {
+            "$ref": "#/components/schemas/CommentSearchModelTypeSearchResult"
+          },
+          "companyHits": {
+            "$ref": "#/components/schemas/CompanySearchModelTypeSearchResult"
+          },
+          "dashboardNotesHits": {
+            "$ref": "#/components/schemas/DashboardNoteSearchModelTypeSearchResult"
+          },
+          "projectHits": {
+            "$ref": "#/components/schemas/ProjectSearchModelTypeSearchResult"
+          },
+          "taskHits": {
+            "$ref": "#/components/schemas/TaskSearchModelTypeSearchResult"
+          },
+          "timeEntriesHits": {
+            "$ref": "#/components/schemas/TimeEntrySearchModelTypeSearchResult"
+          },
+          "timeReportsHits": {
+            "$ref": "#/components/schemas/TimeReportSearchModelTypeSearchResult"
+          },
+          "userHits": {
+            "$ref": "#/components/schemas/UserSearchModelTypeSearchResult"
+          },
+          "taskListHits": {
+            "$ref": "#/components/schemas/TaskListSearchModelTypeSearchResult"
+          },
+          "fileHits": {
+            "$ref": "#/components/schemas/FileSearchModelTypeSearchResult"
+          },
+          "documentHits": {
+            "$ref": "#/components/schemas/DocumentSearchModelTypeSearchResult"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskAssignmentEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The assigned user's id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The assigned user's first name.",
+            "nullable": true,
+            "example": "Carla"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The assigned user's last name.",
+            "nullable": true,
+            "example": "Creative"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskListSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the task list.",
+            "nullable": true,
+            "example": "Create logo concept"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this task list is external."
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskListSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/TaskListSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskListSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskListSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the task. Max allowed length: 25000 characters.\r\nRequired.",
+            "nullable": true,
+            "example": "Create logo concept"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the task. Max allowed length: 25000 characters.",
+            "nullable": true,
+            "example": "Logo design for the new website."
+          },
+          "baseType": {
+            "type": "string",
+            "description": "The base type of the task.",
+            "nullable": true,
+            "example": "projecttask"
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskAssignmentEntity"
+            },
+            "description": "The assignees of the task.",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tags of this task.",
+            "nullable": true,
+            "example": [
+              "Design"
+            ]
+          },
+          "lists": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The task lists this task is in.",
+            "nullable": true,
+            "example": [
+              "Preparation and Concepts"
+            ]
+          },
+          "isPrio": {
+            "type": "boolean",
+            "description": "Whether this task is marked as priority.",
+            "nullable": true,
+            "example": true
+          },
+          "isOpen": {
+            "type": "boolean",
+            "description": "Whether this task is open.",
+            "example": true
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "description": "The expected planned workload of the task, in seconds.",
+            "format": "int32",
+            "nullable": true,
+            "example": 21600
+          },
+          "remainingDuration": {
+            "type": "integer",
+            "description": "The expected remaining duration from the original planned effort of the task, in seconds.",
+            "format": "int32",
+            "nullable": true,
+            "example": 10500
+          },
+          "startOn": {
+            "type": "string",
+            "description": "The expected start date and time of the task.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2021-03-03T17:00:00Z"
+          },
+          "dueOn": {
+            "type": "string",
+            "description": "The expected due date and time of the task.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2021-03-18T17:00:00Z"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusEntity"
+          },
+          "typeOfWork": {
+            "$ref": "#/components/schemas/TypeOfWorkEntity"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this task is part of.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The id of the parent task of this task, if this task is a subtask.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "parentTask": {
+            "$ref": "#/components/schemas/ParentTaskEntity"
+          },
+          "correlationId": {
+            "type": "string",
+            "description": "The correlation id of this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "subtaskOrder": {
+            "type": "number",
+            "description": "The order of this subtask in the parent task, if this task is a subtask.",
+            "format": "double",
+            "nullable": true,
+            "example": null
+          },
+          "userId": {
+            "type": "string",
+            "description": "The user id this task belongs to in case this is a private task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user that created this task.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this task is external."
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "Whether this task should be hidden for connected users."
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/TaskSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskStatusEntity": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the task status.",
+            "nullable": true,
+            "example": "Concept"
+          },
+          "type": {
+            "type": "string",
+            "description": "The general type of this task status.",
+            "nullable": true,
+            "example": "progress"
+          },
+          "icon": {
+            "type": "string",
+            "description": "The icon of the task status.",
+            "nullable": true,
+            "example": "arrow_forward"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TeamEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this team.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the team.",
+            "nullable": true,
+            "example": "Design Team"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeEntrySearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "note": {
+            "type": "string",
+            "description": "The note of the time tracking.",
+            "nullable": true,
+            "example": "I created a first draft for the new sitemap"
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The id of the task this time entry belongs to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project this time entry belongs to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectEntity"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this time entry belongs to.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "startDateUtc": {
+            "type": "string",
+            "description": "The date and time (in UTC) when the time tracking was started.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "startTimeUtc": {
+            "type": "string",
+            "description": "The time (in UTC) when the time tracking was started.",
+            "nullable": true,
+            "example": "09:21:00"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "nullable": true,
+            "example": "Europe/Berlin"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "The duration of the time tracking in seconds.\r\nRequired when the time tracking has already been completed and EndTime has not been set.",
+            "format": "int32",
+            "nullable": true,
+            "example": 8635
+          },
+          "breakDuration": {
+            "type": "integer",
+            "description": "The duration of the break in seconds.\r\nCannot be set via API.",
+            "format": "int32",
+            "nullable": true
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this time entry is external."
+          },
+          "isBilled": {
+            "type": "boolean",
+            "description": "Whether this time entry is billed."
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeEntrySearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/TimeEntrySearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeEntrySearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeEntrySearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReportSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the time report.",
+            "nullable": true,
+            "example": "Weekly reporting"
+          },
+          "shared": {
+            "type": "boolean",
+            "description": "Whether the time report is shared with other users."
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user that created the time report.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReportSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/TimeReportSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReportSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeReportSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TypeOfWorkEntity": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the type of work.",
+            "nullable": true,
+            "example": "Concept"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserAccessStatistic": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "The id of the user that accessed this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "openCount": {
+            "type": "integer",
+            "description": "How many times the user accessed this entity.",
+            "format": "int32",
+            "example": 12
+          },
+          "lastOpened": {
+            "type": "integer",
+            "description": "The unix time of when the entity was last accessed by the user.",
+            "format": "int64",
+            "nullable": true,
+            "example": 1646119800
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserSearchModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id of this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userStats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAccessStatistic"
+            },
+            "description": "The current user's access stats for this entity.",
+            "nullable": true
+          },
+          "indexTime": {
+            "type": "string",
+            "description": "The last time this entity has been indexed.",
+            "format": "date-time"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The user's first name.",
+            "nullable": true,
+            "example": "Carla"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The user's last name.",
+            "nullable": true,
+            "example": "Creative"
+          },
+          "title": {
+            "type": "string",
+            "description": "The user's title.",
+            "nullable": true,
+            "example": "Ms"
+          },
+          "position": {
+            "type": "string",
+            "description": "The user's position.",
+            "nullable": true,
+            "example": "Creative Director"
+          },
+          "language": {
+            "type": "string",
+            "description": "The user's language.",
+            "nullable": true,
+            "example": "de-DE"
+          },
+          "gender": {
+            "type": "string",
+            "description": "The user's gender.",
+            "nullable": true,
+            "example": "Creative"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tags of this user.",
+            "nullable": true,
+            "example": [
+              "Design"
+            ]
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamModel"
+            },
+            "description": "The teams of this user.",
+            "nullable": true
+          },
+          "userContactInfos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactInfoEntity"
+            },
+            "description": "The contact infos of this user.",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isDeactivated": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserSearchModelHit": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The name of the type for this search hit.",
+            "nullable": true,
+            "readOnly": true,
+            "example": "task"
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of this search hit.",
+            "format": "double",
+            "example": 2.9
+          },
+          "entity": {
+            "$ref": "#/components/schemas/UserSearchModel"
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            },
+            "description": "The highlights of this search hit, by property.",
+            "nullable": true,
+            "example": {
+              "description": [
+                "in this creative project"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserSearchModelTypeSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The count of search hits for this type.",
+            "format": "int64",
+            "readOnly": true,
+            "example": 7
+          },
+          "maxScore": {
+            "type": "number",
+            "description": "The score of the best search hit for this type.",
+            "format": "double",
+            "readOnly": true,
+            "example": 1.9
+          },
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserSearchModelHit"
+            },
+            "description": "The results found by this search operation for this type.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasHits": {
+            "type": "boolean",
+            "description": "Whether there are any hits at all, computed property.",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AcceptInvitation": {
         "type": "object",
         "properties": {
@@ -54618,6 +57658,14 @@
     {
       "name": "Autopilot",
       "description": "These endpoints allow you to manage the awork autopilot for projects."
+    },
+    {
+      "name": "Activities",
+      "description": "The activities gives you information about certain operations to entities and their sub-entities."
+    },
+    {
+      "name": "Search",
+      "description": "The search controller provides endpoints to do full-text searching in a dedicated search store.\n    If search data becomes inconsistent or corrupted the reindex endpoints can be used to rebuild it."
     },
     {
       "name": "Invitations",
