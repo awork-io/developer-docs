@@ -10987,7 +10987,7 @@
     "/projects/{projectId}/activities": {
       "get": {
         "tags": [
-          "ProjectActivities"
+          "Activities"
         ],
         "summary": "Returns all activities of the project with the specified id.",
         "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\nThis contains changes to first-level properties of the project, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\nThis does not include activities of sub-entities, like tasks of a project or comments on a task.",
@@ -23920,7 +23920,7 @@
     "/tasks/{taskId}/activities": {
       "get": {
         "tags": [
-          "TaskActivities"
+          "Activities"
         ],
         "summary": "Returns all activities of the task with the specified id.",
         "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\nThis contains changes to first-level properties of the task, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\nThis does not include activities of sub-entities, like tasks of a project or comments on a task.",
