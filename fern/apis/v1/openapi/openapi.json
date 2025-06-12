@@ -14843,8 +14843,8 @@
         "tags": [
           "TaskLists"
         ],
-        "summary": "Returns all task lists of the project with the specified id.",
-        "description": "The permission check in this function is dynamically based on the project name.\r\nIn the cases where the user tries to get the project task lists,\r\nthe user needs read permissions on the project-planning-data feature.\r\nIn cases where the user tries to get the private task lists, permissions are not necessary.",
+        "summary": "Returns all task lists of the entity with the specified id.",
+        "description": "The permission check in this function is dynamically based on the entity name.\r\nIn the cases where the user tries to get the project task lists,\r\nthe user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14892,6 +14892,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -14899,7 +14912,7 @@
           "TaskLists"
         ],
         "summary": "Creates a new task list.",
-        "description": "To create a new project task list, the user needs manage permissions on the project-planning-data feature.\r\nFor a private task list no permissions are required.",
+        "description": "To create a new project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14938,6 +14951,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -14947,7 +14973,7 @@
           "TaskLists"
         ],
         "summary": "Returns the task list with the specified id.",
-        "description": "The permission check in this function is dynamically based on the project name.\r\nIn the cases where the user tries to get the project task lists,\r\nthe user needs read permissions on the project-planning-data feature.\r\nIn cases where the user tries to get a private task list, permissions are not necessary.",
+        "description": "The permission check in this function is dynamically based on the entity name.\r\nIn the cases where the user tries to get the project task lists,\r\nthe user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14981,6 +15007,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -14988,12 +15027,12 @@
           "TaskLists"
         ],
         "summary": "Updates the task list with the specified id.",
-        "description": "To update a project task list, the user needs manage permissions on the project-planning-data feature.\r\nFor a private task list no permissions are required.",
+        "description": "To update a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "The id of the project.",
+            "description": "The id of the entity.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15037,6 +15076,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15046,7 +15098,7 @@
           "TaskLists"
         ],
         "summary": "Adds the tasks to the task list with the specified id.",
-        "description": "Adds the tasks to the task list with the specified id.\r\nTo add a new task to a project task list, the user needs manage permissions on the project-planning-data feature.\r\nFor a private task list no permissions are required.",
+        "description": "Adds the tasks to the task list with the specified id.\r\nTo add a new task to a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15104,6 +15156,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15229,12 +15294,12 @@
           "TaskLists"
         ],
         "summary": "Deletes the task list with the specified id.",
-        "description": "To delete project task list, the user needs manage permissions on the project-planning-data feature.\r\nFor a private task list no permissions are required.",
+        "description": "To delete project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "The id of the project.",
+            "description": "The id of the entity.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15271,6 +15336,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15280,7 +15358,7 @@
           "TaskLists"
         ],
         "summary": "Removes the tasks from the task list with the specified id.",
-        "description": "To remove a task from a project task list, the user needs manage permissions on the project-planning-data feature.\r\nFor a private task list no permissions are required.",
+        "description": "To remove a task from a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15336,6 +15414,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15394,7 +15485,17 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
       }
     },
     "/projects/{projectId}/tasklists/{taskListId}/tasks/{taskId}": {
@@ -15403,7 +15504,7 @@
           "TaskLists"
         ],
         "summary": "Returns the task with the specified id in the specified task list.",
-        "description": "To get a project task from the project task list, the user needs read permissions on the project-planning-data feature\r\nor the current user must be assigned to the task with the specified id.\r\nFor a private task list no permissions are required.",
+        "description": "To get a project task from the project task list, the user needs read permissions on the project-planning-data feature\r\nor the current user must be assigned to the task with the specified id.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15447,6 +15548,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15456,7 +15570,7 @@
           "TaskLists"
         ],
         "summary": "Updates the order of a task in a task list.",
-        "description": "To update the order of tasks in a project task list, the user needs manage permissions on the\r\nproject-planning-data feature.",
+        "description": "To update the order of tasks in a project task list, the user needs manage permissions on the\r\nproject-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15518,6 +15632,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15527,7 +15654,7 @@
           "TaskLists"
         ],
         "summary": "Updates the order of a task list.",
-        "description": "To update the order of project task lists, the user needs manage permissions on the project-planning-data feature.\r\nFor a private task list no permissions are required.",
+        "description": "To update the order of project task lists, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15569,6 +15696,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -20988,13 +21128,14 @@
         "tags": [
           "Search"
         ],
-        "summary": "Matches the entities to a search term and returns the ranked results.",
-        "description": "Matches the entities to a search term and returns the ranked results.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Performs a full-text search across workspace entities.",
+        "description": "This endpoint enables powerful full-text search capabilities across multiple types.\r\nIt returns a ranked list of matching entities based on relevance and respects user permissions.\r\n\r\nThe search functionality includes:\r\n- Cross-entity search across various entity types in the workspace\r\n- Relevance-based scoring and ranking of results\r\n- Respecting user access permissions for all returned results\r\n- Customizable result filtering by entity type and status\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "searchTerm",
             "in": "query",
             "description": "The term to search for. Max. 50 characters. Required.",
+            "required": true,
             "schema": {
               "type": "string"
             }
@@ -21002,7 +21143,7 @@
           {
             "name": "searchTypes",
             "in": "query",
-            "description": "Comma-separated list of types to search for, or 'all'. \r\nOptional. Default: all types.\r\n\r\nValid values are:\r\n<list type=\"bullet\"><item><description>comment</description></item><item><description>company</description></item><item><description>dashboardnote</description></item><item><description>project</description></item><item><description>task</description></item><item><description>timeentry</description></item><item><description>timereport</description></item><item><description>user</description></item><item><description>tasklist</description></item><item><description>file</description></item><item><description>document</description></item></list>",
+            "description": "Comma-separated list of types to search for, or 'all'. \r\nDefault: all types.",
             "schema": {
               "type": "string"
             }
@@ -21010,7 +21151,7 @@
           {
             "name": "top",
             "in": "query",
-            "description": "Count of top results. Optional. Default: 20.",
+            "description": "Count of top results. Default: 20.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -21019,7 +21160,7 @@
           {
             "name": "includeClosedAndStuck",
             "in": "query",
-            "description": "If true, it will add to the results (if the searched entity has that) entities\r\nwhose status is closed, stuck and done. Otherwise, they will be filtered. Optional. Default: true",
+            "description": "If true, the result will include entities where the status is closed, stuck and done.",
             "schema": {
               "type": "boolean",
               "default": true
@@ -39197,6 +39338,13 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "order": {
+            "type": "number",
+            "description": "If it's a project custom field, it's the global order of the custom field definition.\r\nOtherwise, it's the order of the custom field definition within a project template or a project.",
+            "format": "double",
+            "nullable": true,
+            "example": 1
           }
         },
         "additionalProperties": false
@@ -39244,7 +39392,8 @@
           "entity": {
             "minLength": 1,
             "enum": [
-              "task"
+              "task",
+              "project"
             ],
             "type": "string",
             "description": "The entity the custom field definition can be linked to.",
@@ -39283,6 +39432,12 @@
             "type": "string",
             "description": "The type of the custom field definition. When updating a custom field definition, only the following changes are allowed: 'date' ↔ 'datetime', 'select' ↔ 'coloredSelect'.",
             "example": "text"
+          },
+          "order": {
+            "type": "number",
+            "description": "The global (workspace-level) order of the custom field definition.\r\nOnly project custom field definitions have a global order.",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -39349,6 +39504,13 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "order": {
+            "type": "number",
+            "description": "If it's a project custom field, it's the global order of the custom field definition.\r\nOtherwise, it's the order of the custom field definition within a project template or a project.",
+            "format": "double",
+            "nullable": true,
+            "example": 1
           },
           "selectionOptions": {
             "type": "array",
@@ -39903,13 +40065,15 @@
         "additionalProperties": false
       },
       "DocumentContentForm": {
+        "required": [
+          "content"
+        ],
         "type": "object",
         "properties": {
           "content": {
             "type": "string",
             "description": "The content of the document.",
-            "format": "binary",
-            "nullable": true
+            "format": "binary"
           }
         },
         "additionalProperties": false
@@ -40295,18 +40459,6 @@
         },
         "additionalProperties": false
       },
-      "DocumentRestoreVersionForm": {
-        "type": "object",
-        "properties": {
-          "documentVersionToRestoreId": {
-            "type": "string",
-            "description": "The id of the document version to restore.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
       "DocumentSpaceForm": {
         "type": "object",
         "properties": {
@@ -40478,6 +40630,46 @@
           },
           "inheritedDocumentToTeam": {
             "$ref": "#/components/schemas/PermissionInheritedDocumentToTeam"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentVersionModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the document version.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "documentId": {
+            "type": "string",
+            "description": "The id of the referenced document.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this document version was created.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this document version.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this document version was last modified.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this document version.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -43350,6 +43542,14 @@
             "format": "int32",
             "nullable": true,
             "example": 72000
+          },
+          "customFields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomField"
+            },
+            "description": "Custom fields of the project.",
+            "nullable": true
           },
           "resourceVersion": {
             "type": "integer",
@@ -46507,6 +46707,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 1000,
             "minLength": 1,
             "type": "string",
             "description": "The name of the list.",
@@ -46551,6 +46752,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 1000,
             "minLength": 1,
             "type": "string",
             "description": "The name of the list.",
@@ -46578,6 +46780,7 @@
         "type": "object",
         "properties": {
           "name": {
+            "maxLength": 1000,
             "minLength": 1,
             "type": "string",
             "description": "The name of the list.",
@@ -57658,10 +57861,6 @@
     {
       "name": "Autopilot",
       "description": "These endpoints allow you to manage the awork autopilot for projects."
-    },
-    {
-      "name": "Activities",
-      "description": "The activities gives you information about certain operations to entities and their sub-entities."
     },
     {
       "name": "Search",
