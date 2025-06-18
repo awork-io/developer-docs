@@ -24,7 +24,7 @@
           "AbsenceRegions"
         ],
         "summary": "Gets all the absence regions.",
-        "description": "Gets all the absence regions of the workspace.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\n            Any other user will only see themselves assigned to the regions.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Gets all the absence regions of the workspace.\r\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\r\n            Admin will see all users assigned to all regions.\r\n            Planner users with User Team Filter on (UserTeamsData) will only see same team users assigned to the regions.\r\n            Any other user will only see themselves assigned to the regions.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -59,7 +59,7 @@
           "AbsenceRegions"
         ],
         "summary": "Creates a new absence region.",
-        "description": "Creates a new absence region.\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Creates a new absence region.\r\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\r\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to create the absence region.",
           "content": {
@@ -107,7 +107,7 @@
           "AbsenceRegions"
         ],
         "summary": "List of supported countries for absence regions.",
-        "description": "Returns a list of supported countries for absence regions.\n            A country is defined by an ISO 3166-1 alpha-2 country code.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns a list of supported countries for absence regions.\r\n            A country is defined by an ISO 3166-1 alpha-2 country code.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -144,7 +144,7 @@
           "AbsenceRegions"
         ],
         "summary": "List of locations for a country.",
-        "description": "Returns a list of all the locations of a country, expressed as ISO 3166-2 codes.\n            It will include the regions and subregions (sublocations) of the country if available.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns a list of all the locations of a country, expressed as ISO 3166-2 codes.\r\n            It will include the regions and subregions (sublocations) of the country if available.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "countryCode",
@@ -192,7 +192,7 @@
           "AbsenceRegions"
         ],
         "summary": "Assign/remove current user to/from an absence region.",
-        "description": "Assigns or removes the current user to/from an absence region.\n            A user can be assigned to only one absence region.\n            As such, if a user is already assigned to an absence region, he will be removed from the previous one and assigned to the new one.\n            Providing a null region id will remove the user from any absence region.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Assigns or removes the current user to/from an absence region.\r\n            A user can be assigned to only one absence region.\r\n            As such, if a user is already assigned to an absence region, he will be removed from the previous one and assigned to the new one.\r\n            Providing a null region id will remove the user from any absence region.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model assign users to the region.",
           "content": {
@@ -229,7 +229,7 @@
           "AbsenceRegions"
         ],
         "summary": "Assign/remove users to an absence region.",
-        "description": "Only an admin or a user with UserPlanningData(write) permissions can assign/remove any user to an absence region.\n            A user can be assigned to only one absence region.\n            As such, if a user is already assigned to an absence region, he will be removed from the previous one and assigned to the new one.\n            Providing an empty list of user ids will remove all users from the absence region.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Only an admin or a user with UserPlanningData(write) permissions can assign/remove any user to an absence region.\r\n            A user can be assigned to only one absence region.\r\n            As such, if a user is already assigned to an absence region, he will be removed from the previous one and assigned to the new one.\r\n            Providing an empty list of user ids will remove all users from the absence region.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model assign/remove users to/from the region.",
           "content": {
@@ -267,7 +267,7 @@
           "AbsenceRegions"
         ],
         "summary": "Deletes an absence region.",
-        "description": "Deletes an absence region by id, unassigning all users from the absence region.\n            If there are workspace absences related to the region, they will be deleted as well.\n            If the absence region is the default absence region, it will simply be deleted. (no default absence region).\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Deletes an absence region by id, unassigning all users from the absence region.\r\n            If there are workspace absences related to the region, they will be deleted as well.\r\n            If the absence region is the default absence region, it will simply be deleted. (no default absence region).\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -305,7 +305,7 @@
           "AbsenceRegions"
         ],
         "summary": "Get an absence region by id.",
-        "description": "Get an absence region by id.\n            It will include the details of the public holidays for the country and location.\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\n            Admin will see all users assigned to all regions.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Get an absence region by id.\r\n            It will include the details of the public holidays for the country and location.\r\n            Depending on the user's permissions, the visibility of users assigned to the regions may vary.\r\n            Admin will see all users assigned to all regions.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -349,7 +349,7 @@
           "AbsenceRegions"
         ],
         "summary": "Updates an absence region.",
-        "description": "Updates an absence region.\n            It is possible to update the name, country code, location code, and default status of an absence region.\n            The name of the absence region must be unique.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Updates an absence region.\r\n            It is possible to update the name, country code, location code, and default status of an absence region.\r\n            The name of the absence region must be unique.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -2923,7 +2923,7 @@
           "Companies"
         ],
         "summary": "Deletes the company with the specified id.",
-        "description": "There are several ways to delete a company.\n            Look into the property description of the post model to get detailed information.\n            <br />If the post is executed without a model, the default process 'delete-only-company' will be executed.\n            <br />For the operation 'delete-all-without-timeentries' project-master-data write permissions are required on all projects of the company.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
+        "description": "There are several ways to delete a company.\r\n            Look into the property description of the post model to get detailed information.\r\n            <br />If the post is executed without a model, the default process 'delete-only-company' will be executed.\r\n            <br />For the operation 'delete-all-without-timeentries' project-master-data write permissions are required on all projects of the company.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -4011,7 +4011,7 @@
           "CustomFields"
         ],
         "summary": "Returns all custom field definitions.",
-        "description": "The 'linkedProjectIds' property will only be included when the 'includeLinkedProjectIds' parameter is set to 'true'.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The 'linkedProjectIds' are the project Ids that are linked to the custom field definition.\r\n                The 'linkedProjectIds' property will only be included when the 'includeLinkedProjectIds' parameter is set to 'true'.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "includeLinkedProjectIds",
@@ -4429,7 +4429,7 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Adds a new document and also creates an initial version of its content.",
+        "summary": "Creates a new document.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "content": {
@@ -4473,7 +4473,7 @@
           "Documents"
         ],
         "summary": "Restores the document with the specified id from the trash.",
-        "description": "Please note that, after a successful response, this method will trigger a number of events that will\n            eventually update/recreate the document and the related entities such as document versions or its content.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
+        "description": "Please note that, after a successful response, this method will trigger a number of events that will\r\n            eventually update/recreate the document and the related entities such as document versions or its content.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4521,7 +4521,7 @@
           "Documents"
         ],
         "summary": "Deletes a document with the specified id, moving it to the trash section.",
-        "description": "The document itself is deleted synchronously, while its children and related entities\n            are deleted asynchronously in the background if <paramref name=\"alsoDeleteChildren\" /> is true.\n            If <paramref name=\"alsoDeleteChildren\" /> is false, the children's parent references are updated to point to the deleted document's parent.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
+        "description": "The document itself is deleted synchronously, while its children and related entities\r\n            are deleted asynchronously in the background if <paramref name=\"alsoDeleteChildren\" /> is true.\r\n            If <paramref name=\"alsoDeleteChildren\" /> is false, the children's parent references are updated to point to the deleted document's parent.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4567,7 +4567,7 @@
           "Documents"
         ],
         "summary": "Returns the document with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4611,7 +4611,7 @@
           "Documents"
         ],
         "summary": "Updates the document with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -4988,8 +4988,8 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Returns the content of the current version of an the document with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
+        "summary": "Returns the content of the current version of the document with the specified id.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -5042,7 +5042,7 @@
           "Documents"
         ],
         "summary": "Updates the content of the document with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -5097,7 +5097,7 @@
           "Documents"
         ],
         "summary": "Adds a list of document contributors to a document with the specified id.",
-        "description": "Recalculation of permissions for related entities considering the new document contributors\n            will be done in the background asynchronously.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Adding document contributors will affect their access to the document.\n            Specifically the access of a particular user.</Info>",
+        "description": "Recalculation of permissions for related entities considering the new document contributors\r\n            will be done in the background asynchronously.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Adding document contributors will affect their access to the document.\r\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -5159,7 +5159,7 @@
           "Documents"
         ],
         "summary": "Deletes the document contributor with the specified id.",
-        "description": "Deletes the specific document contributor from a document. This operation cannot be performed on inherited document contributors, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document contributor.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Deleting a document contributor will affect their access to the document.\n            Specifically the access of a particular user.</Info>",
+        "description": "Deletes the specific document contributor from a document. This operation cannot be performed on inherited document contributors, only explicit ones.\r\n            There will be recalculation of permissions for related entities considering the deleted document contributor.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Deleting a document contributor will affect their access to the document.\r\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -5216,7 +5216,7 @@
           "Documents"
         ],
         "summary": "Updates the document contributor with the specified id.",
-        "description": "Updates the specific document contributor of a document.\n            There will be recalculation of permissions for related entities considering the updated document contributor.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Updating a document contributor will affect their access to the document.\n            Specifically the access of a particular user.</Info>",
+        "description": "Updates the specific document contributor of a document.\r\n            There will be recalculation of permissions for related entities considering the updated document contributor.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Updating a document contributor will affect their access to the document.\r\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -5282,7 +5282,7 @@
           "Documents"
         ],
         "summary": "Duplicates a document along its content, permissions, and children and descendants (document tree).",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
         "parameters": [
           {
             "name": "documentId",
@@ -6072,7 +6072,7 @@
           "Documents"
         ],
         "summary": "Adds a list of document teams to a document with the specified id.",
-        "description": "Recalculation of permissions for related entities considering the new document teams\n            will be done in the background asynchronously.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Adding document teams will affect their access to the document.\n            Specifically the access of a particular team.</Info>",
+        "description": "Recalculation of permissions for related entities considering the new document teams\r\n            will be done in the background asynchronously.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Adding document teams will affect their access to the document.\r\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -6134,7 +6134,7 @@
           "Documents"
         ],
         "summary": "Deletes the document team with the specified id.",
-        "description": "Deletes the specific document team from a document. This operation cannot be performed on inherited document teams, only explicit ones.\n            There will be recalculation of permissions for related entities considering the deleted document team.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Deleting a document team will affect their access to the document.\n            Specifically the access of a particular team.</Info>",
+        "description": "Deletes the specific document team from a document. This operation cannot be performed on inherited document teams, only explicit ones.\r\n            There will be recalculation of permissions for related entities considering the deleted document team.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Deleting a document team will affect their access to the document.\r\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -6181,7 +6181,7 @@
           "Documents"
         ],
         "summary": "Updates the document team with the specified id.",
-        "description": "Updates the specific document team of a document.\n            There will be recalculation of permissions for related entities considering the updated document team.\n            <Check>\n  <b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Updating a document team will affect their access to the document.\n            Specifically the access of a particular team.</Info>",
+        "description": "Updates the specific document team of a document.\r\n            There will be recalculation of permissions for related entities considering the updated document team.\r\n            <Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check><Info>Updating a document team will affect their access to the document.\r\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentId",
@@ -6295,8 +6295,8 @@
         "tags": [
           "DocumentSpaces"
         ],
-        "summary": "Adds a new document space.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check>",
+        "summary": "Creates a new document space.",
+        "description": "<Check><b>Required Permissions</b>: The user has to be an admin.</Check>",
         "requestBody": {
           "description": "The document space to create.",
           "content": {
@@ -6340,7 +6340,7 @@
           "DocumentSpaces"
         ],
         "summary": "Deletes the document space with the specified id.",
-        "description": "Corresponding documents and their related entities will be unrecoverably deleted in the background asynchronously.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check>",
+        "description": "Corresponding documents and their related entities will be unrecoverably deleted in the background asynchronously.\r\n            <Check><b>Required Permissions</b>: The user has to be an admin.</Check>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6384,7 +6384,7 @@
           "DocumentSpaces"
         ],
         "summary": "Returns the document space with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has at least `read` permissions for this document space.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `read` permissions for this document space.</Check>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6428,7 +6428,7 @@
           "DocumentSpaces"
         ],
         "summary": "Updates the document space with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check>\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Professional plan or higher.</Info>",
+        "description": "<Check><b>Required Permissions</b>: The user has to be an admin.</Check>\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Professional plan or higher.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6487,7 +6487,7 @@
           "DocumentSpaces"
         ],
         "summary": "Adds a list of document space contributors to a document space with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Adding document space contributors will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.</Info>",
+        "description": "<Check><b>Required Permissions</b>: The user has to be an admin.</Check><Info>Adding document space contributors will affect their access to the document space and documents within that space.\r\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6546,7 +6546,7 @@
           "DocumentSpaces"
         ],
         "summary": "Deletes the document space contributor with the specified id.",
-        "description": "Deletes the specific document space contributor from a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Deleting a document space contributor will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular user.</Info>",
+        "description": "Deletes the specific document space contributor from a document space.\r\n            <Check><b>Required Permissions</b>: The user has to be an admin.</Check><Info>Deleting a document space contributor will affect their access to the document space and the documents within that space.\r\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6593,7 +6593,7 @@
           "DocumentSpaces"
         ],
         "summary": "Updates the document space contributor with the specified id.",
-        "description": "Updates the specific document space contributor of a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Updating a document space contributor will affect their access to the document space and documents within that space.\n            Specifically the access of a particular user.</Info>",
+        "description": "Updates the specific document space contributor of a document space.\r\n            <Check><b>Required Permissions</b>: The user has to be an admin.</Check><Info>Updating a document space contributor will affect their access to the document space and documents within that space.\r\n            Specifically the access of a particular user.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6781,7 +6781,7 @@
           "DocumentSpaces"
         ],
         "summary": "Adds a list of document space teams to a document space with the specified id.",
-        "description": "<Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Adding document space teams will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.</Info>",
+        "description": "<Check><b>Required Permissions</b>: The user has to be an admin.</Check><Info>Adding document space teams will affect their access to the document space and documents within that space.\r\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6840,7 +6840,7 @@
           "DocumentSpaces"
         ],
         "summary": "Deletes the document space team with the specified id.",
-        "description": "Deletes the specific document space team from a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Deleting a document space team will affect their access to the document space and the documents within that space.\n            Specifically the access of a particular team.</Info>",
+        "description": "Deletes the specific document space team from a document space.\r\n            <Check><b>Required Permissions</b>: The user has to be an admin.</Check><Info>Deleting a document space team will affect their access to the document space and the documents within that space.\r\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -6887,7 +6887,7 @@
           "DocumentSpaces"
         ],
         "summary": "Updates the document space team with the specified id.",
-        "description": "Updates the specific document space team of a document space.\n            <Check>\n  <b>Required Permissions</b>: The user has to be an admin.</Check><Info>Updating a document space team will affect their access to the document space and documents within that space.\n            Specifically the access of a particular team.</Info>",
+        "description": "Updates the specific document space team of a document space.\r\n            <Check><b>Required Permissions</b>: The user has to be an admin.</Check><Info>Updating a document space team will affect their access to the document space and documents within that space.\r\n            Specifically the access of a particular team.</Info>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -9162,7 +9162,7 @@
           "Documents"
         ],
         "summary": "Returns all documents that were shared with the requesting user.",
-        "description": "This includes documents where the user has been explicitly granted permissions,\n            is part of a team with read permissions, or is part of the workspace with read permissions.\n            Excludes documents where the user already has permissions from the space they're in,\n            the project they're in, or when they're the user's own private documents.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "This includes documents where the user has been explicitly granted permissions,\r\n            is part of a team with read permissions, or is part of the workspace with read permissions.\r\n            Excludes documents where the user already has permissions from the space they're in,\r\n            the project they're in, or when they're the user's own private documents.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -9646,7 +9646,7 @@
           "TimeEntries"
         ],
         "summary": "Returns the last time entry of a specified user.",
-        "description": "The last time entry is always the last one that was started.\n            Time entries which are started in the future are ignored.\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "description": "The last time entry is always the last one that was started.\r\n            Time entries which are started in the future are ignored.\r\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\r\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -9841,7 +9841,7 @@
           "TimeTracking"
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -12654,7 +12654,7 @@
         "tags": [
           "CustomFields"
         ],
-        "summary": "Returns all custom field definitions for a project.",
+        "summary": "Returns all custom field definitions linked to the project.",
         "description": "Permissions: The user either needs to have the project master data read permission or needs to have access to at least one task in the project.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
@@ -12700,7 +12700,7 @@
         "tags": [
           "CustomFields"
         ],
-        "summary": "Updates the order of a custom field definition for a project.",
+        "summary": "Updates the order of a custom field definition linked to a project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-master-data:write` permissions.</Check>",
         "parameters": [
           {
@@ -12868,7 +12868,7 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Endpoint to get all documents that belong to a specific project.",
+        "summary": "Returns all documents that belong to the project with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
@@ -14236,7 +14236,7 @@
           "ProjectTasks"
         ],
         "summary": "Changes the project of the task with the specified id.",
-        "description": "Changes the project of the task with the specified id.\n            This call also moves all subtasks of the task to the new project.\n            This also changes the tracked time sum of the new project and the previous project.\n            The related time entries of this task will also be moved to the new project.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Changes the project of the task with the specified id.\r\n            This call also moves all subtasks of the task to the new project.\r\n            This also changes the tracked time sum of the new project and the previous project.\r\n            The related time entries of this task will also be moved to the new project.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14536,7 +14536,7 @@
           "Retainers"
         ],
         "summary": "Endpoint to create a new retainer for a project.",
-        "description": "As soon as a retainer is created for a project, the project will be marked as a retainer project.\n            Based on the Start and End dates of the retainer, the retainer budgets will be created automatically.\n            Retainers cannot overlap. There can only be one active retainer per project at a time (no end date and/or including the current date).\n            \n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "As soon as a retainer is created for a project, the project will be marked as a retainer project.\r\n            Based on the Start and End dates of the retainer, the retainer budgets will be created automatically.\r\n            Retainers cannot overlap. There can only be one active retainer per project at a time (no end date and/or including the current date).\r\n            \r\n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14693,7 +14693,7 @@
           "Retainers"
         ],
         "summary": "Endpoint to update the retainer for a project.",
-        "description": "The end date of the retainer can only be updated via the POST /setDates endpoint.\n            The start date, the retainer period, and the timezone can not be updated. Delete the retainer and create a new one instead.\n            \n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The end date of the retainer can only be updated via the POST /setDates endpoint.\r\n            The start date, the retainer period, and the timezone can not be updated. Delete the retainer and create a new one instead.\r\n            \r\n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15178,7 +15178,7 @@
           "TaskLists"
         ],
         "summary": "Changes the project of the task list with the specified id.",
-        "description": "This endpoint also moves all tasks and time entries to the new project.\n            This will also change the tracked time sum of the old and new projects.\n            The task status mapping will move all tasks of a certain status to the new provided status on the mapping.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "This endpoint also moves all tasks and time entries to the new project.\r\n            This will also change the tracked time sum of the old and new projects.\r\n            The task status mapping will move all tasks of a certain status to the new provided status on the mapping.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15240,7 +15240,7 @@
           "TaskLists"
         ],
         "summary": "Creates a copy of the task list.",
-        "description": "A new task list will be created with the same name as the original one.\n            All tasks and subtasks will also be copied in this operation.\n            Comments, files and activity logs are not copied.\n            To copy a task list, the user needs to have 'ProjectPlanning'\n            permissions in general or in the project the task list belongs to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "A new task list will be created with the same name as the original one.\r\n            All tasks and subtasks will also be copied in this operation.\r\n            Comments, files and activity logs are not copied.\r\n            To copy a task list, the user needs to have 'ProjectPlanning'\r\n            permissions in general or in the project the task list belongs to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -16027,7 +16027,7 @@
           "TimeEntries"
         ],
         "summary": "Returns all time entries of a specified project.",
-        "description": "The projectName parameter defines the main project of which to fetch the time entries.\n            Supported types are: 'projects' and 'tasks'.",
+        "description": "The projectName parameter defines the main project of which to fetch the time entries.\r\n            Supported types are: 'projects' and 'tasks'.",
         "parameters": [
           {
             "name": "projectId",
@@ -16074,7 +16074,7 @@
           "ProjectTasks"
         ],
         "summary": "Returns the type of work for the project with the specified id.\n            .",
-        "description": "The project can be a connected or a workspace project.\n            User must have at least 'read' permissions on the 'project-planning-data' feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The project can be a connected or a workspace project.\r\n            User must have at least 'read' permissions on the 'project-planning-data' feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -17649,7 +17649,7 @@
         "tags": [
           "CustomFields"
         ],
-        "summary": "Returns all custom field definitions for a project template.",
+        "summary": "Returns all custom field definitions linked to a project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
@@ -17669,7 +17669,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
+                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptions"
                 }
               }
             }
@@ -18184,6 +18184,62 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-manage-config": "write"
+        }
+      }
+    },
+    "/projecttemplates/{projectTemplateId}/setcustomfields": {
+      "post": {
+        "tags": [
+          "CustomFields"
+        ],
+        "summary": "Sets the custom fields for a project template.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "parameters": [
+          {
+            "name": "projectTemplateId",
+            "in": "path",
+            "description": "The id of the project template to set the custom fields for.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model containing the details for setting the custom fields for a project template.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CustomFieldPostForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -20369,7 +20425,7 @@
           "Roles"
         ],
         "summary": "Moves a user from their current role to another role.",
-        "description": "Moves a user from their current role to another role.\n            At least one user needs to remain in the admin role.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "description": "Moves a user from their current role to another role.\r\n            At least one user needs to remain in the admin role.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to change the project of the task.",
           "content": {
@@ -23107,7 +23163,7 @@
           "Tasks"
         ],
         "summary": "Creates a new task.",
-        "description": "Can be a project task or a user's private task.\n            To create a task, the user needs to be the assignee of the task or 'ProjectPlanning'\n            permissions in general or in the project the task is related to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Can be a project task or a user's private task.\r\n            To create a task, the user needs to be the assignee of the task or 'ProjectPlanning'\r\n            permissions in general or in the project the task is related to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model used to create a task.",
           "content": {
@@ -23392,7 +23448,7 @@
           "Tasks"
         ],
         "summary": "Changes the parent task and the order of subtasks.",
-        "description": "Changes parent task and order of subtasks. If the parent task of a subtask changed, its lists, base type and entity\n            will change to match the parent ones.\n            It is not possible to change a task to subtask if the task already has subtasks.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Changes parent task and order of subtasks. If the parent task of a subtask changed, its lists, base type and entity\r\n            will change to match the parent ones.\r\n            It is not possible to change a task to subtask if the task already has subtasks.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model used to change a subtask.",
           "content": {
@@ -23444,7 +23500,7 @@
           "Tasks"
         ],
         "summary": "Convert subtasks to a parent task.",
-        "description": "Convert subtasks to a parent task. If list ids are not provided it will keep the same lists as the old parent task,\n            placing the task as last item in the lists.\n            If multiple list ids are provided per task, the lists will be overwritten with the lists provided. In this case, if an\n            order is not provided, it will be put as the last item in the list.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Convert subtasks to a parent task. If list ids are not provided it will keep the same lists as the old parent task,\r\n            placing the task as last item in the lists.\r\n            If multiple list ids are provided per task, the lists will be overwritten with the lists provided. In this case, if an\r\n            order is not provided, it will be put as the last item in the list.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model used to change a subtask.",
           "content": {
@@ -23976,7 +24032,7 @@
           "Tasks"
         ],
         "summary": "Returns the task with the specified id.",
-        "description": "The required permissions depend on the base type of the task.\n            If the task is a project task, 'read' permissions on the 'project-planning-data' feature are required.\n            For a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The required permissions depend on the base type of the task.\r\n            If the task is a project task, 'read' permissions on the 'project-planning-data' feature are required.\r\n            For a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -24020,7 +24076,7 @@
           "Tasks"
         ],
         "summary": "Updates the task with the specified id.",
-        "description": "To update the task, the user needs to be the assignee of the task or 'ProjectPlanning'\n            permissions in general or in the project the task is related to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "To update the task, the user needs to be the assignee of the task or 'ProjectPlanning'\r\n            permissions in general or in the project the task is related to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -24764,7 +24820,7 @@
           "Tasks"
         ],
         "summary": "Creates a copy of the specified task.",
-        "description": "Comments, files and activity logs are not copied.\n            To copy a task, the user needs to be the assignee of the task or 'ProjectPlanning'\n            permissions in general or in the project the task is related to.\n            If the task is a parent task, it will also copy its subtasks.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Comments, files and activity logs are not copied.\r\n            To copy a task, the user needs to be the assignee of the task or 'ProjectPlanning'\r\n            permissions in general or in the project the task is related to.\r\n            If the task is a parent task, it will also copy its subtasks.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -26099,7 +26155,7 @@
           "TimeEntries"
         ],
         "summary": "Returns all time entries of a specified task.",
-        "description": "The taskName parameter defines the main task of which to fetch the time entries.\n            Supported types are: 'projects' and 'tasks'.",
+        "description": "The taskName parameter defines the main task of which to fetch the time entries.\r\n            Supported types are: 'projects' and 'tasks'.",
         "parameters": [
           {
             "name": "taskId",
@@ -26289,7 +26345,7 @@
           "TaskSchedules"
         ],
         "summary": "Creates task schedules from a task by id.",
-        "description": "Creates task schedules from a task by id. The task must have start and due date and at least one assignee.\n            If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees\n            by setting the\n            'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Creates task schedules from a task by id. The task must have start and due date and at least one assignee.\r\n            If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees\r\n            by setting the\r\n            'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -29061,7 +29117,7 @@
           "TimeEntries"
         ],
         "summary": "Returns all time entries.",
-        "description": "Returns all time entries.\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns all time entries.\r\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\r\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "searchReindex",
@@ -29118,7 +29174,7 @@
           "TimeEntries"
         ],
         "summary": "Creates a new time entry.",
-        "description": "Creates a new time entry.\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Creates a new time entry.\r\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The form to create a time entry.",
           "content": {
@@ -29162,7 +29218,7 @@
           "TimeEntries"
         ],
         "summary": "Edits multiple time entries using the specified operation.",
-        "description": "The user is only allowed to edit time entries they have permissions for.\n            Returns MultiStatus. Includes the list of successfully changed, not found, unauthorized, and invalid time entry ids.\n            Returns BadRequest if the validation of the form fails, f.e. the new type of work cannot be found.\n            \n            Supported Operations:\n            delete: Deletes all time entries. Only admins can delete already billed time entries.\n            setTypeOfWork: Changes the type of work for a list of time entries. TODO: check if only admins should be able to change\n            for billed.\n            setIsBillable: Changes the billability for a list of time entries. Already billed time entries can only be changed to\n            being unbillable by admins. In this case, the IsBilled flag is also set to false.\n            setIsBilled: Changes the billing status for a list of time entries. Only admins can change the billing status back to\n            unbilled for already billed time entries.\n            setProject: Changes the project for a list of time entries. Only admins can change the project for already billed time\n            entries. Setting the project unsets the previous project and task.\n            setTask: Changes the task for a list of time entries. Only admins can change the task for already billed time entries.\n            Setting the task automatically sets the project if that task is a project task.\n            setUser: Changes the user for a list of time entries. Only admins can change the user for already billed time entries.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The user is only allowed to edit time entries they have permissions for.\r\n            Returns MultiStatus. Includes the list of successfully changed, not found, unauthorized, and invalid time entry ids.\r\n            Returns BadRequest if the validation of the form fails, f.e. the new type of work cannot be found.\r\n            \r\n            Supported Operations:\r\n            delete: Deletes all time entries. Only admins can delete already billed time entries.\r\n            setTypeOfWork: Changes the type of work for a list of time entries. TODO: check if only admins should be able to change\r\n            for billed.\r\n            setIsBillable: Changes the billability for a list of time entries. Already billed time entries can only be changed to\r\n            being unbillable by admins. In this case, the IsBilled flag is also set to false.\r\n            setIsBilled: Changes the billing status for a list of time entries. Only admins can change the billing status back to\r\n            unbilled for already billed time entries.\r\n            setProject: Changes the project for a list of time entries. Only admins can change the project for already billed time\r\n            entries. Setting the project unsets the previous project and task.\r\n            setTask: Changes the task for a list of time entries. Only admins can change the task for already billed time entries.\r\n            Setting the task automatically sets the project if that task is a project task.\r\n            setUser: Changes the user for a list of time entries. Only admins can change the user for already billed time entries.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "operation",
@@ -29544,7 +29600,7 @@
           "TimeEntries"
         ],
         "summary": "Deletes the time entry with the specified id.",
-        "description": "Deletes the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Deletes the time entry with the specified id.\r\n            Depending on the time entry, the calling users has to have several permissions to delete the time entry.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -29625,7 +29681,7 @@
           "TimeEntries"
         ],
         "summary": "Updates the time entry with the specified id.",
-        "description": "Updates the time entry with the specified id.\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\n            No permissions are required if the calling user is owner of this time entry.\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\n            permissions\n            on the 'project-timetracking' feature are necessary.\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\n            'project-planning-data' if it is a project task.\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\n            Following combination of times and duration are allowed for already completed time entries:\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\n            - start time (local or utc) and duration\n            - end time (local or utc) and duration\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Updates the time entry with the specified id.\r\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\r\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\r\n            Following combination of times and duration are allowed for already completed time entries:\r\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\r\n            - start time (local or utc) and duration\r\n            - end time (local or utc) and duration\r\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -30453,7 +30509,7 @@
           "Workload"
         ],
         "summary": "Returns the users' workloads per day.",
-        "description": "Returns the users' workloads per day for projects, tasks, task schedules and calendar events\n            that have an overlap with the interval specified by intervalStart and intervalEnd.\n            Takes into consideration weekly availability, absences, user capacity, planned efforts, as well as project budget.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:read` permissions.</Check>",
+        "description": "Returns the users' workloads per day for projects, tasks, task schedules and calendar events\r\n            that have an overlap with the interval specified by intervalStart and intervalEnd.\r\n            Takes into consideration weekly availability, absences, user capacity, planned efforts, as well as project budget.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:read` permissions.</Check>",
         "parameters": [
           {
             "name": "userIds",
@@ -33094,7 +33150,7 @@
           "TimeEntries"
         ],
         "summary": "Returns the last time entry of a specified user.",
-        "description": "The last time entry is always the last one that was started.\n            Time entries which are started in the future are ignored.\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "description": "The last time entry is always the last one that was started.\r\n            Time entries which are started in the future are ignored.\r\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\r\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -33293,7 +33349,7 @@
           "TimeTracking"
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
+        "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -33823,7 +33879,7 @@
           "WorkspaceAbsences"
         ],
         "summary": "Creates a new workspace absence.",
-        "description": "Creates a new workspace absence.\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "Creates a new workspace absence.\r\n            A workspace absence is a kind of absence that is applied to all users in a workspace.\r\n            It can be used to define special holidays (e.g: company offsite) that apply to all users in a workspace.\r\n            It can be limited to a specific absence region, in which case only users in that region will be affected.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to create the workspace absence.",
           "content": {
@@ -39222,6 +39278,10 @@
             "type": "boolean",
             "description": "Imports the project tasks, task lists and task dependencies."
           },
+          "importProjectCustomFieldValues": {
+            "type": "boolean",
+            "description": "Imports the project custom field values."
+          },
           "referenceDate": {
             "type": "string",
             "description": "If provided, it will set the start/end dates of the project and tasks to be relative to this date.\r\nIf start or end dates of project/tasks are not available then no relative dates will be set.",
@@ -39447,6 +39507,87 @@
             "type": "number",
             "description": "The global (workspace-level) order of the custom field definition.\r\nOnly project custom field definitions have a global order.",
             "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomFieldDefinitionWithSelectionOptions": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the custom field definition.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the custom field definition.",
+            "nullable": true,
+            "example": "Ticket-Number"
+          },
+          "entity": {
+            "enum": [
+              "task"
+            ],
+            "type": "string",
+            "description": "The entity the custom field definition can be linked to.",
+            "example": "task"
+          },
+          "type": {
+            "enum": [
+              "text",
+              "number",
+              "date",
+              "datetime",
+              "select",
+              "coloredSelect",
+              "link",
+              "boolean",
+              "user"
+            ],
+            "type": "string",
+            "description": "The type of the custom field definition.",
+            "example": "text"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-10T16:25:09.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-10T18:55:00.500Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "order": {
+            "type": "number",
+            "description": "If it's a project custom field, it's the global order of the custom field definition.\r\nOtherwise, it's the order of the custom field definition within a project template or a project.",
+            "format": "double",
+            "nullable": true,
+            "example": 1
+          },
+          "selectionOptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomFieldSelectionOption"
+            },
+            "description": "The selection options for this custom field definition.",
             "nullable": true
           }
         },
@@ -57686,7 +57827,7 @@
     },
     {
       "name": "CustomFields",
-      "description": "Custom fields are used to extend tasks with additional information.\n        They can be used to store additional information. Custom fields definitions can be linked to project templates and to projects."
+      "description": "Custom fields are used to extend tasks and projects with additional information.\n        They can be used to store additional information. Those are the shared endpoints to work with custom field definitions."
     },
     {
       "name": "Dashboards",
