@@ -6241,6 +6241,111 @@
         }
       }
     },
+    "/documents/{documentId}/versions": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Returns the document versions of the document with the specified id.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `read` permissions for this document.</Check>",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentVersionModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/documents/{documentId}/versions/{documentVersionId}/restore": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Restores a previous version of a document.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `manage` permissions for this document.</Check>\r\n            Restores the specified document version as the current version of the document. This created a new document version with the content of the specified version.",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "documentVersionId",
+            "in": "path",
+            "description": "The document version id to restore.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentVersionModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/documentspaces": {
       "get": {
         "tags": [
@@ -35032,6 +35137,77 @@
           }
         }
       }
+    },
+    "/{entityName}/{entityId}/setcontent": {
+      "post": {
+        "tags": [
+          "LiveEditing"
+        ],
+        "summary": "Updates a live editing entity with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "entityName",
+            "in": "path",
+            "description": "The name of the entity. Can be 'projects', 'tasks', or 'documents'.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            },
+            "example": "tasks"
+          },
+          {
+            "name": "entityId",
+            "in": "path",
+            "description": "The id of the entity.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "aw-internal-cluster-request",
+            "in": "header",
+            "description": "Marks this request as a cluster internal request. Only allowed by Hellfire calls.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "true"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The update request containing the content.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveEditingUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        },
+        "x-cluster-internal": "true"
+      }
     }
   },
   "components": {
@@ -41841,6 +42017,20 @@
             "description": "The order of the task in the list.",
             "format": "double",
             "example": 3
+          }
+        },
+        "additionalProperties": false
+      },
+      "LiveEditingUpdateRequest": {
+        "required": [
+          "content"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The content to update. For tasks and projects, this is the description. For documents, this is the content."
           }
         },
         "additionalProperties": false
@@ -49060,7 +49250,7 @@
             "items": {
               "type": "string"
             },
-            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\".",
+            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\",\r\n\"plannedDuration\".",
             "nullable": true,
             "example": [
               "duration",
@@ -49318,7 +49508,7 @@
             "items": {
               "type": "string"
             },
-            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\".",
+            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\",\r\n\"plannedDuration\".",
             "nullable": true,
             "example": [
               "duration",
@@ -57840,6 +58030,10 @@
     {
       "name": "DocumentSpaces",
       "description": "The document spaces endpoints allow you to create and manage document spaces and related entities such as contributors or connected teams."
+    },
+    {
+      "name": "LiveEditing",
+      "description": "The Live Editing endpoint allows updating entities such as tasks, projects, and documents and their corresponding live editing data, e.g. a description."
     },
     {
       "name": "Permissions",
