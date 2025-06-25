@@ -11036,10 +11036,10 @@
     "/projects/{projectId}/addprojectmember": {
       "post": {
         "tags": [
-          "Projects"
+          "ProjectMembers"
         ],
         "summary": "Adds a project member to the project with the specified id.",
-        "description": "Adds a project member to the project with the specified id.\r\nThe new project member can also be set as a responsible project member, but only if no other member of this project is responsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be added.\r\nA project role is available when they are connected to the specified project type of the project.\r\nA user can only be added to the project once.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
+        "description": "Adds a project member to the project with the specified id.\r\n             The new project member can also be set as a responsible project member, but only if no other member of this project is responsible.\r\n             It is necessary that the project role is available in this project, otherwise the member cannot be added.\r\n             A project role is available when they are connected to the specified project type of the project.\r\n             A user can only be added to the project once.\r\n            \r\n             <Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -11056,11 +11056,6 @@
           "description": "The model to add the project member.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectMemberForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectMemberForm"
               }
@@ -16173,10 +16168,10 @@
     "/projects/{projectId}/updateprojectmember": {
       "post": {
         "tags": [
-          "Projects"
+          "ProjectMembers"
         ],
         "summary": "Updates the role of a project member of the project with the specified id.",
-        "description": "Changes the role of a project member.\r\nThe project member can also be set as a responsible project member, but only if no other member of this project is\r\nresponsible.\r\nIt is necessary that the project role is available in this project, otherwise the member cannot be updated.\r\nA project role is available when they are connected to the specified project type of the project.\r\n            \r\n<Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
+        "description": "Changes the role of a project member.\r\n             The project member can also be set as a responsible project member, but only if no other member of this project is\r\n             responsible.\r\n             It is necessary that the project role is available in this project, otherwise the member cannot be updated.\r\n             A project role is available when they are connected to the specified project type of the project.\r\n            \r\n             <Check><b>Required Permissions</b>: The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -16193,11 +16188,6 @@
           "description": "The model to update the project member.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectMemberForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectMemberForm"
               }
@@ -41845,6 +41835,20 @@
         },
         "additionalProperties": false
       },
+      "LiveEditingUpdateRequest": {
+        "required": [
+          "content"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The content to update. For tasks and projects, this is the description. For documents, this is the content."
+          }
+        },
+        "additionalProperties": false
+      },
       "Mentions": {
         "type": "object",
         "properties": {
@@ -43661,6 +43665,14 @@
           "plannedDuration": {
             "type": "integer",
             "description": "The total planned time of the project, in seconds.\r\nThe time is calculated as te sum of the planned duration by all project tasks.",
+            "format": "int64",
+            "nullable": true,
+            "example": 432000,
+            "deprecated": true
+          },
+          "totalPlannedDurationWithHierarchy": {
+            "type": "integer",
+            "description": "The total planned duration of the project with hierarchy, in seconds.\r\nCalculated based on the planned durations of tasks and task lists of the project.\r\nSum of Sum(TotalPlannedDurationWithHierarchy of all task lists) and\r\nSum(TotalPlannedDurationWithHierarchy of all parent tasks without list)",
             "format": "int64",
             "nullable": true,
             "example": 432000
@@ -46802,11 +46814,6 @@
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
-          "isArchived": {
-            "type": "boolean",
-            "description": "Whether the task list has been archived.",
-            "example": false
-          },
           "createdOn": {
             "type": "string",
             "description": "The date this task list was created.",
@@ -46843,6 +46850,11 @@
             "format": "double",
             "nullable": true,
             "example": 2
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Whether the task list has been archived.",
+            "example": false
           },
           "isHiddenForConnectUsers": {
             "type": "boolean",
@@ -47240,20 +47252,23 @@
             "description": "The total planned workload of the task, in seconds, including subtasks.",
             "format": "int32",
             "nullable": true,
-            "example": 21600
+            "example": 21600,
+            "deprecated": true
           },
           "remainingDuration": {
             "type": "integer",
             "description": "The expected remaining duration from the original planned effort of the task, in seconds.\r\nNull if the user has no permissions to see time tracking information.",
             "format": "int32",
             "nullable": true,
-            "example": 10500
+            "example": 10500,
+            "deprecated": true
           },
           "totalRemainingDuration": {
             "type": "integer",
             "description": "The total remaining duration from the original planned effort of the task, in seconds, including subtasks.",
             "format": "int32",
-            "nullable": true
+            "nullable": true,
+            "deprecated": true
           },
           "resourceVersion": {
             "type": "integer",
@@ -47400,11 +47415,6 @@
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
-          "isArchived": {
-            "type": "boolean",
-            "description": "Whether the task list has been archived.",
-            "example": false
-          },
           "createdOn": {
             "type": "string",
             "description": "The date this task list was created.",
@@ -47441,6 +47451,11 @@
             "format": "double",
             "nullable": true,
             "example": 2
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Whether the task list has been archived.",
+            "example": false
           },
           "isHiddenForConnectUsers": {
             "type": "boolean",
@@ -49060,7 +49075,7 @@
             "items": {
               "type": "string"
             },
-            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\".",
+            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\",\r\n\"plannedDuration\".",
             "nullable": true,
             "example": [
               "duration",
@@ -49318,7 +49333,7 @@
             "items": {
               "type": "string"
             },
-            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\".",
+            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\",\r\n\"plannedDuration\".",
             "nullable": true,
             "example": [
               "duration",
@@ -50009,6 +50024,9 @@
             "type": "boolean"
           },
           "updateTasks": {
+            "type": "boolean"
+          },
+          "updateTaskLists": {
             "type": "boolean"
           }
         },
@@ -57848,6 +57866,10 @@
     {
       "name": "PrivateTasks",
       "description": "Private tasks belong to a single user.\n                             Only the users themselves have access to their tasks and they can only be assigned to them.\n                             It is possible to create and assign private tasks to another user in which case both users have access to the task."
+    },
+    {
+      "name": "ProjectMembers",
+      "description": "Project Members feature allows you to manage the members of a project, including adding users, assigning roles, and setting responsible members. Only users with the appropriate permissions can add or modify project members. Roles and responsibilities are enforced according to project type and permissions."
     },
     {
       "name": "ProjectMilestones",
