@@ -63,6 +63,7 @@ navigation:
   - projecttypes
   - projectstatuses
   - projectroles
+  - projectmembers
   - projectcomments
   - projecttags
   - projectmilestones
