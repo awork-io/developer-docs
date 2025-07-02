@@ -41573,6 +41573,22 @@
         },
         "additionalProperties": false
       },
+      "GetSubtasksDatesResult": {
+        "type": "object",
+        "properties": {
+          "earliestStartOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "latestDueOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetTimeBookingForUsersResult": {
         "type": "object",
         "properties": {
@@ -50664,6 +50680,9 @@
           },
           "status": {
             "$ref": "#/components/schemas/UserStatusModel"
+          },
+          "isApiKeyUser": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
