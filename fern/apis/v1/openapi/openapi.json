@@ -37847,7 +37847,7 @@
           "taskLists": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ReorderingResult"
+              "$ref": "#/components/schemas/TaskListToTaskForm"
             },
             "description": "The lists the task should be moved to."
           }
@@ -47007,6 +47007,33 @@
         },
         "additionalProperties": false
       },
+      "TaskListToTaskForm": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the task in the list.\r\nIf null, the task is moved to the end of the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 3
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "description": "Whether the TaskList should be the primary list for the task.\r\nIf not specified for any list of the task, the first list by order will be the primary list.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "TaskModel": {
         "required": [
           "name"
@@ -47268,8 +47295,7 @@
             "description": "The total planned workload of the task, in seconds, including subtasks.",
             "format": "int32",
             "nullable": true,
-            "example": 21600,
-            "deprecated": true
+            "example": 21600
           },
           "remainingDuration": {
             "type": "integer",
