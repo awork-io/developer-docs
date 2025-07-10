@@ -689,6 +689,61 @@
         }
       }
     },
+    "/api/v1/sync/{entityType}": {
+      "get": {
+        "tags": [
+          "Sync"
+        ],
+        "summary": "Gets sync data for the specified entity type.",
+        "description": "Returns a sync response containing updated entities and deleted entity Ids.\r\n            Returns only entities modified/deleted since the provided timestamp.\r\n            Returns no connected entities for now, only the ones of your own workspace but respects the permissions.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The type of entity to sync (supported: \"typeofwork\").",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "description": "Required timestamp to get changes since that time.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectSyncResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/apiusers": {
       "get": {
         "tags": [
@@ -14790,7 +14845,7 @@
           "TaskDependencies"
         ],
         "summary": "Returns all task dependencies for a specific project.",
-        "description": "To get all dependencies of a project, the user needs project planning permissions on that project.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: To get all dependencies of a project, the user needs project planning permissions on that project.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -23065,16 +23120,11 @@
           "TaskDependencies"
         ],
         "summary": "Creates a new task dependency.",
-        "description": "To create a task dependency, the user needs to be the assignee of both tasks or 'ProjectPlanning'\r\npermissions in general or in the project the tasks are related to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: To create a task dependency, the user needs to be the assignee of both tasks or have `ProjectPlanning`\r\n            permissions in general or in the project the tasks are related to.</Check>",
         "requestBody": {
           "description": "The model used to create a task dependency.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskDependencyForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TaskDependencyForm"
               }
@@ -23114,7 +23164,7 @@
           "TaskDependencies"
         ],
         "summary": "Deletes a task dependency.",
-        "description": "To delete a task dependency, the user needs to be the assignee of both tasks or 'ProjectPlanning'\r\npermissions in general or in the project the task are related to.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: To delete a task dependency, the user needs to be the assignee of both tasks or have 'ProjectPlanning'\r\n            permissions in general or in the project the task are related to.</Check>",
         "parameters": [
           {
             "name": "taskDependencyId",
@@ -23128,6 +23178,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -24075,6 +24128,14 @@
             "schema": {
               "type": "string",
               "format": "uuid"
+            }
+          },
+          {
+            "name": "updateTaskPlannedDuration",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
             }
           }
         ],
@@ -25869,6 +25930,15 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "updateTaskPlannedDuration",
+            "in": "query",
+            "description": "Whether to update the task's planned duration based on the assignments (default: true for backwards compatibility).",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "requestBody": {
@@ -25995,6 +26065,15 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "updateTaskPlannedDuration",
+            "in": "query",
+            "description": "Whether to update the task's planned duration based on the manual efforts (default: true for backwards compatibility).",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "requestBody": {
@@ -26096,7 +26175,7 @@
           "TaskDependencies"
         ],
         "summary": "Returns all task dependencies for a specific task.",
-        "description": "To get all dependencies of a task, the user needs project planning permissions on that project or be assigned to that\r\ntask.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: To get all dependencies of a task, the user needs project planning permissions on that project or be assigned to that task.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -37604,6 +37683,11 @@
             "description": "In case of an adjust date operation, define the number (positive or negative) of days that will be added/subtracted to the task dates.\r\nIt can be a decimal number (fraction of day)",
             "format": "double",
             "nullable": true
+          },
+          "updateTaskPlannedDuration": {
+            "type": "boolean",
+            "description": "Whether to update the task's planned duration based on the assignments (default: true for backwards compatibility).\r\nUsed for 'assignusers', 'unassignusers', and 'delete' operations.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -42503,6 +42587,14 @@
             "description": "The ids of the team the project is associated to.",
             "nullable": true
           },
+          "customFields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectCustomField"
+            },
+            "description": "Custom fields of the project.",
+            "nullable": true
+          },
           "isExternal": {
             "type": "boolean",
             "description": "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
@@ -42778,6 +42870,25 @@
         },
         "additionalProperties": false,
         "description": "This repeated model (copy of NestedTeamModel) is required to avoid a bug\r\nof the Automapper.Extensions.EspressionMapping library that throws an error if in the same expression\r\nwe apply a filter to 2 different models containing the same submodel (e.g: Teams contained in both Project, User and\r\nTasks))\r\nPlease do not remove it."
+      },
+      "ObjectSyncResponse": {
+        "type": "object",
+        "properties": {
+          "updated": {
+            "type": "array",
+            "items": {},
+            "nullable": true
+          },
+          "deleted": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "PermissionAssignee": {
         "type": "object",
@@ -43855,6 +43966,61 @@
           }
         },
         "additionalProperties": false
+      },
+      "ProjectCustomField": {
+        "type": "object",
+        "properties": {
+          "customFieldDefinitionId": {
+            "type": "string",
+            "description": "The custom field definition id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userIdValue": {
+            "type": "string",
+            "description": "The the user id value.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "numberValue": {
+            "type": "number",
+            "description": "The number value.",
+            "format": "double",
+            "nullable": true,
+            "example": 123.45
+          },
+          "selectionOptionIdValue": {
+            "type": "string",
+            "description": "The selection option id value.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "selectionOption": {
+            "$ref": "#/components/schemas/CustomFieldSelectionOption"
+          },
+          "textValue": {
+            "type": "string",
+            "description": "The text value.",
+            "nullable": true,
+            "example": "S1: Business Critical"
+          },
+          "dateValue": {
+            "type": "string",
+            "description": "The date value.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "booleanValue": {
+            "type": "boolean",
+            "description": "The boolean value.",
+            "nullable": true,
+            "example": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents the custom field value."
       },
       "ProjectDeleteForm": {
         "type": "object",
@@ -46575,13 +46741,13 @@
         "properties": {
           "predecessorId": {
             "type": "string",
-            "description": "The Id of the predecessor. One task can have multiple predecessor.",
+            "description": "The Id of the predecessor. A task can have multiple predecessors through multiple dependency relationships.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "successorId": {
             "type": "string",
-            "description": "The Id of the successor. One task can have one successor.",
+            "description": "The Id of the successor. A task can have multiple successors through multiple dependency relationships.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -46624,13 +46790,13 @@
         "properties": {
           "predecessorId": {
             "type": "string",
-            "description": "The Id of the predecessor. One task can have multiple predecessor.",
+            "description": "The Id of the predecessor. A task can have multiple predecessors through multiple dependency relationships.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "successorId": {
             "type": "string",
-            "description": "The Id of the successor. One task can have one successor.",
+            "description": "The Id of the successor. A task can have multiple successors through multiple dependency relationships.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
@@ -57957,12 +58123,16 @@
       "description": "The roles endpoints allow you to configure the permissions of users.\n            You have the possibility to manage roles and assign users to these roles."
     },
     {
+      "name": "Sync",
+      "description": "Provides generic sync endpoints for entity synchronization."
+    },
+    {
       "name": "TaskBundles",
       "description": "Task bundles are used to manage task templates, task list templates and task dependency templates.\n        They can be imported into projects and simplify reoccuring processes."
     },
     {
       "name": "TaskDependencies",
-      "description": "The task dependency endpoints allow you to get all task dependencies of a project or a task.\n                                Every Task can have multiple predeccessors and one successor"
+      "description": "The TaskDependencies endpoints allow you to get all task dependencies of a project or a task.\n                    A task can have multiple predecessors and multiple successors through separate dependency relationships."
     },
     {
       "name": "TaskDependencyTemplates",
