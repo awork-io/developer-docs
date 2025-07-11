@@ -1281,6 +1281,15 @@
           },
           "taskStatus": {
             "$ref": "#/components/schemas/NestedTaskStatusModel"
+          },
+          "primaryTaskListId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "primaryTaskList": {
+            "$ref": "#/components/schemas/NestedModel"
           }
         },
         "additionalProperties": false
@@ -1524,6 +1533,71 @@
           },
           "parentTask": {
             "$ref": "#/components/schemas/NestedModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskOrderList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this task list was created.",
+            "format": "date-time",
+            "example": "2021-03-22T15:00:00Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this task list was last modified.",
+            "format": "date-time",
+            "example": "2021-03-22T16:30:00Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the list.",
+            "nullable": true,
+            "example": "Product and Marketing To-Dos"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 2
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Whether the task list has been archived.",
+            "example": false
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise."
+          },
+          "orderOfTask": {
+            "type": "number",
+            "description": "The order of the task in the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 5
           }
         },
         "additionalProperties": false
