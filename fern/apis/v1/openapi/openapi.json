@@ -2220,7 +2220,7 @@
           "Companies"
         ],
         "summary": "Returns all companies.",
-        "description": "Returns all companies.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -2270,16 +2270,11 @@
           "Companies"
         ],
         "summary": "Creates a new company.",
-        "description": "Creates a new company.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The company to create.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompanyForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CompanyForm"
               }
@@ -2362,7 +2357,7 @@
           "Companies"
         ],
         "summary": "Returns all company industries that are currently in use.",
-        "description": "Returns all company industries that are currently in use.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -2437,7 +2432,7 @@
           "Companies"
         ],
         "summary": "Returns the company with the specified id.",
-        "description": "Returns the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2482,7 +2477,7 @@
           "Companies"
         ],
         "summary": "Updates the company with the specified id.",
-        "description": "Updates the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2499,11 +2494,6 @@
           "description": "The new company values.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompanyForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CompanyForm"
               }
@@ -2614,7 +2604,7 @@
           "Companies"
         ],
         "summary": "Returns the contact infos of the company with the specified id.",
-        "description": "Returns the contact infos of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2674,7 +2664,7 @@
           "Companies"
         ],
         "summary": "Creates a new contact info for the company with the specified id.",
-        "description": "Creates a new contact info for the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2691,11 +2681,6 @@
           "description": "The contact info to create.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactInfoForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ContactInfoForm"
               }
@@ -2736,7 +2721,7 @@
           "Companies"
         ],
         "summary": "Deletes the contact info of the company with the specified id.",
-        "description": "Deletes the contact info of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2760,6 +2745,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -2784,7 +2772,7 @@
           "Companies"
         ],
         "summary": "Returns the specified contact info of the company with the specified id.",
-        "description": "Returns the specified contact info of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2851,7 +2839,7 @@
           "Companies"
         ],
         "summary": "Updates the contact info for the company with the specified id.",
-        "description": "Updates the contact info for the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2878,11 +2866,6 @@
           "description": "The contact info to update.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactInfoForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ContactInfoForm"
               }
@@ -53905,26 +53888,39 @@
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
-          "createdOn": {
+          "entityId": {
             "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
+            "description": "The id of the entity of the entity task.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/DefaultTaskStatusModel"
+          },
+          "closedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dueOn": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "format": {
@@ -53940,18 +53936,10 @@
             "format": "int32",
             "nullable": true
           },
-          "dueOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "startOn": {
             "type": "string",
             "format": "date-time",
             "nullable": true
-          },
-          "taskStatus": {
-            "$ref": "#/components/schemas/DefaultTaskStatusModel"
           },
           "assignees": {
             "type": "array",
