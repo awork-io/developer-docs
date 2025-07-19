@@ -42857,6 +42857,7 @@
           "updated": {
             "type": "array",
             "items": {},
+            "description": "The list of updated items. This includes newly created or modified entities since the last sync.",
             "nullable": true
           },
           "deleted": {
@@ -42865,7 +42866,13 @@
               "type": "string",
               "format": "uuid"
             },
+            "description": "The list of deleted entity Ids. These are the entities that have been removed since the last sync.",
             "nullable": true
+          },
+          "lastSync": {
+            "type": "string",
+            "description": "The timestamp of the last sync operation. This indicates the point in time when the data was last synchronized.",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
