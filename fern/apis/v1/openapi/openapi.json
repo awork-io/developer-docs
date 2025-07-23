@@ -47257,6 +47257,11 @@
             "type": "boolean",
             "description": "True if the model is coming from an external workspace (awork Connect).\r\nFalse otherwise."
           },
+          "createdVia": {
+            "type": "string",
+            "description": "The origin of the task. From which 'flow' the task was created.\r\nAutomatically set by the backend.",
+            "nullable": true
+          },
           "isHiddenForConnectUsers": {
             "type": "boolean",
             "description": "True if the task is hidden for external workspace users. \r\nFalse otherwise."
