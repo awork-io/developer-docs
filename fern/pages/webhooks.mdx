@@ -6,6 +6,8 @@ slug: webhooks
 
 Webhooks allow application developers to receive and react to changes happening in awork without constantly polling and checking.
 
+# Workspace Webhooks
+
 A webhook is triggered for an entire workspace. For example on the `project-added` webhook, you receive events for all projects created in your workspace, no matter who created it or which team it belongs to. This means that user permissions and roles are not checked and have to be evaluated by the developer, if relevant.
 
 ## Configuration
@@ -70,15 +72,15 @@ The request body will contain the event metadata as well as the entity that trig
 
 ```json
 {
-    "timestamp": "2023-09-03T20:28:39.5966465+00:00",
+    "timestamp": "2025-07-24T14:28:39.5966465+00:00",
     "eventType": "project_added",
     "entity": {
-        "id": "8293ac0e-0aaa-468c-b3fc-480b2d7200f0",
+        "id": "123e4567-e89b-12d3-a456-426614174000",
         "hasImage": false,
         "createdOn": "2023-09-03T20:28:39.5961826Z",
-        "createdBy": "7936d6b8-3345-4770-83c8-2c8c2ed12414",
-        "updatedOn": "2023-09-03T20:28:40.017585Z",
-        "updatedBy": "7936d6b8-3345-4770-83c8-2c8c2ed12414",
+        "createdBy": "123e4567-e89b-12d3-a456-426614174000",
+        "updatedOn": "2025-07-24T14:28:40.017585Z",
+        "updatedBy": "123e4567-e89b-12d3-a456-426614174000",
         "projectStatus": {
             "typeOrder": 2,
             "isArchived": false,
@@ -92,12 +94,12 @@ The request body will contain the event metadata as well as the entity that trig
         "tasksDoneCount": 0,
         "members": [
             {
-                "id": "043a32e9-1a41-48d0-9e05-e5967ea849cc",
-                "userId": "7936d6b8-3345-4770-83c8-2c8c2ed12414",
+                "id": "123e4567-e89b-12d3-a456-426614174000",
+                "userId": "123e4567-e89b-12d3-a456-426614174000",
                 "firstName": "Carla",
                 "lastName": "Creative",
                 "hasImage": false,
-                "projectRoleId": "021e1b6b-3ba3-47ea-a829-141ca1686e7a",
+                "projectRoleId": "123e4567-e89b-12d3-a456-426614174000",
                 "projectRoleName": "Project Member",
                 "isResponsible": true,
                 "isDeactivated": false
@@ -105,39 +107,39 @@ The request body will contain the event metadata as well as the entity that trig
         ],
         "trackedDuration": 0,
         "teams": [],
-        "projectStatusId": "fb7de344-aa95-4d75-ae1b-c7c01393f267",
+        "projectStatusId": "123e4567-e89b-12d3-a456-426614174000",
         "name": "Website Design",
         "isPrivate": false,
         "timeBudget": 0,
         "isBillableByDefault": false
     },
-    "entityId": "8293ac0e-0aaa-468c-b3fc-480b2d7200f0",
+    "entityId": "123e4567-e89b-12d3-a456-426614174000",
     "entityType": "project",
-    "entityLink": "https://superstar-design.awork.com/projects/8293ac0e-0aaa-468c-b3fc-480b2d7200f0",
+    "entityLink": "https://superstar-design.awork.com/projects/123e4567-e89b-12d3-a456-426614174000",
     "traceId": "5a8e9540f698455b48cd092811ade4e9",
     "triggeredBy": {
-        "id": "7936d6b8-3345-4770-83c8-2c8c2ed12414",
+        "id": "123e4567-e89b-12d3-a456-426614174000",
         "firstName": "Carla",
         "lastName": "Creative"
     },
     "changes": [
         {
             "property": "ClosedBy",
-            "new": "a56c2b28-9dab-4f1a-b0b1-70aec2a68326"
+            "new": "123e4567-e89b-12d3-a456-426614174000"
         },
         {
             "property": "ClosedOn",
-            "new": "02/02/2025 17:34:39"
+            "new": "2025-07-24T14:28:39.5966465+00:00"
         },
         {
             "property": "TaskStatusId",
-            "old": "9481af0f-9307-467f-b2e1-f8586e9cd0da",
-            "new": "784e6fec-6c9a-ed11-bf7a-38563d6e68b8"
+            "old": "123e4567-e89b-12d3-a456-426614174000",
+            "new": "123e4567-e89b-12d3-a456-426614174001"
         },
         {
             "property": "UpdatedOn",
-            "old": "01/22/2025 16:23:06",
-            "new": "02/02/2025 17:34:39"
+            "old": "2025-07-24T14:28:39.5966465+00:00",
+            "new": "2025-07-24T14:28:39.5966465+00:00"
         }
     ],
 }
@@ -160,3 +162,52 @@ The request body will contain the event metadata as well as the entity that trig
 awork expects a webhook request to return with a successful response within 30 seconds. Otherwise, the event will be marked as failed and retried for up to 10 times.
 
 Should a configured webhook integration fail for more than 10 times without a successful response, it will be paused until a user enables it again in the Integration settings page.
+
+# Project Automation Webhooks
+
+Project automation webhooks can be configured as actions for project automations. Read more about project automations in our [Help Center](https://support.awork.com/en/articles/5354365-automations-in-projects#h_16583a3418).
+
+## Configuration
+
+This type automation action requires a URL where the payload will be sent to. Optionally, users can configure a custom event name as well as a header name and value for athentication.
+
+<Frame caption="An example of a project automation webhook configuration in awork">
+    <img src="/assets/api/webhooks02.png" alt="Project Automation Webhook Config" />
+</Frame>
+
+## Example
+
+| Property | Value       | 
+|----------|-------------|
+| URL      | `https://example.com/webhook` |
+| Event Name | `Task Status Changed` |
+| Authorization Header | Api-Key:abcd... |
+
+This will result in the following request to the provided URL when the automation trigger occurs:
+
+```sh title="Webhook Request"
+curl -X POST https://example.com/webhook \
+  -H 'Content-Type: application/json'
+  -H 'Api-Key: abcd...'
+  -d '{
+        "eventName": "Task Status Changed",
+        "traceId": "5a8e9540f698455b48cd092811ade4e9",
+        "project": {
+            "id": "123e4567-e89b-12d3-a456-426614174000",
+            ...
+        },
+        "task": {
+            "id": "123e4567-e89b-12d3-a456-426614174000",
+            ...
+        }
+      }'
+```
+
+The webhook body will contain the following properties:
+
+| Payload Property  | Description |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `eventName`       | The user-provided name of the event. |
+| `traceId`         | An awork-internal id for support purposes. |
+| `project`         | The project this automation belongs to. [Model details](/apiv1/projects/returns-the-project-with-the-specified-id). |
+| `task`            | The task that triggered the automation. Can be empty if the automation was not triggered by a task. [Model details](/apiv1/tasks/returns-the-task-with-the-specified-id). |
