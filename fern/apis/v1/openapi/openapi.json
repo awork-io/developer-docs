@@ -29771,7 +29771,7 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Handles removing all finished breaks from a time entry.",
+        "summary": "Handles removing all breaks from a time entry, effectively resuming the timer.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
@@ -42665,6 +42665,9 @@
           },
           "isHiddenForConnectUsers": {
             "type": "boolean"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/NestedStatusModel"
           }
         },
         "additionalProperties": false
@@ -54342,6 +54345,9 @@
             "description": "The base type of the task.",
             "nullable": true,
             "example": "projecttask"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusEntity"
           },
           "isExternal": {
             "type": "boolean",
