@@ -28067,7 +28067,7 @@
           "Teams"
         ],
         "summary": "Returns all teams.",
-        "description": "If the include query params aren't set or false, the specified collection property is null in the response.\r\nIf the include param is true, but there are no entities in the collection, an empty collection is returned.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "If the include query params aren't set or false, the specified collection property is null in the response.\r\n            If the include param is true, but there are no entities in the collection, an empty collection is returned.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "includeUserIds",
@@ -28086,6 +28086,18 @@
               "type": "boolean",
               "default": false
             }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
           }
         ],
         "responses": {
@@ -28122,16 +28134,11 @@
           "Teams"
         ],
         "summary": "Creates a new team.",
-        "description": "Creates a new team.\r\nNo validations are done for color and icon property, can be any string.\r\nThrows IllegalOperationException if team with the same name already exists.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
+        "description": "Creates a new team.\r\n            No validations are done for color and icon property, can be any string.\r\n            Throws IllegalOperationException if team with the same name already exists.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
         "requestBody": {
           "description": "The team to create.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TeamForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TeamForm"
               }
@@ -28174,7 +28181,7 @@
           "Teams"
         ],
         "summary": "Deletes the team with the specified id.",
-        "description": "Deletes the team with the specified id.\r\nDeletes all related UserInTeamEntities, ProjectInTeamEntities, DocumentToTeamEntities and DocumentSpaceToTeamEntities as well.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
+        "description": "Deletes the team with the specified id.\r\n            Returns NotFound if team doesn't exist.\r\n            Deletes all related UserInTeamEntities, ProjectInTeamEntities, DocumentToTeamEntities and DocumentSpaceToTeamEntities as well.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
         "parameters": [
           {
             "name": "teamId",
@@ -28188,6 +28195,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -28211,7 +28221,7 @@
           "Teams"
         ],
         "summary": "Returns the team with the specified id.",
-        "description": "Returns the team with the specified id.\r\nReturns NotFound if the team doesn't exist.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "teamId",
@@ -28273,7 +28283,7 @@
           "Teams"
         ],
         "summary": "Updates the team with the specified id.",
-        "description": "Updates the team with the specified id.\r\nOnly updates properties which are not null or whitespace.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
+        "description": "Updates the team with the specified id.\r\n            Only updates properties which are not null or whitespace.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
         "parameters": [
           {
             "name": "teamId",
@@ -28308,11 +28318,6 @@
           "description": "The new team values.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TeamForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TeamForm"
               }
@@ -28352,7 +28357,7 @@
           "Teams"
         ],
         "summary": "Adds projects to a team.",
-        "description": "Returns the created project in team entities.\r\nThrows BadRequestException if project ids are null or empty.\r\nThrows IllegalOperationException if projects fetched from ids failed or returned no projects.\r\nThrwos IllegalOperationException if projects are already connected to the team.\r\nOnly creates the project in team entities for projects the user has 'write' permissions of feature\r\n'project-master-data' for or is the owner.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns the created project in team entities.\r\n            Throws BadRequestException if project ids are null or empty.\r\n            Throws IllegalOperationException if projects fetched from ids failed or returned no projects.\r\n            Thrwos IllegalOperationException if projects are already connected to the team.\r\n            Only creates the project in team entities for projects the user has 'write' permissions of feature\r\n            'project-master-data' for or is the owner.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "teamId",
@@ -28369,18 +28374,6 @@
           "description": "The ids of the projects to add.",
           "content": {
             "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
-            },
-            "application/*+json": {
               "schema": {
                 "type": "array",
                 "items": {
@@ -28430,7 +28423,7 @@
           "Teams"
         ],
         "summary": "Adds users to a team.",
-        "description": "Returns the created user in team entities.\r\nThrows BadRequestException if user ids are null or empty.\r\nThrows IllegalOperationException if users fetched from ids failed, returned no users or misses a user from the userIds.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
+        "description": "Returns the created user in team entities.\r\n            Throws BadRequestException if user ids are null or empty.\r\n            Throws IllegalOperationException if users fetched from ids failed, returned no users or misses a user from the userIds.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
         "parameters": [
           {
             "name": "teamId",
@@ -28447,18 +28440,6 @@
           "description": "The ids of users to add.",
           "content": {
             "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
-            },
-            "application/*+json": {
               "schema": {
                 "type": "array",
                 "items": {
@@ -28508,7 +28489,7 @@
           "Teams"
         ],
         "summary": "Removes projects from a team.",
-        "description": "Throws BadRequestException if project ids are null or empty.\r\nThrows BadRequestException if no project in teams could be found for supplied project ids.\r\nValidates the project ids by checking if entries exists for that project in the database.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns NotFound if team doesn't exist.\r\n            Throws BadRequestException if project ids are null or empty.\r\n            Returns NoContent even if no project in teams relationships exist (idempotent behavior).\r\n            Validates the project ids by checking if entries exists for that project in the database.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "teamId",
@@ -28535,22 +28516,13 @@
               "example": [
                 "123e4567-e89b-12d3-a456-426614174000"
               ]
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -28576,6 +28548,7 @@
           "Teams"
         ],
         "summary": "Removes users from a team.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>",
         "parameters": [
           {
             "name": "teamId",
@@ -28602,22 +28575,13 @@
               "example": [
                 "123e4567-e89b-12d3-a456-426614174000"
               ]
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -28634,8 +28598,7 @@
         ],
         "x-access": {
           "admin": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin.</Check>"
+        }
       }
     },
     "/temporaryfiles": {
@@ -37653,6 +37616,11 @@
           "adjustSuccessors": {
             "type": "boolean",
             "description": "If set to true, it will adjust the dates of successor tasks as well.",
+            "nullable": true
+          },
+          "adjustSubtasks": {
+            "type": "boolean",
+            "description": "If set to true, it will adjust the dates of subtasks of selected tasks.\r\nIf set to false, it will only adjust the dates of the selected tasks.",
             "nullable": true
           },
           "updateTaskPlannedDuration": {
@@ -50879,6 +50847,9 @@
           },
           "isApiKeyUser": {
             "type": "boolean"
+          },
+          "isExternal": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -51577,6 +51548,7 @@
           },
           "duration": {
             "type": "number",
+            "description": "The total duration (in seconds) of all the items that concur in the user's workload calculation:\r\nCalendar events + Scheduled Tasks + Assigned Tasks + Time Bookings + Recurring Tasks.",
             "format": "float",
             "readOnly": true
           },
