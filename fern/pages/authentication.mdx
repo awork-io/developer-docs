@@ -41,9 +41,9 @@ To authenticate with and receive resources from the API, add the  `API Key` to t
 Authorization: Bearer {api_key}
 ```
 
-## OAuth 2 Flow
+## OAuth 2.0 Flow
 
-The OAuth 2 flow allows users to sign in with their own account. This generates a user-specific token which respects all user roles and permissions.
+The [OAuth 2.0](https://oauth.net/2/) flow allows users to sign in with their own account. This generates a user-specific token which respects all user roles and permissions.
 
 ### Definitions
 
@@ -83,13 +83,32 @@ The `Refresh Token` is used to get a new `Access Token` once the `Access Token` 
 
 The `Authorization Code` is a transitory code used to retrieve an `Access Token` and `Refresh Token`. It should not be stored in the client application.
 
+### OpenID Connect Discovery
+
+awork supports OpenID Connect discovery, which provides a standardized way to discover OAuth 2.0 and OpenID Connect configuration information:
+
+<Tip title="OpenID Configuration" icon="info">
+**Discovery Endpoint:** `https://api.awork.com/.well-known/openid-configuration`
+</Tip>
+
+This endpoint returns important configuration details including:
+- Available OAuth 2.0 endpoints
+- Supported grant types, scopes, and response types
+- Supported PKCE challenge methods
+- Token endpoint authentication methods
+
 ### Endpoints
 
 The OAuth endpoints are required to get an `Access Token` and exchange a `Refresh Token` for a new `Access Token`:
 
-**Authorization Endpoint:** `/accounts/authorize` may be used to request user authorization and initially retrieve an `Authorization Code`.
+<Tip title="OAuth 2.0 Endpoints" icon="note">
+**Authorization:** `https://api.awork.com/api/v1/accounts/authorize`<br/>
+**Token:** `https://api.awork.com/api/v1/accounts/token`
+</Tip>
 
-**Token Endpoint:** `/accounts/token` may be used to retrieve an `Access Token` from either an `Authorization Code` or a `Refresh Token`.
+**Authorization Endpoint:** used to request user authorization and initially retrieve an `Authorization Code`.
+
+**Token Endpoint:** used to retrieve an `Access Token` from either an `Authorization Code` or a `Refresh Token`.
 
 ### Authorization Request
 
@@ -211,3 +230,45 @@ The authorization server responds with a new `Access Token` and a new expiration
     "refresh_token": "eyJhbGciOiJ...",
 }
 ```
+
+### PKCE Support
+
+The awork API supports [PKCE (Proof Key for Code Exchange)](https://oauth.net/2/pkce/) for enhanced security in OAuth 2.0 flows. PKCE is especially recommended for mobile apps and single-page applications that cannot securely store client secrets.
+
+#### PKCE Parameters
+
+When using PKCE, include these additional parameters in your authorization request:
+
+* `code_challenge`: Base64-URL encoded SHA256 hash of the `code_verifier`
+* `code_challenge_method`: Use `S256` (recommended) or `plain`
+
+#### Authorization Request with PKCE
+
+```sh
+GET /accounts/authorize
+    ?client_id={client_id}
+    &response_type=code
+    &redirect_uri={redirect_uri}
+    &scope={scope}
+    &code_challenge={code_challenge}
+    &code_challenge_method=S256
+```
+
+#### Token Request with PKCE
+
+When exchanging the authorization code for tokens, include the original `code_verifier`:
+
+```sh
+POST /accounts/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={client_id}
+&grant_type=authorization_code
+&code={code}
+&redirect_uri={redirect_uri}
+&code_verifier={code_verifier}
+```
+
+**Note:** For public clients using PKCE, the `client_secret` is not required.
+
+For detailed implementation guidance, see the [OAuth 2.0 PKCE specification](https://oauth.net/2/pkce/).
