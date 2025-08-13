@@ -4664,6 +4664,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -4720,7 +4723,7 @@
           "DocumentComments"
         ],
         "summary": "Creates a new comment on the document with the specified id.",
-        "description": "Creates a new comment on the document with the specified id.\r\nThe user needs read permissions on the document to create a comment.\r\nA user can only create a comment for him/herself, except for admins and api users.",
+        "description": "Creates a new comment on the document with the specified id.\r\n            The user needs read permissions on the document to create a comment.\r\n            A user can only create a comment for him/herself, except for admins and api users.",
         "parameters": [
           {
             "name": "documentId",
@@ -4737,11 +4740,6 @@
           "description": "The model used to create a comment.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CommentForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CommentForm"
               }
@@ -4768,7 +4766,7 @@
           "DocumentComments"
         ],
         "summary": "Deletes the comment with the specified id on the document with the specified id.",
-        "description": "Deletes the comment with the specified id on the document with the specified id.\r\nThe deletion of the comment includes the deletion reactions of the comment.\r\nIf there are any replies to the comment, they will be deleted as well.",
+        "description": "Deletes the comment with the specified id on the document with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
         "parameters": [
           {
             "name": "documentId",
@@ -4783,7 +4781,7 @@
           {
             "name": "commentId",
             "in": "path",
-            "description": "The id of the workspace.",
+            "description": "The id of the comment.",
             "required": true,
             "schema": {
               "type": "string",
@@ -4817,7 +4815,7 @@
           {
             "name": "commentId",
             "in": "path",
-            "description": "The id of the comments.",
+            "description": "The id of the comment.",
             "required": true,
             "schema": {
               "type": "string",
@@ -4843,7 +4841,7 @@
           "DocumentComments"
         ],
         "summary": "Updates the comment with the specified id on the document with the specified id.",
-        "description": "Updates the comment with the specified id on the document with the specified id.\r\nInReplyToCommentId is not allowed to be changed.\r\nTo update the IsResolved status, use the dedicated /setresolved endpoint.",
+        "description": "Updates the comment with the specified id on the document with the specified id.\r\n            InReplyToCommentId is not allowed to be changed.",
         "parameters": [
           {
             "name": "documentId",
@@ -4870,11 +4868,6 @@
           "description": "The model used to update the comment with the specified id.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CommentPutForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CommentPutForm"
               }
@@ -4951,15 +4944,13 @@
               "schema": {
                 "$ref": "#/components/schemas/ReactionForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReactionForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -12323,6 +12314,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -12379,7 +12373,7 @@
           "ProjectComments"
         ],
         "summary": "Creates a new comment on the project with the specified id.",
-        "description": "Creates a new comment on the project with the specified id.\r\nThe user needs read permissions on the project to create a comment.\r\nA user can only create a comment for him/herself, except for admins and api users.",
+        "description": "Creates a new comment on the project with the specified id.\r\n            The user needs read permissions on the project to create a comment.\r\n            A user can only create a comment for him/herself, except for admins and api users.",
         "parameters": [
           {
             "name": "projectId",
@@ -12396,11 +12390,6 @@
           "description": "The model used to create a comment.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CommentForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CommentForm"
               }
@@ -12427,7 +12416,7 @@
           "ProjectComments"
         ],
         "summary": "Deletes the comment with the specified id on the project with the specified id.",
-        "description": "Deletes the comment with the specified id on the project with the specified id.\r\nThe deletion of the comment includes the deletion reactions of the comment.\r\nIf there are any replies to the comment, they will be deleted as well.",
+        "description": "Deletes the comment with the specified id on the project with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
         "parameters": [
           {
             "name": "projectId",
@@ -12442,7 +12431,7 @@
           {
             "name": "commentId",
             "in": "path",
-            "description": "The id of the workspace.",
+            "description": "The id of the comment.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12476,7 +12465,7 @@
           {
             "name": "commentId",
             "in": "path",
-            "description": "The id of the comments.",
+            "description": "The id of the comment.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12502,7 +12491,7 @@
           "ProjectComments"
         ],
         "summary": "Updates the comment with the specified id on the project with the specified id.",
-        "description": "Updates the comment with the specified id on the project with the specified id.\r\nInReplyToCommentId is not allowed to be changed.\r\nTo update the IsResolved status, use the dedicated /setresolved endpoint.",
+        "description": "Updates the comment with the specified id on the project with the specified id.\r\n            InReplyToCommentId is not allowed to be changed.",
         "parameters": [
           {
             "name": "projectId",
@@ -12529,11 +12518,6 @@
           "description": "The model used to update the comment with the specified id.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CommentPutForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CommentPutForm"
               }
@@ -12610,15 +12594,13 @@
               "schema": {
                 "$ref": "#/components/schemas/ReactionForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReactionForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -24583,6 +24565,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -24639,7 +24624,7 @@
           "TaskComments"
         ],
         "summary": "Creates a new comment on the task with the specified id.",
-        "description": "Creates a new comment on the task with the specified id.\r\nThe user needs read permissions on the task to create a comment.\r\nA user can only create a comment for him/herself, except for admins and api users.",
+        "description": "Creates a new comment on the task with the specified id.\r\n            The user needs read permissions on the task to create a comment.\r\n            A user can only create a comment for him/herself, except for admins and api users.",
         "parameters": [
           {
             "name": "taskId",
@@ -24656,11 +24641,6 @@
           "description": "The model used to create a comment.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CommentForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CommentForm"
               }
@@ -24687,7 +24667,7 @@
           "TaskComments"
         ],
         "summary": "Deletes the comment with the specified id on the task with the specified id.",
-        "description": "Deletes the comment with the specified id on the task with the specified id.\r\nThe deletion of the comment includes the deletion reactions of the comment.\r\nIf there are any replies to the comment, they will be deleted as well.",
+        "description": "Deletes the comment with the specified id on the task with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
         "parameters": [
           {
             "name": "taskId",
@@ -24702,7 +24682,7 @@
           {
             "name": "commentId",
             "in": "path",
-            "description": "The id of the workspace.",
+            "description": "The id of the comment.",
             "required": true,
             "schema": {
               "type": "string",
@@ -24736,7 +24716,7 @@
           {
             "name": "commentId",
             "in": "path",
-            "description": "The id of the comments.",
+            "description": "The id of the comment.",
             "required": true,
             "schema": {
               "type": "string",
@@ -24762,7 +24742,7 @@
           "TaskComments"
         ],
         "summary": "Updates the comment with the specified id on the task with the specified id.",
-        "description": "Updates the comment with the specified id on the task with the specified id.\r\nInReplyToCommentId is not allowed to be changed.\r\nTo update the IsResolved status, use the dedicated /setresolved endpoint.",
+        "description": "Updates the comment with the specified id on the task with the specified id.\r\n            InReplyToCommentId is not allowed to be changed.",
         "parameters": [
           {
             "name": "taskId",
@@ -24789,11 +24769,6 @@
           "description": "The model used to update the comment with the specified id.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CommentPutForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CommentPutForm"
               }
@@ -24870,15 +24845,13 @@
               "schema": {
                 "$ref": "#/components/schemas/ReactionForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReactionForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -51603,7 +51576,7 @@
           },
           "duration": {
             "type": "number",
-            "description": "The total duration (in seconds) of all the items that concur in the user's workload calculation:\r\nCalendar events + Scheduled Tasks + Assigned Tasks + Time Bookings + Recurring Tasks.",
+            "description": "The total duration (in seconds) of all the items included in the user's workload calculation:\r\nCalendar events + Scheduled Tasks + Assigned Tasks + Time Bookings + Recurring Tasks.",
             "format": "float",
             "readOnly": true
           },
