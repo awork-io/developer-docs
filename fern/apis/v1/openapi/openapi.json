@@ -42868,6 +42868,15 @@
             "description": "The list of deleted entity Ids. These are the entities that have been removed since the last sync.",
             "nullable": true
           },
+          "unfilteredUpdated": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The list of entity Ids that were updated since the last sync but do NOT match the current filter criteria.\r\nThese are entities that are not included in Updated or Deleted lists but may need to be removed from the frontend's filtered store.\r\nThe frontend should check if any of these exist in its local filtered store and remove them if present.",
+            "nullable": true
+          },
           "lastSync": {
             "type": "string",
             "description": "The timestamp of the last sync operation. This indicates the point in time when the data was last synchronized.",
