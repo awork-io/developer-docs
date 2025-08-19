@@ -24,6 +24,11 @@ Incorrect:
 /companies?filterby=name eq 'awork & co'
 ```
 
+Use two single quotes to escape an apostrophe inside a string literal:
+```sh
+/tasks?filterby=name eq 'user''s task'
+```
+
 If you want to filter by a nested property, you can do this by separating the properties by `/`, for example:
 ```sh
 /projects?filterby=company/name eq 'awork'
