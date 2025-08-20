@@ -9,7 +9,7 @@ The majority of the awork API requires authentication. This means that you need 
 You have two options for authenticating with the awork API.
 
 * An **API Key** generated in the awork UI, which is permanently valid but is not user-specific, which means it grants admin-level access. This makes sense for background synchronization applications.
-* An **OAuth 2** flow that allows users to sign in with their own account. This generates a user-specific API Token which respects all user roles and permissions.
+* An **OAuth 2.0** flow that allows users to sign in with their own account. This generates a user-specific API Token which respects all user roles and permissions.
 
 Read the corresponding section below.
 
@@ -45,13 +45,17 @@ Authorization: Bearer {api_key}
 
 The [OAuth 2.0](https://oauth.net/2/) flow allows users to sign in with their own account. This generates a user-specific token which respects all user roles and permissions.
 
+<Tip title="OAuth 2.1 Support" icon="note">
+awork supports and recommends [OAuth 2.1](https://oauth.net/2.1/) for improved security and usability. [Authorization Code Flow with Proof Key for Code Exchange (PKCE)](https://oauth.net/2/pkce/) is the recommended flow for user authentication.
+</Tip>
+
 ### Definitions
 
 #### Client Application
 
-A client application needs to be registered before you can make API requests. Go to the workspace settings panel in awork and add a new client application. You will be asked to provide a unique name and a display name for your client. You will receive a client secret in return.
+A client application needs to be registered before you can make API requests. Go to the workspace settings panel in awork and add a new client application. You will be asked to provide a unique name and a display name for your client.
 
-The client secret is only shown while creating the client application! It can be regenerated, but all clients will then lose access.
+There are two types of client applications: **Confidential** and **Public**. Confidential clients, such as backend integrations can securely store the client secret, while public clients, such as web apps, mobile apps or CLI tools, cannot. 
 
 **Client Id**
 
@@ -59,7 +63,7 @@ The `client_id` is used to identify your client application. After you register 
 
 **Client Secret**
 
-The `client_secret` is generated in the client applications section of awork. It is located next to the `client_id` on the workspace settings page. The secret will be used to authenticate your client application when you request a token.
+The `client_secret` is generated when registering a confidential client. The secret will be used to authenticate your client application when you request a token.
 
 The client secret is only displayed when creating the client application! It can be regenerated, but all clients will lose access when their token expires.
 
@@ -67,6 +71,7 @@ The client secret is only displayed when creating the client application! It can
 
 The OAuth 2.0 authentication flow uses scopes to define which rights are granted to the application by the user. Scopes are sent as a space separated list. The API currently supports these scopes:
 
+* `full_access`: grants access to all resources in awork.
 * `offline_access`: continued access, issues a `Refresh Token`.
 
 ### Tokens
@@ -92,14 +97,14 @@ awork supports OpenID Connect discovery, which provides a standardized way to di
 </Tip>
 
 This endpoint returns important configuration details including:
-- Available OAuth 2.0 endpoints
+- Available OAuth 2.1 endpoints
 - Supported grant types, scopes, and response types
 - Supported PKCE challenge methods
 - Token endpoint authentication methods
 
 ### Endpoints
 
-The OAuth endpoints are required to get an `Access Token` and exchange a `Refresh Token` for a new `Access Token`:
+The OAuth 2.0 endpoints are required to get an `Access Token` and exchange a `Refresh Token` for a new `Access Token`:
 
 <Tip title="OAuth 2.0 Endpoints" icon="note">
 **Authorization:** `https://api.awork.com/api/v1/accounts/authorize`<br/>
@@ -112,7 +117,7 @@ The OAuth endpoints are required to get an `Access Token` and exchange a `Refres
 
 ### Authorization Request
 
-The client constructs the request URI by adding the following parameters to the query string of the authorization endpoint URI using the `application/x-www-form-urlencoded` format. The client directs the user to the constructed URI using a browser window. The user is prompted to log in, enter her or his username and password, and grant the requested permissions to the client application. If the user is part of several workspaces in awork, the user needs to select the workspace before authorizing the application.
+The client constructs the request URI by adding the following parameters to the query string of the authorization endpoint URI. The client directs the user to the constructed URI using a browser window. The user is prompted to log in, enter her or his username and password, and grant the requested permissions to the client application. If the user is part of several workspaces in awork, the user needs to select the workspace before authorizing the application.
 
 **Parameter**
 
@@ -120,15 +125,19 @@ The client constructs the request URI by adding the following parameters to the 
 * `redirect_uri`: The user will be redirected to a custom URI after the access was granted. Needs to be the same as specified when registering the client application. Required.
 * `scope`: A space-separated list of API scopes. See the available scopes above. Required.
 * `state`: An arbitrary state string that helps the client application identify the request. Optional.
+* `code_challenge`: Base64-URL encoded SHA256 hash of the `code_verifier`
+* `code_challenge_method`: Use `S256`
 
 ```sh
-GET /accounts/authorize
+GET https://api.awork.com/api/v1/accounts/authorize
     ?client_id={client_id}
     &response_type=code
     &grant_type=authorization_code
     &redirect_uri={redirect_uri}
     &state={state}
     &scope={scope}
+    &code_challenge={code_challenge}
+    &code_challenge_method=S256
 ```
 
 **Note:** The generated URL needs to be opened in a browser window. The user has to log in to authorize the application.
@@ -163,18 +172,31 @@ If the client application has been successfully authorized, it sends a request w
 * `code`: The `Authorization Code` that was received in the previous authorization response. Required.
 * `redirect_uri`: The previously specified redirect URI. Required.
 * `client_id`: The client Id of the client application. Required.
-* `client_secret`: The client secret of the client application. Required.
+* `code_verifier`: The original `code_verifier` used in the authorization request. Required.
+* `client_secret`: The client secret of the client application. Required if the client is confidential.
 
-**Note:** To build a proper HTTP `Authorization` header for [Basic Access Authentication](https://en.wikipedia.org/wiki/Basic\_access\_authentication), you need to encode your `client_id` and `client_secret` using [Base64](https://en.wikipedia.org/wiki/Base64), and add it to the `Authorization` header as follows: `Authorization: Basic Base64({client_id}:{client_secret})`
+**Note:** To build a proper HTTP `Authorization` header for confidential clients using [Basic Access Authentication](https://en.wikipedia.org/wiki/Basic\_access\_authentication), you need to encode your `client_id` and `client_secret` using [Base64](https://en.wikipedia.org/wiki/Base64), and add it to the `Authorization` header as follows: `Authorization: Basic Base64({client_id}:{client_secret})`
 
-```sh
-POST /accounts/token
+```sh title="Confidential client with client secret"
+POST https://api.awork.com/api/v1/accounts/token
 Authorization: Basic Base64({client_id}:{client_secret})
 Content-Type: application/x-www-form-urlencoded
 
 redirect_uri={redirect_uri}
 &grant_type=authorization_code
 &code={code}
+&code_verifier={code_verifier}
+```
+
+```sh title="Public client without client secret"
+POST https://api.awork.com/api/v1/accounts/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={client_id}
+&redirect_uri={redirect_uri}
+&grant_type=authorization_code
+&code={code}
+&code_verifier={code_verifier}
 ```
 
 **Note:** All query parameters (especially the `redirect_uri`) must be properly URL-encoded.
@@ -209,8 +231,8 @@ Authorization: Bearer {access_token}
 
 When the `Access Token` has expired, you must use the `Refresh Token` to retrieve a new `Access Token`. The application sends a request with the following parameters in the body to the token endpoint using the `application/x-www-form-urlencoded` format. Same as in the Access Token Request, you need to send the client credentials in the `Authorization` header.
 
-```sh
-POST /accounts/token
+```sh title="Confidential client with client secret"
+POST https://api.awork.com/api/v1/accounts/token
 Authorization: Basic Base64({client_id}:{client_secret})
 Content-Type: application/x-www-form-urlencoded
 
@@ -218,7 +240,13 @@ grant_type=refresh_token
 &refresh_token={refresh_token}
 ```
 
-#### Response
+```sh title="Public client without client secret"
+POST https://api.awork.com/api/v1/accounts/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={client_id}
+&grant_type=refresh_token
+&refresh_token={refresh_token}
 
 The authorization server responds with a new `Access Token` and a new expiration. It also returns a new `Refresh Token`, invalidating the old one.
 
@@ -230,45 +258,3 @@ The authorization server responds with a new `Access Token` and a new expiration
     "refresh_token": "eyJhbGciOiJ...",
 }
 ```
-
-### PKCE Support
-
-The awork API supports [PKCE (Proof Key for Code Exchange)](https://oauth.net/2/pkce/) for enhanced security in OAuth 2.0 flows. PKCE is especially recommended for mobile apps and single-page applications that cannot securely store client secrets.
-
-#### PKCE Parameters
-
-When using PKCE, include these additional parameters in your authorization request:
-
-* `code_challenge`: Base64-URL encoded SHA256 hash of the `code_verifier`
-* `code_challenge_method`: Use `S256` (recommended) or `plain`
-
-#### Authorization Request with PKCE
-
-```sh
-GET /accounts/authorize
-    ?client_id={client_id}
-    &response_type=code
-    &redirect_uri={redirect_uri}
-    &scope={scope}
-    &code_challenge={code_challenge}
-    &code_challenge_method=S256
-```
-
-#### Token Request with PKCE
-
-When exchanging the authorization code for tokens, include the original `code_verifier`:
-
-```sh
-POST /accounts/token
-Content-Type: application/x-www-form-urlencoded
-
-client_id={client_id}
-&grant_type=authorization_code
-&code={code}
-&redirect_uri={redirect_uri}
-&code_verifier={code_verifier}
-```
-
-**Note:** For public clients using PKCE, the `client_secret` is not required.
-
-For detailed implementation guidance, see the [OAuth 2.0 PKCE specification](https://oauth.net/2/pkce/).
