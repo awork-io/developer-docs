@@ -35599,8 +35599,12 @@
             "description": "The redirect URIs.",
             "nullable": true,
             "example": [
-              "https://awork.com/"
+              "https://awork.com/callback"
             ]
+          },
+          "isConfidential": {
+            "type": "boolean",
+            "description": "Indicates whether the client application is confidential.\r\nBackend integrations are considered confidential as the secret is never shipped to a user, while web apps or CLI integrations are not."
           },
           "createdOn": {
             "type": "string",
@@ -35654,8 +35658,12 @@
             "description": "The redirect URIs.",
             "nullable": true,
             "example": [
-              "https://awork.com/"
+              "https://awork.com/callback"
             ]
+          },
+          "isConfidential": {
+            "type": "boolean",
+            "description": "Indicates whether the client application is confidential.\r\nBackend integrations are considered confidential as the secret is never shipped to a user, while web apps or CLI integrations are not."
           }
         },
         "additionalProperties": false,
@@ -35684,8 +35692,12 @@
             "description": "The redirect URIs.",
             "nullable": true,
             "example": [
-              "https://awork.com/"
+              "https://awork.com/callback"
             ]
+          },
+          "isConfidential": {
+            "type": "boolean",
+            "description": "Indicates whether the client application is confidential.\r\nBackend integrations are considered confidential as the secret is never shipped to a user, while web apps or CLI integrations are not."
           },
           "clientSecret": {
             "type": "string",
