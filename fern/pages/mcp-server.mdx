@@ -1,0 +1,69 @@
+# MCP Server
+
+The awork MCP (Model Context Protocol) server provides AI assistants and language models with direct access to awork's API functionality. This enables seamless integration of awork capabilities into AI-powered workflows.
+
+## Endpoint
+
+```
+https://api.awork.com/api/v1/mcp
+```
+
+## Authentication
+
+The MCP server requires authentication using one of the following methods:
+
+### OAuth 2.0 with PKCE
+
+The MCP server supports OAuth 2.0 authentication with Proof Key for Code Exchange (PKCE) for secure authorization flows. This is the recommended approach for applications that can securely handle the OAuth flow.
+
+**Note:** Dynamic client registration is not currently supported. You'll need to register your application and obtain client credentials through the standard awork developer process.
+
+To register a client, see [Client Application](/authentication#client-application).
+
+### Bearer Token Authentication
+
+Alternatively, you can authenticate using an API key in the Authorization header:
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+To obtain an API key, see [Getting an API key](/authentication#getting-an-api-key).
+
+## Supported Actions
+
+The MCP server provides access to core awork functionality, allowing AI assistants to perform various actions on behalf of users:
+
+### Additional Capabilities
+
+The MCP server continues to expand its capabilities. For the most up-to-date list of supported actions, consult the **Tools** list of the MCP server after connecting to it.
+
+## Rate Limiting
+
+The MCP server enforces the same rate limits as the standard awork API. See the [Rate Limits](/rate-limits) documentation for details.
+
+## Permissions
+
+Actions performed through the MCP server are subject to the same permission model as the standard API. The authenticated user or API token must have appropriate permissions for the requested operations. Refer to the [Permissions](/permissions) documentation for more information.
+
+## Getting Started
+
+1. **Obtain Authentication Credentials**
+   - Register your application (for OAuth 2.0) or create an API key
+
+2. **Configure Your AI Assistant**
+   - Set up the MCP server in your client application
+   - Configure authentication method
+   - Define the actions you want to enable
+
+3. **Test the Connection**
+   - Start with simple read operations (e.g., getting projects)
+   - Verify authentication and permissions
+   - Gradually expand to more complex operations
+
+## Support
+
+For questions about the MCP server or to report issues:
+- Visit the [Developer Forum](https://community.awork.com/c/developer-forum/17)
+- Contact [support@awork.com](mailto:support@awork.com)
+- Refer to the main [API documentation](/apiv1) for detailed endpoint information

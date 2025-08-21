@@ -19,7 +19,7 @@ A long-lived `API Key` can be generated in the awork UI, which is permanently va
 
 ### Getting an API Key
 
-To get a long-lived `API Key`, log into your awork workspace, go to Settings > Integrations. Here you can create a new API Client or use an existing one. Click on the context menu button (...), then on Manage API Keys. Create a new one or choose an existing one, then click on Copy API Key.
+To get a long-lived `API Key`, log into your awork workspace, go to **Settings > Integrations**. Here you can create a new API Client or use an existing one. Click on the context menu button (...), then on Manage API Keys. Create a new one or choose an existing one, then click on Copy API Key.
 
 <Frame caption="Step 1: Create a new API client">
     <img src="/assets/api/authentication01.png" alt="Step 1: Create a new API client" />
@@ -53,19 +53,23 @@ awork supports and recommends [OAuth 2.1](https://oauth.net/2.1/) for improved s
 
 #### Client Application
 
-A client application needs to be registered before you can make API requests. Go to the workspace settings panel in awork and add a new client application. You will be asked to provide a unique name and a display name for your client.
+A client application needs to be registered before you can make API requests. In awork, go to **Settings > Integrations** and add a new client application. You will be asked to provide a unique name and a display name for your client.
+
+<Frame caption="Step 1: Create a new API client">
+    <img src="/assets/api/authentication01.png" alt="Step 1: Create a new API client" />
+</Frame>
 
 There are two types of client applications: **Confidential** and **Public**. Confidential clients, such as backend integrations can securely store the client secret, while public clients, such as web apps, mobile apps or CLI tools, cannot. 
 
 **Client Id**
 
-The `client_id` is used to identify your client application. After you register a client application, you'll find the `client_id` in the list of client applications in the workspace settings panel.
+The `client_id` is used to identify your client application. After you register a client application, you'll be able to see the `client_id` in the list of client applications in the **Integrations** panel.
 
 **Client Secret**
 
 The `client_secret` is generated when registering a confidential client. The secret will be used to authenticate your client application when you request a token.
 
-The client secret is only displayed when creating the client application! It can be regenerated, but all clients will lose access when their token expires.
+The client secret is only displayed when creating the client application, so copy it and keep it safe! It can be regenerated, but all clients will lose access when their token expires.
 
 #### Scopes
 
