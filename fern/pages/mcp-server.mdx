@@ -48,20 +48,36 @@ The MCP server enforces the same rate limits as the standard awork API. See the 
 
 Actions performed through the MCP server are subject to the same permission model as the standard API. The authenticated user or API token must have appropriate permissions for the requested operations. Refer to the [Permissions](/permissions) documentation for more information.
 
-## Getting Started
+## Examples
 
-1. **Obtain Authentication Credentials**
-   - Register your application (for OAuth 2.0) or create an API key
+### Visual Studio Code
 
-2. **Configure Your AI Assistant**
-   - Set up the MCP server in your client application
-   - Configure authentication method
-   - Define the actions you want to enable
+In VSCode, add the MCP server to the `mcp.json` configuration file like this:
+```json title="mcp.json"
+{
+	"servers": {
+		"awork": {
+			"url": "https://api.awork.com/api/v1/mcp/",
+			"type": "http",
+			"headers": {
+				"Authorization": "Bearer ${input:awork-api-key}",
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			}
+		}
+	},
+	"inputs": [
+		{
+			"type": "promptString",
+			"id": "awork-api-key",
+			"description": "awork API Key",
+			"password": true
+		}
+	]
+}
+```
 
-3. **Test the Connection**
-   - Start with simple read operations (e.g., getting projects)
-   - Verify authentication and permissions
-   - Gradually expand to more complex operations
+It will then prompt you to enter the awork API Key when starting the server. More details [here](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).
 
 ## Support
 
