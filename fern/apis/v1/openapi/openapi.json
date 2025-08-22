@@ -10295,7 +10295,7 @@
           "ProjectRoles"
         ],
         "summary": "Creates a new project role.",
-        "description": "Creates a new project role.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "description": "Creates a new project role.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "requestBody": {
           "description": "The model used to create a project role.",
           "content": {
@@ -10336,6 +10336,9 @@
         "x-access": {
           "admin": "true",
           "workspace-manage-config": "write"
+        },
+        "x-subscriptionlevel": {
+          "minimumPlan": "standard"
         }
       }
     },
@@ -10614,7 +10617,7 @@
           "ProjectRoles"
         ],
         "summary": "Creates, updates or deletes a permission of a project role with the specified id.",
-        "description": "Creates, updates or deletes a permission of the project role.\r\nIf the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\nthe permission will be updated. If the 'AccessLevels' property of the model is empty,\r\nthe permission will be deleted.\r\nThe permission will be created if it does not exist.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "description": "Creates, updates or deletes a permission of the project role.\r\nIf the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\nthe permission will be updated. If the 'AccessLevels' property of the model is empty,\r\nthe permission will be deleted.\r\nThe permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10667,9 +10670,6 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
-        },
-        "x-subscriptionlevel": {
-          "minimumPlan": "standard"
         }
       }
     },
@@ -39469,6 +39469,10 @@
             "format": "double",
             "nullable": true,
             "example": 1
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if this entity is coming from an external workspace (awork Connect)."
           }
         },
         "additionalProperties": false
@@ -39643,6 +39647,10 @@
             "nullable": true,
             "example": 1
           },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if this entity is coming from an external workspace (awork Connect)."
+          },
           "selectionOptions": {
             "type": "array",
             "items": {
@@ -39724,6 +39732,10 @@
             "format": "double",
             "nullable": true,
             "example": 1
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if this entity is coming from an external workspace (awork Connect)."
           },
           "selectionOptions": {
             "type": "array",
