@@ -43,6 +43,8 @@ navigation:
     path: ./pages/permissions.mdx
   - page: Webhooks
     path: ./pages/webhooks.mdx
+  - page: MCP Server
+    path: ./pages/mcp-server.mdx
   - page: Versioning
     path: ./pages/versioning.mdx
   - page: Changelog
