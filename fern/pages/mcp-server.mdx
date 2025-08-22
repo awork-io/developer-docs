@@ -79,6 +79,15 @@ In VSCode, add the MCP server to the `mcp.json` configuration file like this:
 
 It will then prompt you to enter the awork API Key when starting the server. More details [here](https://code.visualstudio.com/docs/copilot/chat/mcp-servers).
 
+### Claude Code
+
+In Claude Code, add the MCP server using the following command, replacing `{api-key}` with your actual API key:
+```sh
+claude mcp add --transport http awork https://api.awork.com/api/v1/mcp --header "Authorization: Bearer {api-key}"
+```
+
+Find more details [here](https://docs.anthropic.com/en/docs/claude-code/mcp#option-3%3A-add-a-remote-http-server).
+
 ## Support
 
 For questions about the MCP server or to report issues:
