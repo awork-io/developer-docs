@@ -1088,6 +1088,57 @@
         }
       }
     },
+    "/clientapplications/register": {
+      "post": {
+        "tags": [
+          "ClientApplications"
+        ],
+        "summary": "Dynamically registers a new OAuth 2.0 client according to RFC 7591.",
+        "description": "This endpoint implements the OAuth 2.0 Dynamic Client Registration Protocol.\r\nIt allows clients to register themselves with the authorization server dynamically.",
+        "requestBody": {
+          "description": "The dynamic client registration request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DynamicClientRegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DynamicClientRegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DynamicClientRegistrationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
+      }
+    },
     "/clientapplications/{clientId}": {
       "delete": {
         "tags": [
@@ -35881,6 +35932,276 @@
         ],
         "type": "string"
       },
+      "DynamicClientRegistrationError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "A single error code from the defined set.",
+            "nullable": true,
+            "example": "invalid_redirect_uri"
+          },
+          "error_description": {
+            "type": "string",
+            "description": "Human-readable text providing additional information about the error.",
+            "nullable": true,
+            "example": "The redirect URI is invalid."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Error response for OAuth 2.0 Dynamic Client Registration as defined in RFC 7591."
+      },
+      "DynamicClientRegistrationRequest": {
+        "type": "object",
+        "properties": {
+          "redirect_uris": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of redirection URI strings for use in redirect-based flows.",
+            "nullable": true,
+            "example": [
+              "https://app.ncnstn.com/oauth/callback",
+              "https://app.ncnstn.com/oauth/callback-2"
+            ]
+          },
+          "client_name": {
+            "type": "string",
+            "description": "Human-readable name of the client to be presented to the end-user.",
+            "nullable": true,
+            "example": "NCNSTN Integration"
+          },
+          "token_endpoint_auth_method": {
+            "type": "string",
+            "description": "Requested authentication method for the token endpoint.",
+            "nullable": true,
+            "example": "client_secret_basic"
+          },
+          "grant_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of OAuth 2.0 grant types that the client will use.",
+            "nullable": true,
+            "example": [
+              "authorization_code",
+              "refresh_token"
+            ]
+          },
+          "response_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of OAuth 2.0 response types that the client will use.",
+            "nullable": true,
+            "example": [
+              "code"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "description": "Space-delimited list of OAuth 2.0 scope values.",
+            "nullable": true,
+            "example": "openid profile email offline_access"
+          },
+          "application_type": {
+            "type": "string",
+            "description": "Kind of the application.",
+            "nullable": true,
+            "example": "web"
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of e-mail addresses of people responsible for this client.",
+            "nullable": true,
+            "example": [
+              "carla@ncnstn.com",
+              "dev@ncnstn.com"
+            ]
+          },
+          "logo_uri": {
+            "type": "string",
+            "description": "URL that references a logo for the client application.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com/logo.png"
+          },
+          "client_uri": {
+            "type": "string",
+            "description": "URL of the home page of the client application.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com"
+          },
+          "policy_uri": {
+            "type": "string",
+            "description": "URL that the client provides to the end-user with information about how the client uses their data.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com/privacy"
+          },
+          "tos_uri": {
+            "type": "string",
+            "description": "URL that the client provides to the end-user to read about the client's terms of service.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com/terms"
+          },
+          "software_id": {
+            "type": "string",
+            "description": "A unique identifier string (e.g., a Universally Unique Identifier (UUID)) assigned by the client developer.",
+            "nullable": true,
+            "example": "a3f8c3a1-6f1b-4ac7-8cb3-9d4c2b2b8f9f"
+          },
+          "software_version": {
+            "type": "string",
+            "description": "A version identifier string for the client software identified by software_id.",
+            "nullable": true,
+            "example": "1.0.0"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DynamicClientRegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "redirect_uris": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of redirection URI strings for use in redirect-based flows.",
+            "nullable": true,
+            "example": [
+              "https://app.ncnstn.com/oauth/callback",
+              "https://app.ncnstn.com/oauth/callback-2"
+            ]
+          },
+          "client_name": {
+            "type": "string",
+            "description": "Human-readable name of the client to be presented to the end-user.",
+            "nullable": true,
+            "example": "NCNSTN Integration"
+          },
+          "token_endpoint_auth_method": {
+            "type": "string",
+            "description": "Requested authentication method for the token endpoint.",
+            "nullable": true,
+            "example": "client_secret_basic"
+          },
+          "grant_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of OAuth 2.0 grant types that the client will use.",
+            "nullable": true,
+            "example": [
+              "authorization_code",
+              "refresh_token"
+            ]
+          },
+          "response_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of OAuth 2.0 response types that the client will use.",
+            "nullable": true,
+            "example": [
+              "code"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "description": "Space-delimited list of OAuth 2.0 scope values.",
+            "nullable": true,
+            "example": "openid profile email offline_access"
+          },
+          "application_type": {
+            "type": "string",
+            "description": "Kind of the application.",
+            "nullable": true,
+            "example": "web"
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of e-mail addresses of people responsible for this client.",
+            "nullable": true,
+            "example": [
+              "carla@ncnstn.com",
+              "dev@ncnstn.com"
+            ]
+          },
+          "logo_uri": {
+            "type": "string",
+            "description": "URL that references a logo for the client application.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com/logo.png"
+          },
+          "client_uri": {
+            "type": "string",
+            "description": "URL of the home page of the client application.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com"
+          },
+          "policy_uri": {
+            "type": "string",
+            "description": "URL that the client provides to the end-user with information about how the client uses their data.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com/privacy"
+          },
+          "tos_uri": {
+            "type": "string",
+            "description": "URL that the client provides to the end-user to read about the client's terms of service.",
+            "nullable": true,
+            "example": "https://app.ncnstn.com/terms"
+          },
+          "software_id": {
+            "type": "string",
+            "description": "A unique identifier string (e.g., a Universally Unique Identifier (UUID)) assigned by the client developer.",
+            "nullable": true,
+            "example": "a3f8c3a1-6f1b-4ac7-8cb3-9d4c2b2b8f9f"
+          },
+          "software_version": {
+            "type": "string",
+            "description": "A version identifier string for the client software identified by software_id.",
+            "nullable": true,
+            "example": "1.0.0"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "OAuth 2.0 client identifier string.",
+            "nullable": true,
+            "example": "dcr_ncnstn_integration_123456"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "OAuth 2.0 client secret string. Only provided for confidential clients.",
+            "nullable": true,
+            "example": "G7g9jK8mP2nR4sT6vY8xZ0wQ"
+          },
+          "client_secret_expires_at": {
+            "type": "integer",
+            "description": "Time at which the client secret will expire (0 if it doesn't expire).",
+            "format": "int64",
+            "example": 0
+          },
+          "client_id_issued_at": {
+            "type": "integer",
+            "description": "Time at which the client identifier was issued as seconds since Unix epoch.",
+            "format": "int64",
+            "example": 1617187200
+          }
+        },
+        "additionalProperties": false,
+        "description": "OAuth 2.0 Dynamic Client Registration Response as defined in RFC 7591.\r\nInherits all request properties and adds response-specific fields."
+      },
       "EmailVerificationForm": {
         "type": "object",
         "properties": {
@@ -43915,6 +44236,10 @@
           "isAccepted": {
             "type": "boolean",
             "description": "True if the invitation to the project is accepted."
+          },
+          "isAutoAccepted": {
+            "type": "boolean",
+            "description": "True if the invitation was auto-accepted (trusted) by the external workspace."
           },
           "externalWorkspaceId": {
             "type": "string",
