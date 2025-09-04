@@ -18,6 +18,38 @@
     }
   ],
   "paths": {
+    "/.well-known/oauth-authorization-server": {
+      "get": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Returns the OAuth 2.0 Authorization Server metadata.",
+        "description": "This is only used for local development.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/absenceregions": {
       "get": {
         "tags": [
@@ -24182,14 +24214,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "updateTaskPlannedDuration",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
           }
         ],
         "requestBody": {
@@ -25974,15 +25998,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "updateTaskPlannedDuration",
-            "in": "query",
-            "description": "Whether to update the task's planned duration based on the assignments (default: true for backwards compatibility).",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
           }
         ],
         "requestBody": {
@@ -26108,15 +26123,6 @@
             "schema": {
               "type": "string",
               "format": "uuid"
-            }
-          },
-          {
-            "name": "updateTaskPlannedDuration",
-            "in": "query",
-            "description": "Whether to update the task's planned duration based on the manual efforts (default: true for backwards compatibility).",
-            "schema": {
-              "type": "boolean",
-              "default": true
             }
           }
         ],
@@ -36713,9 +36719,6 @@
         "description": "The model to send an MFA token."
       },
       "SocialConnectForm": {
-        "required": [
-          "code"
-        ],
         "type": "object",
         "properties": {
           "provider": {
@@ -36725,10 +36728,16 @@
             "example": "google"
           },
           "code": {
-            "minLength": 1,
             "type": "string",
-            "description": "The authorization code from the provider.",
+            "description": "The authorization code from the provider.\r\nRequired if Id is not provided.",
+            "nullable": true,
             "example": "4/P7q7W91a-oMsCeLvIaQm6bTrgtp7"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the user.\r\nRequired if Code is not provided.",
+            "nullable": true,
+            "example": "123456789"
           }
         },
         "additionalProperties": false
@@ -37981,11 +37990,6 @@
           "adjustSubtasks": {
             "type": "boolean",
             "description": "If set to true, it will adjust the dates of subtasks of selected tasks.\r\nIf set to false, it will only adjust the dates of the selected tasks.",
-            "nullable": true
-          },
-          "updateTaskPlannedDuration": {
-            "type": "boolean",
-            "description": "Whether to update the task's planned duration based on the assignments (default: true for backwards compatibility).\r\nUsed for 'assignusers', 'unassignusers', and 'delete' operations.",
             "nullable": true
           }
         },
@@ -46826,7 +46830,7 @@
         },
         "additionalProperties": false
       },
-      "SubdomanModel": {
+      "SubdomainModel": {
         "type": "object",
         "properties": {
           "id": {
@@ -52264,7 +52268,7 @@
           "subdomains": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SubdomanModel"
+              "$ref": "#/components/schemas/SubdomainModel"
             },
             "nullable": true
           },
@@ -57528,7 +57532,7 @@
           },
           "validateEmailDomain": {
             "type": "boolean",
-            "description": "If the email domain should be validated against the public domain list",
+            "description": "If the email domain should be validated against the public domain list.",
             "nullable": true
           },
           "firstName": {
@@ -58395,6 +58399,10 @@
     {
       "name": "ClientApplications",
       "description": "Client applications are important for the external login flow used by your applications. These endpoints allow you to manage the client applications registered by your workspace."
+    },
+    {
+      "name": "OAuth",
+      "description": "The OAuth feature provides OAuth 2.0 discovery endpoints for authorization server and protected resource metadata."
     },
     {
       "name": "AbsenceRegions",
