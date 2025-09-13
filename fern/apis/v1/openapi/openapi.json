@@ -48299,14 +48299,14 @@
           "plannedDuration": {
             "type": "integer",
             "description": "The sum of the planned duration of the tasks (in seconds)",
-            "format": "int32",
+            "format": "int64",
             "nullable": true,
             "example": 2000
           },
           "trackedDuration": {
             "type": "integer",
             "description": "The sum of the tracked duration of the tasks (in seconds)",
-            "format": "int32",
+            "format": "int64",
             "nullable": true,
             "example": 1600
           }
