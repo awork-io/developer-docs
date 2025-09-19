@@ -29870,7 +29870,7 @@
           "TypeOfWork"
         ],
         "summary": "Gets all types of work.",
-        "description": "Returns all type of work.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "showArchived",
@@ -29928,16 +29928,11 @@
           "TypeOfWork"
         ],
         "summary": "Creates a new type of work.",
-        "description": "Creates a new type of work.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
         "requestBody": {
           "description": "The type of work to create.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TypeOfWorkForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TypeOfWorkForm"
               }
@@ -29978,7 +29973,7 @@
           "TypeOfWork"
         ],
         "summary": "Gets all possible icons for type of work.",
-        "description": "Returns all possible icons for type of work.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -30009,16 +30004,16 @@
         }
       }
     },
-    "/typeofwork/{id}": {
+    "/typeofwork/{typeOfWorkId}": {
       "get": {
         "tags": [
           "TypeOfWork"
         ],
         "summary": "Gets the type of work with the specified id.",
-        "description": "Gets a type of work.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
-            "name": "id",
+            "name": "typeOfWorkId",
             "in": "path",
             "description": "The id of the type of work.",
             "required": true,
@@ -30059,10 +30054,10 @@
           "TypeOfWork"
         ],
         "summary": "Changes the properties of an existing type of work.",
-        "description": "A change will also effect all related tasks and time entries.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
         "parameters": [
           {
-            "name": "id",
+            "name": "typeOfWorkId",
             "in": "path",
             "description": "Id of the type which will be changed.",
             "required": true,
@@ -30076,11 +30071,6 @@
           "description": "The type of work with the changed properties.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TypeOfWorkForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TypeOfWorkForm"
               }
@@ -30121,7 +30111,7 @@
           "TypeOfWork"
         ],
         "summary": "Deletes the type of work with the specified id.",
-        "description": "Deletes the type of work with the specified id.\r\nIf any tasks, task templates or time entries still use this type, the id of a new type needs to be provided.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "parameters": [
           {
             "name": "typeOfWorkId",
@@ -30138,11 +30128,6 @@
           "description": "The model to delete the task type.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteTaskTypeForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/DeleteTaskTypeForm"
               }
@@ -30176,7 +30161,7 @@
           "TypeOfWork"
         ],
         "summary": "Archives or unarchives the type of work with the specified id.",
-        "description": "Archives or unarchives the type of work with the specified id.\r\nAn archived type of work still exists for all tasks and time entries currently using it,\r\nbut can no longer be created with this type of work.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "parameters": [
           {
             "name": "typeOfWorkId",
@@ -30193,11 +30178,6 @@
           "description": "The model to archive the type of work.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ArchivedForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ArchivedForm"
               }
@@ -43194,6 +43174,15 @@
             "description": "The list of entity Ids that were updated since the last sync but do NOT match the current filter criteria.\r\nThese are entities that are not included in Updated or Deleted lists but may need to be removed from the frontend's filtered store.\r\nThe frontend should check if any of these exist in its local filtered store and remove them if present.",
             "nullable": true
           },
+          "inaccessible": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The list of entity Ids that changed since the last sync but the user no longer has access to.\r\nThese are entities that the user previously had access to (and may exist in the frontend store from previous syncs)\r\nbut can no longer access due to permission changes (e.g., removed as project member, role downgraded).\r\nThe frontend should remove these entities from the store.",
+            "nullable": true
+          },
           "lastSync": {
             "type": "string",
             "description": "The timestamp of the last sync operation. This indicates the point in time when the data was last synchronized.",
@@ -48204,62 +48193,6 @@
             "description": "The id of the workspace the setting belongs to.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskSettingEntity": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "deletedOn": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedBy": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "workspaceId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "isExternal": {
-            "type": "boolean"
-          },
-          "type": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "enabled": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
