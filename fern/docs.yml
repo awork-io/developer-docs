@@ -62,48 +62,48 @@ navigation:
     path: ./pages/api/projects.mdx
     icon: diagram-project
   - projects
-  - projecttypes
-  - projectstatuses
-  - projectroles
-  - projectmembers
-  - projectcomments
-  - projecttags
-  - projectmilestones
-  - projectactivities
-  - projectautomations
-  - projectactions
-  - timebookings
+  - project types
+  - project statuses
+  - project roles
+  - project members
+  - project comments
+  - project tags
+  - project milestones
+  - project activities
+  - project automations
+  - project actions
+  - time bookings
   - retainers
   - autopilot
   - page: Tasks Overview
     path: ./pages/api/tasks.mdx
     icon: list-check
   - tasks
-  - tasklists
-  - taskviews
-  - projecttasks
-  - privatetasks
-  - assignedtasks
-  - checklistitems
-  - taskcomments
-  - tasktags
-  - taskdependencies
-  - taskschedules
-  - taskactivities
-  - tasksbatch
-  - typeofwork
+  - task lists
+  - task views
+  - project tasks
+  - private tasks
+  - assigned tasks
+  - checklist items
+  - task comments
+  - task tags
+  - task dependencies
+  - task schedules
+  - task activities
+  - tasks batch
+  - type of work
   - page: Time Tracking Overview
     path: ./pages/api/timetracking.mdx
     icon: timer
-  - timeentries
-  - timetracking
-  - timereports
+  - time entries
+  - time tracking
+  - time reports
   - page: Documents Overview
     path: ./pages/api/documents.mdx
     icon: note
   - documents
-  - documentspaces
-  - documentcomments
+  - document spaces
+  - document comments
   - page: Search Overview
     path: ./pages/api/search.mdx
     icon: magnifying-glass
@@ -112,38 +112,39 @@ navigation:
     path: ./pages/api/companies.mdx
     icon: crown
   - companies
-  - companytags
+  - company tags
   - page: Users Overview
     path: ./pages/api/users.mdx
     icon: users
   - users
-  - usercapacity
-  - usertags
+  - user capacity
+  - user tags
   - absences
-  - absenceregions
-  - workspaceabsences
+  - absence regions
+  - workspace absences
   - dashboards
   - page: Files & Images Overview
     path: ./pages/api/files.mdx
     icon: paperclip
   - files
-  - fileupload
-  - projectfiles
-  - taskfiles
-  - companyfiles
-  - commentfiles
-  - documentfiles
-  - userfiles
-  - workspacefiles
-  - projecttemplatefiles
-  - tasktemplatefiles
-  - sharedfiles
-  - temporaryfiles
+  - file upload
+  - project files
+  - task files
+  - company files
+  - comment files
+  - document files
+  - user files
+  - workspace files
+  - project template files
+  - task template files
+  - shared files
+  - temporary files
   - images
   - page: Custom Fields Overview
     path: ./pages/api/customfields.mdx
     icon: toggle-off
-  - customfields
+  - custom fields
+  - project custom fields
   - page: Workload & Planning Overview
     path: ./pages/api/workload.mdx
     icon: briefcase
@@ -151,14 +152,14 @@ navigation:
   - page: Project Templates Overview
     path: ./pages/api/projecttemplates.mdx
     icon: box
-  - projecttemplates
-  - taskbundles
-  - tasktemplates
-  - taskdependencytemplates
-  - projecttemplatetags
-  - projectmilestonetemplates
-  - projecttemplateautomations
-  - projecttemplateactions
+  - project templates
+  - task bundles
+  - task templates
+  - task dependency templates
+  - project template tags
+  - project milestone templates
+  - project template automations
+  - project template actions
   - page: Login & Access Overview
     path: ./pages/api/login.mdx
     icon: key
@@ -178,17 +179,17 @@ navigation:
   # - page: Others
   #   path: ./pages/api/others.mdx
   #   icon: angles-right
-# - api: API v2 Reference
-#   api-name: v2
-#   paginated: true
-#   display-errors: true
-#   summary: ./apis/v2/summary.mdx
-#   slug: apiv2
-#   layout:
-#   - page: Time Tracking Overview
-#     path: ./pages/api/v2/timetracking.mdx
-#     icon: timer
-#   - timeTracking
+  # - api: API v2 Reference
+  #   api-name: v2
+  #   paginated: true
+  #   display-errors: true
+  #   summary: ./apis/v2/summary.mdx
+  #   slug: apiv2
+  #   layout:
+  #   - page: Time Tracking Overview
+  #     path: ./pages/api/v2/timetracking.mdx
+  #     icon: timer
+  #   - timeTracking
 
 navbar-links:
 - type: secondary
