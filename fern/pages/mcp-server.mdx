@@ -14,17 +14,17 @@ https://api.awork.com/api/v1/mcp
 
 The MCP server requires authentication using one of the following methods:
 
-### OAuth 2.0 with PKCE
+### OAuth 2.1 with PKCE
 
-The MCP server supports OAuth 2.0 authentication with Proof Key for Code Exchange (PKCE) for secure authorization flows. This is the recommended approach for applications that can securely handle the OAuth flow.
+The MCP server supports [OAuth 2.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13) authentication with Proof Key for Code Exchange (PKCE) for secure authorization flows. This is the recommended approach for applications that can securely handle the OAuth flow.
 
-**Note:** Dynamic client registration is not currently supported. You'll need to register your application and obtain client credentials through the standard awork developer process.
+awork supports [Dynamic Client Registration](https://datatracker.ietf.org/doc/html/rfc7591) which means clients can register themselves during the configuration process. The MCP server will use the registered client to perform the OAuth flow.
 
-To register a public API client, see [Client Application](/authentication#client-application).
 
 ### Bearer Token Authentication
 
-Alternatively, you can authenticate using an API key in the Authorization header:
+If your client does not support Dynamic Client Registration, you need to register a client manually and provide an API key. To register a public API client, see [Client Application](/authentication#client-application).
+You can authenticate using an API key in the Authorization header. The configuration depends on the client you are using. Here is an example of the required header:
 
 ```http
 Authorization: Bearer YOUR_API_KEY
