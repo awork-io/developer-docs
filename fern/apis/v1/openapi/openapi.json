@@ -41827,14 +41827,14 @@
           },
           "typeOfWorkId": {
             "type": "string",
-            "description": "The id of the type of work for this task.",
+            "description": "The id of the type of work for this task.\r\nIf not provided, defaults to the first type of work in the workspace.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "taskStatusId": {
             "type": "string",
-            "description": "The id of the status for this task.",
+            "description": "The id of the status for this task.\r\nIf not provided, defaults to the first status of type 'todo'.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
