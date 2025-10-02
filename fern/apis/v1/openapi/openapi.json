@@ -37943,6 +37943,17 @@
         },
         "additionalProperties": false
       },
+      "BillingStatusAvatar": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Avatar for the billability status of a task."
+      },
       "Break": {
         "type": "object",
         "properties": {
@@ -38838,6 +38849,28 @@
         },
         "additionalProperties": false,
         "description": "The GET company model."
+      },
+      "CompanyAvatar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          },
+          "industry": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "CompanyDeleteForm": {
         "type": "object",
@@ -40222,6 +40255,36 @@
               "$ref": "#/components/schemas/Widget"
             },
             "description": "A list of all widgets of the dashboard.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateGrouping": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quarter": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "week": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -41827,14 +41890,14 @@
           },
           "typeOfWorkId": {
             "type": "string",
-            "description": "The id of the type of work for this task.",
+            "description": "The id of the type of work for this task.\r\nIf not provided, defaults to the first type of work in the workspace.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "taskStatusId": {
             "type": "string",
-            "description": "The id of the status for this task.",
+            "description": "The id of the status for this task.\r\nIf not provided, defaults to the first status of type 'todo'.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -44169,6 +44232,34 @@
         },
         "additionalProperties": false,
         "description": "/// This class contains all information to handle projects."
+      },
+      "ProjectAvatar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          },
+          "isPrivate": {
+            "type": "boolean"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyAvatar"
+          }
+        },
+        "additionalProperties": false
       },
       "ProjectConnection": {
         "type": "object",
@@ -46862,6 +46953,27 @@
         },
         "additionalProperties": false
       },
+      "TaskAvatar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusAvatar"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectAvatar"
+          }
+        },
+        "additionalProperties": false
+      },
       "TaskBundle": {
         "type": "object",
         "properties": {
@@ -47355,6 +47467,21 @@
           "isHiddenForConnectUsers": {
             "type": "boolean",
             "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise."
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskListAvatar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -48317,6 +48444,29 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskStatusAvatar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -49448,12 +49598,6 @@
       "TimeReport": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the time report.",
-            "nullable": true,
-            "example": "Project report for March 2022"
-          },
           "shared": {
             "type": "boolean",
             "description": "Whether the time report is shared.",
@@ -49678,6 +49822,12 @@
             },
             "description": "Group the time report by the type of works.",
             "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the time report.",
+            "nullable": true,
+            "example": "Project report for March 2022"
           },
           "id": {
             "type": "string",
@@ -49703,15 +49853,9 @@
         },
         "additionalProperties": false
       },
-      "TimeReportForm": {
+      "TimeReportBaseForm": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the time report.",
-            "nullable": true,
-            "example": "Project report for March 2022"
-          },
           "shared": {
             "type": "boolean",
             "description": "Whether the time report is shared.",
@@ -49936,6 +50080,339 @@
             },
             "description": "Group the time report by the type of works.",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReportForm": {
+        "type": "object",
+        "properties": {
+          "shared": {
+            "type": "boolean",
+            "description": "Whether the time report is shared.",
+            "example": true
+          },
+          "dateMode": {
+            "type": "string",
+            "description": "The date mode of the time report.\r\nCan be: \"today\", \"yesterday\", \"selectDate\",\r\n\"selectWeek\", \"currentWeek\", \"lastWeek\",\r\n\"selectMonth\", \"currentMonth\", \"lastMonth\",\r\n\"selectQuarter\", \"currentQuarter\", \"lastQuarter\",\r\n\"selectYear\", \"currentYear\", \"lastYear\",\r\n\"customRange\", \"noFilter\".",
+            "nullable": true,
+            "example": "lastMonth"
+          },
+          "startOn": {
+            "type": "string",
+            "description": "The start date time of the report\r\nwhen DateMode is \"customRange\".",
+            "format": "date-time",
+            "nullable": true,
+            "example": null
+          },
+          "endOn": {
+            "type": "string",
+            "description": "The end date time of the time report.\r\nwhen DateMode is \"customRange\".",
+            "format": "date-time",
+            "nullable": true,
+            "example": null
+          },
+          "filter": {
+            "type": "string",
+            "description": "The generated filter query of the time report.",
+            "nullable": true,
+            "example": "projectId eq guid'b870a84e-c7fa-e711-80c2-00155d3163ca'"
+          },
+          "chartType": {
+            "type": "string",
+            "description": "The actual chart type of the time report.\r\nCan be: \"group\" or \"time\".",
+            "nullable": true,
+            "example": "group"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The id of the project of the time report.\r\nUsed for the pdf reports.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "companyId": {
+            "type": "string",
+            "description": "The id of the company of the time report.\r\nUsed for the pdf reports.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "sumBy": {
+            "type": "string",
+            "description": "Summarises the values by the sum of this property.",
+            "nullable": true,
+            "example": "UserId"
+          },
+          "sortBy": {
+            "type": "string",
+            "description": "Sorts the values by this property.",
+            "nullable": true,
+            "example": "CreatedOn"
+          },
+          "sortByOrder": {
+            "type": "string",
+            "description": "The way how to sort the data.\r\nCan be: \"asc\", desc\".",
+            "nullable": true,
+            "example": "asc"
+          },
+          "roundBy": {
+            "type": "string",
+            "description": "Rounding method of the time report.\r\nCan be:\r\n\"nearQuarter\", \"nearHalf\", \"nearHour\",\r\n\"upQuarter\", \"upHalf\", \"upHour\".",
+            "nullable": true,
+            "example": "upHour"
+          },
+          "groupBy": {
+            "type": "string",
+            "description": "Group the values by property.",
+            "nullable": true,
+            "example": null
+          },
+          "sortColumn": {
+            "type": "string",
+            "description": "Sort the values of the time report by a column.",
+            "nullable": true,
+            "example": null
+          },
+          "availableColumns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of shown Columns in the time report.\r\nCan be: \"status\", \"duration\", \"task\", \"timeTrackingNote\", \"typeOfWork\",\r\n\"project\", \"date\", \"time\", \"user\", \"client\", \"projectType\", \"projectRole\",\r\n\"plannedDuration\", \"taskList\".",
+            "nullable": true,
+            "example": [
+              "duration",
+              "user"
+            ]
+          },
+          "billingStatuses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Filter of bill satuses of the time report.\r\nCan be: \"billed\", \"notBilled\", \"notBillable\".",
+            "nullable": true,
+            "example": [
+              "notBilled"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "description": "Filter time entries by note.",
+            "nullable": true,
+            "example": null
+          },
+          "usersFilter": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter time entries by users.",
+            "nullable": true
+          },
+          "projectsFilter": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter time entries by projects.",
+            "nullable": true
+          },
+          "noProjectFilter": {
+            "type": "boolean",
+            "description": "Filter to show also time entries without a project.",
+            "nullable": true,
+            "example": null
+          },
+          "projectCompaniesFilter": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter time entries by projects of the companies.",
+            "nullable": true
+          },
+          "projectTypesFilter": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter time entries by projects of the type.",
+            "nullable": true
+          },
+          "projectStatusesNameFilter": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Filter time entries by projects with status name.",
+            "nullable": true
+          },
+          "projectStatusTypesFilter": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Filter time entries by projects with status of type.",
+            "nullable": true
+          },
+          "projectTeamsFilter": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "List of teams, to the filter the projects for.",
+            "nullable": true
+          },
+          "userTeamsFilter": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter for the teams to filter the users.",
+            "nullable": true
+          },
+          "taskTagsModelFilter": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "description": "Filter time entries by the tags of the task.",
+            "nullable": true
+          },
+          "projectTagsModelFilter": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "description": "Filter time entries by the tags of the project.",
+            "nullable": true
+          },
+          "userTagsModelFilter": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultTagModel"
+            },
+            "description": "Filter time entries by the tags of the users.",
+            "nullable": true
+          },
+          "typesOfWorkFilter": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Group the time report by the type of works.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the time report.",
+            "nullable": true,
+            "example": "Project report for March 2022"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReportGroups": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "durationSum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "$ref": "#/components/schemas/DateGrouping"
+          },
+          "billingStatus": {
+            "$ref": "#/components/schemas/BillingStatusAvatar"
+          },
+          "typeOfWork": {
+            "$ref": "#/components/schemas/TypeOfWorkAvatar"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectAvatar"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyAvatar"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserAvatar"
+          },
+          "task": {
+            "$ref": "#/components/schemas/TaskAvatar"
+          },
+          "taskList": {
+            "$ref": "#/components/schemas/TaskListAvatar"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReportStatistics": {
+        "type": "object",
+        "properties": {
+          "groupBy": {
+            "type": "string",
+            "description": "The groupBy of the time report. Optional.",
+            "nullable": true
+          },
+          "aggregatedBy": {
+            "type": "string",
+            "description": "The time aggregation.",
+            "nullable": true
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The timezone of the user.",
+            "nullable": true
+          },
+          "stats": {
+            "$ref": "#/components/schemas/TimeReportStats"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeReportGroups"
+            },
+            "description": "The aggregated groups of the time report.\r\nAlways aggregated by time, and optionally by the groupBy parameter.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReportStats": {
+        "type": "object",
+        "properties": {
+          "totalDuration": {
+            "type": "integer",
+            "description": "The total duration of all time entries matching the filter, in seconds.",
+            "format": "int32"
+          },
+          "billableDuration": {
+            "type": "integer",
+            "description": "The total billable duration of all time entries matching the filter, in seconds.\r\nThis is excluding the already billed time entries.",
+            "format": "int32"
+          },
+          "billedDuration": {
+            "type": "integer",
+            "description": "The total billed duration of all time entries matching the filter, in seconds.",
+            "format": "int32"
+          },
+          "notBillableDuration": {
+            "type": "integer",
+            "description": "The total non-billable duration of all time entries matching the filter, in seconds.",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -50438,6 +50915,32 @@
         "additionalProperties": false,
         "description": "The task type model."
       },
+      "TypeOfWorkAvatar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isArchived": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "TypeOfWorkForm": {
         "required": [
           "name"
@@ -50868,6 +51371,32 @@
         },
         "additionalProperties": false,
         "description": "The user and workspace model."
+      },
+      "UserAvatar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "UserCapacity": {
         "type": "object",
@@ -58451,7 +58980,7 @@
     },
     {
       "name": "TimeReports",
-      "description": "The endpoints to manage the time reports."
+      "description": "Endpoints for generating and managing time report KPIs and configurations."
     },
     {
       "name": "TimeTracking",
