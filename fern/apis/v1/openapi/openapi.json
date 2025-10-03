@@ -406,7 +406,7 @@
           "Absences"
         ],
         "summary": "Returns all absences.",
-        "description": "Admin or user planning data permissions are required, \r\notherwise only the absences of the current user are returned.",
+        "description": "Admin or user planning data permissions are required,\r\n            otherwise only the absences of the current user are returned.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -445,23 +445,21 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "any": "true"
+        }
       },
       "post": {
         "tags": [
           "Absences"
         ],
         "summary": "Creates a new absence.",
-        "description": "User planning data permissions are required if the calling user\r\nis not the owner of the absence or admin.\r\nThe startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>",
+        "description": "User planning data permissions are required if the calling user\r\n            is not the owner of the absence or admin.\r\n            The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\n            These values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\n            The end date needs to be the same or after the start date.\r\n\r\n<Info title=\"Subscription Level\">This endpoint requires the Standard plan or higher.</Info>\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The absence to create.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AbsenceForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/AbsenceForm"
               }
@@ -490,6 +488,9 @@
         "x-api-versions": [
           "v1"
         ],
+        "x-access": {
+          "any": "true"
+        },
         "x-subscriptionlevel": {
           "minimumPlan": "standard"
         }
@@ -501,7 +502,7 @@
           "Absences"
         ],
         "summary": "Deletes the absence with the specified id.",
-        "description": "User planning data permissions are required if the calling user\r\nis not the owner of the absence or admin.",
+        "description": "User planning data permissions are required if the calling user\r\n            is not the owner of the absence or admin.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "absenceId",
@@ -515,8 +516,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -528,14 +529,17 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "any": "true"
+        }
       },
       "get": {
         "tags": [
           "Absences"
         ],
         "summary": "Returns the absence with the specified id.",
-        "description": "User planning data permissions are required if the calling user\r\nis not the owner of the absence or admin.",
+        "description": "User planning data permissions are required if the calling user\r\n            is not the owner of the absence or admin.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "absenceId",
@@ -569,14 +573,17 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "any": "true"
+        }
       },
       "put": {
         "tags": [
           "Absences"
         ],
         "summary": "Updates the absence with the specified id.",
-        "description": "User planning data permissions are required if the calling user\r\nis not the owner of the absence or admin.\r\nThe startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\nThese values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\nThe end date needs to be the same or after the start date.",
+        "description": "User planning data permissions are required if the calling user\r\n            is not the owner of the absence or admin.\r\n            The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\n            These values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\n            The end date needs to be the same or after the start date.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "absenceId",
@@ -593,11 +600,6 @@
           "description": "The model with the updated values.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AbsenceForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/AbsenceForm"
               }
@@ -625,7 +627,10 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "any": "true"
+        }
       }
     },
     "/accounts/{accountId}": {
@@ -10046,7 +10051,7 @@
           "ProjectMilestones"
         ],
         "summary": "Returns all project milestones the user is allowed to see.",
-        "description": "The user only gets returned all milestones of projects he has 'read' permissions\r\nof feature 'project-planning-data' for.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -10095,16 +10100,11 @@
           "ProjectMilestones"
         ],
         "summary": "Creates a new project milestone.",
-        "description": "The user needs 'write' permissions\r\nof feature 'project-planning-data' to get the data.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model to create a project milestone.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectMilestonePostForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectMilestonePostForm"
               }
@@ -10144,7 +10144,7 @@
           "ProjectMilestones"
         ],
         "summary": "Returns the specified project milestone.",
-        "description": "The user needs 'read' permissions\r\nof feature 'project-planning-data' to get the data.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "milestoneId",
@@ -10190,7 +10190,7 @@
           "ProjectMilestones"
         ],
         "summary": "Deletes the project milestone with the specified id.",
-        "description": "The user needs 'write' permissions\r\nof feature 'project-planning-data' to get the data.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectMilestoneId",
@@ -10204,6 +10204,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -10227,7 +10230,7 @@
           "ProjectMilestones"
         ],
         "summary": "Updates the project milestone with the specified id.",
-        "description": "The user needs 'write' permissions\r\nof feature 'project-planning-data' to get the data.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectMilestoneId",
@@ -10244,11 +10247,6 @@
           "description": "The model to update the project milestone.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectMilestonePutForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectMilestonePutForm"
               }
@@ -10351,11 +10349,6 @@
           "description": "The model used to create a project role.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectRoleForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectRoleForm"
               }
@@ -10512,11 +10505,6 @@
               "schema": {
                 "$ref": "#/components/schemas/ProjectRoleForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectRoleForm"
-              }
             }
           }
         },
@@ -10554,7 +10542,7 @@
           "ProjectRoles"
         ],
         "summary": "Deletes the project role with the specified id.",
-        "description": "Deletes the project role with the specified id.\r\nWhen you want to delete a project role which is still in use,\r\nyou are required to specify which role the currently assigned members should be assigned to instead.\r\nIf the default role gets deleted, the migration role becomes the new default project role.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "description": "Deletes the project role with the specified id.\r\n            When you want to delete a project role which is still in use,\r\n            you are required to specify which role the currently assigned members should be assigned to instead.\r\n            If the default role gets deleted, the migration role becomes the new default project role.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10571,11 +10559,6 @@
           "description": "The model to delete the project role.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectRoleDeleteForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectRoleDeleteForm"
               }
@@ -14077,7 +14060,7 @@
           "ProjectMilestones"
         ],
         "summary": "Returns all project milestones of the specified project.",
-        "description": "The user needs 'read' permissions\r\nof feature 'project-planning-data' to get the data.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -29333,7 +29316,7 @@
           "TimeEntries"
         ],
         "summary": "Deletes the time entry with the specified ids.",
-        "description": "This endpoint is deprecated, please use the batch endpoint POST /timeentries/batch/delete instead.\r\n\r\nDeletes the time entries with the specified ids.\r\nDepending on the time entry, the calling users has to have several permissions to delete the time entries.\r\nNo permissions are required if the calling user is owner of this time entry.\r\nIf the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\npermissions\r\non the 'project-timetracking' feature are necessary.\r\nIf the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n'project-planning-data' if it is a project task.\r\nIf the time entry is billed, Admin permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "This endpoint is deprecated, please use the batch endpoint POST /timeentries/batch/delete instead.\r\n            \r\n            Deletes the time entries with the specified ids.\r\n            Depending on the time entry, the calling users has to have several permissions to delete the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n            If the time entry is billed, Admin permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model for ids of the time entries.",
           "content": {
@@ -29341,15 +29324,13 @@
               "schema": {
                 "$ref": "#/components/schemas/DeleteTimeEntriesForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteTimeEntriesForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -29375,8 +29356,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Sets the time entries with the specified ids to to billable.",
-        "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\nNo permissions are required if the calling user is owner of this time entry.\r\nIf the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\npermissions\r\non the 'project-timetracking' feature are necessary.\r\nIf the time entry is connected to a task, the user needs to be assignee of this task or the user needs 'write'\r\npermissions on:\r\n'project-timetracking' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Sets the time entries with the specified ids to billable.",
+        "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs 'write'\r\n            permissions on:\r\n            'project-timetracking' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model for ids of the time entries.",
           "content": {
@@ -29384,15 +29365,13 @@
               "schema": {
                 "$ref": "#/components/schemas/SetTimeEntryBillableForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/SetTimeEntryBillableForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -29419,7 +29398,7 @@
           "TimeEntries"
         ],
         "summary": "Sets the time entries with the specified ids to billed.",
-        "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\nNo permissions are required if the calling user is owner of this time entry.\r\nIf the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\npermissions\r\non the 'project-timetracking' feature are necessary.\r\nIf the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n'project-planning-data' if it is a project task.\r\nIf the time entry is billed, the permissions can be ignored because there is no change.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n            If the time entry is billed, the permissions can be ignored because there is no change.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model for ids of the time entries.",
           "content": {
@@ -29427,15 +29406,13 @@
               "schema": {
                 "$ref": "#/components/schemas/SetTimeEntryBilledForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/SetTimeEntryBilledForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -29462,7 +29439,7 @@
           "TimeEntries"
         ],
         "summary": "Sets the type of work of the specified timeentries.",
-        "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\nNo permissions are required if the calling user is owner of this time entry.\r\nIf the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\npermissions\r\non the 'project-timetracking' feature are necessary.\r\nIf the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model for ids of the time entries.",
           "content": {
@@ -29470,15 +29447,13 @@
               "schema": {
                 "$ref": "#/components/schemas/SetTimeEntryTypeOfWork"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/SetTimeEntryTypeOfWork"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -29504,8 +29479,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Sets the time entries with the specified ids to to unbillable.",
-        "description": "Already billed time entries cannot be set to unbillable -> Badrequest\r\nDepending on the time entry, the calling users has to have several permissions to edit the time entries.\r\nNo permissions are required if the calling user is owner of this time entry.\r\nIf the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\npermissions\r\non the 'project-timetracking' feature are necessary.\r\nIf the time entry is connected to a task, the user needs to be assignee of this task or the user needs write\r\npermissions on:\r\n'project-timetracking' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Sets the time entries with the specified ids to unbillable.",
+        "description": "Already billed time entries cannot be set to unbillable -&gt; Badrequest\r\n            Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs write\r\n            permissions on:\r\n            'project-timetracking' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model for ids of the time entries.",
           "content": {
@@ -29513,15 +29488,13 @@
               "schema": {
                 "$ref": "#/components/schemas/SetTimeEntryBillableForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/SetTimeEntryBillableForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -29556,15 +29529,13 @@
               "schema": {
                 "$ref": "#/components/schemas/SetTimeEntryBilledForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/SetTimeEntryBilledForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -29833,7 +29804,7 @@
           "TimeReports"
         ],
         "summary": "Returns all time reports of a user.",
-        "description": "Returns time reports the user created as well as the shared time reports of\r\nother users.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns time reports the user created as well as the shared time reports of\r\n            other users.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -30278,7 +30249,7 @@
           "UserTags"
         ],
         "summary": "Removes tag from all entities.",
-        "description": "Removes tag from all projects.\r\nTo delete the tags the user needs 'write' permissions on the specified entity.\r\nReturns 204 NoContent if tag has been removed successfully.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Removes tag from all users.\r\n            To delete the tags the user needs 'write' permissions on the specified entity.\r\n            Returns 204 NoContent if tag has been removed successfully.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model to remove the tag.",
           "content": {
@@ -30286,17 +30257,12 @@
               "schema": {
                 "$ref": "#/components/schemas/DeleteTagForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteTagForm"
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -30825,7 +30791,7 @@
           "UserTags"
         ],
         "summary": "Adds a batch of new tags to the user with the specified id.",
-        "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\r\nTo create the tags the user needs 'write' permissions on the specified user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\r\n            To create the tags the user needs 'write' permissions on the specified user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -30842,14 +30808,6 @@
           "description": "The model to add tags.",
           "content": {
             "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TagForm"
-                }
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "type": "array",
                 "items": {
@@ -31097,14 +31055,15 @@
     "/users/{userId}/capacity": {
       "get": {
         "tags": [
-          "UserCapacity"
+          "UserCapacities"
         ],
         "summary": "Returns the capacity of the specified user.",
-        "description": "Returns the capacity of the specified user.\r\nUser planning data or admin permissions are required if the capacity of the specified user\r\ndoes not belong to the calling user.",
+        "description": "Returns the capacity of the specified user.\r\n            User planning data or admin permissions are required if the capacity of the specified user\r\n            does not belong to the calling user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -31133,14 +31092,17 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "any": "true"
+        }
       },
       "put": {
         "tags": [
-          "UserCapacity"
+          "UserCapacities"
         ],
         "summary": "Updates the capacity of the specified user.",
-        "description": "Updates the capacity of the user with the specified id.\r\nUser planning data or admin permissions are required if the capacity of the specified user\r\ndoes not belong to the calling user.",
+        "description": "Updates the capacity of the user with the specified id.\r\n            User planning data or admin permissions are required if the capacity of the specified user\r\n            does not belong to the calling user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31160,11 +31122,6 @@
               "schema": {
                 "$ref": "#/components/schemas/UserCapacityForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserCapacityForm"
-              }
             }
           }
         },
@@ -31189,7 +31146,10 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "any": "true"
+        }
       }
     },
     "/users/{userId}/contactinfo": {
@@ -31528,7 +31488,7 @@
           "UserTags"
         ],
         "summary": "Removes tags from the user with the specified id.",
-        "description": "Removes tags from the project with the specified id.\r\nTo delete the tags the user needs 'write' permissions on the specified user.\r\nReturns 204 NoContent if all tags have been removed successfully.\r\nReturns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Removes tags from the user with the specified id.\r\n            To delete the tags the user needs 'write' permissions on the specified user.\r\n            Returns 204 NoContent if all tags have been removed successfully.\r\n            Returns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31551,20 +31511,12 @@
                   "$ref": "#/components/schemas/DeleteTagForm"
                 }
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/DeleteTagForm"
-                }
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -33082,7 +33034,7 @@
           "UserTags"
         ],
         "summary": "Returns the tags of the users with the specified id.",
-        "description": "Returns the tags of the user with the specified id ordered by name.\r\nTo read the tags the user needs 'read' permissions on the specified user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns the tags of the user with the specified id ordered by name.\r\n            To read the tags the user needs 'read' permissions on the specified user.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -33431,9 +33383,11 @@
           {
             "name": "userId",
             "in": "path",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -33444,17 +33398,12 @@
               "schema": {
                 "$ref": "#/components/schemas/TagUpdateForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -42179,6 +42128,17 @@
           "targetTaskBundleId": {
             "type": "string",
             "description": "The task bundle to import the other task bundles into.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InitialDashboardModel": {
+        "type": "object",
+        "properties": {
+          "roleId": {
+            "type": "string",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
@@ -52308,6 +52268,9 @@
         "additionalProperties": false
       },
       "WidgetPostForm": {
+        "required": [
+          "widgets"
+        ],
         "type": "object",
         "properties": {
           "widgets": {
@@ -52315,8 +52278,7 @@
             "items": {
               "$ref": "#/components/schemas/WidgetForm"
             },
-            "description": "A list of all widgets of the dashboard.",
-            "nullable": true
+            "description": "A list of all widgets of the dashboard."
           }
         },
         "additionalProperties": false
@@ -58900,7 +58862,7 @@
     },
     {
       "name": "ProjectRoles",
-      "description": "The project roles endpoints allow you to define roles for your project members\n                             You can assign members to these roles on each project.\n                             If the roles are linked to the project types then the roles are available in every project using this type.\n                             When you want to delete a project role which is still in use, you are required to specify which role the currently assigned members should be assigned to instead."
+      "description": "The project roles endpoints allow you to define roles for your project members.\n                                   You can assign members to these roles on each project.\n                                   If the roles are linked to the project types then the roles are available in every project using this type.\n                                   When you want to delete a project role which is still in use, you are required to specify which role the currently assigned members should be assigned to instead."
     },
     {
       "name": "Projects",
@@ -58991,7 +58953,7 @@
       "description": "The type of work endpoints allow you to manage your types of work. They are helpful to describe the type of a task or a time entry."
     },
     {
-      "name": "UserCapacity",
+      "name": "UserCapacities",
       "description": "The user capacity endpoints allow you to define the work capacity of users."
     },
     {
@@ -59000,7 +58962,7 @@
     },
     {
       "name": "UserTags",
-      "description": "The endpoint to manage the tags."
+      "description": "The user tags endpoints allow you to manage tags on users."
     },
     {
       "name": "Workload",
