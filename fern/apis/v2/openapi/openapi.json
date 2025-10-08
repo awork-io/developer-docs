@@ -919,7 +919,7 @@
           },
           "duration": {
             "type": "integer",
-            "description": "The duration of the break in seconds. Required when the end date is set.\r\nWhen a time tracking is paused, it has at least one break with a start date and no duration or end date.",
+            "description": "The duration of the break in seconds. Required when the end date is set.\nWhen a time tracking is paused, it has at least one break with a start date and no duration or end date.",
             "format": "int32",
             "nullable": true,
             "example": 3600
@@ -1183,7 +1183,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "A tag model used for the timetrackings ProjectModelForTimeTrackings.\r\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+        "description": "A tag model used for the timetrackings ProjectModelForTimeTrackings.\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
       },
       "ProjectTeamModelForTimeTrackings": {
         "type": "object",
@@ -1322,12 +1322,12 @@
           },
           "startDate": {
             "type": "string",
-            "description": "The start date and time of the time entry. Required.\r\nIf the time entry is date only, the time should be 00:00:00.",
+            "description": "The start date and time of the time entry. Required.\nIf the time entry is date only, the time should be 00:00:00.",
             "format": "date-time"
           },
           "endDate": {
             "type": "string",
-            "description": "The end date and time of the time entry. Not set if the time entry is still running.\r\nIf the time entry is date only, it should be the same as the start date.",
+            "description": "The end date and time of the time entry. Not set if the time entry is still running.\nIf the time entry is date only, it should be the same as the start date.",
             "format": "date-time",
             "nullable": true
           },
@@ -1432,7 +1432,7 @@
           "timezone": {
             "minLength": 1,
             "type": "string",
-            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "description": "The original timezone of the time tracking.\nThe format of the timezone is the IANA standard.",
             "example": "Europe/London"
           }
         },
@@ -1452,7 +1452,7 @@
           },
           "baseType": {
             "type": "string",
-            "description": "The base type of the task.\r\nCan be 'private' for a private task or\r\n'projecttask' for a project task.",
+            "description": "The base type of the task.\nCan be 'private' for a private task or\n'projecttask' for a project task.",
             "nullable": true,
             "example": "projecttask"
           },
@@ -1473,7 +1473,7 @@
           },
           "projectId": {
             "type": "string",
-            "description": "The id of the project this task is assigned to.\r\nOnly set if this is a project task.\r\nIn this case, it is equal to the EntityId.",
+            "description": "The id of the project this task is assigned to.\nOnly set if this is a project task.\nIn this case, it is equal to the EntityId.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -1526,7 +1526,7 @@
           },
           "parentId": {
             "type": "string",
-            "description": "The id of the parent task this of this subtask.\r\nOnly set if this is a subtask.",
+            "description": "The id of the parent task this of this subtask.\nOnly set if this is a subtask.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -1590,7 +1590,7 @@
           },
           "isHiddenForConnectUsers": {
             "type": "boolean",
-            "description": "True if the task in this list will be not visible for external workspace users. \r\nFalse otherwise."
+            "description": "True if the task in this list will be not visible for external workspace users. \nFalse otherwise."
           },
           "orderOfTask": {
             "type": "number",
@@ -1624,7 +1624,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "A tag model used for the timetrackings TaskModelForTimeTrackings.\r\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+        "description": "A tag model used for the timetrackings TaskModelForTimeTrackings.\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
       },
       "TimeEntry": {
         "required": [
@@ -1681,12 +1681,12 @@
           "timezone": {
             "minLength": 1,
             "type": "string",
-            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "description": "The original timezone of the time tracking.\nThe format of the timezone is the IANA standard.",
             "example": "Europe/Berlin"
           },
           "duration": {
             "type": "integer",
-            "description": "The duration of the time tracking in seconds.\r\nRequired when the time entry is not running.",
+            "description": "The duration of the time tracking in seconds.\nRequired when the time entry is not running.",
             "format": "int32",
             "nullable": true,
             "example": 8635
@@ -1699,7 +1699,7 @@
           },
           "userId": {
             "type": "string",
-            "description": "The id of the user.\r\nCan be null if the user was deleted.",
+            "description": "The id of the user.\nCan be null if the user was deleted.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -1712,7 +1712,7 @@
           },
           "breakDuration": {
             "type": "integer",
-            "description": "The duration of the break in seconds.\r\nCannot be set via API.",
+            "description": "The duration of the break in seconds.\nCannot be set via API.",
             "format": "int32",
             "nullable": true
           },
@@ -1760,7 +1760,7 @@
           },
           "resourceVersion": {
             "type": "integer",
-            "description": "The version of the entity, updated on every modification, to the ticks in UTC.\r\nNot identical to UpdatedOn.",
+            "description": "The version of the entity, updated on every modification, to the ticks in UTC.\nNot identical to UpdatedOn.",
             "format": "int64",
             "readOnly": true,
             "example": 637825154598057900
@@ -1828,12 +1828,12 @@
           "timezone": {
             "minLength": 1,
             "type": "string",
-            "description": "The original timezone of the time tracking.\r\nThe format of the timezone is the IANA standard.",
+            "description": "The original timezone of the time tracking.\nThe format of the timezone is the IANA standard.",
             "example": "Europe/Berlin"
           },
           "duration": {
             "type": "integer",
-            "description": "The duration of the time tracking in seconds.\r\nRequired when the time entry is not running.",
+            "description": "The duration of the time tracking in seconds.\nRequired when the time entry is not running.",
             "format": "int32",
             "nullable": true,
             "example": 8635
@@ -1846,7 +1846,7 @@
           },
           "userId": {
             "type": "string",
-            "description": "The id of the user.\r\nCan be null if the user was deleted.",
+            "description": "The id of the user.\nCan be null if the user was deleted.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -1921,7 +1921,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "A tag model used for the timetrackings UserModelForTimeTrackings.\r\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+        "description": "A tag model used for the timetrackings UserModelForTimeTrackings.\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
       },
       "UserTeamModelForTimeTrackings": {
         "type": "object",
