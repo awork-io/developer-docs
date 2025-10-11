@@ -8189,7 +8189,7 @@
           "Users"
         ],
         "summary": "Returns the currently logged-in user and workspace.",
-        "description": "Returns the currently logged-in user, including workspace information.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -23731,12 +23731,13 @@
           "TaskTags"
         ],
         "summary": "Removes tag from all entities.",
-        "description": "Removes tag from all tasks.\nTo delete the tags the user needs 'write' permissions on the specified entity.\nReturns 204 NoContent if tag has been removed successfully.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Removes tag from all tasks.\r\n            Returns 204 NoContent if tag has been removed successfully.\r\n            <Check><b>Required Permissions</b>: To delete the tags the user needs 'write' permissions on the specified entity.</Check>",
         "parameters": [
           {
             "name": "isPrivateTask",
             "in": "query",
             "description": "If the entity is a private task.",
+            "required": true,
             "schema": {
               "type": "boolean"
             }
@@ -23749,17 +23750,12 @@
               "schema": {
                 "$ref": "#/components/schemas/DeleteTagForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteTagForm"
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -23856,219 +23852,38 @@
         }
       }
     },
-    "/tasks/{entityId}/addtags": {
+    "/tasks/updatetags": {
       "post": {
         "tags": [
           "TaskTags"
         ],
-        "summary": "Adds a batch of new tags to the entity with the specified id.",
-        "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\nTo create the tags the user needs 'write' permissions on the specified entity.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Updates a tag globally across all tasks.",
+        "description": "Updates a tag name and/or color for all tasks that have this tag.\r\n            <Check><b>Required Permissions</b>: To update the tag the user needs appropriate permissions.</Check>",
         "parameters": [
           {
-            "name": "entityId",
-            "in": "path",
-            "description": "The id of the entity.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to add tags.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TagForm"
-                }
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TagForm"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BaseTagModel"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/tasks/{entityId}/deletetags": {
-      "post": {
-        "tags": [
-          "TaskTags"
-        ],
-        "summary": "Removes tags from the entity with the specified id.",
-        "description": "Removes tags from the project with the specified id.\nTo delete the tags the user needs 'write' permissions on the specified entity.\nReturns 204 NoContent if all tags have been removed successfully.\nReturns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "entityId",
-            "in": "path",
-            "description": "The id of the entity.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to remove the tag.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/DeleteTagForm"
-                }
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/DeleteTagForm"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/tasks/{entityId}/tags": {
-      "get": {
-        "tags": [
-          "TaskTags"
-        ],
-        "summary": "Returns the tags of the entity with the specified id.",
-        "description": "Returns the tags of the entity with the specified id ordered by name.\nTo read the tags the user needs 'read' permissions on the specified entity.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "entityId",
-            "in": "path",
-            "description": "The id of the entity.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BaseTagModel"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/tasks/{entityId}/updatetags": {
-      "post": {
-        "tags": [
-          "TaskTags"
-        ],
-        "summary": "Updates a tag to the entity with the specified id.",
-        "description": "To update the tag the user needs 'write' permissions on the specified entity.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "isPrivateTask",
+            "name": "taskId",
             "in": "query",
-            "description": "If the entity is a private task.",
+            "description": "The task id (route parameter maintained for backward compatibility but not used by the service).",
+            "required": true,
             "schema": {
-              "type": "boolean"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
-            "name": "entityId",
-            "in": "path",
+            "name": "isPrivateTask",
+            "in": "query",
+            "description": "If the tags should be updated for private tasks.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "boolean"
             }
           }
         ],
         "requestBody": {
-          "description": "The model to add tags.",
+          "description": "The model containing the old and new tag names and color.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TagUpdateForm"
               }
@@ -24076,8 +23891,8 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -24239,6 +24054,68 @@
               }
             }
           }
+        }
+      }
+    },
+    "/tasks/{taskId}/addtags": {
+      "post": {
+        "tags": [
+          "TaskTags"
+        ],
+        "summary": "Adds a batch of new tags to the task with the specified id.",
+        "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\r\n            <Check><b>Required Permissions</b>: To create the tags the user needs 'write' permissions on the specified task.</Check>",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "The id of the task.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to add tags.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TagForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BaseTagModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -24940,6 +24817,58 @@
         "responses": {
           "204": {
             "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/tasks/{taskId}/deletetags": {
+      "post": {
+        "tags": [
+          "TaskTags"
+        ],
+        "summary": "Removes tags from the task with the specified id.",
+        "description": "Removes tags from the project with the specified id.\r\n            Returns 204 NoContent if all tags have been removed successfully.\r\n            Returns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n            <Check><b>Required Permissions</b>: To delete the tags the user needs 'write' permissions on the specified task.</Check>",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "The id of the task.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to remove the tag.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeleteTagForm"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -26160,6 +26089,55 @@
         }
       }
     },
+    "/tasks/{taskId}/tags": {
+      "get": {
+        "tags": [
+          "TaskTags"
+        ],
+        "summary": "Returns the tags of the task with the specified id.",
+        "description": "Returns the tags of the task with the specified id ordered by name.\r\n            <Check><b>Required Permissions</b>: To read the tags the user needs 'read' permissions on the specified task.</Check>",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "The id of the task.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BaseTagModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/tasks/{taskId}/taskdependencies": {
       "get": {
         "tags": [
@@ -26303,6 +26281,64 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/tasks/{taskId}/updatetags": {
+      "post": {
+        "tags": [
+          "TaskTags"
+        ],
+        "summary": "Updates a tag globally across all tasks.",
+        "description": "Updates a tag name and/or color for all tasks that have this tag.\r\n            <Check><b>Required Permissions</b>: To update the tag the user needs appropriate permissions.</Check>",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "The task id (route parameter maintained for backward compatibility but not used by the service).",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "isPrivateTask",
+            "in": "query",
+            "description": "If the tags should be updated for private tasks.",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model containing the old and new tag names and color.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagUpdateForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -30179,7 +30215,7 @@
           "Users"
         ],
         "summary": "Returns all users.",
-        "description": "Returns all users with their details like status, contact info and more.\nReturns all users if the user has read permissions on the feature\nuser-master-data, otherwise returns only his own user.\nArchived users are excluded by default. You can include them by setting the 'showArchived' query parameter.\nIf the permissions have UserTeamsData Feature, the filter for teams is applied.\nBeware that this will also include API users in the response.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns all users with their details like status, contact info and more.\r\n            Returns all users if the user has read permissions on the feature\r\n            user-master-data, otherwise returns only his own user.\r\n            Archived users are excluded by default. You can include them by setting the 'showArchived' query parameter.\r\n            If the permissions have UserTeamsData Feature, the filter for teams is applied.\r\n            Beware that this will also include API users in the response.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "showArchived",
@@ -30276,7 +30312,7 @@
           "Users"
         ],
         "summary": "Returns the currently logged-in user and workspace.",
-        "description": "Returns the currently logged-in user, including workspace information.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "This is an alternate URL for the /me endpoint.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -30596,7 +30632,7 @@
           "Users"
         ],
         "summary": "Deletes the user with the specified id.",
-        "description": "Deletes the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-manage-config:delete` permissions.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user must have either Admin or UserManageConfig feature with Delete permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -30610,8 +30646,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -30634,6 +30670,7 @@
           "Users"
         ],
         "summary": "Returns the user with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -30670,15 +30707,14 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       },
       "put": {
         "tags": [
           "Users"
         ],
         "summary": "Updates the user with the specified id.",
-        "description": "Updates the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
+        "description": "Updates the user with the specified id.\r\n            \r\n             <Check><b>Required Permissions</b>: The user must have either Admin, Owner (for their own user), or UserMasterData feature with Write permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -30695,11 +30731,6 @@
           "description": "The new user values.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/UserForm"
               }
@@ -30741,7 +30772,7 @@
           "Users"
         ],
         "summary": "Activates the user with the specified id.",
-        "description": "Activates the user with the specified id.\nThe user is then allowed to sign in again and will be notified via email.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-manage-config:write` permissions.</Check>",
+        "description": "Activates the user with the specified id.\r\n            The user is then allowed to sign in again and will be notified via email.\r\n            \r\n            <Check><b>Required Permissions</b>: The user must have either Admin or UserManageConfig feature with Write permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -30755,8 +30786,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -31148,7 +31179,7 @@
           "Users"
         ],
         "summary": "Returns the contact infos of the user with the specified id.",
-        "description": "Returns the contact infos of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator or have `user-master-data:read` permissions.</Check>",
+        "description": "Returns the contact infos of the user with the specified id.\r\n            \r\n            <Check><b>Required Permissions</b>: The user must have either Admin, Owner (for their own user), or UserMasterData feature with Read permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31159,6 +31190,18 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
           }
         ],
         "responses": {
@@ -31197,7 +31240,7 @@
           "Users"
         ],
         "summary": "Creates a new contact info for the user with the specified id.",
-        "description": "Creates a new contact info for the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
+        "description": "Creates a new contact info for the user with the specified id.\r\n            \r\n            <Check><b>Required Permissions</b>: The user must have either Admin, Owner (for their own user), or UserMasterData feature with Write permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31214,11 +31257,6 @@
           "description": "The contact info to create.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactInfoFormForUsers"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ContactInfoFormForUsers"
               }
@@ -31260,7 +31298,7 @@
           "Users"
         ],
         "summary": "Deletes the contact info of the user with the specified id.",
-        "description": "Deletes the contact info of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user must have either Admin, Owner (for their own user), or UserMasterData feature with Write permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31284,8 +31322,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -31309,7 +31347,7 @@
           "Users"
         ],
         "summary": "Returns the contact info of the user with the specified id.",
-        "description": "Returns the contact info of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator or have `user-master-data:read` permissions.</Check>",
+        "description": "Returns the contact info of the user with the specified id.\r\n            \r\n            <Check><b>Required Permissions</b>: The user must have either Admin, Owner (for their own user), or UserMasterData feature with Read permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31365,7 +31403,7 @@
           "Users"
         ],
         "summary": "Updates the contact info of the user with the specified id.",
-        "description": "Updates the contact info of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user must have either Admin, Owner (for their own user), or UserMasterData feature with Write permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31392,11 +31430,6 @@
           "description": "The contact info model.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactInfoFormForUsers"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ContactInfoFormForUsers"
               }
@@ -31438,7 +31471,7 @@
           "Users"
         ],
         "summary": "Deactivates the user with the specified id.",
-        "description": "Deactivates the user with the specified id.\nA deactivated user can no longer sign in.\nIt is only possible if the user is not the last admin user.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `user-manage-config:write` permissions.</Check>",
+        "description": "Deactivates the user with the specified id.\r\n            A deactivated user can no longer sign in.\r\n            It is only possible if the user is not the last admin user.\r\n            \r\n            <Check><b>Required Permissions</b>: The user must have either Admin or UserManageConfig feature with Write permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -31452,8 +31485,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -32962,7 +32995,7 @@
           "Users"
         ],
         "summary": "Archives or unarchives the user with the specified id.",
-        "description": "Archived objects can not be used any longer but still exist for being referenced by other entities.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "description": "Archived objects can not be used any longer but still exist for being referenced by other entities.\r\n            \r\n            <Check><b>Required Permissions</b>: The user must have either Admin or ProjectManageConfig feature with Write permission.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -32979,11 +33012,6 @@
           "description": "The archiving model object.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ArchivedForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ArchivedForm"
               }
@@ -41881,7 +41909,7 @@
           },
           "entityId": {
             "type": "string",
-            "description": "The id of the entity the task is related to.",
+            "description": "The id of the entity the task is related to.\nFor private tasks, this is optional and will default to the current user's ID if not provided.\nFor project tasks, this is required and must be the project ID.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -51762,6 +51790,9 @@
         "additionalProperties": false
       },
       "UserPostForm": {
+        "required": [
+          "accountId"
+        ],
         "type": "object",
         "properties": {
           "firstName": {
@@ -58937,6 +58968,10 @@
     {
       "name": "TaskSchedules",
       "description": ""
+    },
+    {
+      "name": "TaskTags",
+      "description": "The Task tags endpoints can be used for managing tags on tasks."
     },
     {
       "name": "TaskTemplates",
