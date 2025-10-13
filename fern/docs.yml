@@ -149,6 +149,7 @@ navigation:
     path: ./pages/api/workload.mdx
     icon: briefcase
   - workload
+  - user capacities
   - page: Project Templates Overview
     path: ./pages/api/projecttemplates.mdx
     icon: box
@@ -172,9 +173,9 @@ navigation:
   - page: API Management Overview
     path: ./pages/api/api.mdx
     icon: code
-  - apiusers
+  - api users
   - webhooks
-  - clientapplications
+  - client applications
   # Reenable others when there are uncategorized endpoints
   # - page: Others
   #   path: ./pages/api/others.mdx
