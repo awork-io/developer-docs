@@ -23318,7 +23318,7 @@
           "TasksBatch"
         ],
         "summary": "Edits multiple tasks using the specified operation.",
-        "description": "The user is only allowed to edit tasks they have permissions for. The same applies for related entities like time entries.\nReturns MultiStatus. Includes the list of successful and failed tasks.\nReturns BadRequest if the validation for either operation or form fails.\n\nSupported Operations:\nmovetoproject: Moves all tasks to a new project.\nmovetotasklist: Moves all tasks to a new task list inside the same project.\nsetdates: Sets the due and optionally start date for all tasks.\naddtags: Adds a list of tags to all tasks in the list that don't already have the tag.\ndelete: Deletes all tasks. Optional including time trackings.\nchangetypeofwork: Changes the type of work for a list of tasks. Optionally also for the related timetrackings.\nassignusers: Assigns a list of users to a list of tasks.\nunassignusers: Unassigns a list of users from a list of tasks. If the UserIds are not provided, all users are unassigned.\nsetprio: Sets the prio flag for a list of tasks.\nchangetaskstatus: Sets the task status for a list of tasks.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The user is only allowed to edit tasks they have permissions for. The same applies for related entities like time entries.\nReturns MultiStatus. Includes the list of successful and failed tasks.\nReturns BadRequest if the validation for either operation or form fails.\n\nSupported Operations:\nmovetoproject: Moves all tasks to a new project.\nmovetotasklist: Moves all tasks to a new task list inside the same project.\nsetdates: Sets the due and optionally start date for all tasks.\naddtags: Adds a list of tags to all tasks in the list that don't already have the tag.\ndelete: Deletes all tasks. Optional including time trackings.\nchangetypeofwork: Changes the type of work for a list of tasks. Optionally also for the related timetrackings.\nassignusers: Assigns a list of users to a list of tasks.\nunassignusers: Unassigns a list of users from a list of tasks. If the UserIds are not provided, all users are unassigned.\nsetprio: Sets the prio flag for a list of tasks.\nchangetaskstatus: Sets the task status for a list of tasks.\nplannerbatch: Multiple operations to a single task. Used in the planner.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "operation",
@@ -37930,6 +37930,9 @@
             "type": "boolean",
             "description": "If set to true, it will adjust the dates of subtasks of selected tasks.\nIf set to false, it will only adjust the dates of the selected tasks.",
             "nullable": true
+          },
+          "plannerData": {
+            "$ref": "#/components/schemas/PlannerOperationData"
           }
         },
         "additionalProperties": false
@@ -43837,6 +43840,59 @@
           }
         },
         "additionalProperties": false
+      },
+      "PlannerMoveType": {
+        "enum": [
+          "DateOnly",
+          "LaneOnly",
+          "DateAndLane",
+          "AssigneeChange",
+          "AssigneeAndLane",
+          "AssigneeAndDate"
+        ],
+        "type": "string",
+        "description": "Defines the type of move operation in the planner."
+      },
+      "PlannerOperationData": {
+        "required": [
+          "referenceTaskId"
+        ],
+        "type": "object",
+        "properties": {
+          "referenceTaskId": {
+            "type": "string",
+            "description": "The reference task that was dragged (determines delta calculation).",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "targetStartDate": {
+            "type": "string",
+            "description": "Target start date for the reference task (used to calculate start date delta).\nNull if no start date change.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "targetEndDate": {
+            "type": "string",
+            "description": "Target end date for the reference task (used to calculate end date delta).\nNull if no end date change. Allows extending or shortening task duration.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "targetLaneOrder": {
+            "type": "integer",
+            "description": "Target lane order for vertical moves in planner.\nNull if no lane change.",
+            "format": "int32",
+            "nullable": true
+          },
+          "setDates": {
+            "type": "boolean",
+            "description": "Whether to set absolute dates for the task (not delta-based).\nWhen true, only a single task can be modified.\nOnly applies when TargetStartDate or TargetEndDate is provided."
+          },
+          "moveType": {
+            "$ref": "#/components/schemas/PlannerMoveType"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Data specific to planner batch operations for handling drag and drop in the planner UI."
       },
       "PlannerProjectMemberModel": {
         "type": "object",
