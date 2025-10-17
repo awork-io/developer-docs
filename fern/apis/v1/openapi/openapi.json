@@ -8600,7 +8600,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns the checklist items for a private task with the specified id.",
-        "description": "The user needs to be the creator of the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be the creator of the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -8658,7 +8658,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns a checklist item for a private task with the specified id.",
-        "description": "The user needs to be the creator of the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be the creator of the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -9062,7 +9062,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns the checklist for a private task with the specified id.",
-        "description": "The user needs to be assigned to the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be assigned to the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -9120,7 +9120,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns a checklist item for a private task with the specified id.",
-        "description": "The user needs to be assigned to the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be assigned to the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -14336,7 +14336,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns the checklist items for a project task with the specified id.",
-        "description": "To retrieve the checklist items of a project task either 'read' permissions on the 'project-planning-data' feature are\nrequired or the user needs to be assigned.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: To retrieve the checklist items of a project task either `read` permissions on the `project-planning-data` feature are required or the user needs to be assigned.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14395,7 +14395,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns a checklist item for a project task with the specified id.",
-        "description": "To retrieve the checklist item of a project task either 'read' permissions on the 'project-planning-data' feature are\nrequired\nor the user needs to be assigned.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: To retrieve the checklist item of a project task either `read` permissions on the `project-planning-data` feature are required or the user needs to be assigned.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14939,8 +14939,8 @@
         "tags": [
           "TaskLists"
         ],
-        "summary": "Returns all task lists of the entity with the specified id.",
-        "description": "The permission check in this function is dynamically based on the entity name.\nIn the cases where the user tries to get the project task lists,\nthe user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Returns all task lists of the project with the specified id.",
+        "description": "The permission check in this function is dynamically based on the entity name.\r\n            In the cases where the user tries to get the project task lists,\r\n            the user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14960,18 +14960,6 @@
               "type": "boolean",
               "default": false
             }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
           }
         ],
         "responses": {
@@ -15028,11 +15016,6 @@
               "schema": {
                 "$ref": "#/components/schemas/TaskListForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskListForm"
-              }
             }
           }
         },
@@ -15069,7 +15052,7 @@
           "TaskLists"
         ],
         "summary": "Returns the task list with the specified id.",
-        "description": "The permission check in this function is dynamically based on the entity name.\nIn the cases where the user tries to get the project task lists,\nthe user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The permission check in this function is dynamically based on the entity name.\r\n            In the cases where the user tries to get the project task lists,\r\n            the user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15153,11 +15136,6 @@
               "schema": {
                 "$ref": "#/components/schemas/TaskListPutForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskListPutForm"
-              }
             }
           }
         },
@@ -15194,12 +15172,11 @@
           "TaskLists"
         ],
         "summary": "Adds the tasks to the task list with the specified id.",
-        "description": "Adds the tasks to the task list with the specified id.\nTo add a new task to a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "The id of the project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15209,7 +15186,6 @@
           {
             "name": "taskListId",
             "in": "path",
-            "description": "The id of the task list.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15218,17 +15194,8 @@
           }
         ],
         "requestBody": {
-          "description": "The ids of the tasks to add to the list.",
           "content": {
             "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TaskToTaskList"
-                }
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "type": "array",
                 "items": {
@@ -15420,17 +15387,12 @@
               "schema": {
                 "$ref": "#/components/schemas/TaskListDeleteForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskListDeleteForm"
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -15454,12 +15416,11 @@
           "TaskLists"
         ],
         "summary": "Removes the tasks from the task list with the specified id.",
-        "description": "To remove a task from a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "The id of the project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15469,7 +15430,6 @@
           {
             "name": "taskListId",
             "in": "path",
-            "description": "The id of the task list.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15478,21 +15438,8 @@
           }
         ],
         "requestBody": {
-          "description": "The ids of the tasks to remove from the list.",
           "content": {
             "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
-            },
-            "application/*+json": {
               "schema": {
                 "type": "array",
                 "items": {
@@ -15507,8 +15454,8 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -15532,7 +15479,7 @@
           "TaskLists"
         ],
         "summary": "Archives or unarchives the task list with the specified id.",
-        "description": "Archives or unarchives the task list with the specified id.\nAn archived task list still exists but is not editable anymore.",
+        "description": "Archives or unarchives the task list with the specified id.\r\n            An archived task list still exists but is not editable anymore.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15562,11 +15509,6 @@
               "schema": {
                 "$ref": "#/components/schemas/ArchivedTaskListForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ArchivedTaskListForm"
-              }
             }
           }
         },
@@ -15591,7 +15533,10 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "any": "true"
+        }
       }
     },
     "/projects/{projectId}/tasklists/{taskListId}/tasks/{taskId}": {
@@ -15599,8 +15544,8 @@
         "tags": [
           "TaskLists"
         ],
-        "summary": "Returns the task with the specified id in the specified task list.",
-        "description": "To get a project task from the project task list, the user needs read permissions on the project-planning-data feature\nor the current user must be assigned to the task with the specified id.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Returns the task with the specified id in the task list with the specified id.",
+        "description": "To get a task in a project task list, the user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -15666,12 +15611,11 @@
           "TaskLists"
         ],
         "summary": "Updates the order of a task in a task list.",
-        "description": "To update the order of tasks in a project task list, the user needs manage permissions on the\nproject-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "The id of the project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15681,7 +15625,6 @@
           {
             "name": "taskListId",
             "in": "path",
-            "description": "The id of the task list.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15691,7 +15634,6 @@
           {
             "name": "taskId",
             "in": "path",
-            "description": "The id of the task.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15700,14 +15642,8 @@
           }
         ],
         "requestBody": {
-          "description": "The model used to update the order of the task in the task list with the specified id.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskInTaskListUpdateOrderForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TaskInTaskListUpdateOrderForm"
               }
@@ -15749,13 +15685,13 @@
         "tags": [
           "TaskLists"
         ],
-        "summary": "Updates the order of a task list.",
-        "description": "To update the order of project task lists, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Updates the order of the task list with the specified id.",
+        "description": "To update the order of a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "The id of the project.",
+            "description": "The id of the entity.",
             "required": true,
             "schema": {
               "type": "string",
@@ -15774,14 +15710,9 @@
           }
         ],
         "requestBody": {
-          "description": "The model used to update the order of the task list with the specified id.",
+          "description": "The model used to update the order.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOrderForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateOrderForm"
               }
@@ -15789,8 +15720,8 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -17900,6 +17831,7 @@
           "ProjectMilestoneTemplates"
         ],
         "summary": "Returns all milestone templates of the given project template.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `read` permissions for feature `admin` or `project-manage-config`.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -17952,14 +17884,14 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "read"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:read` permissions.</Check>"
+        }
       },
       "post": {
         "tags": [
           "ProjectMilestoneTemplates"
         ],
         "summary": "Creates a new milestone template for the given project template.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `write` permissions for feature `admin` or `project-manage-config`.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -17970,43 +17902,18 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "Name",
-            "in": "query",
-            "description": "The name of the milestone.",
-            "schema": {
-              "maxLength": 255,
-              "minLength": 0,
-              "type": "string",
-              "example": "Internal Review"
-            },
-            "example": "Internal Review"
-          },
-          {
-            "name": "Color",
-            "in": "query",
-            "description": "The color of the milestone.",
-            "schema": {
-              "maxLength": 14,
-              "minLength": 0,
-              "type": "string",
-              "example": "green"
-            },
-            "example": "green"
-          },
-          {
-            "name": "RelativeDueDate",
-            "in": "query",
-            "description": "Relative amount of days the milestone is due after the project creation date\nwhen a project gets created with the corresponding project template.",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "example": 7
-            },
-            "example": 7
           }
         ],
+        "requestBody": {
+          "description": "The form to create a milestone template.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectMilestoneTemplateForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -18032,8 +17939,7 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+        }
       }
     },
     "/projecttemplates/{projectTemplateId}/milestones/{milestoneId}": {
@@ -18042,6 +17948,7 @@
           "ProjectMilestoneTemplates"
         ],
         "summary": "Deletes a milestone for the given project template.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `write` permissions for feature `admin` or `project-manage-config`.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -18065,8 +17972,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -18082,14 +17989,14 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+        }
       },
       "get": {
         "tags": [
           "ProjectMilestoneTemplates"
         ],
         "summary": "Returns a milestone by id for the given project template.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `read` permissions for feature `admin` or `project-manage-config`.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -18137,14 +18044,14 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "read"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:read` permissions.</Check>"
+        }
       },
       "put": {
         "tags": [
           "ProjectMilestoneTemplates"
         ],
         "summary": "Updates a milestone template for the given project template.",
+        "description": "<Check><b>Required Permissions</b>: The user has at least `write` permissions for feature `admin` or `project-manage-config`.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -18165,43 +18072,18 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "Name",
-            "in": "query",
-            "description": "The name of the milestone.",
-            "schema": {
-              "maxLength": 255,
-              "minLength": 0,
-              "type": "string",
-              "example": "Internal Review"
-            },
-            "example": "Internal Review"
-          },
-          {
-            "name": "Color",
-            "in": "query",
-            "description": "The color of the milestone.",
-            "schema": {
-              "maxLength": 14,
-              "minLength": 0,
-              "type": "string",
-              "example": "green"
-            },
-            "example": "green"
-          },
-          {
-            "name": "RelativeDueDate",
-            "in": "query",
-            "description": "Relative amount of days the milestone is due after the project creation date\nwhen a project gets created with the corresponding project template.",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "example": 7
-            },
-            "example": 7
           }
         ],
+        "requestBody": {
+          "description": "The form to update a milestone template.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectMilestoneTemplateForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -18227,8 +18109,7 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `project-manage-config:write` permissions.</Check>"
+        }
       }
     },
     "/projecttemplates/{projectTemplateId}/projectstatuses": {
@@ -22853,11 +22734,6 @@
               "schema": {
                 "$ref": "#/components/schemas/TaskTemplateForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskTemplateForm"
-              }
             }
           }
         },
@@ -22919,8 +22795,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -23027,11 +22903,6 @@
               "schema": {
                 "$ref": "#/components/schemas/TaskTemplateForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskTemplateForm"
-              }
             }
           }
         },
@@ -23069,8 +22940,18 @@
           "TaskTemplates"
         ],
         "summary": "Assigns a list of users to task templates.",
-        "description": "Users that are not passed and are already assigned will be removed.\nRemoves existing task template assignments and adds the new assignment.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "description": "Users that are not passed and are already assigned will be removed.\r\n            Removes existing task template assignments and adds the new assignment.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
         "parameters": [
+          {
+            "name": "taskBundleId",
+            "in": "path",
+            "description": "The id of the task bundle.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
           {
             "name": "taskTemplateId",
             "in": "path",
@@ -23079,14 +22960,6 @@
             "schema": {
               "type": "string",
               "format": "uuid"
-            }
-          },
-          {
-            "name": "taskBundleId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -23104,24 +22977,12 @@
               "example": [
                 "123e4567-e89b-12d3-a456-426614174000"
               ]
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -24125,7 +23986,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns the checklist items for a task with the specified id.",
-        "description": "The required permissions depend on the base type of the task.\nIf the task is a project task, either 'read' permissions on the 'project-planning-data' feature are required or the\nuser needs to be assigned.\nFor a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, either `read` permissions on the `project-planning-data` feature are required or the user needs to be assigned. For a user's private task, no special permissions are required.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -24172,7 +24033,7 @@
           "ChecklistItems"
         ],
         "summary": "Creates a checklist item for a task with the specified id.",
-        "description": "The required permissions depend on the base type of the task.\nIf the task is a project task, either 'write' permissions on the 'project-master-data' feature are required or the user\nneeds to be assigned.\nFor a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, either `write` permissions on the `project-master-data` feature are required or the user needs to be assigned. For a user's private task, no special permissions are required.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -24189,11 +24050,6 @@
           "description": "The model to create the checklist item.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChecklistItemForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ChecklistItemForm"
               }
@@ -24272,7 +24128,7 @@
           "ChecklistItems"
         ],
         "summary": "Deletes a checklist item for a task with the specified id.",
-        "description": "The required permissions depend on the base type of the task.\nIf the task is a project task, either 'write' permissions on the 'project-master-data' feature are required or the user\nneeds to be assigned.\nFor a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, either `write` permissions on the `project-master-data` feature are required or the user needs to be assigned. For a user's private task, no special permissions are required.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -24296,8 +24152,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -24319,7 +24175,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns the checklist item for a task with the specified id.",
-        "description": "The required permissions depend on the base type of the task.\nIf the task is a project task, either 'read' permissions on the 'project-planning-data' feature are required or the\nuser needs to be assigned.\nFor a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, either `read` permissions on the `project-planning-data` feature are required or the user needs to be assigned. For a user's private task, no special permissions are required.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -24373,7 +24229,7 @@
           "ChecklistItems"
         ],
         "summary": "Updates a checklist item for a task with the specified id.",
-        "description": "The required permissions depend on the base type of the task.\nIf the task is a project task, either 'write' permissions on the 'project-master-data' feature are required or the user\nneeds to be assigned.\nFor a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The required permissions depend on the base type of the task. If the task is a project task, either `write` permissions on the `project-master-data` feature are required or the user needs to be assigned. For a user's private task, no special permissions are required.</Check>",
         "parameters": [
           {
             "name": "taskId",
@@ -24400,11 +24256,6 @@
           "description": "The model to update the checklist item.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChecklistItemForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ChecklistItemForm"
               }
@@ -32569,7 +32420,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns the checklist items for a private task with the specified id.",
-        "description": "The user needs to be the creator of the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be the creator of the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -32628,7 +32479,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns a checklist item for a private task with the specified id.",
-        "description": "The user needs to be the creator of the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be the creator of the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -32870,7 +32721,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns the checklist for a private task with the specified id.",
-        "description": "The user needs to be assigned to the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be assigned to the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -32929,7 +32780,7 @@
           "ChecklistItems"
         ],
         "summary": "Returns a checklist item for a private task with the specified id.",
-        "description": "The user needs to be assigned to the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "<Check><b>Required Permissions</b>: The user needs to be assigned to the task.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -38217,6 +38068,9 @@
         "additionalProperties": false
       },
       "ChecklistItem": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
           "isDone": {
@@ -38224,9 +38078,10 @@
             "description": "Whether the checklist item is done."
           },
           "name": {
+            "maxLength": 25000,
+            "minLength": 0,
             "type": "string",
             "description": "The name of the checklist item.",
-            "nullable": true,
             "example": "Create YouTube Ads"
           },
           "order": {
@@ -38276,6 +38131,9 @@
         "additionalProperties": false
       },
       "ChecklistItemForm": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
           "isDone": {
@@ -38283,9 +38141,10 @@
             "description": "Whether the checklist item is done."
           },
           "name": {
+            "maxLength": 25000,
+            "minLength": 0,
             "type": "string",
             "description": "The name of the checklist item.",
-            "nullable": true,
             "example": "Create YouTube Ads"
           },
           "order": {
@@ -38299,6 +38158,9 @@
         "additionalProperties": false
       },
       "ChecklistItemTemplate": {
+        "required": [
+          "name"
+        ],
         "type": "object",
         "properties": {
           "isDone": {
@@ -38306,9 +38168,10 @@
             "description": "Whether the checklist item is done."
           },
           "name": {
+            "maxLength": 25000,
+            "minLength": 0,
             "type": "string",
             "description": "The name of the checklist item.",
-            "nullable": true,
             "example": "Create YouTube Ads"
           },
           "order": {
@@ -39105,11 +38968,6 @@
             "description": "The Id of the contact info.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "isDeleted": {
-            "type": "boolean",
-            "description": "Whether the user has been deleted.",
-            "example": false
           },
           "createdOn": {
             "type": "string",
@@ -41643,6 +41501,12 @@
           "deactivatedOn": {
             "type": "string",
             "description": "The date the user was deactivated.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedOn": {
+            "type": "string",
+            "description": "The date the user was deleted (soft delete).",
             "format": "date-time",
             "nullable": true
           },
@@ -44868,6 +44732,34 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectMilestoneTemplateForm": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the milestone.",
+            "nullable": true,
+            "example": "Internal Review"
+          },
+          "color": {
+            "maxLength": 14,
+            "minLength": 0,
+            "type": "string",
+            "description": "The color of the milestone.",
+            "nullable": true,
+            "example": "green"
+          },
+          "relativeDueDate": {
+            "type": "integer",
+            "description": "Relative amount of days the milestone is due after the project creation date\nwhen a project gets created with the corresponding project template.",
+            "format": "int64",
+            "example": 7
           }
         },
         "additionalProperties": false
@@ -51222,6 +51114,12 @@
             "format": "date-time",
             "nullable": true
           },
+          "deletedOn": {
+            "type": "string",
+            "description": "The date the user was deleted (soft delete).",
+            "format": "date-time",
+            "nullable": true
+          },
           "hasImage": {
             "type": "boolean",
             "description": "Whether the user has uploaded a profile image.",
@@ -51372,6 +51270,12 @@
           "deactivatedOn": {
             "type": "string",
             "description": "The date the user was deactivated.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedOn": {
+            "type": "string",
+            "description": "The date the user was deleted (soft delete).",
             "format": "date-time",
             "nullable": true
           },
@@ -58963,7 +58867,7 @@
     },
     {
       "name": "ProjectMilestoneTemplates",
-      "description": "Endpoints to manage project milestone templates. From these templates, project milestones can be created,\n                        when you create a project with a project template."
+      "description": "The project milestone template endpoints allow you to work with milestone templates for project templates."
     },
     {
       "name": "ProjectRoles",
@@ -59031,7 +58935,7 @@
     },
     {
       "name": "TaskTemplates",
-      "description": "The task templates endpoints can be used for managing task templates inside task bundles."
+      "description": "The Task templates endpoints can be used for managing task templates within task bundles."
     },
     {
       "name": "TaskViews",
