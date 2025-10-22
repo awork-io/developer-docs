@@ -2361,7 +2361,7 @@
           "CompanyTags"
         ],
         "summary": "Removes tag from all entities.",
-        "description": "Removes tag from all projects.\nTo delete the tags the user needs 'write' permissions on the specified entity.\nReturns 204 NoContent if tag has been removed successfully.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Removes tag from all companies.\r\n            To delete the tags the user needs 'write' permissions on the specified entity.\r\n            Returns 204 NoContent if tag has been removed successfully.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
           "description": "The model to remove the tag.",
           "content": {
@@ -2369,17 +2369,12 @@
               "schema": {
                 "$ref": "#/components/schemas/DeleteTagForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteTagForm"
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -2580,7 +2575,7 @@
           "CompanyTags"
         ],
         "summary": "Adds a batch of new tags to the company with the specified id.",
-        "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\nTo create the tags the user needs 'write' permissions on the specified company.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\r\n            To create the tags the user needs 'write' permissions on the specified company.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -2597,14 +2592,6 @@
           "description": "The model to add tags.",
           "content": {
             "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TagForm"
-                }
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "type": "array",
                 "items": {
@@ -3002,7 +2989,7 @@
           "CompanyTags"
         ],
         "summary": "Removes tags from the company with the specified id.",
-        "description": "Removes tags from the project with the specified id.\nTo delete the tags the user needs 'write' permissions on the specified company.\nReturns 204 NoContent if all tags have been removed successfully.\nReturns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Removes tags from the company with the specified id.\r\n            To delete the tags the user needs 'write' permissions on the specified company.\r\n            Returns 204 NoContent if all tags have been removed successfully.\r\n            Returns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -3025,20 +3012,12 @@
                   "$ref": "#/components/schemas/DeleteTagForm"
                 }
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/DeleteTagForm"
-                }
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -3939,7 +3918,7 @@
           "CompanyTags"
         ],
         "summary": "Returns the tags of the companies with the specified id.",
-        "description": "Returns the tags of the company with the specified id ordered by name.\nTo read the tags the user needs 'read' permissions on the specified company.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Returns the tags of the company with the specified id ordered by name.\r\n            To read the tags the user needs 'read' permissions on the specified company.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "companyId",
@@ -3993,9 +3972,11 @@
           {
             "name": "companyId",
             "in": "path",
+            "description": "The id of the company.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -4006,17 +3987,12 @@
               "schema": {
                 "$ref": "#/components/schemas/TagUpdateForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
             }
           }
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -8223,17 +8199,8 @@
           "AssignedTasks"
         ],
         "summary": "Returns all tasks the user is allowed to see.",
-        "description": "Returns all tasks the user is allowed to see. This contains\nproject tasks if the user has \"project-planning\" permissions,\nall assigned tasks and also\nprivate tasks created by the user and assigned to other users.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required on the /me endpoint.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "$ref": "#/components/parameters/page"
           },
@@ -8283,17 +8250,8 @@
           "AssignedTasks"
         ],
         "summary": "Returns all tasks assigned to the user.",
-        "description": "Returns all tasks assigned to a user.\nIf a user gets his own tasks, the private tasks are part of the result as well.\nIf you need only tasks of projects in status 'progress', set the 'inProgress' parameter to 'true'.\nThe assigned on from and to parameters are optional, but both must be provided if you want to use the filter.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required on the /me endpoint.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "name": "inProgress",
             "in": "query",
@@ -8370,16 +8328,8 @@
           "AssignedTasks"
         ],
         "summary": "Returns the assigned task with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required on the /me endpoint.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -8415,8 +8365,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/me/dashboards": {
@@ -9286,19 +9235,8 @@
         "tags": [
           "AssignedTasks"
         ],
-        "summary": "Returns all tags the user is allowed to see.\nYou can filter the tags by task model query constraints.",
-        "description": "Returns all tags from the available tasks of the user ordered by name.\nThe user making the request needs to be assigned to the task or needs\nread permissions on the feature \"project-planning-data\" for project tasks or\nread permissions on the \"entity-master-data\" of the entity of the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required on the me/ endpoint.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
+        "summary": "Returns all tags the user is allowed to see.\n            You can filter the tags by task model query constraints.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -30725,12 +30663,12 @@
           "AssignedTasks"
         ],
         "summary": "Returns all tasks the user is allowed to see.",
-        "description": "Returns all tasks the user is allowed to see. This contains\nproject tasks if the user has \"project-planning\" permissions,\nall assigned tasks and also\nprivate tasks created by the user and assigned to other users.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required on the /me endpoint.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -30786,12 +30724,12 @@
           "AssignedTasks"
         ],
         "summary": "Returns all tasks assigned to the user.",
-        "description": "Returns all tasks assigned to a user.\nIf a user gets his own tasks, the private tasks are part of the result as well.\nIf you need only tasks of projects in status 'progress', set the 'inProgress' parameter to 'true'.\nThe assigned on from and to parameters are optional, but both must be provided if you want to use the filter.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required on the /me endpoint.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -30874,6 +30812,7 @@
           "AssignedTasks"
         ],
         "summary": "Returns the assigned task with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -30920,8 +30859,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/users/{userId}/capacity": {
@@ -32951,13 +32889,13 @@
         "tags": [
           "AssignedTasks"
         ],
-        "summary": "Returns all tags the user is allowed to see.\nYou can filter the tags by task model query constraints.",
-        "description": "Returns all tags from the available tasks of the user ordered by name.\nThe user making the request needs to be assigned to the task or needs\nread permissions on the feature \"project-planning-data\" for project tasks or\nread permissions on the \"entity-master-data\" of the entity of the task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Returns all tags the user is allowed to see.\n            You can filter the tags by task model query constraints.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required on the me/ endpoint.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -58815,7 +58753,7 @@
     },
     {
       "name": "AssignedTasks",
-      "description": "The assigned tasks endpoints allow you to get all assigned tasks of a user.\n                                Project tasks are only visible if the related project is in progress."
+      "description": "The assigned tasks endpoints allow you to get all assigned tasks of a user.\n                    Project tasks are only visible if the related project is in progress."
     },
     {
       "name": "ChecklistItems",
@@ -58827,7 +58765,7 @@
     },
     {
       "name": "CompanyTags",
-      "description": "The endpoint to manage the tags."
+      "description": "The company tags endpoints allow you to manage tags on companies."
     },
     {
       "name": "CustomFields",
