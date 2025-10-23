@@ -117,7 +117,7 @@ navigation:
     path: ./pages/api/users.mdx
     icon: users
   - users
-  - user capacity
+  - user capacities
   - user tags
   - absences
   - absence regions
@@ -149,7 +149,6 @@ navigation:
     path: ./pages/api/workload.mdx
     icon: briefcase
   - workload
-  - user capacities
   - page: Project Templates Overview
     path: ./pages/api/projecttemplates.mdx
     icon: box

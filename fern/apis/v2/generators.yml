@@ -1,4 +1,4 @@
 api:
   specs:
-    - openapi: openapi/openapi.json
-      origin: https://awork-function-swaggercombine-global.azurewebsites.net/api/swagger-combine?version=v2
+  - openapi: openapi/openapi.json
+    origin: https://app.awork.com/openapi/v2
