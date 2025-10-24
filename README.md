@@ -6,6 +6,10 @@ This README provides guidance on how to work with awork's Developer Documentatio
 
 awork uses Fern to generate and publish the Developer Docs. They API reference is based on an OpenAPI spec.
 
+## OpenAPI Documentation
+
+The live OpenAPI specification is available at: <https://api.awork.com/openapi/v1>
+
 ## Project Structure
 
 The project follows this structure:
