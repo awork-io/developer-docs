@@ -15384,10 +15384,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             }
           }
         },
@@ -22282,10 +22279,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             },
             "application/*+json": {
               "schema": {
@@ -22294,10 +22288,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             }
           }
         },
@@ -22911,10 +22902,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             }
           }
         },
@@ -25670,9 +25658,12 @@
                   "format": "uuid"
                 }
               },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              "example": {
+                "ids": [
+                  "123e4567-e89b-12d3-a456-426614174000",
+                  "223e4567-e89b-12d3-a456-426614174001"
+                ]
+              }
             },
             "application/*+json": {
               "schema": {
@@ -25682,9 +25673,12 @@
                   "format": "uuid"
                 }
               },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              "example": {
+                "ids": [
+                  "123e4567-e89b-12d3-a456-426614174000",
+                  "223e4567-e89b-12d3-a456-426614174001"
+                ]
+              }
             }
           }
         },
@@ -28230,10 +28224,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             }
           }
         },
@@ -28296,10 +28287,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             }
           }
         },
@@ -28362,10 +28350,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             }
           }
         },
@@ -28421,10 +28406,7 @@
                   "type": "string",
                   "format": "uuid"
                 }
-              },
-              "example": [
-                "123e4567-e89b-12d3-a456-426614174000"
-              ]
+              }
             }
           }
         },
@@ -30140,15 +30122,13 @@
           {
             "name": "userIds",
             "in": "query",
-            "description": "The ids of the users to get the time bookings for.",
+            "description": "The ids of the users to get the time bookings for, as a comma-separated list of Guids.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "description": "A list of GUIDs provided as a comma-separated string in the query parameter"
-            }
+              "type": "string",
+              "description": "A comma-separated list of GUIDs (e.g., '123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001')",
+              "example": "123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001"
+            },
+            "example": "123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001"
           },
           {
             "name": "intervalStart",
@@ -30251,15 +30231,13 @@
           {
             "name": "userIds",
             "in": "query",
-            "description": "The ids of the users to get the time bookings for.",
+            "description": "The ids of the users to get the time bookings for, as a comma-separated list of Guids.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "description": "A list of GUIDs provided as a comma-separated string in the query parameter"
-            }
+              "type": "string",
+              "description": "A comma-separated list of GUIDs (e.g., '123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001')",
+              "example": "123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001"
+            },
+            "example": "123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001"
           },
           {
             "name": "intervalStart",
@@ -30327,12 +30305,9 @@
             "in": "query",
             "description": "The ids of the users to get the workload for, as a comma-separated list of Guids.",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "description": "A list of GUIDs provided as a comma-separated string in the query parameter"
+              "type": "string",
+              "description": "A comma-separated list of GUIDs (e.g., '123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001')",
+              "example": "123e4567-e89b-12d3-a456-426614174000,223e4567-e89b-12d3-a456-426614174001"
             }
           },
           {
