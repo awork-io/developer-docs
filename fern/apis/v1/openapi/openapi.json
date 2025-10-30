@@ -16557,7 +16557,7 @@
           "ProjectTemplates"
         ],
         "summary": "Returns all existing project templates.",
-        "description": "Returns all existing project templates.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -16606,16 +16606,11 @@
           "ProjectTemplates"
         ],
         "summary": "Creates a new project template.",
-        "description": "Creates a new project template.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
         "requestBody": {
           "description": "The model to create the project template.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectTemplateForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectTemplateForm"
               }
@@ -16709,6 +16704,7 @@
           "ProjectTemplates"
         ],
         "summary": "Deletes the project template with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -16722,6 +16718,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
@@ -16739,8 +16738,7 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>"
+        }
       },
       "get": {
         "tags": [
@@ -16791,7 +16789,7 @@
           "ProjectTemplates"
         ],
         "summary": "Updates the project template with the specified id.",
-        "description": "Updates the project template with the specified id.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -16808,11 +16806,6 @@
           "description": "The model to change the project template.",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectTemplateForm"
-              }
-            },
-            "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/ProjectTemplateForm"
               }
@@ -18171,6 +18164,7 @@
           "ProjectTemplates"
         ],
         "summary": "Returns the task bundle id which is linked to the template.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -18207,8 +18201,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/projecttemplates/{projectTemplateId}/taskstatuses": {
@@ -18565,7 +18558,7 @@
           "ProjectTemplates"
         ],
         "summary": "Updates the order of a project status.",
-        "description": "Updates the order of a project status.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -18585,15 +18578,13 @@
               "schema": {
                 "$ref": "#/components/schemas/UpdateProjectStatusOrderForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProjectStatusOrderForm"
-              }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           }
