@@ -10520,6 +10520,7 @@
           "ProjectRoles"
         ],
         "summary": "Returns all permissions of the project role with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10571,15 +10572,14 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       },
       "post": {
         "tags": [
           "ProjectRoles"
         ],
         "summary": "Creates, updates or deletes a permission of a project role with the specified id.",
-        "description": "Creates, updates or deletes a permission of the project role.\nIf the permission already exist, and the 'AccessLevels' property of the model is not empty,\nthe permission will be updated. If the 'AccessLevels' property of the model is empty,\nthe permission will be deleted.\nThe permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
+        "description": "Creates, updates or deletes a permission of the project role.\r\n            If the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\n            the permission will be updated. If the 'AccessLevels' property of the model is empty,\r\n            the permission will be deleted.\r\n            The permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10597,12 +10597,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PermissionOfRoleForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PermissionOfRoleForm"
+                "$ref": "#/components/schemas/PermissionOfProjectRoleForm"
               }
             }
           }
@@ -43312,6 +43307,29 @@
             "type": "string",
             "description": "The date this entity was last modified.",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionOfProjectRoleForm": {
+        "type": "object",
+        "properties": {
+          "feature": {
+            "type": "string",
+            "description": "The feature these permissions belong to.",
+            "nullable": true,
+            "example": "project-master-data"
+          },
+          "accessLevels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The access levels applied to this feature.",
+            "nullable": true,
+            "example": [
+              "read"
+            ]
           }
         },
         "additionalProperties": false
