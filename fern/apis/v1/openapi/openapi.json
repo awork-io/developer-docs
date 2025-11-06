@@ -10520,6 +10520,7 @@
           "ProjectRoles"
         ],
         "summary": "Returns all permissions of the project role with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10571,15 +10572,14 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       },
       "post": {
         "tags": [
           "ProjectRoles"
         ],
         "summary": "Creates, updates or deletes a permission of a project role with the specified id.",
-        "description": "Creates, updates or deletes a permission of the project role.\nIf the permission already exist, and the 'AccessLevels' property of the model is not empty,\nthe permission will be updated. If the 'AccessLevels' property of the model is empty,\nthe permission will be deleted.\nThe permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
+        "description": "Creates, updates or deletes a permission of the project role.\r\n            If the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\n            the permission will be updated. If the 'AccessLevels' property of the model is empty,\r\n            the permission will be deleted.\r\n            The permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10597,12 +10597,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PermissionOfRoleForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PermissionOfRoleForm"
+                "$ref": "#/components/schemas/PermissionOfProjectRoleForm"
               }
             }
           }
@@ -10971,55 +10966,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/projects/{projectId}/activities": {
-      "get": {
-        "tags": [
-          "ProjectActivities"
-        ],
-        "summary": "Returns all activities of the project with the specified id.",
-        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\nThis contains changes to first-level properties of the project, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\nThis does not include activities of sub-entities, like tasks of a project or comments on a task.",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ActivityModel"
-                  }
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -21894,7 +21840,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TaskList"
+                    "$ref": "#/components/schemas/NestedTaskList"
                   }
                 }
               }
@@ -21954,7 +21900,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskList"
+                  "$ref": "#/components/schemas/NestedTaskList"
                 }
               }
             }
@@ -22059,7 +22005,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskList"
+                  "$ref": "#/components/schemas/NestedTaskList"
                 }
               }
             }
@@ -22128,7 +22074,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskList"
+                  "$ref": "#/components/schemas/NestedTaskList"
                 }
               }
             }
@@ -23783,55 +23729,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/tasks/{taskId}/activities": {
-      "get": {
-        "tags": [
-          "TaskActivities"
-        ],
-        "summary": "Returns all activities of the task with the specified id.",
-        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\nThis contains changes to first-level properties of the task, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\nThis does not include activities of sub-entities, like tasks of a project or comments on a task.",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "The id of the task.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ActivityModel"
-                  }
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -42801,6 +42698,64 @@
         },
         "additionalProperties": false
       },
+      "NestedTaskList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this task list was created.",
+            "format": "date-time",
+            "example": "2021-03-22T15:00:00Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this task list was last modified.",
+            "format": "date-time",
+            "example": "2021-03-22T16:30:00Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the list.",
+            "nullable": true,
+            "example": "Product and Marketing To-Dos"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 2
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Whether the task list has been archived.",
+            "example": false
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \nFalse otherwise."
+          }
+        },
+        "additionalProperties": false
+      },
       "NestedTaskStatusModel": {
         "type": "object",
         "properties": {
@@ -43312,6 +43267,29 @@
             "type": "string",
             "description": "The date this entity was last modified.",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionOfProjectRoleForm": {
+        "type": "object",
+        "properties": {
+          "feature": {
+            "type": "string",
+            "description": "The feature these permissions belong to.",
+            "nullable": true,
+            "example": "project-master-data"
+          },
+          "accessLevels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The access levels applied to this feature.",
+            "nullable": true,
+            "example": [
+              "read"
+            ]
           }
         },
         "additionalProperties": false
@@ -47325,9 +47303,15 @@
           "isHiddenForConnectUsers": {
             "type": "boolean",
             "description": "True if the task in this list will be not visible for external workspace users. \nFalse otherwise."
+          },
+          "trackedDuration": {
+            "type": "integer",
+            "description": "The total duration of time trackings for tasks in this task list, in seconds.\nIncludes both billable and non-billable time trackings.\nBackend-calculated property.\nWhen hierarchy feature flag is enabled: only tasks with PrimaryTaskListId == this list.\nWhen hierarchy feature flag is disabled: all tasks associated with this list.",
+            "format": "int32"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents a full task list with calculated duration properties.\nExtends TaskList with additional computed fields."
       },
       "TaskListAvatar": {
         "type": "object",
@@ -54679,273 +54663,6 @@
             "items": {
               "$ref": "#/components/schemas/SimulationEvent"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ActivityModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "entityType": {
-            "type": "string",
-            "description": "The type of the entity",
-            "nullable": true,
-            "example": "timetracking"
-          },
-          "entityId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "entity": {
-            "$ref": "#/components/schemas/NestedModel"
-          },
-          "createdBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedBy": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "eventType": {
-            "type": "string",
-            "description": "The type of the event of this activity log (e.g: added, updated, deleted)",
-            "nullable": true,
-            "example": "updated"
-          },
-          "eventDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "changedProperty": {
-            "type": "string",
-            "description": "The name of the property that has changed.",
-            "nullable": true,
-            "example": "StartOn"
-          },
-          "oldPropertyValue": {
-            "type": "string",
-            "description": "The previous value of the updated property (as string).",
-            "nullable": true,
-            "example": "2022-03-11T14:00:05.100Z"
-          },
-          "newPropertyValue": {
-            "type": "string",
-            "description": "The new value for the property (as string).",
-            "nullable": true,
-            "example": "2022-03-15T11:30:00.100Z"
-          },
-          "oldProperty": {
-            "description": "The old property value, if the property is a complex object.\nThis is used to store the old value of the property when it is an object, like a user or a task.",
-            "nullable": true,
-            "example": {
-              "name": "To do",
-              "type": "todo",
-              "id": "12345678-1234-1234-1234-123456789012"
-            }
-          },
-          "newProperty": {
-            "description": "The new property value, if the property is a complex object.\nThis is used to store the new value of the property when it is an object, like a user or a task.",
-            "nullable": true,
-            "example": {
-              "name": "In progress",
-              "type": "progress",
-              "id": "12345678-1234-1234-1234-123456789013"
-            }
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user that performed the action that created this activity log entry.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "user": {
-            "$ref": "#/components/schemas/NestedUserModel"
-          },
-          "parentId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "project": {
-            "$ref": "#/components/schemas/BasicNameModel"
-          },
-          "taskId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "task": {
-            "$ref": "#/components/schemas/NameModel"
-          },
-          "assignedUserId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "readOnly": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "assignedUser": {
-            "$ref": "#/components/schemas/NestedUserModel"
-          },
-          "unassignedUserId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "readOnly": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "unassignedUser": {
-            "$ref": "#/components/schemas/NestedUserModel"
-          },
-          "dueDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "duration": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "memberId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "readOnly": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "member": {
-            "$ref": "#/components/schemas/NestedUserModel"
-          }
-        },
-        "additionalProperties": false,
-        "description": "The model to retrieve activities for main entities.\nIncludes additional/aggregated properties for easier access to the most important information."
-      },
-      "BasicNameModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The unique identifier of the entity.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the entity.",
-            "nullable": true,
-            "example": "Website design"
-          },
-          "projectTypeIcon": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectCompanyProfileImageUrl": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ITimeline": {
-        "type": "object",
-        "properties": {
-          "aggregation": {
-            "type": "string",
-            "nullable": true
-          },
-          "aggregationDate": {
-            "type": "string",
-            "nullable": true
-          },
-          "activities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ActivityModel"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ITimelineTimelineResponse": {
-        "type": "object",
-        "properties": {
-          "timelines": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ITimeline"
-            },
-            "description": "The list of all time lines in the time span.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MinimalActivityModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "eventDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
-      "NameModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "name": {
-            "type": "string",
             "nullable": true
           }
         },
