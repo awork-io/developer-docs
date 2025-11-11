@@ -516,8 +516,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -795,8 +795,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -2778,9 +2778,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -4118,9 +4115,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -4283,9 +4277,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -4501,8 +4492,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -4549,8 +4540,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -4686,9 +4677,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -4906,26 +4894,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
           }
         }
       }
@@ -4970,9 +4938,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -5009,15 +4974,14 @@
           }
         ],
         "requestBody": {
-          "description": "Whether the comment should be marked as resolved.",
+          "description": "The model containing the resolved status.",
           "content": {
             "application/json": {
               "schema": {
-                "type": "boolean"
+                "$ref": "#/components/schemas/SetResolvedForm"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -5064,6 +5028,16 @@
         "responses": {
           "200": {
             "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -5235,16 +5209,6 @@
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6404,8 +6368,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -8421,18 +8385,9 @@
         "tags": [
           "PrivateTasks"
         ],
-        "summary": "Returns all private tasks that a user created and assigned to someone else.",
-        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\nThis route returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Returns all private tasks that the current user created and assigned to someone else.",
+        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This route returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required when using the /me route.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "$ref": "#/components/parameters/page"
           },
@@ -8481,18 +8436,9 @@
         "tags": [
           "PrivateTasks"
         ],
-        "summary": "Returns a private tasks that a user created and assigned to someone else.",
-        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\nThis route returns all private tasks that were origianally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Returns a private task that the current user created and assigned to someone else.",
+        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This route returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required when using the /me route.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -8502,18 +8448,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
           }
         ],
         "responses": {
@@ -8807,17 +8741,9 @@
         "tags": [
           "PrivateTasks"
         ],
-        "summary": "Returns all private tasks of the user with the specified id.",
+        "summary": "Returns all private tasks of the current user.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required when using the /me route.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "$ref": "#/components/parameters/page"
           },
@@ -8858,8 +8784,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/me/privatetasks/tags": {
@@ -8868,6 +8793,7 @@
           "PrivateTasks"
         ],
         "summary": "Returns all tags of the private tasks.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "responses": {
           "200": {
             "description": "OK",
@@ -8895,8 +8821,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/me/privatetasks/taskstatuses": {
@@ -8904,7 +8829,7 @@
         "tags": [
           "PrivateTasks"
         ],
-        "summary": "Returns the task statuses for private tasks.",
+        "summary": "Returns the task statuses for private tasks for the current user.",
         "description": "Returns the task statuses for private tasks.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
@@ -8955,17 +8880,9 @@
         "tags": [
           "PrivateTasks"
         ],
-        "summary": "Returns the private task with the specified id.",
+        "summary": "Returns the private task with the specified id for the current user.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user. Not required when using the /me route.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "name": "taskId",
             "in": "path",
@@ -9001,8 +8918,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/me/privatetasks/{taskId}/checklistitems": {
@@ -9683,6 +9599,19 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTracking"
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -9720,8 +9649,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -9765,8 +9694,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -9866,8 +9795,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -10132,9 +10061,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -10520,6 +10446,7 @@
           "ProjectRoles"
         ],
         "summary": "Returns all permissions of the project role with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10571,15 +10498,14 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       },
       "post": {
         "tags": [
           "ProjectRoles"
         ],
         "summary": "Creates, updates or deletes a permission of a project role with the specified id.",
-        "description": "Creates, updates or deletes a permission of the project role.\nIf the permission already exist, and the 'AccessLevels' property of the model is not empty,\nthe permission will be updated. If the 'AccessLevels' property of the model is empty,\nthe permission will be deleted.\nThe permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
+        "description": "Creates, updates or deletes a permission of the project role.\r\n            If the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\n            the permission will be updated. If the 'AccessLevels' property of the model is empty,\r\n            the permission will be deleted.\r\n            The permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\">The user must be an admin or have project-manage-config:write permissions.</Check>",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -10597,12 +10523,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PermissionOfRoleForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PermissionOfRoleForm"
+                "$ref": "#/components/schemas/PermissionOfProjectRoleForm"
               }
             }
           }
@@ -12276,9 +12197,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -12496,26 +12414,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
           }
         }
       }
@@ -12560,9 +12458,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -13911,9 +13806,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -14246,9 +14138,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -14762,14 +14651,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
           }
         },
         "security": [
@@ -15213,9 +15096,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -15329,8 +15209,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -15389,8 +15269,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -15655,8 +15535,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -16109,9 +15989,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -16718,9 +16595,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -17730,9 +17604,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -17900,8 +17771,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -18135,9 +18006,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -18529,9 +18397,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -18582,9 +18447,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -21894,7 +21756,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TaskList"
+                    "$ref": "#/components/schemas/NestedTaskList"
                   }
                 }
               }
@@ -21954,7 +21816,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskList"
+                  "$ref": "#/components/schemas/NestedTaskList"
                 }
               }
             }
@@ -22059,7 +21921,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskList"
+                  "$ref": "#/components/schemas/NestedTaskList"
                 }
               }
             }
@@ -22128,7 +21990,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskList"
+                  "$ref": "#/components/schemas/NestedTaskList"
                 }
               }
             }
@@ -22715,8 +22577,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -22898,8 +22760,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -22982,9 +22844,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -23312,18 +23171,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
           }
         },
         "security": [
@@ -23362,20 +23209,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
           }
         },
         "security": [
@@ -24069,8 +23904,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -24226,9 +24061,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -24446,26 +24278,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
           }
         }
       }
@@ -24510,9 +24322,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -25726,14 +25535,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found"
           }
         },
         "security": [
@@ -26806,9 +26609,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -28030,9 +27830,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -28346,9 +28143,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -28402,9 +28196,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -29062,16 +28853,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MultiStatusResult"
-                }
-              }
-            }
-          },
           "207": {
             "description": "Multi-Status",
             "content": {
@@ -29116,9 +28897,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -29157,9 +28935,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -29198,9 +28973,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -29239,9 +29011,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -29280,9 +29049,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -29321,9 +29087,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           }
@@ -30401,8 +30164,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -30541,8 +30304,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -31077,8 +30840,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -31240,8 +31003,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -32195,12 +31958,12 @@
           "PrivateTasks"
         ],
         "summary": "Returns all private tasks that a user created and assigned to someone else.",
-        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\nThis route returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This route returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required when using the /me route.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -32255,13 +32018,13 @@
         "tags": [
           "PrivateTasks"
         ],
-        "summary": "Returns a private tasks that a user created and assigned to someone else.",
-        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\nThis route returns all private tasks that were origianally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
+        "summary": "Returns a private task that a user created and assigned to someone else.",
+        "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This route returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required when using the /me route.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -32277,18 +32040,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
           }
         ],
         "responses": {
@@ -32449,11 +32200,12 @@
           "PrivateTasks"
         ],
         "summary": "Returns all private tasks of the user with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required when using the /me route.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -32500,8 +32252,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/users/{userId}/privatetasks/taskstatuses": {
@@ -32515,9 +32266,11 @@
           {
             "name": "userId",
             "in": "path",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -32569,11 +32322,12 @@
           "PrivateTasks"
         ],
         "summary": "Returns the private task with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "parameters": [
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required when using the /me route.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -32615,8 +32369,7 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>"
+        }
       }
     },
     "/users/{userId}/privatetasks/{taskId}/checklistitems": {
@@ -32931,6 +32684,19 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTracking"
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -32969,8 +32735,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -33015,8 +32781,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -33118,8 +32884,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
@@ -42801,6 +42567,64 @@
         },
         "additionalProperties": false
       },
+      "NestedTaskList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this task list was created.",
+            "format": "date-time",
+            "example": "2021-03-22T15:00:00Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this task list was last modified.",
+            "format": "date-time",
+            "example": "2021-03-22T16:30:00Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this task list.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the list.",
+            "nullable": true,
+            "example": "Product and Marketing To-Dos"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the list.",
+            "format": "double",
+            "nullable": true,
+            "example": 2
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Whether the task list has been archived.",
+            "example": false
+          },
+          "isHiddenForConnectUsers": {
+            "type": "boolean",
+            "description": "True if the task in this list will be not visible for external workspace users. \nFalse otherwise."
+          }
+        },
+        "additionalProperties": false
+      },
       "NestedTaskStatusModel": {
         "type": "object",
         "properties": {
@@ -43312,6 +43136,29 @@
             "type": "string",
             "description": "The date this entity was last modified.",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PermissionOfProjectRoleForm": {
+        "type": "object",
+        "properties": {
+          "feature": {
+            "type": "string",
+            "description": "The feature these permissions belong to.",
+            "nullable": true,
+            "example": "project-master-data"
+          },
+          "accessLevels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The access levels applied to this feature.",
+            "nullable": true,
+            "example": [
+              "read"
+            ]
           }
         },
         "additionalProperties": false
@@ -46407,6 +46254,20 @@
         "additionalProperties": false,
         "description": "The POST/PUT model of the role."
       },
+      "SetResolvedForm": {
+        "required": [
+          "isResolved"
+        ],
+        "type": "object",
+        "properties": {
+          "isResolved": {
+            "type": "boolean",
+            "description": "Whether the comment should be marked as resolved.",
+            "example": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SetTimeEntryBillableForm": {
         "type": "object",
         "properties": {
@@ -47325,9 +47186,15 @@
           "isHiddenForConnectUsers": {
             "type": "boolean",
             "description": "True if the task in this list will be not visible for external workspace users. \nFalse otherwise."
+          },
+          "trackedDuration": {
+            "type": "integer",
+            "description": "The total duration of time trackings for tasks in this task list, in seconds.\nIncludes both billable and non-billable time trackings.\nBackend-calculated property.\nWhen hierarchy feature flag is enabled: only tasks with PrimaryTaskListId == this list.\nWhen hierarchy feature flag is disabled: all tasks associated with this list.",
+            "format": "int32"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents a full task list with calculated duration properties.\nExtends TaskList with additional computed fields."
       },
       "TaskListAvatar": {
         "type": "object",
@@ -58755,7 +58622,7 @@
     },
     {
       "name": "PrivateTasks",
-      "description": "Private tasks belong to a single user.\n                             Only the users themselves have access to their tasks and they can only be assigned to them.\n                             It is possible to create and assign private tasks to another user in which case both users have access to the task."
+      "description": "Private tasks belong to a single user.\n                     Only the users themselves have access to their tasks and they can only be assigned to them.\n                     It is possible to create and assign private tasks to another user in which case both users have access to the task."
     },
     {
       "name": "ProjectCustomFields",
