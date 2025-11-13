@@ -22,7 +22,7 @@ When a task bundle is applied to a project, it creates actual task lists and tas
 
 The only required field for creating a task bundle is the `name`:
 
-```sh title="Request" {4}
+```sh title="Create a new task bundle" {4}
 curl -X POST https://api.awork.com/api/v1/taskbundles \
   -H 'Content-Type: application/json' \
   -d '{
@@ -36,7 +36,7 @@ curl -X POST https://api.awork.com/api/v1/taskbundles \
 
 Once you have a task bundle, you can create task list templates within it:
 
-```sh title="Request" {4}
+```sh title="Create a task list template" {4}
 curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasklisttemplates \
   -H 'Content-Type: application/json' \
   -d '{
@@ -47,9 +47,9 @@ curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-42
 
 ### Creating a Task Template
 
-Create task templates within a task bundle. Note that `typeOfWorkId` is required:
+Create task templates within a task bundle:
 
-```sh title="Request" {4-8}
+```sh title="Create a task template" {4-8}
 curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasktemplates \
   -H 'Content-Type: application/json' \
   -d '{
@@ -65,7 +65,7 @@ curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-42
 
 Assign task templates to specific task list templates:
 
-```sh title="Request"
+```sh title="Assign task templates to a list"
 curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasklisttemplates/456e4567-e89b-12d3-a456-426614174000/addtasktemplates \
   -H 'Content-Type: application/json' \
   -d '[
@@ -79,7 +79,7 @@ curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-42
 
 Once your task bundle is set up, apply it to a project to create actual tasks and task lists:
 
-```sh title="Request" {4}
+```sh title="Apply task bundle to project" {4}
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/addtaskbundle \
   -H 'Content-Type: application/json' \
   -d '{
