@@ -79,6 +79,7 @@ navigation:
     path: ./pages/api/tasks.mdx
     icon: list-check
   - tasks
+  - task statuses
   - task lists
   - task views
   - project tasks
