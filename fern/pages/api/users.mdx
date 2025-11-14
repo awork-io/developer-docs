@@ -24,7 +24,7 @@ curl -X POST https://api.awork.com/api/v1/invitations \
 You can find the workspace id of the current user by making a request to the `/users/me` endpoint.
 
 ```sh title="Request"
-curl https://api.awork.com/api/v1/users/me
+curl -X GET https://api.awork.com/api/v1/users/me
 ```
 ```json title="Response" {4}
 {

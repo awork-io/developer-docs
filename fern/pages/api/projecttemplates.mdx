@@ -10,6 +10,8 @@ Learn more about [project templates](https://support.awork.com/en/articles/54192
 
 **Task Bundles** (called "Task Templates" in the awork UI) are reusable containers that hold templates for tasks and task lists. They simplify recurring processes by allowing you to import a complete set of tasks and lists into projects.
 
+Each Project Template has exactly one Task Bundle associated with it. However, Task Bundles can also exist independently and be used for importing into running projects.
+
 **Three core concepts:**
 
 - **Task Bundle**: Top-level container that can be global or private, holds task templates and task list templates
@@ -77,7 +79,11 @@ curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-42
 
 ### Applying a Task Bundle to a Project
 
-Once your task bundle is set up, apply it to a project to create actual tasks and task lists:
+Once your task bundle is set up, apply it to a project to create actual tasks and task lists.
+
+When a task bundle is applied:
+- **Tasks** are always created in the project
+- **Task lists** are merged based on their name (existing lists with matching names are reused)
 
 ```sh title="Apply task bundle to project" {4}
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/addtaskbundle \

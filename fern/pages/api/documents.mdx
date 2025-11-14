@@ -34,18 +34,19 @@ If you don't specify a space id or project id, the document will be created as a
 
 #### Document Content Requirements
 
-The `Content` field for now must be provided as a file with the proper encoding to ensure special characters display correctly:
+The `Content` field must be provided as a file with the proper encoding to ensure special characters display correctly:
 
 - For HTML content, use `text/html; charset=utf-8`
 - For plain text, use `text/plain; charset=utf-8`
 - For JSON content, use `application/json; charset=utf-8`
 
-Here's an example creating a document with proper file content:
+Here's an example creating a document in a document space:
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My New Document" \
+     -F "DocumentSpaceId=123e4567-e89b-12d3-a456-426614174000" \
      -F "Content=@document.html;type=text/html;charset=utf-8"
 ```
 
@@ -179,9 +180,9 @@ Document spaces provide a way to organize workspace-wide documents. They act as 
 curl -X POST "https://api.awork.com/api/v1/documentSpaces" \
      -H "Content-Type: application/json" \
      -d '{
-           "Name": "Marketing Team",
-           "Emoji": "📚",
-           "Color": "purple",
-           "WorkspaceAccessLevel": "read"
+           "name": "Marketing Team",
+           "emoji": "📚",
+           "color": "purple",
+           "workspaceAccessLevel": "read"
          }'
 ```
