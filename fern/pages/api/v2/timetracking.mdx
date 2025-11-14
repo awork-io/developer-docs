@@ -69,7 +69,7 @@ curl -X POST https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-42661417
 To find the currently running time entry of a user, you can use the `GET /v2/users/:userId/timeentries/last` endpoint and check whether the returned time entry has a duration of 0, which indicates that the timer is running. If the duration is > 0, no timer is running.
 
 ```sh title="Request"
-curl -X POST https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-426614174000/timeentries/last
+curl -X GET https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-426614174000/timeentries/last
 ```
 
 You can additionally specify the project and task to start the timer for. You can then also pause, resume and stop the timer. There can only be one active timer per user. Timers are automatically stopped after 24h or when the time entry reaches the maximum allowed time for that user and day.
@@ -85,7 +85,7 @@ When using the timer, the timer can also be paused. This will create a break ent
 
 Breaks cannot be created/updated/deleted manually. They are only created when the timer is paused and resumed.
 
-If you want to remove the breaks, you can do so by making a request to `POST /v2/timeentries/:timeEntryId/breaks/remove`.
+If you want to remove the breaks, you can do so by making a request to `POST /v2/timeentries/:timeEntryId/removeBreaks`.
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v2/timeentries/123e4567-e89b-12d3-a456-426614174000/removeBreaks

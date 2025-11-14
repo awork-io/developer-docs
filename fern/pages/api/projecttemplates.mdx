@@ -5,3 +5,90 @@ slug: projecttemplates
 ---
 
 Learn more about [project templates](https://support.awork.com/en/articles/5419200-project-templates).
+
+## Task Bundles
+
+**Task Bundles** (called "Task Templates" in the awork UI) are reusable containers that hold templates for tasks and task lists. They simplify recurring processes by allowing you to import a complete set of tasks and lists into projects.
+
+Each Project Template has exactly one Task Bundle associated with it. However, Task Bundles can also exist independently and be used for importing into running projects.
+
+**Three core concepts:**
+
+- **Task Bundle**: Top-level container that can be global or private, holds task templates and task list templates
+- **Task List Template**: Defines task lists (boards/columns) that will be created when the bundle is applied to a project
+- **Task Template**: Defines individual tasks with properties like name, description, priority, planned duration, dependencies, and relative dates
+
+When a task bundle is applied to a project, it creates actual task lists and tasks based on the templates.
+
+### Creating a Task Bundle
+
+The only required field for creating a task bundle is the `name`:
+
+```sh title="Create a new task bundle" {4}
+curl -X POST https://api.awork.com/api/v1/taskbundles \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Website Launch",
+    "description": "Complete task bundle for launching a new website",
+    "icon": "rocket"
+  }'
+```
+
+### Creating a Task List Template
+
+Once you have a task bundle, you can create task list templates within it:
+
+```sh title="Create a task list template" {4}
+curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasklisttemplates \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Design",
+    "order": 1
+  }'
+```
+
+### Creating a Task Template
+
+Create task templates within a task bundle:
+
+```sh title="Create a task template" {4-8}
+curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasktemplates \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Create wireframe mockups",
+    "description": "Design initial wireframes for the homepage",
+    "isPrio": false,
+    "plannedDuration": 14400,
+    "typeOfWorkId": "123e4567-e89b-12d3-a456-426614174000"
+  }'
+```
+
+### Adding Task Templates to a Task List Template
+
+Assign task templates to specific task list templates:
+
+```sh title="Assign task templates to a list"
+curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasklisttemplates/456e4567-e89b-12d3-a456-426614174000/addtasktemplates \
+  -H 'Content-Type: application/json' \
+  -d '[
+    {
+      "taskTemplateId": "789e4567-e89b-12d3-a456-426614174000"
+    }
+  ]'
+```
+
+### Applying a Task Bundle to a Project
+
+Once your task bundle is set up, apply it to a project to create actual tasks and task lists.
+
+When a task bundle is applied:
+- **Tasks** are always created in the project
+- **Task lists** are merged based on their name (existing lists with matching names are reused)
+
+```sh title="Apply task bundle to project" {4}
+curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/addtaskbundle \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "taskBundleId": "123e4567-e89b-12d3-a456-426614174000"
+  }'
+```
