@@ -108,8 +108,9 @@ The data types DateTime and Guid have to be prefixed with the corresponding type
 | `lt`       | The `lt` operator filters and returns the items which are less than the filter term.                        | `/users?filterby=birthDate lt datetime'2018-04-03T00:00'`     |
 | `le`       | The `le` operator filters and returns the items which are less than or equal to the filter term.            | `/users?filterby=birthDate le datetime'2018-04-03T00:00'`     |
 | `ge`       | The `ge` operator filters and returns the items which are greater than or equal to the filter term.         | `/users?filterby=birthDate ge datetime'2018-04-03T00:00'`     |
+| `in`       | The `in` operator filters and returns the items where the property value matches any value in the provided list. | `/tasks?filterby=tags/any(t: t/name in ('Draft','In Progress'))` |
 | `any`      | The `any` operator iterates through the main entity (Project), executes the condition and returns the filtered list of projects where any member with a first name of 'Neil' exists. | `/projects?filterby=members/any(p: p/firstName eq 'Neil')` |
-| `count`    | The `count` operator iterates through the main entity (Project), and returns the filtered list of projects that have less than 10 members. | `/projects?filterby=members/count() lt 10` |
+| `count`    | The `count` operator iterates through the main entity (Project), and returns the filtered list of projects that have less than 10 members. Also supports conditional counting with expressions. | `/projects?filterby=members/count() lt 10` or `/projects?filterby=members/count(m: m/firstName eq 'Neil') gt 0` |
 | `tolower`  | The `tolower` operator can be used to convert strings to lowercase, which can be helpful for string comparison. | `/projects?filterby=tolower(name) eq 'website'` |
 
 <Warning>Not all operators can be used in combination or nested.</Warning>
