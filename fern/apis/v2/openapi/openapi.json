@@ -29,7 +29,6 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -91,7 +90,6 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -99,6 +97,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -136,7 +144,6 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -144,6 +151,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -181,7 +198,6 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -189,14 +205,14 @@
           }
         ],
         "requestBody": {
-          "description": "The model to start a time tracking.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StartTimeTrackingForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -237,7 +253,6 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -245,6 +260,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -431,18 +456,38 @@
         "summary": "Creates a new time entry.",
         "description": "Creates a new time entry.\r\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
-          "description": "The form to create a time entry.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TimeEntryForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -478,7 +523,6 @@
           {
             "name": "grouping",
             "in": "query",
-            "description": "The group-by parameter.",
             "schema": {
               "type": "string"
             }
@@ -537,7 +581,6 @@
           {
             "name": "timeEntryId",
             "in": "path",
-            "description": "The id of the time entry.",
             "required": true,
             "schema": {
               "type": "string",
@@ -581,7 +624,6 @@
           {
             "name": "timeEntryId",
             "in": "path",
-            "description": "The id of the time entry.",
             "required": true,
             "schema": {
               "type": "string",
@@ -590,18 +632,48 @@
           }
         ],
         "requestBody": {
-          "description": "The form to update the time entry with the specified id.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TimeEntryForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
             "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
@@ -637,7 +709,6 @@
           {
             "name": "timeEntryId",
             "in": "path",
-            "description": "The id of the time entry.",
             "required": true,
             "schema": {
               "type": "string",
@@ -683,7 +754,6 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
             "required": true,
             "schema": {
               "type": "string",
@@ -746,7 +816,6 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
             "required": true,
             "schema": {
               "type": "string",
@@ -755,6 +824,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -792,7 +871,6 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
             "required": true,
             "schema": {
               "type": "string",
@@ -801,6 +879,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -838,7 +926,6 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
             "required": true,
             "schema": {
               "type": "string",
@@ -847,14 +934,14 @@
           }
         ],
         "requestBody": {
-          "description": "The model to start a time tracking.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StartTimeTrackingForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -895,7 +982,6 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
             "required": true,
             "schema": {
               "type": "string",
@@ -904,6 +990,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
