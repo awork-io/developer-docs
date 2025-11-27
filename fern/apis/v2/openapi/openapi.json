@@ -29,7 +29,7 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -91,7 +91,7 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -99,6 +99,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -136,7 +146,7 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -144,6 +154,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -181,7 +201,7 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -189,14 +209,15 @@
           }
         ],
         "requestBody": {
-          "description": "The model to start a time tracking.",
+          "description": "The model describing the time tracking to start.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StartTimeTrackingForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -237,7 +258,7 @@
           {
             "name": "userId",
             "in": "query",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -245,6 +266,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -283,6 +314,7 @@
           {
             "name": "projectId",
             "in": "path",
+            "description": "The id of the project.",
             "required": true,
             "schema": {
               "type": "string",
@@ -330,6 +362,7 @@
           {
             "name": "taskId",
             "in": "path",
+            "description": "The id of the task.",
             "required": true,
             "schema": {
               "type": "string",
@@ -377,6 +410,7 @@
           {
             "name": "searchReindex",
             "in": "query",
+            "description": "Whether to reindex for search.",
             "schema": {
               "type": "boolean",
               "default": false
@@ -431,14 +465,15 @@
         "summary": "Creates a new time entry.",
         "description": "Creates a new time entry.\r\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\">Any authenticated user.</Check>",
         "requestBody": {
-          "description": "The form to create a time entry.",
+          "description": "The time entry data.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TimeEntryForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -447,6 +482,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -478,7 +533,7 @@
           {
             "name": "grouping",
             "in": "query",
-            "description": "The group-by parameter.",
+            "description": "The grouping type.",
             "schema": {
               "type": "string"
             }
@@ -590,14 +645,15 @@
           }
         ],
         "requestBody": {
-          "description": "The form to update the time entry with the specified id.",
+          "description": "The time entry data to update.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TimeEntryForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -606,6 +662,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -683,7 +769,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -746,7 +832,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -755,6 +841,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -792,7 +888,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -801,6 +897,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -838,7 +944,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -847,14 +953,15 @@
           }
         ],
         "requestBody": {
-          "description": "The model to start a time tracking.",
+          "description": "The model describing the time tracking to start.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StartTimeTrackingForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -895,7 +1002,7 @@
           {
             "name": "userId",
             "in": "path",
-            "description": "The id of the user. Not required if the me route is used.",
+            "description": "The id of the user.",
             "required": true,
             "schema": {
               "type": "string",
@@ -904,6 +1011,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeEntry"
+                }
+              }
+            }
+          },
           "204": {
             "description": "No Content",
             "content": {
@@ -961,21 +1078,81 @@
         "additionalProperties": false,
         "description": "The break model. Shows when a time tracking was paused."
       },
+      "ErrorResponse": {
+        "required": [
+          "code",
+          "description",
+          "link"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The error code.",
+            "example": "not-found"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The description of the error.",
+            "example": "There is no matching path for this URL."
+          },
+          "link": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The link to the API documentation page.",
+            "example": "https://developers.awork.com"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of details describing the error.",
+            "nullable": true,
+            "example": [
+              "No project with the id '123' exists."
+            ]
+          },
+          "validationErrors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationErrorResponse"
+            },
+            "description": "If a validation error occurred, this contains the validation errors for each property.",
+            "nullable": true
+          },
+          "traceId": {
+            "type": "string",
+            "description": "The request trace id for tracking the request.",
+            "nullable": true,
+            "example": "a65ce5745df02af216715ff06661fb3a"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The API error response."
+      },
       "NestedBaseTypeModel": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "icon": {
             "type": "string",
-            "nullable": true
+            "description": "The icon of the type.",
+            "nullable": true,
+            "example": "thumb_up"
           }
         },
         "additionalProperties": false
@@ -985,19 +1162,26 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "hasImage": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the company has a profile image.",
+            "example": true
           },
           "description": {
             "type": "string",
-            "nullable": true
+            "description": "The description of the company.",
+            "nullable": true,
+            "example": "One of our customers"
           }
         },
         "additionalProperties": false
@@ -1007,12 +1191,15 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           }
         },
         "additionalProperties": false
@@ -1022,23 +1209,32 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "description": {
             "type": "string",
-            "nullable": true
+            "description": "The description of the type.",
+            "nullable": true,
+            "example": "Work in progress"
           },
           "type": {
             "type": "string",
-            "nullable": true
+            "description": "The type of the status.",
+            "nullable": true,
+            "example": "todo"
           },
           "isArchived": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the type is archived.",
+            "example": false
           }
         },
         "additionalProperties": false
@@ -1048,29 +1244,40 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "description": {
             "type": "string",
-            "nullable": true
+            "description": "The description of the type.",
+            "nullable": true,
+            "example": "Work in progress"
           },
           "type": {
             "type": "string",
-            "nullable": true
+            "description": "The type of the status.",
+            "nullable": true,
+            "example": "todo"
           },
           "order": {
             "type": "number",
+            "description": "The order of the task status in a task.",
             "format": "double",
-            "nullable": true
+            "nullable": true,
+            "example": 1
           },
           "icon": {
             "type": "string",
-            "nullable": true
+            "description": "The icon of the task status in a task.",
+            "nullable": true,
+            "example": "arrow_forward"
           }
         },
         "additionalProperties": false
@@ -1080,19 +1287,26 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "icon": {
             "type": "string",
-            "nullable": true
+            "description": "The icon of the type.",
+            "nullable": true,
+            "example": "thumb_up"
           },
           "isArchived": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the type is archived.",
+            "example": false
           }
         },
         "additionalProperties": false
@@ -1102,19 +1316,25 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "firstName": {
             "type": "string",
-            "nullable": true
+            "description": "The first name of the user.",
+            "nullable": true,
+            "example": "Carla"
           },
           "lastName": {
             "type": "string",
-            "nullable": true
+            "description": "The last name of the user.",
+            "nullable": true,
+            "example": "Creative"
           },
           "hasImage": {
             "type": "boolean",
+            "description": "Whether this user has a profile image.",
             "nullable": true
           }
         },
@@ -1125,12 +1345,15 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "projectStatus": {
             "$ref": "#/components/schemas/NestedStatusModel"
@@ -1216,6 +1439,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The id of the entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
@@ -1227,6 +1451,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -1241,12 +1466,15 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "hasImage": {
             "type": "boolean"
@@ -1469,12 +1697,15 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
           },
           "baseType": {
             "type": "string",
@@ -1885,19 +2116,25 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Gets or sets the id of the nested model.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "firstName": {
             "type": "string",
-            "nullable": true
+            "description": "The first name of the user.",
+            "nullable": true,
+            "example": "Carla"
           },
           "lastName": {
             "type": "string",
-            "nullable": true
+            "description": "The last name of the user.",
+            "nullable": true,
+            "example": "Creative"
           },
           "hasImage": {
             "type": "boolean",
+            "description": "Whether this user has a profile image.",
             "nullable": true
           },
           "tags": {
@@ -1954,11 +2191,31 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The id of the entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "property": {
+            "type": "string",
+            "description": "The name of the property that failed validation.",
+            "nullable": true,
+            "example": "FirstName"
+          },
+          "message": {
+            "type": "string",
+            "description": "The reason why this property failed validation.",
+            "nullable": true,
+            "example": "FirstName is required."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The validation error response."
       }
     },
     "parameters": {
