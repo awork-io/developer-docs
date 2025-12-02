@@ -91,7 +91,6 @@ navigation:
   - task dependencies
   - task schedules
   - task activities
-  - tasks batch
   - type of work
   - page: Time Tracking Overview
     path: ./pages/api/timetracking.mdx
@@ -145,7 +144,6 @@ navigation:
     path: ./pages/api/customfields.mdx
     icon: toggle-off
   - custom fields
-  - project custom fields
   - page: Workload & Planning Overview
     path: ./pages/api/workload.mdx
     icon: briefcase
@@ -161,6 +159,10 @@ navigation:
   - project milestone templates
   - project template automations
   - project template actions
+  - page: Workflows Overview
+    path: ./pages/api/workflows.mdx
+    icon: microchip
+  - workflow automations
   - page: Login & Access Overview
     path: ./pages/api/login.mdx
     icon: key
