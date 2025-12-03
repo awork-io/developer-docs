@@ -159,10 +159,6 @@ navigation:
   - project milestone templates
   - project template automations
   - project template actions
-  - page: Workflows Overview
-    path: ./pages/api/workflows.mdx
-    icon: microchip
-  - workflow automations
   - page: Login & Access Overview
     path: ./pages/api/login.mdx
     icon: key
