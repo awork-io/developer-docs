@@ -59,7 +59,7 @@
           "AbsenceRegions"
         ],
         "summary": "Creates a new absence region.",
-        "description": "Creates a new absence region.\r\n            An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\r\n            There can be multiple absence regions for a country, but only one absence region for a country and location. (no duplicates)\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Standard` plan or higher.</Note>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "description": "An absence region is defined by an ISO 3166-1 alpha-2 country code and a location code.\r\n            There can be multiple absence regions for a country, but only one absence region for a country and location (no duplicates).\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Standard` plan or higher.</Note>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to create the absence region.",
           "content": {
@@ -2736,17 +2736,6 @@
         ],
         "summary": "Updates a tag globally for all companies.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "query",
-            "description": "The id of the company to update tags for.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "requestBody": {
           "description": "The model containing the tag updates.",
           "content": {
@@ -4456,67 +4445,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/companies/{companyId}/updatetags": {
-      "post": {
-        "tags": [
-          "CompanyTags"
-        ],
-        "summary": "Updates a tag globally for all companies.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "companyId",
-            "in": "path",
-            "description": "The id of the company to update tags for.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model containing the tag updates.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "company-master-data": "write"
         }
       }
     },
@@ -8056,7 +7984,7 @@
           "DocumentSpaces"
         ],
         "summary": "Adds teams to the document space with the specified id.",
-        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user has to be an admin.</Check>\r\n            Adding teams to a document space will affect their access to the document space and documents within that space.",
+        "description": "Adding teams to a document space will affect their access to the document space and documents within that space.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -12615,7 +12543,7 @@
           "Projects"
         ],
         "summary": "Returns all projects.",
-        "description": "Returns all projects the user has `read` permissions of feature `project-master-data` for.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">Returns all projects the user has `read` permissions for.</Check>",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -12885,17 +12813,6 @@
         ],
         "summary": "Updates a tag globally for all projects.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-master-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "query",
-            "description": "The id of the project to update tags for.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "requestBody": {
           "description": "The model containing the tag updates.",
           "content": {
@@ -12954,7 +12871,7 @@
           "Projects"
         ],
         "summary": "Returns the project with the specified id.",
-        "description": "Returns the project with the specified id if the user has `read` permissions of feature `project-master-data`.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either be admin, have `project-master-data:read` permissions or be the creator of the project.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -14910,7 +14827,7 @@
         "tags": [
           "CustomFields"
         ],
-        "summary": "Returns all custom field definitions linked to the specified project.",
+        "summary": "Returns all custom field definitions linked to the specified project, including definitions linked via a workflow.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-master-data:read` permissions or access to at least one task in the project.</Check>",
         "parameters": [
           {
@@ -14932,7 +14849,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptionsAndLinkedProjectIds"
+                    "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptions"
                   }
                 }
               }
@@ -18758,8 +18675,8 @@
         "tags": [
           "TaskStatuses"
         ],
-        "summary": "Returns all task statuses of the project with the specified id.",
-        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user mast have either `project-master-data:read` permissions or be assigned to a task on the specified project.</Check>",
+        "summary": "Returns all task statuses of the project with the specified id.\n            If the project is linked to a workflow, the workflow's task statuses are returned.",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-master-data:read` permissions or be assigned to a task on the specified project.</Check>",
         "parameters": [
           {
             "name": "projectId",
@@ -19504,77 +19421,6 @@
         }
       }
     },
-    "/projects/{projectId}/updatetags": {
-      "post": {
-        "tags": [
-          "ProjectTags"
-        ],
-        "summary": "Updates a tag globally for all projects.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-master-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project to update tags for.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model containing the tag updates.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-master-data": "write"
-        }
-      }
-    },
     "/projectstatuses": {
       "get": {
         "tags": [
@@ -20201,17 +20047,6 @@
         ],
         "summary": "Updates a tag globally for all project templates.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectTemplateId",
-            "in": "query",
-            "description": "The id of the project template to update tags for.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "requestBody": {
           "description": "The model containing the tag updates.",
           "content": {
@@ -21287,7 +21122,7 @@
         "tags": [
           "CustomFields"
         ],
-        "summary": "Returns all custom field definitions linked to the specified project template.",
+        "summary": "Returns all custom field definitions linked to the specified project template, including definitions linked via a workflow.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "parameters": [
           {
@@ -22620,77 +22455,6 @@
           },
           "404": {
             "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "project-manage-config": "write"
-        }
-      }
-    },
-    "/projecttemplates/{projectTemplateId}/updatetags": {
-      "post": {
-        "tags": [
-          "ProjectTemplateTags"
-        ],
-        "summary": "Updates a tag globally for all project templates.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "projectTemplateId",
-            "in": "path",
-            "description": "The id of the project template to update tags for.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model containing the tag updates.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -28246,19 +28010,8 @@
         "tags": [
           "TaskTags"
         ],
-        "summary": "Removes a tag from all tasks.",
-        "description": "Removes a tag from all tasks. If `isPrivateTask` is true, removes a tag from private tasks only. Otherwise removes it from project tasks.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">To remove tags from all tasks the user must have `project-planning-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "isPrivateTask",
-            "in": "query",
-            "description": "Whether to remove the tag from private tasks only.",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
+        "summary": "Removes a tag from all project tasks.",
+        "description": "Removes a tag from all project tasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to delete the tag from all tasks.",
           "content": {
@@ -28306,7 +28059,8 @@
           "v1"
         ],
         "x-access": {
-          "any": "true"
+          "admin": "true",
+          "project-planning-data": "write"
         }
       }
     },
@@ -28420,28 +28174,8 @@
         "tags": [
           "TaskTags"
         ],
-        "summary": "Updates a tag globally for all tasks.",
-        "description": "Updates a tag for all tasks. If `isPrivateTask` is true, updates a tag for private tasks of the current user only. Otherwise updates it for project tasks.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">To update tags for all tasks the user must have `project-planning-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "query",
-            "description": "The id of the task.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "isPrivateTask",
-            "in": "query",
-            "description": "Whether the tag should be updated for private tasks only.",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
+        "summary": "Updates a tag globally for all project tasks.",
+        "description": "Updates a tag for all project tasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-planning-data:write` permissions.</Check>",
         "requestBody": {
           "description": "The model to update the tag including the old and new tag names.",
           "content": {
@@ -28482,7 +28216,8 @@
           "v1"
         ],
         "x-access": {
-          "any": "true"
+          "admin": "true",
+          "project-planning-data": "write"
         }
       }
     },
@@ -31400,78 +31135,6 @@
           },
           "404": {
             "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/tasks/{taskId}/updatetags": {
-      "post": {
-        "tags": [
-          "TaskTags"
-        ],
-        "summary": "Updates a tag globally for all tasks.",
-        "description": "Updates a tag for all tasks. If `isPrivateTask` is true, updates a tag for private tasks of the current user only. Otherwise updates it for project tasks.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">To update tags for all tasks the user must have `project-planning-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "The id of the task.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "isPrivateTask",
-            "in": "query",
-            "description": "Whether the tag should be updated for private tasks only.",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model to update the tag including the old and new tag names.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "207": {
-            "description": "Multi-Status"
-          },
-          "400": {
-            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
@@ -36424,17 +36087,6 @@
         ],
         "summary": "Updates a tag globally for all users.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-master-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "description": "The id of the user whose tag should be updated.",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -39355,7 +39007,7 @@
           "Users"
         ],
         "summary": "Archives or unarchives the user with the specified id.",
-        "description": "Archived objects can not be used any longer but still exist for being referenced by other entities.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have either Admin or ProjectManageConfig feature with Write permission.</Check>",
+        "description": "Archived objects can not be used any longer but still exist for being referenced by other entities.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "parameters": [
           {
             "name": "userId",
@@ -39832,76 +39484,6 @@
         "x-access": {
           "admin": "true",
           "owner": "true"
-        }
-      }
-    },
-    "/users/{userId}/updatetags": {
-      "post": {
-        "tags": [
-          "UserTags"
-        ],
-        "summary": "Updates a tag globally for all users.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-master-data:write` permissions.</Check>",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user whose tag should be updated.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagUpdateForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "user-master-data": "write"
         }
       }
     },
@@ -43641,7 +43223,7 @@
           },
           "name": {
             "type": "string",
-            "description": "The name of the country, e.g. \"Germany\".",
+            "description": "The name of the country.",
             "nullable": true,
             "example": "Germany"
           }
@@ -43666,13 +43248,13 @@
             "maxLength": 2,
             "minLength": 1,
             "type": "string",
-            "description": "The ISO 3166-1 alpha-2 country code. (e.g. 'DE' for Germany)",
+            "description": "The ISO 3166-1 alpha-2 country code (e.g. 'DE' for Germany).",
             "example": "DE"
           },
           "locationCode": {
             "maxLength": 25,
             "type": "string",
-            "description": "The (optional) location code of the absence region.\nIt is in ISO 3166-2 format. (e.g. 'DE-BE' for Berlin, Germany)",
+            "description": "The (optional) location code of the absence region in ISO 3166-2 format (e.g. 'DE-HH' for Hamburg, Germany).",
             "nullable": true,
             "example": "DE-HH"
           },
@@ -43695,7 +43277,7 @@
           },
           "name": {
             "type": "string",
-            "description": "The name of the location, e.g. \"Berlin\".",
+            "description": "The name of the location.",
             "nullable": true,
             "example": "Hamburg"
           }
@@ -43755,7 +43337,7 @@
           },
           "locationCode": {
             "type": "string",
-            "description": "The location code of the absence region.\nIt is optional. It should be a valid ISO 3166-2 country subdivision code.",
+            "description": "The location code of the absence region. It should be a valid ISO 3166-2 country subdivision code.",
             "nullable": true,
             "example": "DE-HH"
           },
@@ -43845,7 +43427,7 @@
           },
           "locationCode": {
             "type": "string",
-            "description": "The location code of the absence region.\nIt is optional. It should be a valid ISO 3166-2 country subdivision code.",
+            "description": "The location code of the absence region. It should be a valid ISO 3166-2 country subdivision code.",
             "nullable": true,
             "example": "DE-HH"
           },
@@ -43984,17 +43566,6 @@
         },
         "additionalProperties": false,
         "description": "Form to specify the options for adjusting the start/end dates of a project and related entities."
-      },
-      "AdjustTimeBookingDatesForm": {
-        "type": "object",
-        "properties": {
-          "daysOffset": {
-            "type": "integer",
-            "description": "The number of days (positive or negative) that will be added/subtracted the start/end dates of the time bookings.",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
       },
       "AggregatedBillableDuration": {
         "type": "object",
@@ -47281,6 +46852,20 @@
         },
         "additionalProperties": false
       },
+      "DeleteWorkflowProjectStatusForm": {
+        "type": "object",
+        "properties": {
+          "newProjectStatusId": {
+            "type": "string",
+            "description": "The Id of the project status to migrate projects to.\nRequired if any projects are currently using the status being deleted.\nMust be a different status within the same workflow.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The form for deleting a workflow project status."
+      },
       "DeletedEntityModel": {
         "type": "object",
         "properties": {
@@ -48131,6 +47716,13 @@
           "publicProjectTemplateId": {
             "type": "string",
             "description": "The id of the public template which is used to create the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workflowId": {
+            "type": "string",
+            "description": "The id of the workflow to link to the project.\nCannot be specified if ProjectTemplateId is set.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -49189,7 +48781,7 @@
           },
           "name": {
             "type": "string",
-            "description": "The english name of the public holiday.",
+            "description": "The English name of the public holiday.",
             "nullable": true,
             "example": "Christmas Day"
           },
@@ -49590,6 +49182,11 @@
             "description": "The name of the entity.",
             "nullable": true,
             "example": "Design"
+          },
+          "projectKey": {
+            "type": "string",
+            "description": "The unique project key within the workspace (e.g., \"NIKE\").\nMaximum 32 characters, uppercase letters, numbers, and dashes only.",
+            "nullable": true
           },
           "projectStatus": {
             "$ref": "#/components/schemas/NestedStatusModel"
@@ -50107,6 +49704,21 @@
             "type": "string",
             "description": "The timestamp of the last sync operation. This indicates the point in time when the data was last synchronized.",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OnboardingLeaderboardModel": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "completionRate": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -51078,6 +50690,13 @@
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
+          "workflowId": {
+            "type": "string",
+            "description": "The id of the workflow to link to the project.\nCannot be specified if ProjectTemplateId is set.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
           "id": {
             "type": "string",
             "description": "Id of the project.",
@@ -52013,6 +51632,11 @@
             "description": "The teams of the project.",
             "nullable": true,
             "deprecated": true
+          },
+          "projectKey": {
+            "type": "string",
+            "description": "The unique project key within the workspace (e.g., \"NIKE\").\nMaximum 32 characters, uppercase letters, numbers, and dashes only.",
+            "nullable": true
           },
           "isPrivate": {
             "type": "boolean",
@@ -55176,6 +54800,11 @@
             "nullable": true,
             "example": "projecttask"
           },
+          "taskIdentifier": {
+            "type": "string",
+            "description": "The full task identifier combining project key and task number (e.g., \"NIKE-42\").\nMaintained by the service layer, updated when project key changes.",
+            "nullable": true
+          },
           "taskStatusId": {
             "type": "string",
             "description": "The id of the status for this task.",
@@ -55639,6 +55268,13 @@
           "projectTypeId": {
             "type": "string",
             "description": "Is set if the task status is related to a project type.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workflowId": {
+            "type": "string",
+            "description": "Is set if the task status is related to a workflow.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -60283,6 +59919,33 @@
         "additionalProperties": false,
         "description": "The user's current workspace model."
       },
+      "WorkspaceUsageStatsModel": {
+        "type": "object",
+        "properties": {
+          "taskCustomFieldCount": {
+            "type": "integer",
+            "description": "The number of custom fields defined for tasks.",
+            "format": "int32"
+          },
+          "projectCustomFieldCount": {
+            "type": "integer",
+            "description": "The number of custom fields defined for projects.",
+            "format": "int32"
+          },
+          "projectTemplateCount": {
+            "type": "integer",
+            "description": "The number of project templates.",
+            "format": "int32"
+          },
+          "privateProjectCount": {
+            "type": "integer",
+            "description": "The number of private projects.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Statistics about workspace usage for plan validation.\nUsed to determine if a workspace can downgrade to a specific plan\nbased on their current usage of limited features."
+      },
       "DefaultModel": {
         "type": "object",
         "properties": {
@@ -61594,18 +61257,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "WorkspaceUsageStatsModel": {
-        "type": "object",
-        "properties": {
-          "maxAutomationsPerProject": {
-            "type": "integer",
-            "description": "The maximum number of automations on any single project.",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false,
-        "description": "Response model for automations workspace usage stats endpoint."
       },
       "WebhookConfig": {
         "required": [

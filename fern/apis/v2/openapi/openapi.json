@@ -1382,6 +1382,11 @@
             "nullable": true,
             "deprecated": true
           },
+          "projectKey": {
+            "type": "string",
+            "description": "The unique project key within the workspace (e.g., \"NIKE\").\nMaximum 32 characters, uppercase letters, numbers, and dashes only.",
+            "nullable": true
+          },
           "isPrivate": {
             "type": "boolean",
             "description": "Whether the project is private.",
@@ -1712,6 +1717,11 @@
             "description": "The base type of the task.\nCan be 'private' for a private task or\n'projecttask' for a project task.",
             "nullable": true,
             "example": "projecttask"
+          },
+          "taskIdentifier": {
+            "type": "string",
+            "description": "The full task identifier combining project key and task number (e.g., \"NIKE-42\").\nMaintained by the service layer, updated when project key changes.",
+            "nullable": true
           },
           "taskStatusId": {
             "type": "string",
