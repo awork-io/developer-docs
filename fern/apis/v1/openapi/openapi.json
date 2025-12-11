@@ -22091,6 +22091,16 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -50590,6 +50600,51 @@
         },
         "additionalProperties": false
       },
+      "PreviewResult": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageBytes": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "imageHeight": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "imageWidth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "imageFormat": {
+            "type": "string",
+            "nullable": true
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Project": {
         "required": [
           "name"
@@ -52177,6 +52232,13 @@
           "projectTypeId": {
             "type": "string",
             "description": "The id of the project type.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workflowId": {
+            "type": "string",
+            "description": "The id of the workflow linked to this template.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
