@@ -25,6 +25,7 @@
         ],
         "summary": "Returns the last time entry of a specified user.",
         "description": "The last time entry is always the last one that was started.\r\n            Time entries which are started in the future are ignored.\r\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\r\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "operationId": "GetMyLastTimeEntriesV2",
         "parameters": [
           {
             "name": "userId",
@@ -87,6 +88,7 @@
         ],
         "summary": "Pauses a running time tracking for a user.",
         "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator.</Check>",
+        "operationId": "PostPauseMyTimeTrackingV2",
         "parameters": [
           {
             "name": "userId",
@@ -142,6 +144,7 @@
         ],
         "summary": "Resumes a paused time tracking for a user.",
         "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator.</Check>",
+        "operationId": "PostResumeMyTimeTrackingV2",
         "parameters": [
           {
             "name": "userId",
@@ -197,6 +200,7 @@
         ],
         "summary": "Starts a new time tracking for a user.",
         "description": "If there is already a running/paused time tracking it will be stopped automatically in order to start the new one.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "operationId": "PostStartMyTimeTrackingV2",
         "parameters": [
           {
             "name": "userId",
@@ -254,6 +258,7 @@
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
         "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "operationId": "PostStopMyTimeTrackingV2",
         "parameters": [
           {
             "name": "userId",
@@ -308,8 +313,9 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Returns all time entries of a specified project.",
-        "description": "The projectName parameter defines the main project of which to fetch the time entries.\r\n            Supported types are: 'projects' and 'tasks'.",
+        "summary": "Returns all time entries of the specified project.",
+        "description": "",
+        "operationId": "GetProjectTimeEntriesV2",
         "parameters": [
           {
             "name": "projectId",
@@ -356,8 +362,9 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Returns all time entries of a specified task.",
-        "description": "The taskName parameter defines the main task of which to fetch the time entries.\r\n            Supported types are: 'projects' and 'tasks'.",
+        "summary": "Returns all time entries of the specified task.",
+        "description": "",
+        "operationId": "GetTaskTimeEntriesV2",
         "parameters": [
           {
             "name": "taskId",
@@ -406,6 +413,7 @@
         ],
         "summary": "Returns all time entries.",
         "description": "Returns all time entries.\r\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\r\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTimeEntriesV2",
         "parameters": [
           {
             "name": "searchReindex",
@@ -464,6 +472,7 @@
         ],
         "summary": "Creates a new time entry.",
         "description": "Creates a new time entry.\r\n            Depending on the time entry, the calling users has to have several permissions to create the time entry.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostTimeEntryV2",
         "requestBody": {
           "description": "The time entry data.",
           "content": {
@@ -529,6 +538,7 @@
         ],
         "summary": "Retrieves all time entries with a simplified model based on the grouping parameter.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTimeEntriesSimplifiedV2",
         "parameters": [
           {
             "name": "grouping",
@@ -588,6 +598,7 @@
         ],
         "summary": "Get a time entry by id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTimeEntryByIdV2",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -632,6 +643,7 @@
         ],
         "summary": "Updates the time entry with the specified id.",
         "description": "Updates the time entry with the specified id.\r\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\r\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\r\n            Following combination of times and duration are allowed for already completed time entries:\r\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\r\n            - start time (local or utc) and duration\r\n            - end time (local or utc) and duration\r\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PutTimeEntryV2",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -719,6 +731,7 @@
         ],
         "summary": "Handles removing all breaks from a time entry, effectively resuming the timer.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostTimeEntryRemoveBreaksV2",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -765,6 +778,7 @@
         ],
         "summary": "Returns the last time entry of a specified user.",
         "description": "The last time entry is always the last one that was started.\r\n            Time entries which are started in the future are ignored.\r\n            If a time entry does not have a start time, 12.00 am is automatically assumed as the start time\r\n            for comparison with other time entries from the same day.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "operationId": "GetLastTimeEntriesByUserIdV2",
         "parameters": [
           {
             "name": "userId",
@@ -828,6 +842,7 @@
         ],
         "summary": "Pauses a running time tracking for a user.",
         "description": "If there is already a paused time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator.</Check>",
+        "operationId": "PostPauseTimeTrackingByUserIdV2",
         "parameters": [
           {
             "name": "userId",
@@ -884,6 +899,7 @@
         ],
         "summary": "Resumes a paused time tracking for a user.",
         "description": "If there is already a running time tracking nothing happens. If there is no running time tracking, returns NoContent.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator.</Check>",
+        "operationId": "PostResumeTimeTrackingByUserIdV2",
         "parameters": [
           {
             "name": "userId",
@@ -940,6 +956,7 @@
         ],
         "summary": "Starts a new time tracking for a user.",
         "description": "If there is already a running/paused time tracking it will be stopped automatically in order to start the new one.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "operationId": "PostStartTimeTrackingByUserIdV2",
         "parameters": [
           {
             "name": "userId",
@@ -998,6 +1015,7 @@
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
         "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "operationId": "PostStopTimeTrackingByUserIdV2",
         "parameters": [
           {
             "name": "userId",
