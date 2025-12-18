@@ -12922,7 +12922,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/BaseTagModel"
+                    "$ref": "#/components/schemas/BaseTagModelWithCount"
                   }
                 }
               }
@@ -13516,7 +13516,7 @@
         ],
         "summary": "Returns all automations of the specified project.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:read` permissions on the specified project.</Check>",
-        "operationId": "GetProjectAutomations",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "projectId",
@@ -13564,7 +13564,7 @@
         ],
         "summary": "Creates a new automation for the specified project.",
         "description": "Creates a new automation for the project with the specified id.\nThe user needs to be the owner of the project or have 'write' permissions of\nthe feature 'project-master-data' globally or in the project.\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Standard` plan or higher.</Note>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostProjectAutomation",
+        "operationId": "Post",
         "parameters": [
           {
             "name": "projectId",
@@ -13629,7 +13629,7 @@
         ],
         "summary": "Deletes the specified automation for a given project.",
         "description": "Deletes the specified automation for a given project.\nAlso deletes all actions connected to the automation.\nThe user needs to be the owner of the project or have 'write' permissions of\nthe feature 'project-master-data' globally or in the project.\nAutomations created from a workflow cannot be deleted via this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteProjectAutomation",
+        "operationId": "Delete",
         "parameters": [
           {
             "name": "automationId",
@@ -13677,7 +13677,7 @@
         ],
         "summary": "Returns a specific automation from a project.",
         "description": "Returns a specific automation of the project with the specified id.\nReturns NotFound if the automation doesnt exist.\nTo get the the automation data the user needs to be the owner of the project or\nhave 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectAutomation",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "automationId",
@@ -13732,7 +13732,7 @@
         ],
         "summary": "Updates the automation with the specified id.",
         "description": "Updates the automation with the specified id.\nThe user needs to be the owner of the project or have 'write' permissions of\nthe feature 'project-master-data' globally or in the project.\nIf the automation was created from a workflow, only the Enabled flag can be changed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutProjectAutomation",
+        "operationId": "Put",
         "parameters": [
           {
             "name": "automationId",
@@ -13804,7 +13804,7 @@
         ],
         "summary": "Gets the actions of a project automation.",
         "description": "Gets all actions including their values of an automation.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:read` permissions on the specified project.</Check>",
-        "operationId": "GetProjectAutomationActions",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "projectId",
@@ -13862,7 +13862,7 @@
         ],
         "summary": "Creates a new action for an automation.",
         "description": "Creates a new action including its values for an automation. Actions cannot be added to automations created from a workflow.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
-        "operationId": "PostProjectAutomationAction",
+        "operationId": "Post",
         "parameters": [
           {
             "name": "projectId",
@@ -13934,7 +13934,7 @@
         ],
         "summary": "Deletes an action for a project automation.",
         "description": "Deletes an action for an automation including all its values. Actions of automations created from a workflow cannot be deleted.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
-        "operationId": "DeleteProjectAutomationAction",
+        "operationId": "Delete",
         "parameters": [
           {
             "name": "projectId",
@@ -13999,7 +13999,7 @@
         ],
         "summary": "Gets a specific action for a project automation.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:read` permissions on the specified project.</Check>",
-        "operationId": "GetProjectAutomationAction",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "projectId",
@@ -14064,7 +14064,7 @@
         ],
         "summary": "Updates a specifc action of a project automation.",
         "description": "Updates an exsting action including its values for an automation. Actions of automations created from a workflow cannot be modified.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
-        "operationId": "PutProjectAutomationAction",
+        "operationId": "Put",
         "parameters": [
           {
             "name": "projectId",
@@ -14146,7 +14146,7 @@
         ],
         "summary": "Updates the order of a given action of a project automation.",
         "description": "Updates the order of a given action in the list of actions of the specific project automation. Actions of automations created from a workflow cannot be modified.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
-        "operationId": "UpdateProjectAutomationActionOrder",
+        "operationId": "UpdateOrder",
         "parameters": [
           {
             "name": "projectId",
@@ -20639,7 +20639,7 @@
           "ProjectTemplateAutomations"
         ],
         "summary": "Returns all automations for a project template.",
-        "operationId": "GetProjectTemplateAutomations",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -20686,9 +20686,9 @@
         "tags": [
           "ProjectTemplateAutomations"
         ],
-        "summary": "Creates a new automation for a given project template.",
-        "description": "Creates a new automation of the project template with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostProjectTemplateAutomation",
+        "summary": "Creates a new automation for a given projecttemplate.",
+        "description": "Creates a new automation of the projecttemplate with the specified id.\nTo create the the automation the user needs to have 'write' permissions of\nthe feature 'project-manage-config' globally.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "operationId": "PostToProjectTemplate",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -20749,7 +20749,7 @@
         ],
         "summary": "Deletes the specified automation for a given projecttemplate.",
         "description": "Deletes the specified automation with its trigger and all its values.\nTo delete the the automation the user needs to have 'write' permissions of\nthe feature 'project-manage-config' globally.\nIf the 'removeFromProject' boolean is set to true, all automations in projects of that\nproject template created from that automation template are deleted aswell.\nAutomations created from a workflow cannot be deleted via this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteProjectTemplateAutomation",
+        "operationId": "Delete",
         "parameters": [
           {
             "name": "automationId",
@@ -20806,7 +20806,7 @@
         ],
         "summary": "Returns a specific automation for a projecttemplate.",
         "description": "Returns a specific automation of the projecttemplate with the specified id.\nReturns NotFound if the automation doesnt exist.\nTo get the the automation data the user needs to have 'read' permissions of\nthe feature 'project-manage-config' globally.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
-        "operationId": "GetProjectTemplateAutomation",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "automationId",
@@ -20862,7 +20862,7 @@
         ],
         "summary": "Updates the automation with the specified id for a given projecttemplate.",
         "description": "Updates the specified automation for a specific projecttemplate.\nTo update the the automation the user needs to have 'write' permissions of\nthe feature 'project-manage-config' globally.\nIf the automation was created from a workflow, only the Enabled flag can be changed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutProjectTemplateAutomation",
+        "operationId": "Put",
         "parameters": [
           {
             "name": "automationId",
@@ -20991,7 +20991,7 @@
         ],
         "summary": "Creates a new action for an automation of a project template.",
         "description": "Creates an action for a specific automation of a project template including all its values. Actions cannot be added to automations created from a workflow.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostProjectTemplateAutomationAction",
+        "operationId": "Post",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21064,7 +21064,7 @@
         ],
         "summary": "Deletes an action for an automation of a project template.",
         "description": "Deletes an action for a specific automation of a project template including all its values. Actions of automations created from a workflow cannot be deleted.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteProjectTemplateAutomationAction",
+        "operationId": "Delete",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21098,8 +21098,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -21123,7 +21123,7 @@
         ],
         "summary": "Gets a specific action for an automation of a projecttemplate.",
         "description": "Returns a specific action for a specific automation of a project template including all its values.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
-        "operationId": "GetProjectTemplateAutomationAction",
+        "operationId": "Get",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21189,7 +21189,7 @@
         ],
         "summary": "Updates a specifc action of an automation of a project template.",
         "description": "Returns an updated action for a specific automation of a project template including all its values. Actions of automations created from a workflow cannot be modified.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutProjectTemplateAutomationAction",
+        "operationId": "Put",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21272,7 +21272,7 @@
         ],
         "summary": "Updates the order of a project template automation action.",
         "description": "Actions of automations created from a workflow cannot be modified.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "UpdateOrderForProjectTemplateAutomationAction",
+        "operationId": "UpdateOrderForProjectTemplate",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21355,7 +21355,7 @@
         ],
         "summary": "Reapplies the automation to all projects of this specific project template.",
         "description": "Returns NotFound if the automation doesnt exist.\nTo execute this you need to have 'write' permissions of\nthe feature 'project-manage-config' globally.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "ReApplyProjectTemplateAutomation",
+        "operationId": "ReApply",
         "parameters": [
           {
             "name": "automationId",
