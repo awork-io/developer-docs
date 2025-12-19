@@ -12922,7 +12922,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/BaseTagModel"
+                    "$ref": "#/components/schemas/BaseTagModelWithCount"
                   }
                 }
               }
@@ -36309,6 +36309,62 @@
         }
       }
     },
+    "/users/autofill/{email}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Tries to retrieve user name and gender for the specified email.",
+        "description": "Returns the first name, last name and gender of the given email address.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAutofillUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "The user's email.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutofillUser"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutofillUser"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/users/deletetags": {
       "post": {
         "tags": [
@@ -44509,6 +44565,37 @@
         },
         "additionalProperties": false
       },
+      "AutofillUser": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The firstname of the user.",
+            "nullable": true,
+            "example": "Carla"
+          },
+          "lastName": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The lastname of the user.",
+            "nullable": true,
+            "example": "Creative"
+          },
+          "gender": {
+            "maxLength": 25,
+            "minLength": 0,
+            "type": "string",
+            "description": "The gender of the user.",
+            "nullable": true,
+            "example": "female"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Autofill user data derived from an email address."
+      },
       "AutofixForm": {
         "type": "object",
         "properties": {
@@ -45852,6 +45939,37 @@
           }
         },
         "additionalProperties": false
+      },
+      "ConnectedWorkspaceModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the connected workspace.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the connected workspace.",
+            "nullable": true
+          },
+          "subdomains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The subdomains of the connected workspace.",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "description": "The role of the current workspace in the connection.\n\"home\" means the current workspace is the home workspace (we shared a project with them).\n\"external\" means the current workspace is the external workspace (they shared a project with us).",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a workspace that is connected to the current workspace via project connections."
       },
       "ContactInfo": {
         "type": "object",
@@ -64497,6 +64615,11 @@
             "nullable": true,
             "example": "Website Design"
           },
+          "projectKey": {
+            "type": "string",
+            "description": "The unique project key within the workspace (e.g., \"NIKE\").\nMaximum 32 characters, uppercase letters, numbers, and dashes only.",
+            "nullable": true
+          },
           "description": {
             "type": "string",
             "description": "The description of the project. Max allowed length: 25000 characters.",
@@ -64972,6 +65095,11 @@
             "description": "The name of the task. Max allowed length: 25000 characters.\nRequired.",
             "nullable": true,
             "example": "Create logo concept"
+          },
+          "taskIdentifier": {
+            "type": "string",
+            "description": "The full task identifier combining project key and task number (e.g., \"NIKE-42\").",
+            "nullable": true
           },
           "description": {
             "type": "string",
