@@ -13512,7 +13512,7 @@
     "/projects/{projectId}/automations": {
       "get": {
         "tags": [
-          "ProjectAutomations"
+          "Project Automations"
         ],
         "summary": "Returns all automations of the specified project.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:read` permissions on the specified project.</Check>",
@@ -13560,10 +13560,10 @@
       },
       "post": {
         "tags": [
-          "ProjectAutomations"
+          "Project Automations"
         ],
         "summary": "Creates a new automation for the specified project.",
-        "description": "Creates a new automation for the project with the specified id.\nThe user needs to be the owner of the project or have 'write' permissions of\nthe feature 'project-master-data' globally or in the project.\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Standard` plan or higher.</Note>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Creates a new automation for the project with the specified id.\r\n            The user needs to be the owner of the project or have 'write' permissions of\r\n            the feature 'project-master-data' globally or in the project.\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Standard` plan or higher.</Note>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostProjectAutomation",
         "parameters": [
           {
@@ -13584,13 +13584,9 @@
               "schema": {
                 "$ref": "#/components/schemas/AutomationTriggerForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutomationTriggerForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -13599,6 +13595,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Automation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -13625,10 +13631,10 @@
     "/projects/{projectId}/automations/{automationId}": {
       "delete": {
         "tags": [
-          "ProjectAutomations"
+          "Project Automations"
         ],
         "summary": "Deletes the specified automation for a given project.",
-        "description": "Deletes the specified automation for a given project.\nAlso deletes all actions connected to the automation.\nThe user needs to be the owner of the project or have 'write' permissions of\nthe feature 'project-master-data' globally or in the project.\nAutomations created from a workflow cannot be deleted via this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Deletes the specified automation for a given project.\r\n            Also deletes all actions connected to the automation.\r\n            The user needs to be the owner of the project or have 'write' permissions of\r\n            the feature 'project-master-data' globally or in the project.\r\n            Automations created from a workflow cannot be deleted via this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteProjectAutomation",
         "parameters": [
           {
@@ -13655,6 +13661,16 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -13673,10 +13689,10 @@
       },
       "get": {
         "tags": [
-          "ProjectAutomations"
+          "Project Automations"
         ],
         "summary": "Returns a specific automation from a project.",
-        "description": "Returns a specific automation of the project with the specified id.\nReturns NotFound if the automation doesnt exist.\nTo get the the automation data the user needs to be the owner of the project or\nhave 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Returns a specific automation of the project with the specified id.\r\n            Returns NotFound if the automation doesnt exist.\r\n            To get the the automation data the user needs to be the owner of the project or\r\n            have 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectAutomation",
         "parameters": [
           {
@@ -13728,10 +13744,10 @@
       },
       "put": {
         "tags": [
-          "ProjectAutomations"
+          "Project Automations"
         ],
         "summary": "Updates the automation with the specified id.",
-        "description": "Updates the automation with the specified id.\nThe user needs to be the owner of the project or have 'write' permissions of\nthe feature 'project-master-data' globally or in the project.\nIf the automation was created from a workflow, only the Enabled flag can be changed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Updates the automation with the specified id.\r\n            The user needs to be the owner of the project or have 'write' permissions of\r\n            the feature 'project-master-data' globally or in the project.\r\n            If the automation was created from a workflow, only the Enabled flag can be changed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PutProjectAutomation",
         "parameters": [
           {
@@ -13762,13 +13778,9 @@
               "schema": {
                 "$ref": "#/components/schemas/AutomationPutForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutomationPutForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -13777,6 +13789,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Automation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -13800,10 +13822,10 @@
     "/projects/{projectId}/automations/{automationId}/actions": {
       "get": {
         "tags": [
-          "ProjectActions"
+          "Project Automations"
         ],
         "summary": "Gets the actions of a project automation.",
-        "description": "Gets all actions including their values of an automation.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:read` permissions on the specified project.</Check>",
+        "description": "Gets all actions including their values of an automation.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:read` permissions on the specified project.</Check>",
         "operationId": "GetProjectAutomationActions",
         "parameters": [
           {
@@ -13858,10 +13880,10 @@
       },
       "post": {
         "tags": [
-          "ProjectActions"
+          "Project Automations"
         ],
         "summary": "Creates a new action for an automation.",
-        "description": "Creates a new action including its values for an automation. Actions cannot be added to automations created from a workflow.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
+        "description": "Creates a new action including its values for an automation. Actions cannot be added to automations created from a workflow.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
         "operationId": "PostProjectAutomationAction",
         "parameters": [
           {
@@ -13892,13 +13914,9 @@
               "schema": {
                 "$ref": "#/components/schemas/ActionForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ActionForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -13907,6 +13925,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Action"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -13930,10 +13958,10 @@
     "/projects/{projectId}/automations/{automationId}/actions/{actionId}": {
       "delete": {
         "tags": [
-          "ProjectActions"
+          "Project Automations"
         ],
         "summary": "Deletes an action for a project automation.",
-        "description": "Deletes an action for an automation including all its values. Actions of automations created from a workflow cannot be deleted.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
+        "description": "Deletes an action for an automation including all its values. Actions of automations created from a workflow cannot be deleted.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
         "operationId": "DeleteProjectAutomationAction",
         "parameters": [
           {
@@ -13969,11 +13997,14 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content",
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Action"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -13995,7 +14026,7 @@
       },
       "get": {
         "tags": [
-          "ProjectActions"
+          "Project Automations"
         ],
         "summary": "Gets a specific action for a project automation.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:read` permissions on the specified project.</Check>",
@@ -14060,10 +14091,10 @@
       },
       "put": {
         "tags": [
-          "ProjectActions"
+          "Project Automations"
         ],
         "summary": "Updates a specifc action of a project automation.",
-        "description": "Updates an exsting action including its values for an automation. Actions of automations created from a workflow cannot be modified.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
+        "description": "Updates an exsting action including its values for an automation. Actions of automations created from a workflow cannot be modified.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
         "operationId": "PutProjectAutomationAction",
         "parameters": [
           {
@@ -14104,13 +14135,9 @@
               "schema": {
                 "$ref": "#/components/schemas/ActionForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ActionForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -14119,6 +14146,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Action"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -14142,11 +14179,11 @@
     "/projects/{projectId}/automations/{automationId}/actions/{actionId}/updateorder": {
       "post": {
         "tags": [
-          "ProjectActions"
+          "Project Automations"
         ],
         "summary": "Updates the order of a given action of a project automation.",
-        "description": "Updates the order of a given action in the list of actions of the specific project automation. Actions of automations created from a workflow cannot be modified.\n<Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
-        "operationId": "UpdateProjectAutomationActionOrder",
+        "description": "Updates the order of a given action in the list of actions of the specific project automation. Actions of automations created from a workflow cannot be modified.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
+        "operationId": "PostUpdateProjectAutomationActionOrder",
         "parameters": [
           {
             "name": "projectId",
@@ -14186,21 +14223,20 @@
               "schema": {
                 "$ref": "#/components/schemas/UpdateOrderForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOrderForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Action"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -20636,9 +20672,10 @@
     "/projecttemplates/{projectTemplateId}/automations": {
       "get": {
         "tags": [
-          "ProjectTemplateAutomations"
+          "Project Template Automations"
         ],
         "summary": "Returns all automations for a project template.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateAutomations",
         "parameters": [
           {
@@ -20679,12 +20716,11 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>"
+        }
       },
       "post": {
         "tags": [
-          "ProjectTemplateAutomations"
+          "Project Template Automations"
         ],
         "summary": "Creates a new automation for a given project template.",
         "description": "Creates a new automation of the project template with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
@@ -20693,6 +20729,7 @@
           {
             "name": "projectTemplateId",
             "in": "path",
+            "description": "The id of the project template.",
             "required": true,
             "schema": {
               "type": "string",
@@ -20701,18 +20738,15 @@
           }
         ],
         "requestBody": {
+          "description": "The model to create the automation.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/AutomationTriggerForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutomationTriggerForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -20721,6 +20755,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Automation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -20745,10 +20789,10 @@
     "/projecttemplates/{projectTemplateId}/automations/{automationId}": {
       "delete": {
         "tags": [
-          "ProjectTemplateAutomations"
+          "Project Template Automations"
         ],
         "summary": "Deletes the specified automation for a given projecttemplate.",
-        "description": "Deletes the specified automation with its trigger and all its values.\nTo delete the the automation the user needs to have 'write' permissions of\nthe feature 'project-manage-config' globally.\nIf the 'removeFromProject' boolean is set to true, all automations in projects of that\nproject template created from that automation template are deleted aswell.\nAutomations created from a workflow cannot be deleted via this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "description": "Deletes the specified automation with its trigger and all its values.\r\n            To delete the the automation the user needs to have 'write' permissions of\r\n            the feature 'project-manage-config' globally.\r\n            If the 'removeFromProject' boolean is set to true, all automations in projects of that\r\n            project template created from that automation template are deleted aswell.\r\n            Automations created from a workflow cannot be deleted via this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "operationId": "DeleteProjectTemplateAutomation",
         "parameters": [
           {
@@ -20775,6 +20819,7 @@
             "name": "removeFromProjects",
             "in": "query",
             "description": "Whether to delete the automation also from all projects of the projecttemplate.",
+            "required": true,
             "schema": {
               "type": "boolean"
             }
@@ -20783,6 +20828,16 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -20802,10 +20857,10 @@
       },
       "get": {
         "tags": [
-          "ProjectTemplateAutomations"
+          "Project Template Automations"
         ],
         "summary": "Returns a specific automation for a projecttemplate.",
-        "description": "Returns a specific automation of the projecttemplate with the specified id.\nReturns NotFound if the automation doesnt exist.\nTo get the the automation data the user needs to have 'read' permissions of\nthe feature 'project-manage-config' globally.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
+        "description": "Returns a specific automation of the projecttemplate with the specified id.\r\n            Returns NotFound if the automation doesnt exist.\r\n            To get the the automation data the user needs to have 'read' permissions of\r\n            the feature 'project-manage-config' globally.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
         "operationId": "GetProjectTemplateAutomation",
         "parameters": [
           {
@@ -20858,10 +20913,10 @@
       },
       "put": {
         "tags": [
-          "ProjectTemplateAutomations"
+          "Project Template Automations"
         ],
         "summary": "Updates the automation with the specified id for a given projecttemplate.",
-        "description": "Updates the specified automation for a specific projecttemplate.\nTo update the the automation the user needs to have 'write' permissions of\nthe feature 'project-manage-config' globally.\nIf the automation was created from a workflow, only the Enabled flag can be changed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "description": "Updates the specified automation for a specific projecttemplate.\r\n            If the automation was created from a workflow, only the Enabled flag can be changed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "operationId": "PutProjectTemplateAutomation",
         "parameters": [
           {
@@ -20889,13 +20944,9 @@
               "schema": {
                 "$ref": "#/components/schemas/AutomationPutForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutomationPutForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -20904,6 +20955,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Automation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -20928,10 +20989,11 @@
     "/projecttemplates/{projectTemplateId}/automations/{automationId}/actions": {
       "get": {
         "tags": [
-          "ProjectTemplateActions"
+          "Project Template Automations"
         ],
         "summary": "Gets the actions of an automation of a project template.",
-        "operationId": "Get",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
+        "operationId": "GetProjectTemplateAutomationActions",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -20982,12 +21044,11 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "read"
-        },
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>"
+        }
       },
       "post": {
         "tags": [
-          "ProjectTemplateActions"
+          "Project Template Automations"
         ],
         "summary": "Creates a new action for an automation of a project template.",
         "description": "Creates an action for a specific automation of a project template including all its values. Actions cannot be added to automations created from a workflow.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
@@ -21021,13 +21082,9 @@
               "schema": {
                 "$ref": "#/components/schemas/ActionForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ActionForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -21036,6 +21093,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Action"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -21060,7 +21127,7 @@
     "/projecttemplates/{projectTemplateId}/automations/{automationId}/actions/{actionId}": {
       "delete": {
         "tags": [
-          "ProjectTemplateActions"
+          "Project Template Automations"
         ],
         "summary": "Deletes an action for an automation of a project template.",
         "description": "Deletes an action for a specific automation of a project template including all its values. Actions of automations created from a workflow cannot be deleted.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
@@ -21100,6 +21167,16 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -21119,7 +21196,7 @@
       },
       "get": {
         "tags": [
-          "ProjectTemplateActions"
+          "Project Template Automations"
         ],
         "summary": "Gets a specific action for an automation of a projecttemplate.",
         "description": "Returns a specific action for a specific automation of a project template including all its values.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
@@ -21185,7 +21262,7 @@
       },
       "put": {
         "tags": [
-          "ProjectTemplateActions"
+          "Project Template Automations"
         ],
         "summary": "Updates a specifc action of an automation of a project template.",
         "description": "Returns an updated action for a specific automation of a project template including all its values. Actions of automations created from a workflow cannot be modified.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
@@ -21229,13 +21306,9 @@
               "schema": {
                 "$ref": "#/components/schemas/ActionForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ActionForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -21244,6 +21317,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Action"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -21268,11 +21351,11 @@
     "/projecttemplates/{projectTemplateId}/automations/{automationId}/actions/{actionId}/updateorder": {
       "post": {
         "tags": [
-          "ProjectTemplateActions"
+          "Project Template Automations"
         ],
         "summary": "Updates the order of a project template automation action.",
         "description": "Actions of automations created from a workflow cannot be modified.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "UpdateOrderForProjectTemplateAutomationAction",
+        "operationId": "PostUpdateProjectTemplateAutomationActionOrder",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21312,21 +21395,20 @@
               "schema": {
                 "$ref": "#/components/schemas/UpdateOrderForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateOrderForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Action"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -21351,11 +21433,11 @@
     "/projecttemplates/{projectTemplateId}/automations/{automationId}/reapply": {
       "post": {
         "tags": [
-          "ProjectTemplateAutomations"
+          "Project Template Automations"
         ],
         "summary": "Reapplies the automation to all projects of this specific project template.",
-        "description": "Returns NotFound if the automation doesnt exist.\nTo execute this you need to have 'write' permissions of\nthe feature 'project-manage-config' globally.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "ReApplyProjectTemplateAutomation",
+        "description": "Returns NotFound if the automation doesnt exist.\r\n            To execute this you need to have 'write' permissions of\r\n            the feature 'project-manage-config' globally.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
+        "operationId": "PostReapplyProjectTemplateAutomation",
         "parameters": [
           {
             "name": "automationId",
@@ -25480,14 +25562,13 @@
           "Search"
         ],
         "summary": "Performs a full-text search across workspace entities.",
-        "description": "This endpoint enables powerful full-text search capabilities across multiple types.\nIt returns a ranked list of matching entities based on relevance and respects user permissions.\n\nThe search functionality includes:\n- Cross-entity search across various entity types in the workspace\n- Relevance-based scoring and ranking of results\n- Respecting user access permissions for all returned results\n- Customizable result filtering by entity type and status\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "Search",
+        "description": "This endpoint enables powerful full-text search capabilities across multiple types.\r\n             It returns a ranked list of matching entities based on relevance and respects user permissions.\r\n            \r\n             The search functionality includes:\r\n             - Cross-entity search across various entity types in the workspace.\r\n             - Relevance-based scoring and ranking of results.\r\n             - Respecting user access permissions for all returned results.\r\n             - Customizable result filtering by entity type and status.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetSearch",
         "parameters": [
           {
             "name": "searchTerm",
             "in": "query",
             "description": "The term to search for. Max. 50 characters. Required.",
-            "required": true,
             "schema": {
               "type": "string"
             }
@@ -25495,7 +25576,7 @@
           {
             "name": "searchTypes",
             "in": "query",
-            "description": "Comma-separated list of types to search for, or 'all'. \nDefault: all types.",
+            "description": "Comma-separated list of types to search for, or 'all'. Supported types: task, project, user, company, comment, timeentry, timereport, file, document, tasklist, dashboardnote.",
             "schema": {
               "type": "string"
             }
@@ -25514,8 +25595,7 @@
             "in": "query",
             "description": "If true, the result will include entities where the status is closed, stuck and done.",
             "schema": {
-              "type": "boolean",
-              "default": true
+              "type": "boolean"
             }
           }
         ],
@@ -25532,6 +25612,16 @@
           },
           "400": {
             "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -62056,6 +62146,67 @@
         },
         "additionalProperties": false
       },
+      "ProjectJobRecreationResult": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "automationsCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecreateProjectAutomationJobsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "processedProjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectJobRecreationResult"
+            },
+            "nullable": true
+          },
+          "successCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failureCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Trigger": {
         "type": "object",
         "properties": {
@@ -67241,20 +67392,12 @@
       "description": "The temporary file endpoints allow you to upload and update files \n    that do not have a connection to any entity. The files can be linked to an entity later.\n    They don’t show up in awork before they are either linked to a file or marked as a global file. \n    Only the user who uploaded the file has access to the temporary file."
     },
     {
-      "name": "ProjectActions",
-      "description": "The actions endpoints allow you to manage the actions for automations in awork."
+      "name": "Project Automations",
+      "description": "Endpoints to manage automations and actions scoped to projects."
     },
     {
-      "name": "ProjectAutomations",
-      "description": "The automation endpoints allow you to manage the automations for projects in awork."
-    },
-    {
-      "name": "ProjectTemplateActions",
-      "description": "The actions endpoints allow you to manage the actions for automations of project templates in awork."
-    },
-    {
-      "name": "ProjectTemplateAutomations",
-      "description": "The automation endpoints allow you to manage the automations for projects in awork."
+      "name": "Project Template Automations",
+      "description": "Endpoints to manage automations and actions scoped to project templates."
     },
     {
       "name": "Webhooks",
@@ -67266,7 +67409,7 @@
     },
     {
       "name": "Search",
-      "description": "The search controller provides endpoints to do full-text searching in a dedicated search store.\n    If search data becomes inconsistent or corrupted the reindex endpoints can be used to rebuild it."
+      "description": "Endpoints for full-text search and search index maintenance."
     },
     {
       "name": "Invitations",
