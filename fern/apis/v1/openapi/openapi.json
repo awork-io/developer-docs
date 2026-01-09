@@ -44652,6 +44652,18 @@
         },
         "additionalProperties": false
       },
+      "ApplyFilterForm": {
+        "required": [
+          "filterDefinition"
+        ],
+        "type": "object",
+        "properties": {
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          }
+        },
+        "additionalProperties": false
+      },
       "ArchivedForm": {
         "required": [
           "isArchived"
@@ -46133,6 +46145,77 @@
         "additionalProperties": false,
         "description": "A tag model used for the company.\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
       },
+      "ComputedValueKind": {
+        "enum": [
+          "Me",
+          "Now",
+          "Today",
+          "EndOfWeek",
+          "EndOfMonth",
+          "StartOfWeek",
+          "StartOfMonth",
+          "WithinThisWeek",
+          "WithinThisMonth"
+        ],
+        "type": "string",
+        "description": "The kind of computed value in the context of a Awork.Core.Models.Filters.FilterDefinition.Condition.Value.FilterValue."
+      },
+      "Condition": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "The field to filter on.\nFor collection fields, use the full path including the inner field (e.g., \"tags/id\", \"assignees/id\").",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/ConditionType"
+          },
+          "operator": {
+            "$ref": "#/components/schemas/Operator"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilterValue"
+            },
+            "description": "The values for this condition. Usage depends on operator:\n- Single-value operators (Equal, NotEqual, etc.): Use Values[0]\n- Multi-value operators (In): Use all Values\n- Range operators (Between): Use Values[0] as start, Values[1] as end\n- No-value operators (IsSet, IsNotSet, WithinThisWeek, WithinThisMonth): Values is null or empty",
+            "nullable": true
+          },
+          "customFieldInformation": {
+            "$ref": "#/components/schemas/CustomFieldInformation"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A condition of a Awork.Core.Models.Filters.FilterDefinition.FilterDefinition, is always part of a Awork.Core.Models.Filters.FilterDefinition.ConditionGroup.\n            \nconditions can be either:\n- Comparison conditions (Type = ConditionType.Comparison): Simple field comparisons like \"name eq 'John'\"\n- Collection conditions (Type = ConditionType.Collection): Collection operations like \"tags/any(t: t/name eq 'urgent')\"\n            \nFor collection conditions:\n- Field contains the full path including inner field (e.g., \"tags/name\", \"assignees/firstName\")\n- The collection path is extracted from Field (everything before the last '/')"
+      },
+      "ConditionGroup": {
+        "type": "object",
+        "properties": {
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Condition"
+            },
+            "description": "A list of conditions within this condition group.",
+            "nullable": true
+          },
+          "connector": {
+            "$ref": "#/components/schemas/Connector"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A condition group within a Awork.Core.Models.Filters.FilterDefinition.FilterDefinition."
+      },
+      "ConditionType": {
+        "enum": [
+          "Comparison",
+          "Collection",
+          "CustomField"
+        ],
+        "type": "string",
+        "description": "The type of condition."
+      },
       "ConnectedUserModel": {
         "type": "object",
         "properties": {
@@ -46196,6 +46279,14 @@
         },
         "additionalProperties": false,
         "description": "Represents a workspace that is connected to the current workspace via project connections."
+      },
+      "Connector": {
+        "enum": [
+          "And",
+          "Or"
+        ],
+        "type": "string",
+        "description": "The connector connecting condition groups or conditions within a Awork.Core.Models.Filters.FilterDefinition.FilterDefinition."
       },
       "ContactInfo": {
         "type": "object",
@@ -47269,6 +47360,21 @@
         },
         "additionalProperties": false
       },
+      "CustomFieldInformation": {
+        "type": "object",
+        "properties": {
+          "customFieldDefinitionId": {
+            "type": "string",
+            "description": "The custom field definition id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "customFieldValueType": {
+            "$ref": "#/components/schemas/CustomFieldValueType"
+          }
+        },
+        "additionalProperties": false
+      },
       "CustomFieldOrderForm": {
         "type": "object",
         "properties": {
@@ -47443,6 +47549,19 @@
           }
         },
         "additionalProperties": false
+      },
+      "CustomFieldValueType": {
+        "enum": [
+          "UserId",
+          "Number",
+          "SelectionOptionId",
+          "Text",
+          "Date",
+          "Boolean",
+          "Client"
+        ],
+        "type": "string",
+        "description": "The supported types of custom field values."
       },
       "Dashboard": {
         "type": "object",
@@ -49044,6 +49163,235 @@
         },
         "additionalProperties": false,
         "description": "A Type of work enriched with the list of external project ids in which this TypeOfWork exists."
+      },
+      "Filter": {
+        "required": [
+          "filterDefinition",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the filter."
+          },
+          "isShared": {
+            "type": "boolean",
+            "description": "Whether this filter is shared within the workspace."
+          },
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the filter.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityType": {
+            "$ref": "#/components/schemas/FilterEntityType"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this filter was created for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "filterQuery": {
+            "type": "string",
+            "description": "The OData- query string that will be applied for querying this filter's underlying data type.",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this filter was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this filter.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this filter was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this filter.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterDefinition": {
+        "type": "object",
+        "properties": {
+          "conditionGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionGroup"
+            },
+            "description": "The condition groups within the filter definition.",
+            "nullable": true
+          },
+          "rootConnector": {
+            "$ref": "#/components/schemas/Connector"
+          },
+          "entityType": {
+            "$ref": "#/components/schemas/FilterEntityType"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The structured filter representation of a filter query."
+      },
+      "FilterEntityType": {
+        "enum": [
+          "Project",
+          "Task",
+          "Company",
+          "User"
+        ],
+        "type": "string",
+        "description": "The entity type of a filter definition."
+      },
+      "FilterForm": {
+        "required": [
+          "filterDefinition",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the filter."
+          },
+          "isShared": {
+            "type": "boolean",
+            "description": "Whether this filter is shared within the workspace."
+          },
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterFromQueryForm": {
+        "required": [
+          "filterQuery",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the filter."
+          },
+          "isShared": {
+            "type": "boolean",
+            "description": "Whether this filter is shared within the workspace."
+          },
+          "filterQuery": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The filter query string in Awork OData format (e.g., \"taskStatus/type eq 'todo' and dueOn lt today+7d\")."
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterSubscription": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this subscription is for.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "filterId": {
+            "type": "string",
+            "description": "The id of the filter this subscription is for.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "filter": {
+            "$ref": "#/components/schemas/Filter"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterValue": {
+        "type": "object",
+        "properties": {
+          "constantValue": {
+            "description": "The constant value.",
+            "nullable": true
+          },
+          "filterValueKind": {
+            "$ref": "#/components/schemas/FilterValueKind"
+          },
+          "computedValueKind": {
+            "$ref": "#/components/schemas/ComputedValueKind"
+          },
+          "daysOffset": {
+            "type": "integer",
+            "description": "The offset for the computed value, if the value is computed and is of kind 'Today'.\nOnly need for Today computations for now.",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents the value of a Awork.Core.Models.Filters.FilterDefinition.Condition.Condition."
+      },
+      "FilterValueKind": {
+        "enum": [
+          "Constant",
+          "Computed"
+        ],
+        "type": "string",
+        "description": "The kind of the value in the context of a Awork.Core.Models.Filters.FilterDefinition.Condition.Value.FilterValue, either 'Constant' or 'Computed'."
       },
       "GeneralTaskForm": {
         "required": [
@@ -50673,6 +51021,45 @@
         "additionalProperties": false,
         "description": "This repeated model (copy of NestedTeamModel) is required to avoid a bug\nof the Automapper.Extensions.EspressionMapping library that throws an error if in the same expression\nwe apply a filter to 2 different models containing the same submodel (e.g: Teams contained in both Project, User and\nTasks))\nPlease do not remove it."
       },
+      "ObjectPagedResult": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {},
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortPropertyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "$ref": "#/components/schemas/SortOrder"
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ObjectSyncResponse": {
         "type": "object",
         "properties": {
@@ -50784,6 +51171,28 @@
           }
         },
         "additionalProperties": false
+      },
+      "Operator": {
+        "enum": [
+          "Equal",
+          "NotEqual",
+          "GreaterThan",
+          "GreaterThanOrEqual",
+          "LessThan",
+          "LessThanOrEqual",
+          "Contains",
+          "DoesNotContain",
+          "In",
+          "Between",
+          "IsSet",
+          "IsNotSet",
+          "CollectionContains",
+          "CollectionDoesNotContain",
+          "WithinThisWeek",
+          "WithinThisMonth"
+        ],
+        "type": "string",
+        "description": "The supported operators for a filter condition.\nThese operators map directly to UI filter options."
       },
       "Permission": {
         "type": "object",
@@ -54635,6 +55044,14 @@
         },
         "additionalProperties": false,
         "description": "The simplified time tracking model."
+      },
+      "SortOrder": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "StartTimeTrackingForm": {
         "required": [
