@@ -121,7 +121,7 @@
         ],
         "summary": "List of supported countries for absence regions.",
         "description": "Returns a list of supported countries for absence regions.\r\n            A country is defined by an ISO 3166-1 alpha-2 country code.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAbsenceRegionCountries",
+        "operationId": "GetAbsenceRegionsCountries",
         "responses": {
           "200": {
             "description": "OK",
@@ -159,7 +159,7 @@
         ],
         "summary": "List of locations for a country.",
         "description": "Returns a list of all the locations of a country, expressed as ISO 3166-2 codes.\r\n            It will include the regions and subregions (sublocations) of the country if available.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAbsenceRegionLocations",
+        "operationId": "GetAbsenceRegionsCountryLocationsByCountryCode",
         "parameters": [
           {
             "name": "countryCode",
@@ -218,7 +218,7 @@
         ],
         "summary": "Assign/remove current user to/from an absence region.",
         "description": "Assigns or removes the current user to/from an absence region.\r\n            A user can be assigned to only one absence region.\r\n            If a user is already assigned to an absence region, they will be removed from the previous one and assigned to the new one.\r\n            Providing a null region id will remove the user from any absence region.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "operationId": "PutAssignUserToAbsenceRegion",
+        "operationId": "PutMeAbsenceRegionsAssign",
         "requestBody": {
           "description": "The model to assign or unassign the current user to/from an absence region.",
           "content": {
@@ -278,7 +278,7 @@
         ],
         "summary": "Assigns or unassigns users to/from an absence region.",
         "description": "A user can be assigned to only one absence region.\r\n            If a user is already assigned to an absence region, they will be removed from the previous one and assigned to the new one.\r\n            Providing an empty list of user ids will remove all users from the absence region.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "operationId": "PutAssignUsersToAbsenceRegion",
+        "operationId": "PutAbsenceRegionsUsersAssign",
         "requestBody": {
           "description": "The model to assign or unassign users to/from an absence region.",
           "content": {
@@ -338,7 +338,7 @@
         ],
         "summary": "Deletes an absence region.",
         "description": "Deletes an absence region by id, unassigning all users from the absence region.\r\n            If there are workspace absences related to the region, they will be deleted as well.\r\n            If the absence region is the default absence region, it will simply be deleted (no default absence region).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "operationId": "DeleteAbsenceRegion",
+        "operationId": "DeleteAbsenceRegionById",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -442,7 +442,7 @@
         ],
         "summary": "Updates an absence region.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "operationId": "PutAbsenceRegion",
+        "operationId": "PutAbsenceRegionById",
         "parameters": [
           {
             "name": "absenceRegionId",
@@ -640,7 +640,7 @@
         ],
         "summary": "Deletes the absence with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">User planning data permissions are required if the calling user is not the owner of the absence or admin.</Check>",
-        "operationId": "DeleteAbsence",
+        "operationId": "DeleteAbsenceById",
         "parameters": [
           {
             "name": "absenceId",
@@ -743,7 +743,7 @@
         ],
         "summary": "Updates the absence with the specified id.",
         "description": "The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\n             These values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\n             The end date needs to be the same or after the start date.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">User planning data permissions are required if the calling user is not the owner of the absence or admin.</Check>",
-        "operationId": "PutAbsence",
+        "operationId": "PutAbsenceById",
         "parameters": [
           {
             "name": "absenceId",
@@ -987,7 +987,7 @@
         ],
         "summary": "Deletes the API user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteApiUser",
+        "operationId": "DeleteApiUserById",
         "parameters": [
           {
             "name": "apiUserId",
@@ -1092,7 +1092,7 @@
         ],
         "summary": "Updates the API user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PutApiUser",
+        "operationId": "PutApiUserById",
         "parameters": [
           {
             "name": "apiUserId",
@@ -2651,7 +2651,7 @@
         ],
         "summary": "Removes a tag from all companies.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "operationId": "PostDeleteTagFromAllCompanies",
+        "operationId": "PostCompaniesDeleteTags",
         "requestBody": {
           "description": "The model with the tag to be removed.",
           "content": {
@@ -2711,7 +2711,7 @@
         ],
         "summary": "Returns all company industries that are currently in use.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
-        "operationId": "GetCompanyIndustries",
+        "operationId": "GetCompaniesIndustries",
         "responses": {
           "200": {
             "description": "OK",
@@ -2788,7 +2788,7 @@
         ],
         "summary": "Updates a tag globally for all companies.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "operationId": "PostUpdateTagForAllCompanies",
+        "operationId": "PostCompaniesUpdateTags",
         "requestBody": {
           "description": "The model containing the tag updates.",
           "content": {
@@ -2894,7 +2894,7 @@
         ],
         "summary": "Updates the company with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "operationId": "PutCompany",
+        "operationId": "PutCompanyById",
         "parameters": [
           {
             "name": "companyId",
@@ -2963,7 +2963,7 @@
         ],
         "summary": "Adds a batch of new tags to the company with the specified id.",
         "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\r\n            <Check title=\"Required Permissions\" icon=\"key\">To add tags to a company the user must have `company-master-data:write` permissions on the specified company.</Check>",
-        "operationId": "PostAddCompanyTags",
+        "operationId": "PostCompanyAddTagsByCompanyId",
         "parameters": [
           {
             "name": "companyId",
@@ -3047,7 +3047,7 @@
         ],
         "summary": "Returns the contact infos of the company with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
-        "operationId": "GetCompanyContactInfos",
+        "operationId": "GetCompanyContactInfoByCompanyId",
         "parameters": [
           {
             "name": "companyId",
@@ -3108,7 +3108,7 @@
         ],
         "summary": "Creates a new contact info for the company with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "operationId": "PostCompanyContactInfo",
+        "operationId": "PostCompanyContactInfoByCompanyId",
         "parameters": [
           {
             "name": "companyId",
@@ -3177,7 +3177,7 @@
         ],
         "summary": "Deletes the contact info of the company with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "operationId": "DeleteCompanyContactInfo",
+        "operationId": "DeleteCompanyContactInfoByCompanyIdAndContactInfoId",
         "parameters": [
           {
             "name": "companyId",
@@ -3246,7 +3246,7 @@
         ],
         "summary": "Returns the specified contact info of the company with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:read` permissions.</Check>",
-        "operationId": "GetCompanyContactInfoById",
+        "operationId": "GetCompanyContactInfoByCompanyIdAndContactInfoId",
         "parameters": [
           {
             "name": "companyId",
@@ -3334,7 +3334,7 @@
         ],
         "summary": "Updates the contact info for the company with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "operationId": "PutCompanyContactInfo",
+        "operationId": "PutCompanyContactInfoByCompanyIdAndContactInfoId",
         "parameters": [
           {
             "name": "companyId",
@@ -3423,7 +3423,7 @@
         ],
         "summary": "Deletes the company with the specified id.",
         "description": "There are several ways to delete a company.\r\n            Look into the property description of the post model to get detailed information.\r\n            <br />If the post is executed without a model, the default process 'delete-only-company' will be executed.\r\n            <br />For the operation 'delete-all-without-timeentries' project-master-data write permissions are required on all projects of the company.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `company-master-data:write` permissions.</Check>",
-        "operationId": "PostDeleteCompany",
+        "operationId": "PostCompanyDeleteByCompanyId",
         "parameters": [
           {
             "name": "companyId",
@@ -3505,7 +3505,7 @@
         ],
         "summary": "Removes tags from the company with the specified id.",
         "description": "Removes tags from the company with the specified id.\r\n            \r\n             Returns 204 NoContent if all tags have been removed successfully.\r\n             Returns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">To remove tags from a company the user must have `company-master-data:write` permissions on the specified company.</Check>",
-        "operationId": "PostDeleteCompanyTags",
+        "operationId": "PostCompanyDeleteTagsByCompanyId",
         "parameters": [
           {
             "name": "companyId",
@@ -4476,7 +4476,7 @@
         ],
         "summary": "Returns the tags of the company with the specified id.",
         "description": "Returns the tags of the company with the specified id ordered by name.\r\n            <Check title=\"Required Permissions\" icon=\"key\">To read tags of a company the user must have `company-master-data:read` permissions on the specified company.</Check>",
-        "operationId": "GetTagsByCompanyId",
+        "operationId": "GetCompanyTagsByCompanyId",
         "parameters": [
           {
             "name": "companyId",
@@ -4640,7 +4640,7 @@
         ],
         "summary": "Deletes the custom field definition with the specified Id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteCustomFieldDefinition",
+        "operationId": "DeleteCustomFieldDefinitionById",
         "parameters": [
           {
             "name": "customFieldDefinitionId",
@@ -4689,7 +4689,7 @@
         ],
         "summary": "Updates the custom field definition with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutCustomFieldDefinition",
+        "operationId": "PutCustomFieldDefinitionById",
         "parameters": [
           {
             "name": "customFieldDefinitionId",
@@ -4768,7 +4768,7 @@
         ],
         "summary": "Creates a custom field selection option for an existing custom field definition.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostCustomFieldDefinitionSelectionOptions",
+        "operationId": "PostCustomFieldDefinitionSelectionOptionsByCustomFieldDefinitionId",
         "parameters": [
           {
             "name": "customFieldDefinitionId",
@@ -4837,7 +4837,7 @@
         ],
         "summary": "Deletes a custom field selection option for an existing custom field definition.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteCustomFieldDefinitionSelectionOptions",
+        "operationId": "DeleteCustomFieldDefinitionSelectionOptionByCustomFieldDefinitionIdAndSelectionOptionId",
         "parameters": [
           {
             "name": "customFieldDefinitionId",
@@ -4896,7 +4896,7 @@
         ],
         "summary": "Updates a custom field selection option for an existing custom field definition.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutCustomFieldDefinitionSelectionOption",
+        "operationId": "PutCustomFieldDefinitionSelectionOptionByCustomFieldDefinitionIdAndSelectionOptionId",
         "parameters": [
           {
             "name": "customFieldDefinitionId",
@@ -5078,7 +5078,7 @@
         ],
         "summary": "Restores the document with the specified id from the trash.",
         "description": "Please note that restoring a document using this method will asynchronously and eventually update or recreate the document and the related entities such as document versions or its content.\r\n            This operation is idempotent, if applied to an already restored document, it will return a NoContent result.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
-        "operationId": "PostRestoreDocumentFromTrash",
+        "operationId": "PostDocumentsTrashRestoreByDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5137,7 +5137,7 @@
         ],
         "summary": "Deletes the document with the specified id.",
         "description": "This operation moves the document to the trash.\r\n            The document itself is moved to the trash synchronously, while its children and related entities will be moved to the trash asynchronously.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified document.</Check>",
-        "operationId": "DeleteDocument",
+        "operationId": "DeleteDocumentById",
         "parameters": [
           {
             "name": "documentId",
@@ -5269,7 +5269,7 @@
         ],
         "summary": "Updates the document with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
-        "operationId": "PutDocument",
+        "operationId": "PutDocumentById",
         "parameters": [
           {
             "name": "documentId",
@@ -5357,7 +5357,7 @@
         ],
         "summary": "Deletes all comments of the specified document.",
         "description": "Deletes all comments of the specified document.",
-        "operationId": "DeleteDocumentComments",
+        "operationId": "DeleteCommentsByDocumentNameAndDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5392,7 +5392,7 @@
         ],
         "summary": "Returns all comments of the document with the specified id.",
         "description": "Returns all comments of the document with the specified id. The user needs read permissions on the document.",
-        "operationId": "GetDocumentComments",
+        "operationId": "GetCommentsByDocumentNameAndDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5459,7 +5459,7 @@
         ],
         "summary": "Creates a new comment on the document with the specified id.",
         "description": "Creates a new comment on the document with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check>To create a comment the user must have at least `read` permissions on the specified document.</Check>",
-        "operationId": "PostDocumentComment",
+        "operationId": "PostCommentsByDocumentNameAndDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5534,7 +5534,7 @@
         ],
         "summary": "Deletes the comment with the specified id on the document with the specified id.",
         "description": "Deletes the comment with the specified id on the document with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
-        "operationId": "DeleteDocumentComment",
+        "operationId": "DeleteCommentByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5589,7 +5589,7 @@
         ],
         "summary": "Returns the comment with the specified id of the document with the specified id.",
         "description": "Returns the comment with the specified id of the document with the specified id.",
-        "operationId": "GetDocumentCommentById",
+        "operationId": "GetCommentByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5641,7 +5641,7 @@
         ],
         "summary": "Updates the comment with the specified id on the document with the specified id.",
         "description": "<Check>To update a comment the user must either have at least `read` permissions on the specified document, be the creator of the comment or be admin.</Check>",
-        "operationId": "PutDocumentComment",
+        "operationId": "PutCommentByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5716,7 +5716,7 @@
         ],
         "summary": "Updates the reactions of the comment with the specified id on the document with the specified id.",
         "description": "<Check>To update a reaction of a comment the user must have at least `read` permissions on the specified document.</Check>",
-        "operationId": "PostDocumentCommentReaction",
+        "operationId": "PostCommentReactByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5784,7 +5784,7 @@
         ],
         "summary": "Sets the resolved status of a comment.",
         "description": "Sets the resolved status of a comment. Users need write permissions on the document to resolve/unresolve comments.\r\n            Currently, the IsResolved property is only available for document comments.",
-        "operationId": "PostSetCommentResolved",
+        "operationId": "PostCommentSetResolvedByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5859,7 +5859,7 @@
         ],
         "summary": "Returns the content of the current version of the document with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `read` permissions for the specified document.</Check>",
-        "operationId": "GetDocumentContent",
+        "operationId": "GetDocumentContentByDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -5943,7 +5943,7 @@
         ],
         "summary": "Updates the content of the document with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
-        "operationId": "PutDocumentContent",
+        "operationId": "PutDocumentContentByDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -6009,7 +6009,7 @@
         ],
         "summary": "Adds a list of document contributors to the document with the specified id.",
         "description": "Adding document contributors will grant them access to the document.\r\n            There will be a recalculation of permissions for related entities considering the updated document contributor.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for this document.</Check>",
-        "operationId": "PostDocumentContributors",
+        "operationId": "PostDocumentContributorsByDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -6103,7 +6103,7 @@
         ],
         "summary": "Deletes the document contributor with the specified id from a document.",
         "description": "This operation cannot be performed on inherited document contributors, only explicit ones.\r\n            There will be recalculation of permissions for related entities considering the deleted document contributor.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
-        "operationId": "DeleteDocumentContributor",
+        "operationId": "DeleteDocumentContributorByDocumentIdAndDocumentContributorId",
         "parameters": [
           {
             "name": "documentId",
@@ -6181,7 +6181,7 @@
         ],
         "summary": "Updates the access of a document contributor with the specified id to a document.",
         "description": "Updating a document contributor will affect their access to the document.\r\n            There will be a recalculation of permissions for related entities considering the updated document contributor.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
-        "operationId": "PutDocumentContributor",
+        "operationId": "PutDocumentContributorByDocumentIdAndDocumentContributorId",
         "parameters": [
           {
             "name": "documentId",
@@ -6279,7 +6279,7 @@
         ],
         "summary": "Duplicates the document with the specified id.",
         "description": "Duplicates the document content, permissions and children documents.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user has at least `read` permissions for the specified document.</Check>",
-        "operationId": "DuplicateDocument",
+        "operationId": "PostDocumentDuplicateByDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -7133,7 +7133,7 @@
         ],
         "summary": "Adds a list of document teams to a document with the specified id.",
         "description": "Adding document teams will affect their access to the document.\r\n            Recalculation of permissions for related entities considering the new document teams\r\n            will be done in the background asynchronously.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
-        "operationId": "PostDocumentToTeams",
+        "operationId": "PostDocumentTeamsByDocumentId",
         "parameters": [
           {
             "name": "documentId",
@@ -7227,7 +7227,7 @@
         ],
         "summary": "Deletes the document team with the specified id from a document.",
         "description": "Deletes the specific document team from a document. Deleting a document team will affect their access to the document.\r\n            This operation cannot be performed on inherited document teams, only explicit ones.\r\n            There will be recalculation of permissions for related entities considering the deleted document team.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
-        "operationId": "DeleteDocumentToTeam",
+        "operationId": "DeleteDocumentTeamByDocumentIdAndDocumentToTeamId",
         "parameters": [
           {
             "name": "documentId",
@@ -7305,7 +7305,7 @@
         ],
         "summary": "Updates the document team with the specified id.",
         "description": "Updates the specific document team of a document. Updating a document team will affect their access to the document.\r\n            There will be recalculation of permissions for related entities considering the updated document team.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for this document.</Check>",
-        "operationId": "PutDocumentToTeam",
+        "operationId": "PutDocumentTeamByDocumentIdAndDocumentToTeamId",
         "parameters": [
           {
             "name": "documentId",
@@ -7519,7 +7519,7 @@
         ],
         "summary": "Deletes the document space with the specified id.",
         "description": "The documents in this space and their related entities (comments, etc.) will be unrecoverably deleted in the background asynchronously.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "DeleteDocumentSpace",
+        "operationId": "DeleteDocumentSpaceById",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -7649,7 +7649,7 @@
         ],
         "summary": "Updates the document space with the specified id.",
         "description": "\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Professional` plan or higher.</Note>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PutDocumentSpace",
+        "operationId": "PutDocumentSpaceById",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -7730,7 +7730,7 @@
         ],
         "summary": "Adds a list of document space contributors to a document space.",
         "description": "Adding document space contributors will affect their access to the document space and documents within that space.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PostDocumentSpaceContributors",
+        "operationId": "PostDocumentSpaceContributorsByDocumentSpaceId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -7821,7 +7821,7 @@
         ],
         "summary": "Deletes the document space contributor with the specified id from a document space.",
         "description": "Deletes the specified document space contributor from a document space.\r\n            Deleting a document space contributor will affect their access to the document space and the documents within that space.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "DeleteDocumentSpaceContributor",
+        "operationId": "DeleteDocumentSpaceContributorByDocumentSpaceIdAndDocumentSpaceContributorId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -7899,7 +7899,7 @@
         ],
         "summary": "Updates the access of a document space contributor to the document space with the specified id.",
         "description": "Updates the access of the specified document space contributor to the specified document space.\r\n            Updating a document space contributor will affect their access to the document space and documents within that space.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PutDocumentSpaceContributor",
+        "operationId": "PutDocumentSpaceContributorByDocumentSpaceIdAndDocumentSpaceContributorId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -7997,7 +7997,7 @@
         ],
         "summary": "Returns all documents that belong to the document space with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `read` permissions for the specified document space.</Check>",
-        "operationId": "GetDocumentSpaceDocuments",
+        "operationId": "GetDocumentSpaceDocumentsByDocumentSpaceId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -8059,7 +8059,7 @@
         ],
         "summary": "Returns all deleted documents of the document space with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetDocumentSpaceTrashDocuments",
+        "operationId": "GetDocumentSpaceDocumentsTrashByDocumentSpaceId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -8121,7 +8121,7 @@
         ],
         "summary": "Adds teams to the document space with the specified id.",
         "description": "Adding teams to a document space will affect their access to the document space and documents within that space.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PostDocumentSpaceToTeams",
+        "operationId": "PostDocumentSpaceTeamsByDocumentSpaceId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -8212,7 +8212,7 @@
         ],
         "summary": "Deletes the team with the specified id from a document space.",
         "description": "Deletes the specified team from a document space.\r\n            Deleting a team from a document space will affect their access to the document space and the documents within that space.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "DeleteDocumentSpaceToTeam",
+        "operationId": "DeleteDocumentSpaceTeamByDocumentSpaceIdAndDocumentSpaceToTeamId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -8290,7 +8290,7 @@
         ],
         "summary": "Updates the access of a team to the document space with the specified id.",
         "description": "Updates the specified document space to team connection of a document space.\r\n            Updating a document space team will affect their access to the document space and documents within that space.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PutDocumentSpaceToTeam",
+        "operationId": "PutDocumentSpaceTeamByDocumentSpaceIdAndDocumentSpaceToTeamId",
         "parameters": [
           {
             "name": "documentSpaceId",
@@ -9574,7 +9574,7 @@
         ],
         "summary": "Returns the currently logged-in user and workspace.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyAndWorkspace",
+        "operationId": "GetMe",
         "responses": {
           "200": {
             "description": "OK",
@@ -9619,7 +9619,7 @@
         ],
         "summary": "Returns all tasks the current user is allowed to see.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyMeAllAvailableTasks",
+        "operationId": "GetMeAllAvailableTasks",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -9671,7 +9671,7 @@
         ],
         "summary": "Returns all tasks assigned to the current user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyMeAssignedTasks",
+        "operationId": "GetMeAssignedTasks",
         "parameters": [
           {
             "name": "inProgress",
@@ -9760,7 +9760,7 @@
         ],
         "summary": "Returns the assigned task with the specified id of the current user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyMeAssignedTask",
+        "operationId": "GetMeAssignedTaskByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -9817,7 +9817,7 @@
         ],
         "summary": "Returns the dashboards of the current user.",
         "description": "Returns the dashboards of the current user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator.</Check>",
-        "operationId": "GetMyDashboards",
+        "operationId": "GetMeDashboards",
         "parameters": [
           {
             "name": "includeWidgets",
@@ -9866,7 +9866,7 @@
         ],
         "summary": "Returns all private tasks that the current user created and assigned to someone else.",
         "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This endpoint returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyOtherPrivateTasks",
+        "operationId": "GetMeOtherPrivateTasks",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -9938,7 +9938,7 @@
         ],
         "summary": "Returns a private task that the current user created and assigned to someone else.",
         "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This endpoint returns a private task that was originally created by the user but was reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyOtherPrivateTask",
+        "operationId": "GetMeOtherPrivateTaskByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -10005,7 +10005,7 @@
         ],
         "summary": "Returns the checklist items for a private task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator of the task.</Check>",
-        "operationId": "GetMyOtherPrivateChecklistItems",
+        "operationId": "GetMyOtherPrivateTaskChecklistItemsByUserIdAndTaskId",
         "parameters": [
           {
             "name": "userId",
@@ -10084,7 +10084,7 @@
         ],
         "summary": "Returns a checklist item for a private task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator of the task.</Check>",
-        "operationId": "GetMyOtherPrivateChecklistItem",
+        "operationId": "GetMyOtherPrivateTaskChecklistItemByUserIdAndTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "userId",
@@ -10170,7 +10170,7 @@
         ],
         "summary": "Returns the permissions of the currently logged-in user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyPermissions",
+        "operationId": "GetMePermissions",
         "responses": {
           "200": {
             "description": "OK",
@@ -10215,7 +10215,7 @@
         ],
         "summary": "Returns the requesting user's private documents.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyPrivateDocuments",
+        "operationId": "GetMePrivateDocuments",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -10267,7 +10267,7 @@
         ],
         "summary": "Returns the requesting user's private trashed documents.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyPrivateTrashDocuments",
+        "operationId": "GetMePrivateDocumentsTrash",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -10319,7 +10319,7 @@
         ],
         "summary": "Returns all private tasks of the current user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyPrivateTasks",
+        "operationId": "GetMePrivateTasks",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -10391,7 +10391,7 @@
         ],
         "summary": "Removes a tag from all private tasks.",
         "description": "Removes a tag from all private tasks of the current user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMyDeleteTagsFromAllPrivateTasks",
+        "operationId": "PostMePrivateTasksDeleteTags",
         "requestBody": {
           "description": "The model to remove the tag from all private tasks.",
           "content": {
@@ -10450,7 +10450,7 @@
         ],
         "summary": "Returns all tags of the private tasks of the current user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyTagsOfPrivateTasks",
+        "operationId": "GetMePrivateTasksTags",
         "responses": {
           "200": {
             "description": "OK",
@@ -10549,7 +10549,7 @@
         ],
         "summary": "Updates a tag for all private tasks.",
         "description": "Updates a tag for all private tasks of the current user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMyUpdateTagForAllPrivateTasks",
+        "operationId": "PostMePrivateTasksUpdateTags",
         "requestBody": {
           "description": "The model to update the tag including the old and new tag names.",
           "content": {
@@ -10601,7 +10601,7 @@
         ],
         "summary": "Returns the private task with the specified id for the current user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyPrivateTask",
+        "operationId": "GetMePrivateTaskByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -10668,7 +10668,7 @@
         ],
         "summary": "Returns the checklist for a private task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be be assigned to the task.</Check>",
-        "operationId": "GetMyPrivateChecklistItems",
+        "operationId": "GetMyPrivateTaskChecklistItemsByUserIdAndTaskId",
         "parameters": [
           {
             "name": "userId",
@@ -10747,7 +10747,7 @@
         ],
         "summary": "Retrieves a checklist item from a private task.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be assigned to the task.</Check>",
-        "operationId": "GetMyPrivateChecklistItem",
+        "operationId": "GetMyPrivateTaskChecklistItemByUserIdAndTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "userId",
@@ -10833,7 +10833,7 @@
         ],
         "summary": "Returns all project tasks that the current user can see.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have `project-planning-data:read` permissions, otherwise only assigned tasks will be returned.</Check>",
-        "operationId": "GetMyMeProjectTasks",
+        "operationId": "GetMeProjectTasks",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -10885,7 +10885,7 @@
         ],
         "summary": "Returns all documents that were shared with the requesting user.",
         "description": "Returns documents where the user has been explicitly granted document-level permissions\r\n            (direct user permissions, team permissions, or workspace permissions on the document).\r\n            Excludes the user's own private documents.\r\n            Note: Also includes documents the user can access through their project or space memberships.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMySharedWithMeDocuments",
+        "operationId": "GetMeSharedDocuments",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -10937,7 +10937,7 @@
         ],
         "summary": "Returns all task tags the current user is allowed to see.",
         "description": "The tags can be filtered by the properties of the task model.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyMeTagsFromAvailableTasks",
+        "operationId": "GetMeTasksTags",
         "responses": {
           "200": {
             "description": "OK",
@@ -10975,7 +10975,7 @@
         ],
         "summary": "Returns all task views that the current user subscribed to.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyTaskViews",
+        "operationId": "GetMeTaskViews",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -11025,7 +11025,7 @@
         ],
         "summary": "Creates a new task view and directly subscribes the current user to it.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMyTaskView",
+        "operationId": "PostMeTaskView",
         "requestBody": {
           "description": "The model to create the task view.",
           "content": {
@@ -11091,7 +11091,7 @@
         ],
         "summary": "Subscribes the current user to a shared task view.",
         "description": "After subscribing, the user can retrieve the tasks matching the view from `/me/taskViews/:taskViewId/tasks`.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMySubscribeToTaskView",
+        "operationId": "PostMeTaskViewsSubscribe",
         "requestBody": {
           "description": "The model to subscribe to the task view.",
           "content": {
@@ -11150,7 +11150,7 @@
         ],
         "summary": "Removes a subscription of the current user from a shared task view.",
         "description": "Only shared task views can be unsubscribed from.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMyUnsubscribeFromTaskView",
+        "operationId": "PostMeTaskViewsUnsubscribe",
         "requestBody": {
           "description": "The model to unsubscribe from the task view.",
           "content": {
@@ -11209,7 +11209,7 @@
         ],
         "summary": "Deletes the specified task view.",
         "description": "Deleting a task view also removes all subscriptions of the task view.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">Shared task views can be deleted by the creator or users with admin permissions. Private task views can only be deleted by the creator.</Check>",
-        "operationId": "DeleteMyTaskView",
+        "operationId": "DeleteMeTaskViewById",
         "parameters": [
           {
             "name": "taskViewId",
@@ -11267,7 +11267,7 @@
         ],
         "summary": "Returns the specified task view of the current user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyTaskView",
+        "operationId": "GetMeTaskViewById",
         "parameters": [
           {
             "name": "taskViewId",
@@ -11322,7 +11322,7 @@
         ],
         "summary": "Updates the specified task view of the current user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutMyTaskView",
+        "operationId": "PutMeTaskViewById",
         "parameters": [
           {
             "name": "taskViewId",
@@ -11410,7 +11410,7 @@
         ],
         "summary": "Returns all tasks matching the filter of the specified task view.",
         "description": "The user permissions are taken into account when returning the tasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMyTaskViewTasks",
+        "operationId": "GetMeTaskViewTasksByTaskViewId",
         "parameters": [
           {
             "name": "taskViewId",
@@ -11772,7 +11772,7 @@
         ],
         "summary": "Returns all available features.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetPermissionFeatures",
+        "operationId": "GetPermissionsFeatures",
         "responses": {
           "200": {
             "description": "OK",
@@ -11813,7 +11813,7 @@
         ],
         "summary": "Returns all available project features.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectPermissionFeatures",
+        "operationId": "GetPermissionsProjectFeatures",
         "responses": {
           "200": {
             "description": "OK",
@@ -11960,7 +11960,7 @@
         ],
         "summary": "Returns the specified project milestone.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectMilestoneById",
+        "operationId": "GetProjectMilestoneByMilestoneId",
         "parameters": [
           {
             "name": "milestoneId",
@@ -12027,7 +12027,7 @@
         ],
         "summary": "Deletes a project milestone.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteProjectMilestone",
+        "operationId": "DeleteProjectMilestoneById",
         "parameters": [
           {
             "name": "projectMilestoneId",
@@ -12085,7 +12085,7 @@
         ],
         "summary": "Updates an existing project milestone.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutProjectMilestone",
+        "operationId": "PutProjectMilestoneById",
         "parameters": [
           {
             "name": "projectMilestoneId",
@@ -12282,7 +12282,7 @@
         ],
         "summary": "Returns all project roles assigned to the specified user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectRolesByUserId",
+        "operationId": "GetProjectRolesByUserIdByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -12397,7 +12397,7 @@
         ],
         "summary": "Updates an existing project role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PutProjectRole",
+        "operationId": "PutProjectRoleById",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -12476,7 +12476,7 @@
         ],
         "summary": "Deletes a project role and migrates its members to a new role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostDeleteProjectRole",
+        "operationId": "PostProjectRoleDeleteByProjectRoleId",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -12548,7 +12548,7 @@
         ],
         "summary": "Returns all permissions assigned to a project role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectRolePermissions",
+        "operationId": "GetProjectRolePermissionsByProjectRoleId",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -12618,7 +12618,7 @@
         ],
         "summary": "Creates or updates a permission for a project role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostProjectRolePermission",
+        "operationId": "PostProjectRolePermissionsByProjectRoleId",
         "parameters": [
           {
             "name": "projectRoleId",
@@ -12804,7 +12804,7 @@
         ],
         "summary": "Removes a tag from all projects.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-master-data:write` permissions.</Check>",
-        "operationId": "PostDeleteTagFromAllProjects",
+        "operationId": "PostProjectsDeleteTags",
         "requestBody": {
           "description": "The model to remove the tag from all projects.",
           "content": {
@@ -12864,7 +12864,7 @@
         ],
         "summary": "Returns all tags of the project tasks.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTagsOfProjectTasks",
+        "operationId": "GetProjectsProjectTasksTags",
         "parameters": [
           {
             "name": "projectId",
@@ -12913,7 +12913,7 @@
         ],
         "summary": "Returns all tags currently in use by projects.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTags",
+        "operationId": "GetProjectsTags",
         "responses": {
           "200": {
             "description": "OK",
@@ -12971,7 +12971,7 @@
         ],
         "summary": "Updates a tag globally for all projects.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-master-data:write` permissions.</Check>",
-        "operationId": "PostUpdateTagForAllProjects",
+        "operationId": "PostProjectsUpdateTags",
         "requestBody": {
           "description": "The model containing the tag updates.",
           "content": {
@@ -13096,7 +13096,7 @@
         ],
         "summary": "Updates the project with the specified id.",
         "description": "Updates the project with the specified id.\r\n             Special handling for retainer projects:\r\n             If the project has at least one Retainer, the IsRetainer flag is automatically set to true.\r\n             For retainer projects, the TimeBudget cannot be set. Instead the TimeBudget is the sum of all retainer budgets.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
-        "operationId": "PutProject",
+        "operationId": "PutProjectById",
         "parameters": [
           {
             "name": "projectId",
@@ -13177,6 +13177,85 @@
         }
       }
     },
+    "/projects/{projectId}/activities": {
+      "get": {
+        "tags": [
+          "Activities"
+        ],
+        "summary": "Returns all activities of the project with the specified id.",
+        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\n            This contains changes to first-level properties of the project, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\n            This does not include activities of sub-entities, like tasks of a project or comments on a task.",
+        "operationId": "GetProjectActivities",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/projects/{projectId}/addprojectmember": {
       "post": {
         "tags": [
@@ -13184,7 +13263,7 @@
         ],
         "summary": "Adds a project member to the project with the specified id.",
         "description": "Adds a project member to the project with the specified id.\r\n             The new project member can also be set as a responsible project member, but only if no other member of this project is responsible.\r\n             It is necessary that the project role is available in this project, otherwise the member cannot be added.\r\n             A project role is available when they are connected to the specified project type of the project.\r\n             A user can only be added to the project once.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator or needs `project-master-data:manage` permissions on the project.</Check>",
-        "operationId": "PostAddProjectMember",
+        "operationId": "PostProjectAddProjectMemberByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -13242,7 +13321,7 @@
         ],
         "summary": "Adds a batch of tags to the project with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">To add tags to a project the user must have `project-master-data:write` permissions on the specified project.</Check>",
-        "operationId": "PostAddProjectTags",
+        "operationId": "PostProjectAddTagsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -13336,7 +13415,7 @@
         ],
         "summary": "Adds a task bundle to a project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostAddTaskBundleToProject",
+        "operationId": "PostProjectAddTaskBundleByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14514,7 +14593,7 @@
         ],
         "summary": "Changes the project type of the project with the specified id.",
         "description": "Changes the project type of the project with the specified id.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
-        "operationId": "PostChangeProjectType",
+        "operationId": "PostProjectChangeProjectTypeByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14595,7 +14674,7 @@
         ],
         "summary": "Changes the status of the project with the specified id.",
         "description": "Changes the status of the project with the specified id.\r\n             The project status must be associated with the project type used by the project.\r\n             This potentially adds task bundles to the project and informs the project members about the status change.\r\n             If the project is already in the specified status, nothing happens.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
-        "operationId": "PostChangeProjectStatus",
+        "operationId": "PostProjectChangeStatusByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14666,7 +14745,7 @@
         ],
         "summary": "Deletes all comments of the specified project.",
         "description": "Deletes all comments of the specified project.",
-        "operationId": "DeleteProjectComments",
+        "operationId": "DeleteCommentsByProjectNameAndProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14701,7 +14780,7 @@
         ],
         "summary": "Returns all comments of the project with the specified id.",
         "description": "Returns all comments of the project with the specified id. The user needs read permissions on the project.",
-        "operationId": "GetProjectComments",
+        "operationId": "GetCommentsByProjectNameAndProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14768,7 +14847,7 @@
         ],
         "summary": "Creates a new comment on the project with the specified id.",
         "description": "Creates a new comment on the project with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check>To create a comment the user must have at least `read` permissions on the specified project.</Check>",
-        "operationId": "PostProjectComment",
+        "operationId": "PostCommentsByProjectNameAndProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14843,7 +14922,7 @@
         ],
         "summary": "Deletes the comment with the specified id on the project with the specified id.",
         "description": "Deletes the comment with the specified id on the project with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
-        "operationId": "DeleteProjectComment",
+        "operationId": "DeleteCommentByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
             "name": "projectId",
@@ -14898,7 +14977,7 @@
         ],
         "summary": "Returns the comment with the specified id of the project with the specified id.",
         "description": "Returns the comment with the specified id of the project with the specified id.",
-        "operationId": "GetProjectCommentById",
+        "operationId": "GetCommentByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
             "name": "projectId",
@@ -14950,7 +15029,7 @@
         ],
         "summary": "Updates the comment with the specified id on the project with the specified id.",
         "description": "<Check>To update a comment the user must either have at least `read` permissions on the specified project, be the creator of the comment or be admin.</Check>",
-        "operationId": "PutProjectComment",
+        "operationId": "PutCommentByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
             "name": "projectId",
@@ -15025,7 +15104,7 @@
         ],
         "summary": "Updates the reactions of the comment with the specified id on the project with the specified id.",
         "description": "<Check>To update a reaction of a comment the user must have at least `read` permissions on the specified project.</Check>",
-        "operationId": "PostProjectCommentReaction",
+        "operationId": "PostCommentReactByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
             "name": "projectId",
@@ -15093,7 +15172,7 @@
         ],
         "summary": "Returns all custom field definitions linked to the specified project, including definitions linked via a workflow.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-master-data:read` permissions or access to at least one task in the project.</Check>",
-        "operationId": "GetCustomFieldDefinitionsByProjectId",
+        "operationId": "GetProjectCustomFieldDefinitionsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -15163,7 +15242,7 @@
         ],
         "summary": "Updates the order of a custom field definition linked to the specified project.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have `project-master-data:write` permissions or `write` permissions on the specified project.</Check>",
-        "operationId": "PutCustomFieldDefinitionsByProjectId",
+        "operationId": "PutProjectCustomFieldDefinitionByProjectIdAndCustomFieldDefinitionId",
         "parameters": [
           {
             "name": "projectId",
@@ -15251,7 +15330,7 @@
         ],
         "summary": "Deletes the project with the specified id.",
         "description": "Deletes the project with the specified id.\r\n             In the default case the related tasks of this project will also be deleted and the related time entries of this project and all tasks loose the relation to the deleted project and tasks.\r\n             To delete the time entries as well, you can set the `deleteTimeTrackings` property of the request to `true`.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator of the project or needs `write` permissions of the feature `project-master-data`.</Check>",
-        "operationId": "PostDeleteProject",
+        "operationId": "PostProjectDeleteByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -15322,7 +15401,7 @@
         ],
         "summary": "Removes tags from the project with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">To remove tags from a project the user must have `project-master-data:write` permissions on the specified project.</Check>",
-        "operationId": "PostDeleteProjectTags",
+        "operationId": "PostProjectDeleteTagsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -15409,7 +15488,7 @@
         ],
         "summary": "Retrieves all documents for a project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectDocuments",
+        "operationId": "GetProjectDocumentsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -15471,7 +15550,7 @@
         ],
         "summary": "Retrieves all trashed documents for a project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTrashDocuments",
+        "operationId": "GetProjectDocumentsTrashByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -16482,7 +16561,7 @@
         ],
         "summary": "Links a custom field definition to the specified project.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have `project-master-data:write` permissions or `write` permissions on the specified project.</Check>",
-        "operationId": "PostLinkCustomFieldDefinitionByProjectId",
+        "operationId": "PostProjectLinkCustomFieldDefinitionByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -16563,7 +16642,7 @@
         ],
         "summary": "Returns the project members of the project with the specified id.",
         "description": "Returns the project members of the project with the specified id.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator of the project or needs `read` permissions of the feature `project-master-data`.</Check>",
-        "operationId": "GetProjectMembers",
+        "operationId": "GetProjectMembersByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -16693,7 +16772,7 @@
         ],
         "summary": "Creates a project status for a project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostProjectStatusForProject",
+        "operationId": "PostProjectProjectStatusesByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -16781,7 +16860,7 @@
         ],
         "summary": "Returns all project tasks of the project with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have `project-planning-data:read` permissions, otherwise only assigned tasks will be returned.</Check>",
-        "operationId": "GetProjectTasks",
+        "operationId": "GetProjectProjectTasksByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -16853,7 +16932,7 @@
         ],
         "summary": "Returns the project task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-planning-data:read` permissions or be assigned to the project task.</Check>",
-        "operationId": "GetProjectTask",
+        "operationId": "GetProjectProjectTaskByProjectIdAndTaskId",
         "parameters": [
           {
             "name": "projectId",
@@ -16930,7 +17009,7 @@
         ],
         "summary": "Changes the project of the task with the specified id.",
         "description": "Changes the project of the task with the specified id.\r\n            This call also moves all subtasks of the task to the new project.\r\n            This also changes the tracked time sum of the new project and the previous project.\r\n            The related time entries of this task will also be moved to the new project.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have `project-planning-data:write` permissions on both projects.</Check>",
-        "operationId": "PostChangeProject",
+        "operationId": "PostProjectProjectTaskChangeProjectByProjectIdAndTaskId",
         "parameters": [
           {
             "name": "projectId",
@@ -17021,7 +17100,7 @@
         ],
         "summary": "Returns the checklist items for a project task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-planning-data:read` permissions or be assigned to the project task.</Check>",
-        "operationId": "GetProjectChecklistItems",
+        "operationId": "GetProjectProjectTaskChecklistItemsByProjectIdAndTaskId",
         "parameters": [
           {
             "name": "projectId",
@@ -17101,7 +17180,7 @@
         ],
         "summary": "Retrieves a checklist item from a project task.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-planning-data:read` permissions or be assigned to the project task.</Check>",
-        "operationId": "GetProjectChecklistItem",
+        "operationId": "GetProjectProjectTaskChecklistItemByProjectIdAndTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "projectId",
@@ -17188,7 +17267,7 @@
         ],
         "summary": "Removes a project member from the project with the specified id.",
         "description": "Removes a project member from the project with the specified id.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator of the project or needs `manage` permissions of the feature `project-master-data`.</Check>",
-        "operationId": "PostRemoveProjectMember",
+        "operationId": "PostProjectRemoveProjectMemberByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -17269,7 +17348,7 @@
         ],
         "summary": "Endpoint to get all retainers for a project.",
         "description": "The user must have the ProjectMasterData read permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetRetainers",
+        "operationId": "GetProjectRetainersByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -17329,7 +17408,7 @@
         ],
         "summary": "Endpoint to create a new retainer for a project.",
         "description": "As soon as a retainer is created for a project, the project will be marked as a retainer project.\r\n            Based on the Start and End dates of the retainer, the retainer budgets will be created automatically.\r\n            Retainers cannot overlap. There can only be one active retainer per project at a time (no end date and/or including the current date).\r\n            \r\n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostRetainer",
+        "operationId": "PostProjectRetainersByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -17407,7 +17486,7 @@
         ],
         "summary": "Endpoint to delete a retainer for a project. Deletes all related retainer budgets.",
         "description": "The user must have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteRetainer",
+        "operationId": "DeleteProjectRetainerByProjectIdAndRetainerId",
         "parameters": [
           {
             "name": "projectId",
@@ -17475,7 +17554,7 @@
         ],
         "summary": "Endpoint to get a retainer for a project by id.",
         "description": "The user must have the ProjectMasterData read permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetRetainerById",
+        "operationId": "GetProjectRetainerByProjectIdAndRetainerId",
         "parameters": [
           {
             "name": "projectId",
@@ -17540,7 +17619,7 @@
         ],
         "summary": "Endpoint to update the retainer for a project.",
         "description": "The end date of the retainer can only be updated via the POST /setDates endpoint.\r\n            The start date, the retainer period, and the timezone can not be updated. Delete the retainer and create a new one instead.\r\n            \r\n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutRetainer",
+        "operationId": "PutProjectRetainerByProjectIdAndRetainerId",
         "parameters": [
           {
             "name": "projectId",
@@ -17628,7 +17707,7 @@
         ],
         "summary": "Sets custom field values for a project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetCustomFieldByProjectId",
+        "operationId": "PostProjectSetCustomFieldsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -17712,7 +17791,7 @@
         ],
         "summary": "Updates the project key for the specified project and all associated task identifiers.",
         "description": "The project key must be unique within the workspace and follow these rules:\r\n             - Only uppercase letters (A-Z), numbers (0-9), and dashes (-)\r\n             - Between 1 and 32 characters\r\n             - Not already in use by another active project in the workspace\r\n            \r\n             This operation will also update all task identifiers for tasks in this project\r\n             (e.g., OLDKEY-123 becomes NEWKEY-123). Task identifiers are updated in batches\r\n             to ensure audit logs and websocket events are triggered properly.\r\n            \r\n             Note: The project key update is now transactional with automatic retry on race conditions.\r\n             If multiple concurrent requests try to update the same project key, the service will\r\n             retry with exponential backoff (100ms, 200ms, 400ms) for up to 3 attempts.\r\n             Task identifier updates are processed in batches as a background operation.\r\n            \r\n             Note: User-provided keys are not subject to profanity filtering. Users can set any key they choose.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-master-data:write` permissions.</Check>",
-        "operationId": "PostSetProjectKey",
+        "operationId": "PostProjectSetProjectKeyByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -17790,7 +17869,7 @@
         ],
         "summary": "Returns the tags of the project with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">To get the tags of a project the user must have `project-master-data:read` permissions on the specified project.</Check>",
-        "operationId": "GetTagsByProjectId",
+        "operationId": "GetProjectTagsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -17882,7 +17961,7 @@
         ],
         "summary": "Returns all task dependencies for a specific project.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">To get all dependencies of a project, the user needs project planning permissions on that project.</Check>",
-        "operationId": "GetTaskDependenciesByProjectId",
+        "operationId": "GetProjectTaskdependenciesByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -17942,7 +18021,7 @@
         ],
         "summary": "Returns all task lists of the project with the specified id.",
         "description": "The permission check in this function is dynamically based on the entity name.\r\n            In the cases where the user tries to get the project task lists,\r\n            the user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskLists",
+        "operationId": "GetProjectTaskListsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -18021,7 +18100,7 @@
         ],
         "summary": "Creates a new task list.",
         "description": "To create a new project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostTaskList",
+        "operationId": "PostProjectTaskListsByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -18109,7 +18188,7 @@
         ],
         "summary": "Returns the task list with the specified id.",
         "description": "The permission check in this function is dynamically based on the entity name.\r\n            In the cases where the user tries to get the project task lists,\r\n            the user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskList",
+        "operationId": "GetProjectTaskListByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18164,7 +18243,7 @@
         ],
         "summary": "Updates the task list with the specified id.",
         "description": "To update a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutTaskList",
+        "operationId": "PutProjectTaskListByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18252,7 +18331,7 @@
         ],
         "summary": "Adds the tasks to the task list with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostAddTasksToList",
+        "operationId": "PostProjectTaskListAddTasksByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18336,7 +18415,7 @@
         ],
         "summary": "Changes the project of the task list with the specified id.",
         "description": "This endpoint also moves all tasks and time entries to the new project.\r\n            This will also change the tracked time sum of the old and new projects.\r\n            The task status mapping will move all tasks of a certain status to the new provided status on the mapping.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostTaskListChangeProject",
+        "operationId": "PostProjectTaskListChangeProjectByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18397,7 +18476,7 @@
         ],
         "summary": "Creates a copy of the task list.",
         "description": "A new task list will be created with the same name as the original one.\r\n            All tasks and subtasks will also be copied in this operation.\r\n            Comments, files and activity logs are not copied.\r\n            To copy a task list, the user needs to have 'ProjectPlanning'\r\n            permissions in general or in the project the task list belongs to.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostCopyTaskList",
+        "operationId": "PostProjectTaskListCopyByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18474,7 +18553,7 @@
         ],
         "summary": "Deletes the task list with the specified id.",
         "description": "To delete project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostDeleteTaskList",
+        "operationId": "PostProjectTaskListDeleteByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18555,7 +18634,7 @@
         ],
         "summary": "Removes the tasks from the task list with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostRemoveTasksFromList",
+        "operationId": "PostProjectTaskListRemoveTasksByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18620,7 +18699,7 @@
         ],
         "summary": "Archives or unarchives the task list with the specified id.",
         "description": "Archives or unarchives the task list with the specified id.\r\n            An archived task list still exists but is not editable anymore.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetArchivedTaskList",
+        "operationId": "PostProjectTaskListSetArchivedByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18718,7 +18797,7 @@
         ],
         "summary": "Returns the task with the specified id in the task list with the specified id.",
         "description": "To get a task in a project task list, the user needs read permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskInTaskList",
+        "operationId": "GetProjectTaskListTaskByProjectIdAndTaskListIdAndTaskId",
         "parameters": [
           {
             "name": "projectId",
@@ -18815,7 +18894,7 @@
         ],
         "summary": "Updates the order of a task in a task list.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostUpdateTaskOrderInTaskList",
+        "operationId": "PostProjectTaskListTaskUpdateOrderByProjectIdAndTaskListIdAndTaskId",
         "parameters": [
           {
             "name": "projectId",
@@ -18916,7 +18995,7 @@
         ],
         "summary": "Updates the order of the task list with the specified id.",
         "description": "To update the order of a project task list, the user needs manage permissions on the project-planning-data feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostUpdateTaskListOrder",
+        "operationId": "PostProjectTaskListUpdateOrderByProjectIdAndTaskListId",
         "parameters": [
           {
             "name": "projectId",
@@ -18997,7 +19076,7 @@
         ],
         "summary": "Returns all task statuses of the project with the specified id.\n            If the project is linked to a workflow, the workflow's task statuses are returned.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-master-data:read` permissions or be assigned to a task on the specified project.</Check>",
-        "operationId": "GetProjectTaskStatuses",
+        "operationId": "GetProjectTaskStatusesByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -19077,7 +19156,7 @@
         ],
         "summary": "Creates a new task status for the specified project.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either have `project-planning-data:write` permissions or be creator of the project.</Check>",
-        "operationId": "PostProjectTaskStatus",
+        "operationId": "PostProjectTaskStatusesByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -19165,7 +19244,7 @@
         ],
         "summary": "Returns the specified task status of a project.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either have 'project-master-data:write' permissions or be the owner of the project.</Check>",
-        "operationId": "GetProjectTaskStatusById",
+        "operationId": "GetProjectTaskStatusByProjectIdAndTaskStatusId",
         "parameters": [
           {
             "name": "projectId",
@@ -19240,7 +19319,7 @@
         ],
         "summary": "Updates a task status for the specified project.",
         "description": "The status type cannot be changed if it is the last status of type 'todo' or 'done'.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must either have `project-planning-data:write` permissions or be creator of the project.</Check>",
-        "operationId": "PutProjectTaskStatus",
+        "operationId": "PutProjectTaskStatusByProjectIdAndTaskStatusId",
         "parameters": [
           {
             "name": "projectId",
@@ -19338,7 +19417,7 @@
         ],
         "summary": "Deletes the task status with the specified id.",
         "description": "If the status to delete is still used by tasks, another task status to move the tasks to must be provided.\r\n            The last status of type 'todo' or 'done' cannot be deleted.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must either have `project-planning-data:write` permissions or must be creator of the project.</Check>",
-        "operationId": "PostDeleteProjectTaskStatus",
+        "operationId": "PostProjectTaskStatusDeleteByProjectIdAndTaskStatusId",
         "parameters": [
           {
             "name": "projectId",
@@ -19478,7 +19557,7 @@
         ],
         "summary": "Returns the type of work for the project with the specified id.",
         "description": "The project can be a connected or a workspace project.\r\n            User must have at least 'read' permissions on the 'project-planning-data' feature.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTypesOfWork",
+        "operationId": "GetProjectTypesOfWorkByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -19548,7 +19627,7 @@
         ],
         "summary": "Unlinks a custom field definition from the specified project.",
         "description": "When the definition is unlinked from a project, all values of the custom field will be removed from the tasks within that project.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have `project-master-data:write` permissions or `write` permissions on the specified project.</Check>",
-        "operationId": "PostUnLinkCustomFieldDefinitionByProjectId",
+        "operationId": "PostProjectUnlinkCustomFieldDefinitionByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -19629,7 +19708,7 @@
         ],
         "summary": "Updates the role of a project member of the project with the specified id.",
         "description": "Changes the role of a project member.\r\n             The project member can also be set as a responsible project member, but only if no other member of this project is\r\n             responsible.\r\n             It is necessary that the project role is available in this project, otherwise the member cannot be updated.\r\n             A project role is available when they are connected to the specified project type of the project.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user has to be the creator or needs `project-master-data:manage` permissions on the project.</Check>",
-        "operationId": "PostUpdateProjectMember",
+        "operationId": "PostProjectUpdateProjectMemberByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -19687,7 +19766,7 @@
         ],
         "summary": "Updates the order of a project status.",
         "description": "Updates the order of a project status.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostUpdateProjectStatusOrder",
+        "operationId": "PostProjectUpdateProjectStatusOrderByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -19914,7 +19993,7 @@
         ],
         "summary": "Updates an existing project status.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutProjectStatus",
+        "operationId": "PutProjectStatusById",
         "parameters": [
           {
             "name": "projectStatusId",
@@ -20002,7 +20081,7 @@
         ],
         "summary": "Deletes a project status.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostDeleteProjectStatus",
+        "operationId": "PostProjectStatusDeleteByProjectStatusId",
         "parameters": [
           {
             "name": "projectStatusId",
@@ -20083,7 +20162,7 @@
         ],
         "summary": "Sets the archived flag for a project status.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetProjectStatusArchived",
+        "operationId": "PostProjectStatusSetArchivedByProjectStatusId",
         "parameters": [
           {
             "name": "projectStatusId",
@@ -20278,7 +20357,7 @@
         ],
         "summary": "Removes a tag from all project templates.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostDeleteTagFromAllProjectTemplates",
+        "operationId": "PostProjectTemplatesDeleteTags",
         "requestBody": {
           "description": "The model to remove the tag from all project templates.",
           "content": {
@@ -20338,7 +20417,7 @@
         ],
         "summary": "Returns all tags currently in use by project templates.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTemplateTags",
+        "operationId": "GetProjectTemplatesTags",
         "responses": {
           "200": {
             "description": "OK",
@@ -20446,7 +20525,7 @@
         ],
         "summary": "Deletes a project template by its ID.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteProjectTemplate",
+        "operationId": "DeleteProjectTemplateById",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -20540,7 +20619,7 @@
         ],
         "summary": "Updates an existing project template with new values and configuration.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutProjectTemplate",
+        "operationId": "PutProjectTemplateById",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -20619,7 +20698,7 @@
         ],
         "summary": "Adds a batch of tags to the project template with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostAddProjectTemplateTags",
+        "operationId": "PostProjectTemplateAddTagsByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21526,7 +21605,7 @@
         ],
         "summary": "Returns all custom field definitions linked to the specified project template, including definitions linked via a workflow.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetCustomFieldDefinitionsByProjectTemplateId",
+        "operationId": "GetProjectTemplateCustomFieldDefinitionsByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21586,7 +21665,7 @@
         ],
         "summary": "Updates the order of a custom field definition for the specified project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutCustomFieldDefinitionsByProjectTemplateId",
+        "operationId": "PutProjectTemplateCustomFieldDefinitionByProjectTemplateIdAndCustomFieldDefinitionId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21665,7 +21744,7 @@
         ],
         "summary": "Removes tags from the project template with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostDeleteProjectTemplateTags",
+        "operationId": "PostProjectTemplateDeleteTagsByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21753,7 +21832,7 @@
         ],
         "summary": "Links a custom field definition to the specified project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostLinkCustomFieldDefinitionByProjectTemplateId",
+        "operationId": "PostProjectTemplateLinkCustomFieldDefinitionByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21825,7 +21904,7 @@
         ],
         "summary": "Returns all milestone templates of the given project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
-        "operationId": "GetMilestoneTemplates",
+        "operationId": "GetProjectTemplateMilestonesByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21886,7 +21965,7 @@
         ],
         "summary": "Creates a new milestone template for the given project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostMilestoneTemplate",
+        "operationId": "PostProjectTemplateMilestonesByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21945,7 +22024,7 @@
         ],
         "summary": "Deletes a milestone for the given project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteMilestoneTemplate",
+        "operationId": "DeleteProjectTemplateMilestoneByProjectTemplateIdAndMilestoneId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -21994,7 +22073,7 @@
         ],
         "summary": "Returns a milestone by id for the given project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
-        "operationId": "GetMilestoneTemplate",
+        "operationId": "GetProjectTemplateMilestoneByProjectTemplateIdAndMilestoneId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22050,7 +22129,7 @@
         ],
         "summary": "Updates a milestone template for the given project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutMilestoneTemplate",
+        "operationId": "PutProjectTemplateMilestoneByProjectTemplateIdAndMilestoneId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22119,7 +22198,7 @@
         ],
         "summary": "Adds a project status to a project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostProjectTemplateStatus",
+        "operationId": "PostProjectTemplateProjectStatusesByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22208,7 +22287,7 @@
         ],
         "summary": "Sets the custom fields for a project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostSetCustomFieldByProjectTemplateId",
+        "operationId": "PostProjectTemplateSetCustomFieldsByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22263,7 +22342,7 @@
         ],
         "summary": "Returns the tags of the project template with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
-        "operationId": "GetTagsByProjectTemplateId",
+        "operationId": "GetProjectTemplateTagsByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22346,7 +22425,7 @@
         ],
         "summary": "Retrieves the task bundle associated with a project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskBundle",
+        "operationId": "GetProjectTemplateTaskBundleByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22403,7 +22482,7 @@
         ],
         "summary": "Returns all task statuses of the project template with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTemplateTaskStatuses",
+        "operationId": "GetProjectTemplateTaskStatusesByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22473,7 +22552,7 @@
         ],
         "summary": "Creates a new task status for the specified project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostProjectTemplateTaskStatus",
+        "operationId": "PostProjectTemplateTaskStatusesByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22552,7 +22631,7 @@
         ],
         "summary": "Deletes the task status of the project template with the specified id.",
         "description": "The last status of type 'todo' or 'done' cannot be deleted.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteProjectTemplateTaskStatus",
+        "operationId": "DeleteProjectTemplateTaskStatusByProjectTemplateIdAndTaskStatusId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22621,7 +22700,7 @@
         ],
         "summary": "Returns the task status of the project template with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTemplateTaskStatusById",
+        "operationId": "GetProjectTemplateTaskStatusByProjectTemplateIdAndTaskStatusId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22686,7 +22765,7 @@
         ],
         "summary": "Updates a task status for the specified project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutProjectTemplateTaskStatus",
+        "operationId": "PutProjectTemplateTaskStatusByProjectTemplateIdAndTaskStatusId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22775,7 +22854,7 @@
         ],
         "summary": "Unlinks a custom field definition from the specified project template.",
         "description": "When the definition is unlinked from a project template, all values of the custom field will be removed from the task templates within that project template.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostUnLinkCustomFieldDefinitionByProjectTemplateId",
+        "operationId": "PostProjectTemplateUnlinkCustomFieldDefinitionByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -22847,7 +22926,7 @@
         ],
         "summary": "Updates the order of a project status within a project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostUpdateProjectTemplateStatusOrder",
+        "operationId": "PostProjectTemplateUpdateProjectStatusOrderByProjectTemplateId",
         "parameters": [
           {
             "name": "projectTemplateId",
@@ -24170,7 +24249,7 @@
         ],
         "summary": "Retrieves all available project type icons.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTypeIcons",
+        "operationId": "GetProjectTypesIcons",
         "responses": {
           "200": {
             "description": "OK",
@@ -24263,7 +24342,7 @@
         ],
         "summary": "Updates an existing project type.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PutProjectType",
+        "operationId": "PutProjectTypeById",
         "parameters": [
           {
             "name": "projectTypeId",
@@ -24342,7 +24421,7 @@
         ],
         "summary": "Deletes a project type and reassigns related projects and templates.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteProjectType",
+        "operationId": "PostProjectTypeDeleteByProjectTypeId",
         "parameters": [
           {
             "name": "projectTypeId",
@@ -24414,7 +24493,7 @@
         ],
         "summary": "Archives or unarchives the project type with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "SetProjectTypeArchived",
+        "operationId": "PostProjectTypeSetArchivedByProjectTypeId",
         "parameters": [
           {
             "name": "projectTypeId",
@@ -24580,7 +24659,7 @@
         ],
         "summary": "Moves a user from their current role to another role.",
         "description": "Moves a user from their current role to another role.\r\n            At least one user needs to remain in the admin role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostMoveUserToRole",
+        "operationId": "PostRolesMoveUser",
         "requestBody": {
           "description": "The move user in role payload.",
           "content": {
@@ -24760,7 +24839,7 @@
         ],
         "summary": "Updates the role with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PutRole",
+        "operationId": "PutRoleById",
         "parameters": [
           {
             "name": "roleId",
@@ -24839,7 +24918,7 @@
         ],
         "summary": "Adds the user to the role with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostAddUserToRole",
+        "operationId": "PostRoleAddUserByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -24911,7 +24990,7 @@
         ],
         "summary": "Returns all deactivated menu items for the specified role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
-        "operationId": "GetRoleDeactivatedMenuItems",
+        "operationId": "GetRoleDeactivatedMenuItemsByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -24973,7 +25052,7 @@
         ],
         "summary": "Creates or updates the deactivated menu items for the specified role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostRoleDeactivatedMenuItems",
+        "operationId": "PostRoleDeactivatedMenuItemsByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -25048,7 +25127,7 @@
         ],
         "summary": "Deletes the role with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostDeleteRole",
+        "operationId": "PostRoleDeleteByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -25120,7 +25199,7 @@
         ],
         "summary": "Returns all permissions of the specified role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
-        "operationId": "GetRolePermissions",
+        "operationId": "GetRolePermissionsByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -25191,7 +25270,7 @@
         ],
         "summary": "Creates, updates or deletes a permission of the specified role.",
         "description": "Creates, updates or deletes a permission of the role.\r\n            If the permission already exist, and the 'AccessLevels' property of the model is not empty,\r\n            the permission will be updated. If the 'AccessLevels' property of the model is empty,\r\n            the permission will be deleted.\r\n            The permission will be created if it does not exist.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostRolePermission",
+        "operationId": "PostRolePermissionsByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -25270,7 +25349,7 @@
         ],
         "summary": "Archives or unarchives the role with the specified id.",
         "description": "Archives or unarchives the role with the specified id.\r\n            An archived role still exists for all users currently using it,\r\n            but users can no longer be assigned to this role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostSetRoleArchived",
+        "operationId": "PostRoleSetArchivedByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -25349,7 +25428,7 @@
         ],
         "summary": "Returns all users of the specified role.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
-        "operationId": "GetRoleUsers",
+        "operationId": "GetRoleUsersByRoleId",
         "parameters": [
           {
             "name": "roleId",
@@ -25422,7 +25501,7 @@
         ],
         "summary": "Activates the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostActivateRoleUser",
+        "operationId": "PostRoleUserActivateByRoleIdAndUserId",
         "parameters": [
           {
             "name": "roleId",
@@ -25483,7 +25562,7 @@
         ],
         "summary": "Deactivates the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostDeactivateRoleUser",
+        "operationId": "PostRoleUserDeactivateByRoleIdAndUserId",
         "parameters": [
           {
             "name": "roleId",
@@ -25544,7 +25623,7 @@
         ],
         "summary": "Returns the role with the specified name.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
-        "operationId": "GetRoleByName",
+        "operationId": "GetRoleByRoleName",
         "parameters": [
           {
             "name": "roleName",
@@ -25841,7 +25920,7 @@
         ],
         "summary": "Creates a task bundle from a project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskBundleFromProject",
+        "operationId": "PostTaskBundlesFromProjectByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -25910,7 +25989,7 @@
         ],
         "summary": "Creates a task bundle from a task list.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskBundleFromTaskList",
+        "operationId": "PostTaskBundlesFromTaskListByTaskListId",
         "parameters": [
           {
             "name": "taskListId",
@@ -25979,7 +26058,7 @@
         ],
         "summary": "Lists available task bundle icons.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskBundleIcons",
+        "operationId": "GetTaskBundlesIcons",
         "responses": {
           "200": {
             "description": "OK",
@@ -26017,7 +26096,7 @@
         ],
         "summary": "Deletes a task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteTaskBundle",
+        "operationId": "DeleteTaskBundleById",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26111,7 +26190,7 @@
         ],
         "summary": "Updates a task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PutTaskBundle",
+        "operationId": "PutTaskBundleById",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26180,7 +26259,7 @@
         ],
         "summary": "Creates a copy of an existing task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostCopyTaskBundle",
+        "operationId": "PostTaskBundleCopyByTaskBundleId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26249,7 +26328,7 @@
         ],
         "summary": "Returns all task dependency templates for a given task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:read` permissions.</Check>",
-        "operationId": "GetTaskDependencyTemplatesForTaskBundle",
+        "operationId": "GetTaskBundleTaskDependencyTemplatesByTaskBundleId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26328,7 +26407,7 @@
         ],
         "summary": "Creates a task dependency template for two task templates of the given task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskDependencyTemplateForTaskBundle",
+        "operationId": "PostTaskBundleTaskDependencyTemplatesByTaskBundleId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26417,7 +26496,7 @@
         ],
         "summary": "Deletes the task dependency template from the task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteTaskDependencyTemplateForTaskBundle",
+        "operationId": "DeleteTaskBundleTaskDependencyTemplateByTaskBundleIdAndTaskDependencyTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26486,7 +26565,7 @@
         ],
         "summary": "Returns a task dependency template by id for a given task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:read` permissions.</Check>",
-        "operationId": "GetTaskDependencyTemplateForTaskBundle",
+        "operationId": "GetTaskBundleTaskDependencyTemplateByTaskBundleIdAndTaskDependencyTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26574,7 +26653,7 @@
         ],
         "summary": "Lists task list templates for a task bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskListTemplates",
+        "operationId": "GetTaskBundleTaskListTemplatesByTaskBundleId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26644,7 +26723,7 @@
         ],
         "summary": "Creates a task list template for a bundle.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskListTemplate",
+        "operationId": "PostTaskBundleTaskListTemplatesByTaskBundleId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26713,7 +26792,7 @@
         ],
         "summary": "Deletes a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteTaskListTemplate",
+        "operationId": "DeleteTaskBundleTaskListTemplateByTaskBundleIdAndTaskListTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26772,7 +26851,7 @@
         ],
         "summary": "Gets a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskListTemplate",
+        "operationId": "GetTaskBundleTaskListTemplateByTaskBundleIdAndTaskListTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26837,7 +26916,7 @@
         ],
         "summary": "Updates a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PutTaskListTemplate",
+        "operationId": "PutTaskBundleTaskListTemplateByTaskBundleIdAndTaskListTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -26916,7 +26995,7 @@
         ],
         "summary": "Adds task templates to a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskListTemplateAddTaskTemplates",
+        "operationId": "PostTaskBundleTaskListTemplateAddTaskTemplatesByTaskBundleIdAndTaskListTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27011,7 +27090,7 @@
         ],
         "summary": "Removes task templates from a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskListTemplateRemoveTaskTemplates",
+        "operationId": "PostTaskBundleTaskListTemplateRemoveTaskTemplatesByTaskBundleIdAndTaskListTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27097,7 +27176,7 @@
         ],
         "summary": "Lists task templates inside a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskTemplatesInTaskListTemplate",
+        "operationId": "GetTaskBundleTaskListTemplateTaskTemplatesByTaskBundleIdAndTaskListTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27167,7 +27246,7 @@
         ],
         "summary": "Gets a task template inside a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskTemplateInTaskListTemplate",
+        "operationId": "GetTaskBundleTaskListTemplateTaskTemplateByTaskBundleIdAndTaskListTemplateIdAndTaskTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27244,7 +27323,7 @@
         ],
         "summary": "Updates the order of a task template inside a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskTemplateUpdateOrder",
+        "operationId": "PostTaskBundleTaskListTemplateTaskTemplateUpdateOrderByTaskBundleIdAndTaskListTemplateIdAndTaskTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27336,7 +27415,7 @@
         ],
         "summary": "Updates the order of task templates in a task list template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskListTemplateUpdateOrder",
+        "operationId": "PostTaskBundleTaskListTemplateUpdateOrderByTaskBundleIdAndTaskListTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27408,7 +27487,7 @@
         ],
         "summary": "Returns all task templates of the task bundle with the specified id.",
         "description": "Returns all task templates of the task bundle with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskTemplates",
+        "operationId": "GetTaskBundleTaskTemplatesByTaskBundleId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27478,7 +27557,7 @@
         ],
         "summary": "Creates a new task template for the task bundle with the specified id.",
         "description": "Creates a new task template for the task bundle with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTaskTemplate",
+        "operationId": "PostTaskBundleTaskTemplatesByTaskBundleId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27557,7 +27636,7 @@
         ],
         "summary": "Deletes the task template for the task bundle with the specified id.",
         "description": "Deletes the task template for the task bundle with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteTaskTemplate",
+        "operationId": "DeleteTaskBundleTaskTemplateByTaskBundleIdAndTaskTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27616,7 +27695,7 @@
         ],
         "summary": "Returns the task template of the task bundle with the specified id.",
         "description": "Returns the task template of the task bundle with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskTemplate",
+        "operationId": "GetTaskBundleTaskTemplateByTaskBundleIdAndTaskTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27681,7 +27760,7 @@
         ],
         "summary": "Updates the task template for the task bundle with the specified id.",
         "description": "Updates the task template for the task bundle with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PutTaskTemplate",
+        "operationId": "PutTaskBundleTaskTemplateByTaskBundleIdAndTaskTemplateId",
         "parameters": [
           {
             "name": "taskBundleId",
@@ -27760,18 +27839,8 @@
         ],
         "summary": "Assigns a list of users to task templates.",
         "description": "Users that are not passed and are already assigned will be removed.\r\n            Removes existing task template assignments and adds the new assignment.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "SetAssignees",
+        "operationId": "PostTaskBundlesTaskTemplatesSetAssigneesByTaskBundleIdAndTaskTemplateId",
         "parameters": [
-          {
-            "name": "taskBundleId",
-            "in": "path",
-            "description": "The id of the task bundle.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "name": "taskTemplateId",
             "in": "path",
@@ -27902,7 +27971,7 @@
         ],
         "summary": "Deletes a task dependency.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">To delete a task dependency, the User needs to be the assignee of both tasks or have 'ProjectPlanning'\r\n            permissions in general or in the project the task are related to.</Check>",
-        "operationId": "DeleteTaskDependency",
+        "operationId": "DeleteTaskdependencyByTaskDependencyId",
         "parameters": [
           {
             "name": "taskDependencyId",
@@ -28028,7 +28097,7 @@
         ],
         "summary": "Invites a user by email and assigns them to a task.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostAssignUserByEmail",
+        "operationId": "PostTasksAssignUserByEmail",
         "requestBody": {
           "description": "The assign By Email form payload.",
           "content": {
@@ -28087,7 +28156,7 @@
         ],
         "summary": "Edits multiple tasks using the specified operation.",
         "description": "Returns MultiStatus including the list of successful and failed tasks.\r\n            \r\n             Supported Operations:\r\n             <ul>&gt;\r\n             <li>movetoproject: Moves all tasks to a new project.</li><li>movetotasklist: Moves all tasks to a new task list inside the same project.</li><li>moveundertask: Moves every selected task (and their subtasks) under the specified parent task, validating project boundaries.</li><li>setdates: Sets the due and optionally start date for all tasks.</li><li>adjustdates: Offsets start and due dates by the specified number of days while respecting the user's timezone.</li><li>addtags: Adds a list of tags to all tasks in the list that don't already have the tag.</li><li>delete: Deletes all tasks. Optional including time trackings.</li><li>changetypeofwork: Changes the type of work for a list of tasks. Optionally also for the related timetrackings.</li><li>assignusers: Assigns a list of users to a list of tasks.</li><li>unassignusers: Unassigns a list of users from a list of tasks. If the UserIds are not provided, all users are unassigned.</li><li>setprio: Sets the prio flag for a list of tasks.</li><li>changetaskstatus: Sets the task status for a list of tasks.</li><li>copy: Creates copies of all specified tasks (including subtasks) and reorders them to maintain hierarchy.</li><li>plannerbatch: Multiple operations to a single task. Used in the planner.</li></ul><Check title=\"Required Permissions\" icon=\"key\">The user must have `write` permissions on all tasks as well as related entities modified by the operation.</Check>",
-        "operationId": "PostTasksBatch",
+        "operationId": "PostTasksBatchByOperation",
         "parameters": [
           {
             "name": "operation",
@@ -28164,7 +28233,7 @@
         ],
         "summary": "Changes the base type for multiple tasks.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostChangeBaseTypes",
+        "operationId": "PostTasksChangeBaseTypes",
         "requestBody": {
           "description": "The tasks Change Base Types form payload.",
           "content": {
@@ -28216,7 +28285,7 @@
         ],
         "summary": "Changes the lists of tasks.",
         "description": "Adds tasks to lists, removes them and reorders tasks within lists.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostChangeLists",
+        "operationId": "PostTasksChangeLists",
         "requestBody": {
           "description": "The change Task List forms.",
           "content": {
@@ -28278,7 +28347,7 @@
         ],
         "summary": "Changes statuses of tasks.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostChangeTaskStatuses",
+        "operationId": "PostTasksChangeStatuses",
         "requestBody": {
           "description": "The change Status form list.",
           "content": {
@@ -28333,7 +28402,7 @@
         ],
         "summary": "Changes the parent task and the order of subtasks.",
         "description": "Changes parent task and order of subtasks. If the parent task of a subtask changed, its lists, base type and entity\r\n            will change to match the parent ones.\r\n            It is not possible to change a task to subtask if the task already has subtasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "ChangeSubtasks",
+        "operationId": "PostTasksChangeSubtasks",
         "requestBody": {
           "description": "The subtask Changes model.",
           "content": {
@@ -28385,7 +28454,7 @@
         ],
         "summary": "Convert subtasks to a parent task.",
         "description": "Convert subtasks to a parent task. If list ids are not provided it will keep the same lists as the old parent task,\r\n            placing the task as last item in the lists.\r\n            If multiple list ids are provided per task, the lists will be overwritten with the lists provided. In this case, if an\r\n            order is not provided, it will be put as the last item in the list.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "ChangeSubtasksToParent",
+        "operationId": "PostTasksChangeSubtasksToParent",
         "requestBody": {
           "description": "The change Subtasks To Parent Post form list.",
           "content": {
@@ -28437,7 +28506,7 @@
         ],
         "summary": "Changes the type of work for a batch of tasks.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostChangeTypeOfWork",
+        "operationId": "PostTasksChangeTypeOfWork",
         "requestBody": {
           "description": "The tasks Change Types form payload.",
           "content": {
@@ -28489,7 +28558,7 @@
         ],
         "summary": "Deletes tasks and optionally related time entries.",
         "description": "Returns 207 MultiStatus when individual deletions fail.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostDeleteTasks",
+        "operationId": "PostTasksDelete",
         "requestBody": {
           "description": "The model describing the task deletion request.",
           "content": {
@@ -28541,7 +28610,7 @@
         ],
         "summary": "Removes a tag from all project tasks.",
         "description": "Removes a tag from all project tasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-planning-data:write` permissions.</Check>",
-        "operationId": "PostDeleteTagsFromAllTasks",
+        "operationId": "PostTasksDeleteTags",
         "requestBody": {
           "description": "The model to delete the tag from all tasks.",
           "content": {
@@ -28601,7 +28670,7 @@
         ],
         "summary": "Sets the priority flag for a task.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetTaskPriority",
+        "operationId": "PostTasksSetTaskPriority",
         "requestBody": {
           "description": "The task Set Prio form payload.",
           "content": {
@@ -28660,7 +28729,7 @@
         ],
         "summary": "Returns all task tags that are currently in use by tasks.",
         "description": "Returns all task tags that are currently in use by tasks ordered by count.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskTags",
+        "operationId": "GetTasksTags",
         "responses": {
           "200": {
             "description": "OK",
@@ -28708,7 +28777,7 @@
         ],
         "summary": "Updates a tag globally for all project tasks.",
         "description": "Updates a tag for all project tasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-planning-data:write` permissions.</Check>",
-        "operationId": "PostUpdateTagForAllTasks",
+        "operationId": "PostTasksUpdateTags",
         "requestBody": {
           "description": "The model to update the tag including the old and new tag names.",
           "content": {
@@ -28761,7 +28830,7 @@
         ],
         "summary": "Returns the task with the specified id.",
         "description": "The required permissions depend on the base type of the task.\r\n            If the task is a project task, 'read' permissions on the 'project-planning-data' feature are required.\r\n            For a user's private task, no special permissions are required.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTask",
+        "operationId": "GetTaskById",
         "parameters": [
           {
             "name": "taskId",
@@ -28826,7 +28895,7 @@
         ],
         "summary": "Updates the task with the specified id.",
         "description": "To update the task, the user needs to be the assignee of the task or 'ProjectPlanning'\r\n            permissions in general or in the project the task is related to.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutTask",
+        "operationId": "PutTaskById",
         "parameters": [
           {
             "name": "taskId",
@@ -28907,6 +28976,85 @@
         }
       }
     },
+    "/tasks/{taskId}/activities": {
+      "get": {
+        "tags": [
+          "Activities"
+        ],
+        "summary": "Returns all activities of the task with the specified id.",
+        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\n            This contains changes to first-level properties of the task, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\n            This does not include activities of sub-entities, like tasks of a project or comments on a task.",
+        "operationId": "GetTaskActivities",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "The id of the task.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tasks/{taskId}/addtags": {
       "post": {
         "tags": [
@@ -28914,7 +29062,7 @@
         ],
         "summary": "Adds a batch of tags to the task with the specified id.",
         "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\r\n            <Check title=\"Required Permissions\" icon=\"key\">To add tags to a task the user must have `write` permissions on the specified task.</Check>",
-        "operationId": "PostAddTaskTags",
+        "operationId": "PostTaskAddTagsByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -28998,7 +29146,7 @@
         ],
         "summary": "Returns the checklist items for the task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `read` permissions on the specified task.</Check>",
-        "operationId": "GetChecklistItems",
+        "operationId": "GetTaskChecklistItemsByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -29066,7 +29214,7 @@
         ],
         "summary": "Creates a checklist item for a task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The required permissions depend on the base type of the task. If the task is a project task, the user must have either `project-master-data:write` permissions or be assigned to the task. For a user's private task, no special permissions are required.</Check>",
-        "operationId": "PostChecklistItem",
+        "operationId": "PostTaskChecklistItemsByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -29144,7 +29292,7 @@
         ],
         "summary": "Converts all checklist items of the specified task to subtasks.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions on the specified task.</Check>",
-        "operationId": "ToSubtasks",
+        "operationId": "PostTaskChecklistItemsToSubtasksByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -29224,7 +29372,7 @@
         ],
         "summary": "Deletes a checklist item from a task.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions on the specified task.</Check>",
-        "operationId": "DeleteChecklistItem",
+        "operationId": "DeleteTaskChecklistItemByTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "taskId",
@@ -29292,7 +29440,7 @@
         ],
         "summary": "Returns the checklist item with the specified id for a task.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `read` permissions on the specified task.</Check>",
-        "operationId": "GetChecklistItemById",
+        "operationId": "GetTaskChecklistItemByTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "taskId",
@@ -29367,7 +29515,7 @@
         ],
         "summary": "Updates a checklist item for a task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The required permissions depend on the base type of the task. If the task is a project task, the user must have either `project-master-data:write` permissions or be assigned to the task. For a user's private task, no special permissions are required.</Check>",
-        "operationId": "PutChecklistItem",
+        "operationId": "PutTaskChecklistItemByTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "taskId",
@@ -29455,7 +29603,7 @@
         ],
         "summary": "Deletes all comments of the specified task.",
         "description": "Deletes all comments of the specified task.",
-        "operationId": "DeleteTaskComments",
+        "operationId": "DeleteCommentsByTaskNameAndTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -29490,7 +29638,7 @@
         ],
         "summary": "Returns all comments of the task with the specified id.",
         "description": "Returns all comments of the task with the specified id. The user needs read permissions on the task.",
-        "operationId": "GetTaskComments",
+        "operationId": "GetCommentsByTaskNameAndTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -29557,7 +29705,7 @@
         ],
         "summary": "Creates a new comment on the task with the specified id.",
         "description": "Creates a new comment on the task with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check>To create a comment the user must have at least `read` permissions on the specified task.</Check>",
-        "operationId": "PostTaskComment",
+        "operationId": "PostCommentsByTaskNameAndTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -29632,7 +29780,7 @@
         ],
         "summary": "Deletes the comment with the specified id on the task with the specified id.",
         "description": "Deletes the comment with the specified id on the task with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
-        "operationId": "DeleteTaskComment",
+        "operationId": "DeleteCommentByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
             "name": "taskId",
@@ -29687,7 +29835,7 @@
         ],
         "summary": "Returns the comment with the specified id of the task with the specified id.",
         "description": "Returns the comment with the specified id of the task with the specified id.",
-        "operationId": "GetTaskCommentById",
+        "operationId": "GetCommentByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
             "name": "taskId",
@@ -29739,7 +29887,7 @@
         ],
         "summary": "Updates the comment with the specified id on the task with the specified id.",
         "description": "<Check>To update a comment the user must either have at least `read` permissions on the specified task, be the creator of the comment or be admin.</Check>",
-        "operationId": "PutTaskComment",
+        "operationId": "PutCommentByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
             "name": "taskId",
@@ -29814,7 +29962,7 @@
         ],
         "summary": "Updates the reactions of the comment with the specified id on the task with the specified id.",
         "description": "<Check>To update a reaction of a comment the user must have at least `read` permissions on the specified task.</Check>",
-        "operationId": "PostTaskCommentReaction",
+        "operationId": "PostCommentReactByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
             "name": "taskId",
@@ -29882,7 +30030,7 @@
         ],
         "summary": "Creates a copy of the specified task.",
         "description": "Comments, files and activity logs are not copied.\r\n            To copy a task, the user needs to be the assignee of the task or 'ProjectPlanning'\r\n            permissions in general or in the project the task is related to.\r\n            If the task is a parent task, it will also copy its subtasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostCopyTask",
+        "operationId": "PostTaskCopyByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -29949,7 +30097,7 @@
         ],
         "summary": "Deletes the recurrence rule for a task.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostDeleteRecurrency",
+        "operationId": "PostTaskDeleteRecurrencyByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -30009,7 +30157,7 @@
         ],
         "summary": "Removes tags from the task with the specified id.",
         "description": "Returns 204 NoContent if all tags have been removed successfully.\r\n             Returns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">To remove tags from a task the user must have `write` permissions on the specified task.</Check>",
-        "operationId": "PostDeleteTaskTags",
+        "operationId": "PostTaskDeleteTagsByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31035,7 +31183,7 @@
         ],
         "summary": "Gets the recurrence rule of a task.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetRecurrency",
+        "operationId": "GetTaskRecurrencyByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31102,7 +31250,7 @@
         ],
         "summary": "Assigns a list of users to a task.",
         "description": "Replaces existing assignments with the provided list.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetAssignees",
+        "operationId": "PostTaskSetAssigneesByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31187,7 +31335,7 @@
         ],
         "summary": "Sets the custom fields for a task.",
         "description": "The required properties depend on the type of the custom field.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions on the specified task.</Check>",
-        "operationId": "PostSetCustomFieldByTaskId",
+        "operationId": "PostTaskSetCustomFieldsByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31271,7 +31419,7 @@
         ],
         "summary": "Modifies planned efforts for the given task assignments.",
         "description": "Only the provided assignments are updated; missing assignments remain unchanged.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetPlannedEfforts",
+        "operationId": "PostTaskSetPlannedEffortsByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31355,7 +31503,7 @@
         ],
         "summary": "Adds or updates a recurrence rule for a task.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetRecurrency",
+        "operationId": "PostTaskSetRecurrencyByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31436,7 +31584,7 @@
         ],
         "summary": "Returns the tags of the task with the specified id.",
         "description": "Returns the tags of the task with the specified id ordered by name.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTagsByTaskId",
+        "operationId": "GetTaskTagsByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31496,7 +31644,7 @@
         ],
         "summary": "Returns all task dependencies for a specific task.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">To get all dependencies of a task, the user needs project planning permissions on that project or be assigned to that task.</Check>",
-        "operationId": "GetTaskDependenciesByTaskId",
+        "operationId": "GetTaskTaskdependenciesByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31605,7 +31753,7 @@
         ],
         "summary": "Updates the order of a task within its list.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostUpdateTaskOrder",
+        "operationId": "PostTaskUpdateOrderByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31818,7 +31966,7 @@
         ],
         "summary": "Creates task schedules from a task by id.",
         "description": "Creates task schedules from a task by id. The task must have start and due date and at least one assignee.\r\n            If more than one user is assigned to the task, then the user needs to opt in to create task schedules for all assignees\r\n            by setting the\r\n            'createSchedulesForAllAssignees' query param to true. This requires admin or feature permissions.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostTaskSchedulesFromTask",
+        "operationId": "PostTaskSchedulesByTaskIdByTaskId",
         "parameters": [
           {
             "name": "taskId",
@@ -31897,7 +32045,7 @@
         ],
         "summary": "Deletes a task schedule by id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteTaskSchedule",
+        "operationId": "DeleteTaskScheduleById",
         "parameters": [
           {
             "name": "taskScheduleId",
@@ -31945,7 +32093,7 @@
         ],
         "summary": "Returns a task schedule by id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskSchedule",
+        "operationId": "GetTaskScheduleById",
         "parameters": [
           {
             "name": "taskScheduleId",
@@ -32010,7 +32158,7 @@
         ],
         "summary": "Updates a given task schedule.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutTaskSchedule",
+        "operationId": "PutTaskScheduleById",
         "parameters": [
           {
             "name": "taskScheduleId",
@@ -32145,7 +32293,7 @@
         ],
         "summary": "Lists checklist item templates for a task template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:read` permissions.</Check>",
-        "operationId": "GetChecklistItemTemplates",
+        "operationId": "GetTaskTemplateChecklistItemTemplatesByTaskTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -32204,7 +32352,7 @@
         ],
         "summary": "Creates a checklist item template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostChecklistItemTemplate",
+        "operationId": "PostTaskTemplateChecklistItemTemplatesByTaskTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -32283,7 +32431,7 @@
         ],
         "summary": "Deletes a checklist item template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteChecklistItemTemplate",
+        "operationId": "DeleteTaskTemplateChecklistItemTemplateByTaskTemplateIdAndChecklistItemTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -32342,7 +32490,7 @@
         ],
         "summary": "Gets a checklist item template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:read` permissions.</Check>",
-        "operationId": "GetChecklistItemTemplate",
+        "operationId": "GetTaskTemplateChecklistItemTemplateByTaskTemplateIdAndChecklistItemTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -32408,7 +32556,7 @@
         ],
         "summary": "Updates a checklist item template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PutChecklistItemTemplate",
+        "operationId": "PutTaskTemplateChecklistItemTemplateByTaskTemplateIdAndChecklistItemTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -32497,7 +32645,7 @@
         ],
         "summary": "Gets recurrency details for a task template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskTemplateRecurrency",
+        "operationId": "GetTaskTemplateRecurrencyByTaskTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -32554,7 +32702,7 @@
         ],
         "summary": "Sets the custom fields for the specified task template.",
         "description": "The required properties depend on the type of the custom field. Only task templates which are linked to a project template may have custom fields set.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostSetCustomFieldByTaskTemplateId",
+        "operationId": "PostTaskTemplateSetCustomFieldsByTaskTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -32629,7 +32777,7 @@
         ],
         "summary": "Returns the task dependency templates for a given task template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:read` permissions.</Check>",
-        "operationId": "GetTaskDependencyTemplatesForTaskTemplate",
+        "operationId": "GetTaskTemplateTaskDependencyTemplatesByTaskTemplateId",
         "parameters": [
           {
             "name": "taskTemplateId",
@@ -33649,7 +33797,7 @@
         ],
         "summary": "Returns all shared task views.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetSharedTaskViews",
+        "operationId": "GetTaskViews",
         "parameters": [
           {
             "$ref": "#/components/parameters/page"
@@ -33701,7 +33849,7 @@
         ],
         "summary": "Returns the specified shared task view.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetSharedTaskView",
+        "operationId": "GetTaskViewById",
         "parameters": [
           {
             "name": "taskViewId",
@@ -33875,7 +34023,7 @@
         ],
         "summary": "Deletes the team with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "DeleteTeam",
+        "operationId": "DeleteTeamById",
         "parameters": [
           {
             "name": "teamId",
@@ -34006,7 +34154,7 @@
         ],
         "summary": "Updates the team with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PutTeam",
+        "operationId": "PutTeamById",
         "parameters": [
           {
             "name": "teamId",
@@ -34092,7 +34240,7 @@
         ],
         "summary": "Adds projects to the specified team.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have `project-master-data:write` permissions or be the owner of the projects.</Check>",
-        "operationId": "PostAddProjectsToTeam",
+        "operationId": "PostTeamAddProjectsByTeamId",
         "parameters": [
           {
             "name": "teamId",
@@ -34177,7 +34325,7 @@
         ],
         "summary": "Adds users to the specified team.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PostAddUsersToTeam",
+        "operationId": "PostTeamAddUsersByTeamId",
         "parameters": [
           {
             "name": "teamId",
@@ -34262,7 +34410,7 @@
         ],
         "summary": "Removes projects from the specified team.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have `project-master-data:write` permissions or be the owner of the projects.</Check>",
-        "operationId": "PostRemoveProjectsFromTeam",
+        "operationId": "PostTeamRemoveProjectsByTeamId",
         "parameters": [
           {
             "name": "teamId",
@@ -34337,7 +34485,7 @@
         ],
         "summary": "Removes users from the specified team.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
-        "operationId": "PostRemoveUsersFromTeam",
+        "operationId": "PostTeamRemoveUsersByTeamId",
         "parameters": [
           {
             "name": "teamId",
@@ -34856,7 +35004,7 @@
         ],
         "summary": "Deletes a time booking by id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteTimeBooking",
+        "operationId": "DeleteTimeBookingById",
         "parameters": [
           {
             "name": "timeBookingId",
@@ -34914,7 +35062,7 @@
         ],
         "summary": "Updates a given time booking.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutTimeBooking",
+        "operationId": "PutTimeBookingById",
         "parameters": [
           {
             "name": "timeBookingId",
@@ -35117,7 +35265,7 @@
         ],
         "summary": "Edits multiple time entries using the specified operation.",
         "description": "The user is only allowed to edit time entries they have permissions for.\r\n             Returns MultiStatus. Includes the list of successfully changed, not found, unauthorized, and invalid time entry ids.\r\n             Returns BadRequest if the validation of the form fails, f.e. the new type of work cannot be found.\r\n            \r\n             Supported Operations:\r\n             delete: Deletes all time entries. Only admins can delete already billed time entries.\r\n             setTypeOfWork: Changes the type of work for a list of time entries. TODO: check if only admins should be able to change\r\n             for billed.\r\n             setIsBillable: Changes the billability for a list of time entries. Already billed time entries can only be changed to\r\n             being unbillable by admins. In this case, the IsBilled flag is also set to false.\r\n             setIsBilled: Changes the billing status for a list of time entries. Only admins can change the billing status back to\r\n             unbilled for already billed time entries.\r\n             setProject: Changes the project for a list of time entries. Only admins can change the project for already billed time\r\n             entries. Setting the project unsets the previous project and task.\r\n             setTask: Changes the task for a list of time entries. Only admins can change the task for already billed time entries.\r\n             Setting the task automatically sets the project if that task is a project task.\r\n             setUser: Changes the user for a list of time entries. Only admins can change the user for already billed time entries.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostTimeEntriesBatchOperation",
+        "operationId": "PostTimeEntriesBatchByOperation",
         "parameters": [
           {
             "name": "operation",
@@ -35184,7 +35332,7 @@
         ],
         "summary": "Deletes the time entry with the specified ids.",
         "description": "This endpoint is deprecated, please use the batch endpoint POST /timeentries/batch/delete instead.\r\n            \r\n             Deletes the time entries with the specified ids.\r\n             Depending on the time entry, the calling users has to have several permissions to delete the time entries.\r\n             No permissions are required if the calling user is owner of this time entry.\r\n             If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n             permissions\r\n             on the 'project-timetracking' feature are necessary.\r\n             If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n             'project-planning-data' if it is a project task.\r\n             If the time entry is billed, Admin permissions are required.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostDeleteTimeEntries",
+        "operationId": "PostTimeEntriesDelete",
         "requestBody": {
           "description": "The time entry ids to delete.",
           "content": {
@@ -35233,7 +35381,7 @@
         ],
         "summary": "Sets the time entries with the specified ids to billable.",
         "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user must have 'write'\r\n            permissions on:\r\n            'project-timetracking' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetTimeEntriesToBillable",
+        "operationId": "PostTimeEntriesSetBillable",
         "requestBody": {
           "description": "The time entry ids and billable flag.",
           "content": {
@@ -35302,7 +35450,7 @@
         ],
         "summary": "Sets the time entries with the specified ids to billed.",
         "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n            If the time entry is billed, the permissions can be ignored because there is no change.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetTimeEntriesToBilled",
+        "operationId": "PostTimeEntriesSetBilled",
         "requestBody": {
           "description": "The time entry ids and billed flag.",
           "content": {
@@ -35371,7 +35519,7 @@
         ],
         "summary": "Sets the type of work of the specified timeentries.",
         "description": "Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetTypeOfWork",
+        "operationId": "PostTimeEntriesSetTypeOfWork",
         "requestBody": {
           "description": "The time entry ids and type of work.",
           "content": {
@@ -35440,7 +35588,7 @@
         ],
         "summary": "Sets the time entries with the specified ids to unbillable.",
         "description": "Already billed time entries cannot be set to unbillable -&gt; Badrequest\r\n            Depending on the time entry, the calling users has to have several permissions to edit the time entries.\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs write\r\n            permissions on:\r\n            'project-timetracking' if it is a project task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetTimeEntriesToUnbillable",
+        "operationId": "PostTimeEntriesSetUnbillable",
         "requestBody": {
           "description": "The time entry ids and billable flag.",
           "content": {
@@ -35509,7 +35657,7 @@
         ],
         "summary": "Sets the time entries with the specified ids to unbilled.",
         "description": "For setting already billed time entries to unbilled, the user needs to have admin permissions.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostSetTimeEntriesToUnBilled",
+        "operationId": "PostTimeEntriesSetUnBilled",
         "requestBody": {
           "description": "The time entry ids and billed flag.",
           "content": {
@@ -35721,7 +35869,7 @@
         ],
         "summary": "Updates the time entry with the specified id.",
         "description": "Updates the time entry with the specified id.\r\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\r\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\r\n            Following combination of times and duration are allowed for already completed time entries:\r\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\r\n            - start time (local or utc) and duration\r\n            - end time (local or utc) and duration\r\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutTimeEntry",
+        "operationId": "PutTimeEntryById",
         "parameters": [
           {
             "name": "timeEntryId",
@@ -35953,7 +36101,7 @@
         ],
         "summary": "Creates a new type of work.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PostTypeOfWork",
+        "operationId": "PostTypesOfWork",
         "requestBody": {
           "description": "The type Of Work form payload.",
           "content": {
@@ -36010,7 +36158,7 @@
         ],
         "summary": "Gets all possible icons for type of work.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTypeOfWorkIcons",
+        "operationId": "GetTypesOfWorkIcons",
         "responses": {
           "200": {
             "description": "OK",
@@ -36048,7 +36196,7 @@
         ],
         "summary": "Gets the type of work with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTypeOfWork",
+        "operationId": "GetTypeOfWorkById",
         "parameters": [
           {
             "name": "typeOfWorkId",
@@ -36103,7 +36251,7 @@
         ],
         "summary": "Changes the properties of an existing type of work.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
-        "operationId": "PutTypeOfWork",
+        "operationId": "PutTypeOfWorkById",
         "parameters": [
           {
             "name": "typeOfWorkId",
@@ -36182,7 +36330,7 @@
         ],
         "summary": "Deletes the type of work with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteTypeOfWork",
+        "operationId": "PostTypeOfWorkDeleteByTypeOfWorkId",
         "parameters": [
           {
             "name": "typeOfWorkId",
@@ -36254,7 +36402,7 @@
         ],
         "summary": "Archives or unarchives the type of work with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "SetTypeOfWorkArchived",
+        "operationId": "PostTypeOfWorkSetArchivedByTypeOfWorkId",
         "parameters": [
           {
             "name": "typeOfWorkId",
@@ -36394,7 +36542,7 @@
         ],
         "summary": "Tries to retrieve user name and gender for the specified email.",
         "description": "Returns the first name, last name and gender of the given email address.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAutofillUserByEmail",
+        "operationId": "GetUsersAutofillByEmail",
         "parameters": [
           {
             "name": "email",
@@ -36450,7 +36598,7 @@
         ],
         "summary": "Removes a tag from all users.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-master-data:write` permissions.</Check>",
-        "operationId": "PostDeleteTagForAllUsers",
+        "operationId": "PostUsersDeleteTags",
         "requestBody": {
           "description": "The model with the tag to be removed.",
           "content": {
@@ -36490,7 +36638,7 @@
         ],
         "summary": "Returns the currently logged-in user and workspace.",
         "description": "This is an alternate URL for the /me endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetCurrentUserAndWorkspaceAlternate",
+        "operationId": "GetUsersMe",
         "responses": {
           "200": {
             "description": "OK",
@@ -36626,7 +36774,7 @@
         ],
         "summary": "Returns all tags that are currently in use.",
         "description": "Returns all tags that are currently in use ordered by count.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetUserTags",
+        "operationId": "GetUsersTags",
         "responses": {
           "200": {
             "description": "OK",
@@ -36664,7 +36812,7 @@
         ],
         "summary": "Returns the time bookings in a specified time range for a list of users.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTimeBookingsForUsers",
+        "operationId": "GetUsersTimeBookings",
         "parameters": [
           {
             "name": "userIds",
@@ -36755,7 +36903,7 @@
         ],
         "summary": "Updates a tag globally for all users.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-master-data:write` permissions.</Check>",
-        "operationId": "PostUpdateTagForAllUsers",
+        "operationId": "PostUsersUpdateTags",
         "requestBody": {
           "content": {
             "application/json": {
@@ -36814,7 +36962,7 @@
         ],
         "summary": "Returns the users' workloads per day.",
         "description": "Returns the users' workloads per day for projects, tasks, task schedules and calendar events\r\n            that have an overlap with the interval specified by intervalStart and intervalEnd.\r\n            Takes into consideration weekly availability, absences, user capacity, planned efforts, as well as project budget.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:read` permissions.</Check>",
-        "operationId": "GetWorkloadForUsers",
+        "operationId": "GetUsersWorkload",
         "parameters": [
           {
             "name": "userIds",
@@ -36934,7 +37082,7 @@
         ],
         "summary": "Deletes the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-manage-config:delete` permissions.</Check>",
-        "operationId": "DeleteUser",
+        "operationId": "DeleteUserById",
         "parameters": [
           {
             "name": "userId",
@@ -36993,7 +37141,7 @@
         ],
         "summary": "Returns the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetUser",
+        "operationId": "GetUserById",
         "parameters": [
           {
             "name": "userId",
@@ -37058,7 +37206,7 @@
         ],
         "summary": "Updates the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
-        "operationId": "PutUser",
+        "operationId": "PutUserById",
         "parameters": [
           {
             "name": "userId",
@@ -37128,7 +37276,7 @@
         ],
         "summary": "Activates the user with the specified id.",
         "description": "The user is then allowed to sign in again and will be notified via email.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-manage-config:write` permissions.</Check>",
-        "operationId": "PostActivateUser",
+        "operationId": "PostUserActivateByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37199,7 +37347,7 @@
         ],
         "summary": "Adds a batch of tags to the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-master-data:write` permissions.</Check>",
-        "operationId": "PostAddUserTags",
+        "operationId": "PostUserAddTagsByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37284,7 +37432,7 @@
         ],
         "summary": "Returns all tasks the specified user is allowed to see.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAllAvailableTasks",
+        "operationId": "GetUserAllAvailableTasksByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37346,7 +37494,7 @@
         ],
         "summary": "Returns all tasks assigned to the specified user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetUserAssignedTasks",
+        "operationId": "GetUserAssignedTasksByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37435,7 +37583,7 @@
         ],
         "summary": "Returns the assigned task with the specified id of a specified user.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAssignedUserTask",
+        "operationId": "GetUserAssignedTaskByUserIdAndTaskId",
         "parameters": [
           {
             "name": "userId",
@@ -37512,7 +37660,7 @@
         ],
         "summary": "Returns the capacity of the specified user.",
         "description": "Returns the capacity of the specified user.\r\n            User planning data or admin permissions are required if the capacity of the specified user\r\n            does not belong to the calling user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetUserCapacity",
+        "operationId": "GetUserCapacityByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37567,7 +37715,7 @@
         ],
         "summary": "Updates the capacity of the specified user.",
         "description": "Updates the capacity of the user with the specified id.\r\n            User planning data or admin permissions are required if the capacity of the specified user\r\n            does not belong to the calling user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutUserCapacity",
+        "operationId": "PutUserCapacityByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37635,7 +37783,7 @@
         ],
         "summary": "Returns the contact infos of the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator or have `user-master-data:read` permissions.</Check>",
-        "operationId": "GetUserContactInfo",
+        "operationId": "GetUserContactInfoByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37707,7 +37855,7 @@
         ],
         "summary": "Creates a new contact info for the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
-        "operationId": "PostUserContactInfo",
+        "operationId": "PostUserContactInfoByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -37777,7 +37925,7 @@
         ],
         "summary": "Deletes the contact info of the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
-        "operationId": "DeleteUserContactInfo",
+        "operationId": "DeleteUserContactInfoByUserIdAndContactInfoId",
         "parameters": [
           {
             "name": "userId",
@@ -37837,7 +37985,7 @@
         ],
         "summary": "Returns the contact info of the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator or have `user-master-data:read` permissions.</Check>",
-        "operationId": "GetUserContactInfoById",
+        "operationId": "GetUserContactInfoByUserIdAndContactInfoId",
         "parameters": [
           {
             "name": "userId",
@@ -37904,7 +38052,7 @@
         ],
         "summary": "Updates the contact info of the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator or have `user-master-data:write` permissions.</Check>",
-        "operationId": "PutUserContactInfo",
+        "operationId": "PutUserContactInfoByUserIdAndContactInfoId",
         "parameters": [
           {
             "name": "userId",
@@ -37984,7 +38132,7 @@
         ],
         "summary": "Deactivates the user with the specified id.",
         "description": "A deactivated user can no longer sign in.\r\n            This is only possible if the user is not the last admin user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-manage-config:write` permissions.</Check>",
-        "operationId": "PostDeactivateUser",
+        "operationId": "PostUserDeactivateByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -38055,7 +38203,7 @@
         ],
         "summary": "Removes tags from the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-master-data:write` permissions.</Check>",
-        "operationId": "PostDeleteUserTags",
+        "operationId": "PostUserDeleteTagsByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -39007,7 +39155,7 @@
         ],
         "summary": "Returns all private tasks that a user created and assigned to someone else.",
         "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This endpoint returns all private tasks that were originally created by the user but were reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetOtherPrivateTasks",
+        "operationId": "GetUserOtherPrivateTasksByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -39089,7 +39237,7 @@
         ],
         "summary": "Returns a private task that a user created and assigned to someone else.",
         "description": "Private tasks are always created for the current user but can be reassigned to other users afterwards.\r\n            This endpoint returns a private task that was originally created by the user but was reassigned to someone else.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetOtherPrivateTask",
+        "operationId": "GetUserOtherPrivateTaskByUserIdAndTaskId",
         "parameters": [
           {
             "name": "userId",
@@ -39166,7 +39314,7 @@
         ],
         "summary": "Returns the checklist items for a private task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator of the task.</Check>",
-        "operationId": "GetOtherPrivateChecklistItems",
+        "operationId": "GetUserOtherPrivateTaskChecklistItemsByUserIdAndTaskId",
         "parameters": [
           {
             "name": "userId",
@@ -39246,7 +39394,7 @@
         ],
         "summary": "Returns a checklist item for a private task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be the creator of the task.</Check>",
-        "operationId": "GetOtherPrivateChecklistItem",
+        "operationId": "GetUserOtherPrivateTaskChecklistItemByUserIdAndTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "userId",
@@ -39333,7 +39481,7 @@
         ],
         "summary": "Returns all private tasks of the user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetPrivateTasksForUser",
+        "operationId": "GetUserPrivateTasksByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -39477,7 +39625,7 @@
         ],
         "summary": "Returns the private task of a user with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetPrivateTask",
+        "operationId": "GetUserPrivateTaskByUserIdAndTaskId",
         "parameters": [
           {
             "name": "userId",
@@ -39554,7 +39702,7 @@
         ],
         "summary": "Returns the checklist for a private task with the specified id.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be be assigned to the task.</Check>",
-        "operationId": "GetPrivateChecklistItems",
+        "operationId": "GetUserPrivateTaskChecklistItemsByUserIdAndTaskId",
         "parameters": [
           {
             "name": "userId",
@@ -39634,7 +39782,7 @@
         ],
         "summary": "Retrieves a checklist item from a private task.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must be assigned to the task.</Check>",
-        "operationId": "GetPrivateChecklistItem",
+        "operationId": "GetUserPrivateTaskChecklistItemByUserIdAndTaskIdAndChecklistItemId",
         "parameters": [
           {
             "name": "userId",
@@ -39721,7 +39869,7 @@
         ],
         "summary": "Archives or unarchives the user with the specified id.",
         "description": "Archived objects can not be used any longer but still exist for being referenced by other entities.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
-        "operationId": "PostSetArchived",
+        "operationId": "PostUserSetArchivedByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -39800,7 +39948,7 @@
         ],
         "summary": "Returns the tags of the users with the specified id.",
         "description": "Returns the tags of the user with the specified id ordered by name.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">To read the tags of a user the user must have 'read' permissions on the specified user.</Check>",
-        "operationId": "GetTagsByUserId",
+        "operationId": "GetUserTagsByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -39870,7 +40018,7 @@
         ],
         "summary": "Returns all task tags the specified user is allowed to see.",
         "description": "The tags can be filtered by the properties of the task model.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTagsFromAvailableTasks",
+        "operationId": "GetUserTasksTagsByUserId",
         "parameters": [
           {
             "name": "userId",
@@ -40761,7 +40909,7 @@
         ],
         "summary": "Deletes a workspace absence.",
         "description": "Deletes a workspace absence.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "operationId": "DeleteWorkspaceAbsence",
+        "operationId": "DeleteWorkspaceAbsenceById",
         "parameters": [
           {
             "name": "workspaceAbsenceId",
@@ -40810,7 +40958,7 @@
         ],
         "summary": "Updates a workspace absence.",
         "description": "Updates a workspace absence.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "operationId": "PutWorkspaceAbsence",
+        "operationId": "PutWorkspaceAbsenceById",
         "parameters": [
           {
             "name": "workspaceAbsenceId",
@@ -41916,108 +42064,6 @@
               }
             }
           }
-        }
-      }
-    },
-    "/{entityName}/{entityId}/activities": {
-      "get": {
-        "tags": [
-          "Activities"
-        ],
-        "summary": "Returns all activities of the entity with the specified id.",
-        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\n            This contains changes to first-level properties of the entity, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\n            This does not include activities of sub-entities, like tasks of a project or comments on a task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetEntityActivities",
-        "parameters": [
-          {
-            "name": "entityName",
-            "in": "path",
-            "description": "The name of the entity.",
-            "required": true,
-            "schema": {
-              "pattern": "^[A-Za-z]*$",
-              "type": "string"
-            }
-          },
-          {
-            "name": "entityId",
-            "in": "path",
-            "description": "The id of the entity.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ActivityModel"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
         }
       }
     }
@@ -49873,6 +49919,16 @@
             },
             "description": "Maps existing task status Ids to workflow task status Ids.\nRequired if the project/template has existing task statuses.",
             "nullable": true
+          },
+          "keepCustomFields": {
+            "type": "boolean",
+            "description": "Whether to keep existing non-workflow custom fields when linking the workflow.\nIf false, existing non-workflow task custom fields will be deleted.\nDefault: true (keep custom fields).",
+            "nullable": true
+          },
+          "keepCustomAutomations": {
+            "type": "boolean",
+            "description": "Whether to keep existing non-workflow automations when linking the workflow.\nIf false, custom automations will be deleted.\nDefault: true (keep custom automations).",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -51182,7 +51238,6 @@
           "LessThanOrEqual",
           "Contains",
           "DoesNotContain",
-          "In",
           "Between",
           "IsSet",
           "IsNotSet",
@@ -56211,21 +56266,6 @@
             "format": "int32",
             "nullable": true,
             "example": 21600
-          },
-          "remainingDuration": {
-            "type": "integer",
-            "description": "The expected remaining duration from the original planned effort of the task, in seconds.\nNull if the user has no permissions to see time tracking information.",
-            "format": "int32",
-            "nullable": true,
-            "example": 10500,
-            "deprecated": true
-          },
-          "totalRemainingDuration": {
-            "type": "integer",
-            "description": "The total remaining duration from the original planned effort of the task, in seconds, including subtasks.",
-            "format": "int32",
-            "nullable": true,
-            "deprecated": true
           },
           "resourceVersion": {
             "type": "integer",
@@ -65911,13 +65951,6 @@
             "format": "int32",
             "nullable": true,
             "example": 21600
-          },
-          "remainingDuration": {
-            "type": "integer",
-            "description": "The expected remaining duration from the original planned effort of the task, in seconds.",
-            "format": "int32",
-            "nullable": true,
-            "example": 10500
           },
           "startOn": {
             "type": "string",
