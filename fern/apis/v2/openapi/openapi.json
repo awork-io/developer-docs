@@ -643,7 +643,7 @@
         ],
         "summary": "Updates the time entry with the specified id.",
         "description": "Updates the time entry with the specified id.\r\n            Depending on the time entry, the calling users has to have several permissions to update the time entry:\r\n            No permissions are required if the calling user is owner of this time entry.\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions\r\n            on the 'project-timetracking' feature are necessary.\r\n            If the time entry is connected to a task, the user needs to be assignee of this task or the user needs permissions on:\r\n            'project-planning-data' if it is a project task.\r\n            The break duration of the time entry is kept the same. The break duration cannot be smaller than the duration of the\r\n            time entry. To remove the breaks, use the endpoint POST /timeentries/{id}/removeBreaks.\r\n            Following combination of times and duration are allowed for already completed time entries:\r\n            - start time (local or utc) and end time (local or utc) (this option always takes precedence)\r\n            - start time (local or utc) and duration\r\n            - end time (local or utc) and duration\r\n            For running time entries, you can only update the start time (local or utc) while the duration stays 0.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutTimeEntryV2",
+        "operationId": "PutTimeEntryByIdV2",
         "parameters": [
           {
             "name": "timeEntryId",
