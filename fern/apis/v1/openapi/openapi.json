@@ -49331,6 +49331,34 @@
         },
         "additionalProperties": false
       },
+      "FilterFromPromptForm": {
+        "required": [
+          "name",
+          "prompt"
+        ],
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The natural language prompt describing the desired filter.",
+            "example": "Show all my tasks that are overdue"
+          },
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name for the filter.",
+            "example": "My overdue tasks"
+          },
+          "isShared": {
+            "type": "boolean",
+            "description": "Whether the filter should be shared with other workspace members."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Form for creating a filter from a natural language prompt."
+      },
       "FilterFromQueryForm": {
         "required": [
           "filterQuery",
@@ -58098,6 +58126,12 @@
             "nullable": true,
             "example": null
           },
+          "sortGroupsEnabled": {
+            "type": "boolean",
+            "description": "Whether sorting of groups is enabled.",
+            "nullable": true,
+            "example": true
+          },
           "availableColumns": {
             "type": "array",
             "items": {
@@ -58356,6 +58390,12 @@
             "nullable": true,
             "example": null
           },
+          "sortGroupsEnabled": {
+            "type": "boolean",
+            "description": "Whether sorting of groups is enabled.",
+            "nullable": true,
+            "example": true
+          },
           "availableColumns": {
             "type": "array",
             "items": {
@@ -58586,6 +58626,12 @@
             "description": "Sort the values of the time report by a column.",
             "nullable": true,
             "example": null
+          },
+          "sortGroupsEnabled": {
+            "type": "boolean",
+            "description": "Whether sorting of groups is enabled.",
+            "nullable": true,
+            "example": true
           },
           "availableColumns": {
             "type": "array",
