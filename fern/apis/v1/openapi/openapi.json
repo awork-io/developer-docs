@@ -11714,7 +11714,7 @@
           "TimeTracking"
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "description": "The request body is optional. You can provide a stopReason to indicate how the tracking was stopped.\r\n            For external API clients, the stopReason is automatically set to \"external-api\" regardless of what is provided.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
         "operationId": "PostStopMyTimeTracking",
         "parameters": [
           {
@@ -11727,6 +11727,15 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StopTimeTrackingForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -14325,8 +14334,8 @@
           "required": true
         },
         "responses": {
-          "204": {
-            "description": "No Content"
+          "202": {
+            "description": "Accepted"
           },
           "400": {
             "description": "Bad Request",
@@ -40304,7 +40313,7 @@
           "TimeTracking"
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "description": "The request body is optional. You can provide a stopReason to indicate how the tracking was stopped.\r\n            For external API clients, the stopReason is automatically set to \"external-api\" regardless of what is provided.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
         "operationId": "PostStopTimeTrackingByUserId",
         "parameters": [
           {
@@ -40318,6 +40327,15 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StopTimeTrackingForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -46199,12 +46217,10 @@
           "EndOfWeek",
           "EndOfMonth",
           "StartOfWeek",
-          "StartOfMonth",
-          "WithinThisWeek",
-          "WithinThisMonth"
+          "StartOfMonth"
         ],
         "type": "string",
-        "description": "The kind of computed value in the context of a Awork.Core.Models.Filters.FilterDefinition.Condition.Value.FilterValue."
+        "description": "The kind of computed value in the context of a Awork.Core.Models.Filters.FilterDefinition.Condition.Value.FilterValue.\nThese represent actual VALUES that can be used with operators (e.g., \"dueOn eq today\", \"dueOn ge sow\").\nNote: WithinThisWeek and WithinThisMonth are operators (Operator enum), not values."
       },
       "Condition": {
         "type": "object",
@@ -48872,6 +48888,11 @@
           "deductNonBillableHours": {
             "type": "boolean",
             "description": "Whether to deduct non-billable hours from project budgets."
+          },
+          "isProjectKeyVisible": {
+            "type": "boolean",
+            "description": "Whether project key should be visible for this project.\nIf null, it will use the workspace default setting.",
+            "nullable": true
           },
           "projectStatusId": {
             "type": "string",
@@ -52215,6 +52236,11 @@
             "type": "boolean",
             "description": "Whether to deduct non-billable hours from project budgets."
           },
+          "isProjectKeyVisible": {
+            "type": "boolean",
+            "description": "Whether project key should be visible for this project.\nIf null, it will use the workspace default setting.",
+            "nullable": true
+          },
           "projectStatusId": {
             "type": "string",
             "description": "The id of the project status.",
@@ -53290,6 +53316,11 @@
           "deductNonBillableHours": {
             "type": "boolean",
             "description": "Whether to deduct non-billable hours from project budgets."
+          },
+          "isProjectKeyVisible": {
+            "type": "boolean",
+            "description": "Whether project key should be visible for this project.\nIf null, it will use the workspace default setting.",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -53635,6 +53666,78 @@
         },
         "additionalProperties": false,
         "description": "A tag model used for the timetrackings ProjectModelForTimeTrackings.\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+      },
+      "ProjectTaskKeyMigrationResult": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "succeeded": {
+            "type": "boolean"
+          },
+          "wasSkipped": {
+            "type": "boolean"
+          },
+          "validationExecuted": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectsMissingKeysBefore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasksMissingNumbersBefore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasksWithInvalidIdentifiersBefore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectsProcessed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasksNumbered": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "taskIdentifiersFixed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectKeyGenerationFailures": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectsMissingKeysAfter": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasksMissingNumbersAfter": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tasksWithInvalidIdentifiersAfter": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sequenceDriftCountAfter": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
       },
       "ProjectTeamModel": {
         "type": "object",
@@ -55201,6 +55304,11 @@
           }
         },
         "additionalProperties": false
+      },
+      "StopTimeTrackingForm": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Form for stopping a time tracking."
       },
       "SubdomainModel": {
         "type": "object",
@@ -61146,6 +61254,14 @@
             "items": {
               "$ref": "#/components/schemas/WorkloadAppointments"
             },
+            "nullable": true
+          },
+          "calendarAbsences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkloadAppointments"
+            },
+            "description": "Calendar out-of-office entries grouped by calendar that reduce capacity for this day.\nOnly returned when fetchDetails is enabled.",
             "nullable": true
           }
         },
