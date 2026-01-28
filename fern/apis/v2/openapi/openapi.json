@@ -257,7 +257,7 @@
           "TimeTracking"
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "description": "The request body is optional. You can provide a stopReason to indicate how the tracking was stopped.\r\n            For external API clients, the stopReason is automatically set to \"external-api\" regardless of what is provided.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
         "operationId": "PostStopMyTimeTrackingV2",
         "parameters": [
           {
@@ -270,6 +270,15 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StopTimeTrackingForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -1014,7 +1023,7 @@
           "TimeTracking"
         ],
         "summary": "Stops the currently running time tracking of the specified user.",
-        "description": "There is no request body necessary for this operation.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
+        "description": "The request body is optional. You can provide a stopReason to indicate how the tracking was stopped.\r\n            For external API clients, the stopReason is automatically set to \"external-api\" regardless of what is provided.\r\n            For this operation to work there must be a running time tracking for the user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or the creator.</Check>",
         "operationId": "PostStopTimeTrackingByUserIdV2",
         "parameters": [
           {
@@ -1028,6 +1037,15 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StopTimeTrackingForm"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -1714,6 +1732,11 @@
           }
         },
         "additionalProperties": false
+      },
+      "StopTimeTrackingForm": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Form for stopping a time tracking."
       },
       "TaskModelForTimeTrackings": {
         "type": "object",
