@@ -54699,6 +54699,52 @@
         },
         "additionalProperties": false
       },
+      "ResolveKeyResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResolveKeyResult"
+            },
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResolveKeyResult": {
+        "type": "object",
+        "properties": {
+          "entityType": {
+            "type": "string",
+            "nullable": true
+          },
+          "entityId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "resolvedUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "entityName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Retainer": {
         "type": "object",
         "properties": {
