@@ -12866,6 +12866,82 @@
         }
       }
     },
+    "/projects/key/{projectKey}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Returns the project with the specified key.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetProjectsKeyByProjectKey",
+        "parameters": [
+          {
+            "name": "projectKey",
+            "in": "path",
+            "description": "The project key to lookup.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/projects/projecttasks/tags": {
       "get": {
         "tags": [
@@ -28672,6 +28748,82 @@
         }
       }
     },
+    "/tasks/key/{taskIdentifier}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Returns the task with the specified key.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTasksKeyByTaskIdentifier",
+        "parameters": [
+          {
+            "name": "taskIdentifier",
+            "in": "path",
+            "description": "The task identifier to lookup (for example, KEY-123).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/tasks/settaskpriority": {
       "post": {
         "tags": [
@@ -42094,6 +42246,7 @@
           "email": {
             "type": "string",
             "description": "The email of the account.",
+            "format": "email",
             "nullable": true,
             "example": "carla.creative@ncnstn.com"
           },
@@ -42174,6 +42327,7 @@
           "email": {
             "type": "string",
             "description": "The email of the account.",
+            "format": "email",
             "nullable": true,
             "example": "carla.creative@ncnstn.com"
           },
@@ -53830,6 +53984,10 @@
             "type": "boolean",
             "description": "Whether the project template has an image in the files service."
           },
+          "copyImageToProjectOnCreation": {
+            "type": "boolean",
+            "description": "Whether the template image should be copied to the project during project creation.\nIf the template has no image, no image is copied.\nNo image is copied from the client."
+          },
           "projectTypeId": {
             "type": "string",
             "description": "The id of the project type.",
@@ -53887,6 +54045,10 @@
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "copyImageToProjectOnCreation": {
+            "type": "boolean",
+            "description": "Whether the template image should be copied to the project during project creation.\nIf the template has no image, no image is copied.\nNo image is copied from the client."
           },
           "projectTypeId": {
             "type": "string",
