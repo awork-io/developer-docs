@@ -36196,6 +36196,44 @@
         }
       }
     },
+    "/timetracking/settings": {
+      "get": {
+        "tags": [
+          "TimeTrackingSettings"
+        ],
+        "summary": "Returns the global timetracking settings.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTimeTrackingSettings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackingSetting"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/typeofwork": {
       "get": {
         "tags": [
@@ -59525,12 +59563,6 @@
             "format": "int32",
             "nullable": true,
             "example": null
-          },
-          "workspaceId": {
-            "type": "string",
-            "description": "The id of the workspace the setting belongs to.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -68368,6 +68400,10 @@
     {
       "name": "TimeTracking",
       "description": "The v1 versions of these endpoints will be deprecated at some point. Please migrate to the V2 versions.\n                These endpoints can be used to start, stop, pause or resume a time tracking as well as to get the last time tracking of a user."
+    },
+    {
+      "name": "TimeTrackingSettings",
+      "description": "These endpoints can be used to manage global timetracking settings for a workspace."
     },
     {
       "name": "TypeOfWork",
