@@ -36196,6 +36196,44 @@
         }
       }
     },
+    "/timetracking/settings": {
+      "get": {
+        "tags": [
+          "TimeTrackingSettings"
+        ],
+        "summary": "Returns the global timetracking settings.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTimeTrackingSettings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeTrackingSetting"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/typeofwork": {
       "get": {
         "tags": [
@@ -49386,17 +49424,42 @@
         "description": "A Type of work enriched with the list of external project ids in which this TypeOfWork exists."
       },
       "Filter": {
-        "required": [
-          "filterDefinition",
-          "name"
-        ],
         "type": "object",
         "properties": {
-          "name": {
-            "maxLength": 1000,
-            "minLength": 0,
+          "id": {
             "type": "string",
-            "description": "The name of the filter."
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the filter.",
+            "nullable": true
           },
           "isShared": {
             "type": "boolean",
@@ -49405,14 +49468,10 @@
           "filterDefinition": {
             "$ref": "#/components/schemas/FilterDefinition"
           },
-          "id": {
-            "type": "string",
-            "description": "The id of the filter.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
           "entityType": {
-            "$ref": "#/components/schemas/FilterEntityType"
+            "type": "string",
+            "description": "The entity type this filter targets. Can be 'projects', 'tasks', 'companies', 'users'.",
+            "nullable": true
           },
           "userId": {
             "type": "string",
@@ -49424,30 +49483,6 @@
             "type": "string",
             "description": "The OData- query string that will be applied for querying this filter's underlying data type.",
             "nullable": true
-          },
-          "createdOn": {
-            "type": "string",
-            "description": "The date this filter was created.",
-            "format": "date-time",
-            "example": "2022-03-11T15:33:47.100Z"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "The id of the user who created this filter.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "description": "The date this filter was last modified.",
-            "format": "date-time",
-            "example": "2022-03-11T21:15:00.100Z"
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "The id of the user who last modified this filter.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -49467,21 +49502,89 @@
             "$ref": "#/components/schemas/Connector"
           },
           "entityType": {
-            "$ref": "#/components/schemas/FilterEntityType"
+            "type": "string",
+            "description": "The entity type to filter on (e.g. \"tasks\", \"projects\", \"companies\", \"users\").",
+            "nullable": true
           }
         },
         "additionalProperties": false,
         "description": "The structured filter representation of a filter query."
       },
-      "FilterEntityType": {
-        "enum": [
-          "Project",
-          "Task",
-          "Company",
-          "User"
+      "FilterDraft": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityType": {
+            "type": "string",
+            "description": "The entity type this draft targets. Can be 'projects', 'tasks', 'companies', 'users'.",
+            "nullable": true
+          },
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          },
+          "filterId": {
+            "type": "string",
+            "description": "The optional id of the saved filter this draft is based on.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The id of the user this draft belongs to.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterDraftForm": {
+        "required": [
+          "filterDefinition"
         ],
-        "type": "string",
-        "description": "The entity type of a filter definition."
+        "type": "object",
+        "properties": {
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          },
+          "filterId": {
+            "type": "string",
+            "description": "The optional id of the saved filter this draft is based on.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
       },
       "FilterForm": {
         "required": [
@@ -54764,6 +54867,24 @@
         },
         "additionalProperties": false
       },
+      "RebuildUserProjectAccessResponse": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace ID that was rebuilt.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entriesCreated": {
+            "type": "integer",
+            "description": "The number of UserProjectAccess entries created.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response model for the rebuild operation."
+      },
       "RecurrencyModel": {
         "type": "object",
         "properties": {
@@ -59525,12 +59646,6 @@
             "format": "int32",
             "nullable": true,
             "example": null
-          },
-          "workspaceId": {
-            "type": "string",
-            "description": "The id of the workspace the setting belongs to.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -60821,6 +60936,88 @@
         },
         "additionalProperties": false,
         "description": "The user model with the account id to create a new user."
+      },
+      "UserProjectAccessValidationResult": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "expectedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actualCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "missingCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mismatchedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isValid": {
+            "type": "boolean"
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserProjectAccessValidationSample"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserProjectAccessValidationSample": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "hasPpdRead": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hasPmdRead": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "expectedHasPpdRead": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "expectedHasPmdRead": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "UserSetting": {
         "required": [
@@ -68368,6 +68565,10 @@
     {
       "name": "TimeTracking",
       "description": "The v1 versions of these endpoints will be deprecated at some point. Please migrate to the V2 versions.\n                These endpoints can be used to start, stop, pause or resume a time tracking as well as to get the last time tracking of a user."
+    },
+    {
+      "name": "TimeTrackingSettings",
+      "description": "These endpoints can be used to manage global timetracking settings for a workspace."
     },
     {
       "name": "TypeOfWork",
