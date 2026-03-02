@@ -71,7 +71,6 @@ navigation:
   - project milestones
   - project activities
   - project automations
-  - project actions
   - time bookings
   - retainers
   - autopilot
@@ -98,6 +97,7 @@ navigation:
   - time entries
   - time tracking
   - time reports
+  - time tracking settings
   - page: Documents Overview
     path: ./pages/api/documents.mdx
     icon: note
@@ -158,7 +158,6 @@ navigation:
   - project template tags
   - project milestone templates
   - project template automations
-  - project template actions
   - page: Login & Access Overview
     path: ./pages/api/login.mdx
     icon: key
