@@ -25526,6 +25526,15 @@
             }
           },
           {
+            "name": "showArchived",
+            "in": "query",
+            "description": "Whether to show archived users.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
             "$ref": "#/components/parameters/page"
           },
           {
