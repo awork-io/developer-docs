@@ -16851,6 +16851,85 @@
       }
     },
     "/projects/{projectId}/projectstatuses": {
+      "get": {
+        "tags": [
+          "ProjectStatuses"
+        ],
+        "summary": "Returns all project statuses of the project with the specified id.\n            If the project is linked to a workflow, the workflow's project statuses are returned.",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either be admin, have `project-master-data:read` permissions or be the creator of the project.</Check>",
+        "operationId": "GetProjectProjectStatusesByProjectId",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectStatus"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "post": {
         "tags": [
           "ProjectStatuses"
@@ -49097,7 +49176,7 @@
           },
           "projectStatusId": {
             "type": "string",
-            "description": "The id of the project status.",
+            "description": "Optional existing status to use when creating from a workflow or template source.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -52499,7 +52578,6 @@
             "type": "string",
             "description": "The id of the project status.",
             "format": "uuid",
-            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "projectTemplateId": {
@@ -52928,7 +53006,6 @@
           "projectStatusId": {
             "type": "string",
             "format": "uuid",
-            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
