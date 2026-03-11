@@ -26,7 +26,7 @@ Incorrect:
 
 Use two single quotes to escape an apostrophe inside a string literal:
 ```sh
-/tasks?filterby=name eq 'user''s task'
+/me/allavailabletasks?filterby=name eq 'user''s task'
 ```
 
 If you want to filter by a nested property, you can do this by separating the properties by `/`, for example:
@@ -59,7 +59,7 @@ Precedence is defined with `(` and `)`.
 You can also use the `any` operator in combination with `eq false` to filter for items that do not contain a specific value.
 
 ```sh
-/tasks?filterby=lists/any(l: l/name eq 'Draft') eq false
+/me/allavailabletasks?filterby=lists/any(l: l/name eq 'Draft') eq false
 ```
 
 ## Combining Filtering and Ordering
