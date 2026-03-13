@@ -45324,10 +45324,19 @@
           },
           "newTaskStatusId": {
             "type": "string",
-            "description": "The id of the new task status id to change the tasks to. Needed if operation is 'movetoproject' or 'changetaskstatus'.",
+            "description": "Deprecated for 'movetoproject': use TaskStatusMapping instead.\nThe id of the new task status id to change the tasks to. Needed if operation is 'movetoproject' or 'changetaskstatus'.",
             "format": "uuid",
             "nullable": true,
+            "deprecated": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "taskStatusMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskStatusMappingForm"
+            },
+            "description": "The task status mapping from old task status to new task status. Optional for operation 'movetoproject'.",
+            "nullable": true
           },
           "newDueDate": {
             "type": "string",
@@ -45466,9 +45475,19 @@
           },
           "taskStatusId": {
             "type": "string",
-            "description": "The id of the new status the task is assigned to.",
+            "description": "Deprecated: use TaskStatusMapping instead.\nThe id of the new status the task is assigned to.",
             "format": "uuid",
+            "nullable": true,
+            "deprecated": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "taskStatusMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskStatusMappingForm"
+            },
+            "description": "The task status mapping from old task status to new task status.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -45489,7 +45508,7 @@
           "taskStatusMapping": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ChangeTaskStatusForm"
+              "$ref": "#/components/schemas/TaskStatusMappingForm"
             },
             "description": "The task status mapping from old task status to new task status."
           }
@@ -45670,28 +45689,6 @@
               "$ref": "#/components/schemas/TaskListToTaskForm"
             },
             "description": "The lists the task should be moved to."
-          }
-        },
-        "additionalProperties": false
-      },
-      "ChangeTaskStatusForm": {
-        "required": [
-          "newStatusId",
-          "oldStatusId"
-        ],
-        "type": "object",
-        "properties": {
-          "oldStatusId": {
-            "type": "string",
-            "description": "The old task status id.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "newStatusId": {
-            "type": "string",
-            "description": "The new task status id.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -57446,6 +57443,28 @@
         },
         "additionalProperties": false,
         "description": "Maps an existing task status to a workflow task status."
+      },
+      "TaskStatusMappingForm": {
+        "required": [
+          "newStatusId",
+          "oldStatusId"
+        ],
+        "type": "object",
+        "properties": {
+          "oldStatusId": {
+            "type": "string",
+            "description": "The old task status id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "newStatusId": {
+            "type": "string",
+            "description": "The new task status id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
       },
       "TaskTagModel": {
         "type": "object",
