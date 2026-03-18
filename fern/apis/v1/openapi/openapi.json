@@ -35608,6 +35608,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35677,6 +35678,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35746,6 +35748,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35815,6 +35818,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35884,6 +35888,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35933,6 +35938,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -44410,8 +44416,6 @@
       },
       "AbsenceForm": {
         "required": [
-          "endOn",
-          "startOn",
           "userId"
         ],
         "type": "object",
@@ -45009,9 +45013,6 @@
         "additionalProperties": false
       },
       "ArchivedForm": {
-        "required": [
-          "isArchived"
-        ],
         "type": "object",
         "properties": {
           "isArchived": {
@@ -45023,9 +45024,6 @@
         "additionalProperties": false
       },
       "ArchivedTaskListForm": {
-        "required": [
-          "isArchived"
-        ],
         "type": "object",
         "properties": {
           "isArchived": {
@@ -47807,7 +47805,6 @@
       },
       "CustomFieldSelectionOption": {
         "required": [
-          "order",
           "value"
         ],
         "type": "object",
@@ -48352,6 +48349,39 @@
             "type": "string",
             "description": "The date the entity has been deleted.",
             "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DemoDataStatus": {
+        "type": "object",
+        "properties": {
+          "exists": {
+            "type": "boolean"
+          },
+          "projectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "clientIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
             "nullable": true
           }
         },
@@ -50315,8 +50345,7 @@
       },
       "ListAssignment": {
         "required": [
-          "id",
-          "order"
+          "id"
         ],
         "type": "object",
         "properties": {
@@ -53003,6 +53032,7 @@
           "projectStatusId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
@@ -53167,7 +53197,6 @@
       "ProjectMilestone": {
         "required": [
           "color",
-          "dueDate",
           "name",
           "projectId"
         ],
@@ -53235,7 +53264,6 @@
       "ProjectMilestonePostForm": {
         "required": [
           "color",
-          "dueDate",
           "name",
           "projectId"
         ],
@@ -53273,7 +53301,6 @@
       "ProjectMilestonePutForm": {
         "required": [
           "color",
-          "dueDate",
           "name"
         ],
         "type": "object",
@@ -57176,7 +57203,6 @@
       },
       "TaskSetPrioForm": {
         "required": [
-          "isPrio",
           "taskId"
         ],
         "type": "object",
@@ -59699,7 +59725,6 @@
       },
       "TimeTrackingSetting": {
         "required": [
-          "enabled",
           "type"
         ],
         "type": "object",
@@ -59727,7 +59752,6 @@
       },
       "TimeTrackingSettingForm": {
         "required": [
-          "enabled",
           "type"
         ],
         "type": "object",
@@ -67479,6 +67503,35 @@
             "type": "number",
             "description": "The predicted annualized revenue.",
             "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProvisionDemoUserMembershipForm": {
+        "required": [
+          "accountId",
+          "invitationFlow",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "description": "The account id of the demo user.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The core user id of the demo user.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "invitationFlow": {
+            "maxLength": 25,
+            "minLength": 1,
+            "type": "string",
+            "description": "The invitation flow marker stored on the workspace relation."
           }
         },
         "additionalProperties": false
