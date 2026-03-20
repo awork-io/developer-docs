@@ -2781,6 +2781,77 @@
         }
       }
     },
+    "/companies/tags/batch/{operation}": {
+      "post": {
+        "tags": [
+          "SharedTags"
+        ],
+        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
+        "description": "",
+        "operationId": "PostTagsBatchByCompanyNameAndOperation",
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagBatchOperationForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/companies/updatetags": {
       "post": {
         "tags": [
@@ -5879,6 +5950,15 @@
               "type": "boolean",
               "default": false
             }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "The response format. Supported values are `html` and `markdown`.",
+            "schema": {
+              "type": "string",
+              "default": "html"
+            }
           }
         ],
         "responses": {
@@ -5898,6 +5978,16 @@
               "application/json": {
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -9481,6 +9571,646 @@
         }
       }
     },
+    "/filters": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the current user's filters.",
+        "description": "Returns the union of filters owned by the requesting user and filters explicitly shared with the requesting user.\r\n            Use the specialized created-by-me and shared-with-me endpoints when only one category is needed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{entityType}": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the current user's filters for the specified user type.",
+        "description": "Returns the union of filters owned by the requesting user and filters explicitly shared with the requesting user\r\n            for the requested user type.\r\n            Use the specialized created-by-me and shared-with-me endpoints when only one category is needed.",
+        "operationId": "GetFiltersByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type route value.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/filters/{filterId}/contributors": {
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Adds explicit contributors to the specified filter.",
+        "description": "Adding filter contributors grants explicit access to the filter with the specified access levels.\r\n             Existing explicit contributors are ignored and therefore not recreated.\r\n             The filter creator cannot be added as an explicit contributor because ownership is handled implicitly.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PostFilterContributorsByFilterId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that should receive explicit contributors.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The contributor permissions to add.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContributorPostForm"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinimalContributorModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{filterId}/contributors/{filterContributorId}": {
+      "delete": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Removes an explicit contributor from the specified filter.",
+        "description": "Removing a filter contributor revokes that contributor's explicit access to the filter.\r\n             The contributor entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "DeleteFilterContributorByFilterIdAndFilterContributorId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the contributor entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterContributorId",
+            "in": "path",
+            "description": "The contributor entry to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Updates the access level of an explicit filter contributor.",
+        "description": "Updating a filter contributor changes that contributor's explicit access level for the filter.\r\n             The contributor entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PutFilterContributorByFilterIdAndFilterContributorId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the contributor entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterContributorId",
+            "in": "path",
+            "description": "The contributor entry to update.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The new contributor permission payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContributorForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalContributorModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{filterId}/teams": {
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Adds explicit team permissions to the specified filter.",
+        "description": "Adding filter teams grants explicit access to the filter for all members of the specified teams.\r\n             Existing explicit team permissions are ignored and therefore not recreated.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PostFilterTeamsByFilterId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that should receive explicit team permissions.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The team permissions to add.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityToTeamPostForm"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{filterId}/teams/{filterToTeamId}": {
+      "delete": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Removes an explicit team permission from the specified filter.",
+        "description": "Removing a filter team permission revokes that team's explicit access to the filter.\r\n             The team permission entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "DeleteFilterTeamByFilterIdAndFilterToTeamId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the team permission entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterToTeamId",
+            "in": "path",
+            "description": "The team permission entry to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Updates the access level of an explicit team permission on the specified filter.",
+        "description": "Updating a filter team permission changes the explicit access level of the referenced team for the filter.\r\n             The team permission entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PutFilterTeamByFilterIdAndFilterToTeamId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the team permission entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterToTeamId",
+            "in": "path",
+            "description": "The team permission entry to update.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The new team permission payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityToTeamForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/invitations": {
       "post": {
         "tags": [
@@ -9856,6 +10586,126 @@
         ],
         "x-access": {
           "owner": "true"
+        }
+      }
+    },
+    "/me/filters": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the filters created by the current user.",
+        "description": "Returns filters that were created by and are owned by the requesting user.\r\n            Shared filters are excluded, even if the requesting user also has explicit access through contributor, team, or workspace permissions.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeFilters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/filters/{entityType}": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the filters created by the current user for the specified user type.",
+        "description": "Returns filters that were created by and are owned by the requesting user and match the requested user type.\r\n            Shared filters are excluded, even if the requesting user also has explicit access through contributor, team, or workspace permissions.",
+        "operationId": "GetMeFiltersByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type route value.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -10927,6 +11777,126 @@
         ],
         "x-access": {
           "any": "true"
+        }
+      }
+    },
+    "/me/sharedfilters": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns filters explicitly shared with the current user.",
+        "description": "Returns filters where the requesting user has been granted explicit access through user permissions,\r\n            team permissions, or workspace-wide filter permissions.\r\n            Excludes filters owned by the requesting user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeSharedFilters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/sharedfilters/{entityType}": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns filters explicitly shared with the current user for the specified user type.",
+        "description": "Returns filters where the requesting user has been granted explicit access through user permissions,\r\n            team permissions, or workspace-wide filter permissions and that match the requested user type.\r\n            Excludes filters owned by the requesting user.",
+        "operationId": "GetMeSharedFiltersByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type route value.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -13046,6 +14016,77 @@
         ],
         "x-access": {
           "any": "true"
+        }
+      }
+    },
+    "/projects/tags/batch/{operation}": {
+      "post": {
+        "tags": [
+          "SharedTags"
+        ],
+        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
+        "description": "",
+        "operationId": "PostTagsBatchByProjectNameAndOperation",
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagBatchOperationForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -29019,6 +30060,77 @@
         }
       }
     },
+    "/tasks/tags/batch/{operation}": {
+      "post": {
+        "tags": [
+          "SharedTags"
+        ],
+        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
+        "description": "",
+        "operationId": "PostTagsBatchByTaskNameAndOperation",
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagBatchOperationForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tasks/updatetags": {
       "post": {
         "tags": [
@@ -35608,6 +36720,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35677,6 +36790,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35746,6 +36860,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35815,6 +36930,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35884,6 +37000,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -35933,6 +37050,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -37089,6 +38207,77 @@
         ],
         "x-access": {
           "any": "true"
+        }
+      }
+    },
+    "/users/tags/batch/{operation}": {
+      "post": {
+        "tags": [
+          "SharedTags"
+        ],
+        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
+        "description": "",
+        "operationId": "PostTagsBatchByUserNameAndOperation",
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagBatchOperationForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -44374,7 +45563,7 @@
           },
           "externalProvider": {
             "type": "string",
-            "description": "The external provider for the absence.",
+            "description": "The external provider for the absence.\nIf this value is set, the absence is treated as externally managed and therefore read-only in awork.\nThis means users in awork can no longer edit or delete the absence.",
             "nullable": true
           },
           "deletedOn": {
@@ -44410,8 +45599,6 @@
       },
       "AbsenceForm": {
         "required": [
-          "endOn",
-          "startOn",
           "userId"
         ],
         "type": "object",
@@ -44441,6 +45628,13 @@
             "description": "The reason for the absence.",
             "nullable": true,
             "example": "Workation by the beach"
+          },
+          "externalProvider": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "The external provider for the absence.\nIf this value is set, the absence is treated as externally managed and therefore read-only in awork.\nThis means users in awork can no longer edit or delete the absence.",
+            "nullable": true
           },
           "isHalfDayOnStart": {
             "type": "boolean",
@@ -45009,9 +46203,6 @@
         "additionalProperties": false
       },
       "ArchivedForm": {
-        "required": [
-          "isArchived"
-        ],
         "type": "object",
         "properties": {
           "isArchived": {
@@ -45023,9 +46214,6 @@
         "additionalProperties": false
       },
       "ArchivedTaskListForm": {
-        "required": [
-          "isArchived"
-        ],
         "type": "object",
         "properties": {
           "isArchived": {
@@ -47807,7 +48995,6 @@
       },
       "CustomFieldSelectionOption": {
         "required": [
-          "order",
           "value"
         ],
         "type": "object",
@@ -48352,6 +49539,39 @@
             "type": "string",
             "description": "The date the entity has been deleted.",
             "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DemoDataStatus": {
+        "type": "object",
+        "properties": {
+          "exists": {
+            "type": "boolean"
+          },
+          "projectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "clientIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
             "nullable": true
           }
         },
@@ -49546,10 +50766,6 @@
             "description": "The name of the filter.",
             "nullable": true
           },
-          "isShared": {
-            "type": "boolean",
-            "description": "Whether this filter is shared within the workspace."
-          },
           "filterDefinition": {
             "$ref": "#/components/schemas/FilterDefinition"
           },
@@ -49568,9 +50784,31 @@
             "type": "string",
             "description": "The OData- query string that will be applied for querying this filter's underlying data type.",
             "nullable": true
+          },
+          "workspaceAccessLevel": {
+            "type": "string",
+            "description": "Determines the level of access to this filter granted to all workspace users.\nCan be either not set (no access), `read`, or `manage`.",
+            "nullable": true
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContributorModel"
+            },
+            "description": "The users explicitly connected to this filter.",
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityToTeamModel"
+            },
+            "description": "The teams explicitly connected to this filter.",
+            "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Represents a saved filter including explicit sharing settings."
       },
       "FilterDefinition": {
         "type": "object",
@@ -49684,9 +50922,16 @@
             "type": "string",
             "description": "The name of the filter."
           },
-          "isShared": {
-            "type": "boolean",
-            "description": "Whether this filter is shared within the workspace."
+          "workspaceAccessLevel": {
+            "maxLength": 25,
+            "minLength": 0,
+            "enum": [
+              "read",
+              "manage"
+            ],
+            "type": "string",
+            "description": "Determines the level of access to this filter granted to all workspace users.\nCan be either not set (no access), `read`, or `manage`.",
+            "nullable": true
           },
           "filterDefinition": {
             "$ref": "#/components/schemas/FilterDefinition"
@@ -49723,66 +50968,21 @@
             "type": "string",
             "description": "The name of the filter."
           },
-          "isShared": {
-            "type": "boolean",
-            "description": "Whether this filter is shared within the workspace."
+          "workspaceAccessLevel": {
+            "maxLength": 25,
+            "minLength": 0,
+            "enum": [
+              "read",
+              "manage"
+            ],
+            "type": "string",
+            "description": "Determines the level of access to this filter granted to all workspace users.\nCan be either not set (no access), `read`, or `manage`.",
+            "nullable": true
           },
           "filterQuery": {
             "minLength": 1,
             "type": "string",
             "description": "The filter query string in Awork OData format (e.g., \"taskStatus/type eq 'todo' and dueOn lt today+7d\")."
-          }
-        },
-        "additionalProperties": false
-      },
-      "FilterSubscription": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The id of the entity.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "description": "The date this entity was created.",
-            "format": "date-time",
-            "example": "2022-03-11T15:33:47.100Z"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "The id of the user who created this entity.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "description": "The date this entity was last modified.",
-            "format": "date-time",
-            "example": "2022-03-11T21:15:00.100Z"
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "The id of the user who last modified this entity.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "description": "The id of the user this subscription is for.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "filterId": {
-            "type": "string",
-            "description": "The id of the filter this subscription is for.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "filter": {
-            "$ref": "#/components/schemas/Filter"
           }
         },
         "additionalProperties": false
@@ -50315,8 +51515,7 @@
       },
       "ListAssignment": {
         "required": [
-          "id",
-          "order"
+          "id"
         ],
         "type": "object",
         "properties": {
@@ -53003,6 +54202,7 @@
           "projectStatusId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
@@ -53167,7 +54367,6 @@
       "ProjectMilestone": {
         "required": [
           "color",
-          "dueDate",
           "name",
           "projectId"
         ],
@@ -53235,7 +54434,6 @@
       "ProjectMilestonePostForm": {
         "required": [
           "color",
-          "dueDate",
           "name",
           "projectId"
         ],
@@ -53273,7 +54471,6 @@
       "ProjectMilestonePutForm": {
         "required": [
           "color",
-          "dueDate",
           "name"
         ],
         "type": "object",
@@ -55740,6 +56937,68 @@
         "additionalProperties": false,
         "description": "The commonly used subdomain API model."
       },
+      "TagBatchMultiStatusResult": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "$ref": "#/components/schemas/TagBatchStatusResult"
+          },
+          "notFound": {
+            "$ref": "#/components/schemas/TagBatchStatusResult"
+          },
+          "badRequest": {
+            "$ref": "#/components/schemas/TagBatchStatusResult"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The multi-status result for a batch tag operation."
+      },
+      "TagBatchOperationForm": {
+        "type": "object",
+        "properties": {
+          "tagNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The tag names used by delete and update-color operations.",
+            "nullable": true
+          },
+          "sourceTagNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The source tag names used by merge operations.",
+            "nullable": true
+          },
+          "targetTag": {
+            "$ref": "#/components/schemas/TagForm"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color used by update-color operations.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The generic request body for workspace-wide batch tag operations."
+      },
+      "TagBatchStatusResult": {
+        "type": "object",
+        "properties": {
+          "tagNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The requested tag names that belong to this status bucket.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A collection of requested tag names that share the same batch-operation status."
+      },
       "TagForm": {
         "required": [
           "name"
@@ -57176,7 +58435,6 @@
       },
       "TaskSetPrioForm": {
         "required": [
-          "isPrio",
           "taskId"
         ],
         "type": "object",
@@ -59699,7 +60957,6 @@
       },
       "TimeTrackingSetting": {
         "required": [
-          "enabled",
           "type"
         ],
         "type": "object",
@@ -59727,7 +60984,6 @@
       },
       "TimeTrackingSettingForm": {
         "required": [
-          "enabled",
           "type"
         ],
         "type": "object",
@@ -67483,6 +68739,35 @@
         },
         "additionalProperties": false
       },
+      "ProvisionDemoUserMembershipForm": {
+        "required": [
+          "accountId",
+          "invitationFlow",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "description": "The account id of the demo user.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The core user id of the demo user.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "invitationFlow": {
+            "maxLength": 25,
+            "minLength": 1,
+            "type": "string",
+            "description": "The invitation flow marker stored on the workspace relation."
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterLoginForm": {
         "type": "object",
         "properties": {
@@ -68522,6 +69807,10 @@
       "description": "The document spaces endpoints allow you to create and manage document spaces and related entities such as contributors or connected teams."
     },
     {
+      "name": "Filters",
+      "description": "Provides endpoints to manage and share saved filters."
+    },
+    {
       "name": "Permissions",
       "description": "The permissions endpoints provide the permission information of the workspace.\n                    That includes the complete permission set of the currently logged-in user as well as all available features."
     },
@@ -68580,6 +69869,10 @@
     {
       "name": "Roles",
       "description": "The roles endpoints allow you to configure the permissions of users.\n            You have the possibility to manage roles and assign users to these roles."
+    },
+    {
+      "name": "SharedTags",
+      "description": "Manage shared tag batch operations across supported entity types."
     },
     {
       "name": "TaskBundles",
