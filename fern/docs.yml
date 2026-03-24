@@ -27,6 +27,8 @@ navigation:
     path: ./pages/introduction.mdx
   - page: Getting Started
     path: ./pages/getting-started.mdx
+  - page: Integration Example (PSA)
+    path: ./pages/psa-agentursoftware-integration.mdx
   - page: Authentication
     path: ./pages/authentication.mdx
   - page: Error Handling
