@@ -161,7 +161,7 @@ curl -X POST "https://api.awork.com/api/v1/timeentries/setbilled" \
 
 - The transport mechanism is up to you (for example n8n, custom backend, iPaaS).
 - Store ID mappings in your middleware so you can always resolve both directions:
-  - external project ID <-> awork project ID
-  - external task ID <-> awork task ID
+  - `external project ID <-> awork project ID`
+  - `external task ID <-> awork task ID`
 - Use idempotency in your middleware (for example lookup by your stored external reference before creating).
 - Export times in windows (for example daily) and persist a sync checkpoint to avoid duplicates.
