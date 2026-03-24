@@ -57,21 +57,7 @@ The response contains the awork `id` (project ID). Keep this mapping in your mid
 
 ## 3) Store the external project link on the awork project
 
-If your project is created from a template where this project custom field is already linked, you can skip the linking request and set the value directly.
-
-If needed, link the custom field definition to the project first:
-
-```sh title="Link custom field definition to project"
-curl -X POST "https://api.awork.com/api/v1/projects/{aworkProjectId}/linkcustomfielddefinition" \
-  -H "Authorization: Bearer {token}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "customFieldDefinitionId": "{externalProjectLinkCustomFieldDefinitionId}",
-    "order": 1
-  }'
-```
-
-Then set the value on the project:
+Project custom fields are available across all projects once the definition exists. You can set the value directly:
 
 ```sh title="Set project custom field value"
 curl -X POST "https://api.awork.com/api/v1/projects/{aworkProjectId}/setcustomfields" \
