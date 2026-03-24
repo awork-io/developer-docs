@@ -1400,24 +1400,6 @@
           "projectType": {
             "$ref": "#/components/schemas/NestedTypeModel"
           },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectTagModelForTimeTrackings"
-            },
-            "description": "The tags of the project.",
-            "nullable": true,
-            "deprecated": true
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectTeamModelForTimeTrackings"
-            },
-            "description": "The teams of the project.",
-            "nullable": true,
-            "deprecated": true
-          },
           "projectKey": {
             "type": "string",
             "description": "The unique project key within the workspace (e.g., \"NIKE\").\nMaximum 32 characters, uppercase letters, numbers, and dashes only.",
@@ -1801,24 +1783,6 @@
           },
           "taskStatus": {
             "$ref": "#/components/schemas/NestedTaskStatusModel"
-          },
-          "assignees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NestedUserModel"
-            },
-            "description": "The list of assigned users of this task, or empty if no user is assigned.",
-            "nullable": true,
-            "deprecated": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TaskTagModelForTimeTrackings"
-            },
-            "description": "The list of tags.",
-            "nullable": true,
-            "deprecated": true
           },
           "createdBy": {
             "type": "string",
@@ -2205,24 +2169,6 @@
             "type": "boolean",
             "description": "Whether this user has a profile image.",
             "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTagModelForTimeTrackings"
-            },
-            "description": "The tags of the user.",
-            "nullable": true,
-            "deprecated": true
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTeamModelForTimeTrackings"
-            },
-            "description": "The teams of the user.",
-            "nullable": true,
-            "deprecated": true
           },
           "isExternal": {
             "type": "boolean",

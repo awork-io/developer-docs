@@ -39428,6 +39428,16 @@
           "204": {
             "description": "No Content"
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -39569,6 +39579,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ContactInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -50926,6 +50946,7 @@
             "maxLength": 25,
             "minLength": 0,
             "enum": [
+              "none",
               "read",
               "manage"
             ],
@@ -51974,15 +51995,6 @@
             "description": "The description of the company.",
             "nullable": true,
             "example": "NCNSTN Brand Design Company"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CompanyTagModel"
-            },
-            "description": "The Tags of the company.",
-            "nullable": true,
-            "deprecated": true
           }
         },
         "additionalProperties": false
@@ -52228,15 +52240,6 @@
             "description": "The created by of the project.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectTagModel"
-            },
-            "description": "The Tags of the Project.",
-            "nullable": true,
-            "deprecated": true
           },
           "teams": {
             "type": "array",
@@ -52618,24 +52621,6 @@
             "format": "date-time",
             "example": "2020-02-30T18:52:54.945Z"
           },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTagModel"
-            },
-            "description": "The Tags of the User.",
-            "nullable": true,
-            "deprecated": true
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NestedUserTeamModel"
-            },
-            "description": "The ids of the team the user is associated to.",
-            "nullable": true,
-            "deprecated": true
-          },
           "isExternal": {
             "type": "boolean",
             "description": "True if the model is coming from an external workspace (awork Connect).\nFalse otherwise."
@@ -52819,8 +52804,6 @@
           "Between",
           "IsSet",
           "IsNotSet",
-          "CollectionContains",
-          "CollectionDoesNotContain",
           "WithinThisWeek",
           "WithinThisMonth"
         ],
@@ -54711,24 +54694,6 @@
           },
           "projectType": {
             "$ref": "#/components/schemas/NestedTypeModel"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectTagModelForTimeTrackings"
-            },
-            "description": "The tags of the project.",
-            "nullable": true,
-            "deprecated": true
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProjectTeamModelForTimeTrackings"
-            },
-            "description": "The teams of the project.",
-            "nullable": true,
-            "deprecated": true
           },
           "projectKey": {
             "type": "string",
@@ -58144,24 +58109,6 @@
           },
           "taskStatus": {
             "$ref": "#/components/schemas/NestedTaskStatusModel"
-          },
-          "assignees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NestedUserModel"
-            },
-            "description": "The list of assigned users of this task, or empty if no user is assigned.",
-            "nullable": true,
-            "deprecated": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TaskTagModelForTimeTrackings"
-            },
-            "description": "The list of tags.",
-            "nullable": true,
-            "deprecated": true
           },
           "createdBy": {
             "type": "string",
@@ -62018,24 +61965,6 @@
             "type": "boolean",
             "description": "Whether this user has a profile image.",
             "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTagModelForTimeTrackings"
-            },
-            "description": "The tags of the user.",
-            "nullable": true,
-            "deprecated": true
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserTeamModelForTimeTrackings"
-            },
-            "description": "The teams of the user.",
-            "nullable": true,
-            "deprecated": true
           },
           "isExternal": {
             "type": "boolean",
