@@ -102,13 +102,15 @@ curl -X POST "https://api.awork.com/api/v1/projects/{aworkProjectId}/tasklists" 
 
 Use the returned `taskListId` to place tasks:
 
+Use `projectId` for project tasks. `entityId` is deprecated.
+
 ```sh title="Create project task in a list"
 curl -X POST "https://api.awork.com/api/v1/tasks" \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
     "baseType": "projecttask",
-    "entityId": "{aworkProjectId}",
+    "projectId": "{aworkProjectId}",
     "name": "Create first homepage design draft",
     "plannedDuration": 21600,
     "lists": [
@@ -146,14 +148,15 @@ If you instead need an export of already billed entries (for reconciliation), fi
 Some teams export billable, not-yet-billed entries and mark them as billed after successful export:
 
 ```sh title="Mark time entries as billed"
-curl -X POST "https://api.awork.com/api/v1/timeentries/setbilled" \
+curl -X POST "https://api.awork.com/api/v1/timeentries/batch/setIsBilled" \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
-    "ids": [
+    "timeEntryIds": [
       "123e4567-e89b-12d3-a456-426614174000",
       "123e4567-e89b-12d3-a456-426614174001"
-    ]
+    ],
+    "isBilled": true
   }'
 ```
 
