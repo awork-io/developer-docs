@@ -1,0 +1,156 @@
+---
+title: "Integration Example: PSA"
+description: Example flow for syncing projects and billed times between Professional Services Automation (PSA) tools and awork.
+slug: psa-integration
+---
+
+This example shows a common integration pattern where a middleware tool sits between your Professional Services Automation (PSA, Agentursoftware) tool and awork.
+
+The external system remains the source of truth for quotations and invoicing. awork is used for project execution, task collaboration, and time tracking.
+
+## Typical flow
+
+1. A quotation is approved in your PSA.
+2. Your middleware creates the related project in awork.
+3. Your middleware stores the external project link in awork as a project custom field.
+4. Your middleware creates task lists and tasks (or uses a project template).
+5. The team tracks time in awork while working on tasks.
+6. Your middleware fetches billed time entries from awork and sends them back to the external system for invoicing.
+
+## 1) Create or reuse a project custom field for the external link
+
+Create this once per workspace. Use `entity: "project"` so the field can be set on projects.
+
+```sh title="Create a project custom field definition"
+curl -X POST "https://api.awork.com/api/v1/customfielddefinitions" \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "External Project Link",
+    "type": "link",
+    "entity": "project",
+    "order": 1
+  }'
+```
+
+Save the returned custom field definition ID for later, for example as `externalProjectLinkCustomFieldDefinitionId`.
+
+## 2) Create the awork project when the quotation is approved
+
+You can either create from a project template or from scratch.
+
+```sh title="Create project from template"
+curl -X POST "https://api.awork.com/api/v1/projects" \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Website Relaunch - ACME GmbH",
+    "companyId": "11111111-2222-3333-4444-555555555555",
+    "projectTemplateId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+    "isBillableByDefault": true
+  }'
+```
+
+The response contains the awork `id` (project ID). Keep this mapping in your middleware:
+
+- external system `projectId` -> awork `projectId`
+
+## 3) Store the external project link on the awork project
+
+Project custom fields are available across all projects once the definition exists. You can set the value directly:
+
+```sh title="Set project custom field value"
+curl -X POST "https://api.awork.com/api/v1/projects/{aworkProjectId}/setcustomfields" \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '[
+    {
+      "customFieldDefinitionId": "{externalProjectLinkCustomFieldDefinitionId}",
+      "textValue": "https://psa.example.com/projects/PSA-PROJ-2026-0042"
+    }
+  ]'
+```
+
+This makes navigation easier for users, because they can jump directly from awork to the related project in your PSA.
+
+## 4) Create task lists and tasks (if you are not using a full template)
+
+If your project template already creates the structure, you can skip this section.
+
+```sh title="Create task list"
+curl -X POST "https://api.awork.com/api/v1/projects/{aworkProjectId}/tasklists" \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Concept & Design"
+  }'
+```
+
+Use the returned `taskListId` to place tasks:
+
+For `POST /tasks`, pass the project ID in `entityId` when `baseType` is `projecttask`.
+
+```sh title="Create project task in a list"
+curl -X POST "https://api.awork.com/api/v1/tasks" \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "baseType": "projecttask",
+    "entityId": "{aworkProjectId}",
+    "name": "Create first homepage design draft",
+    "plannedDuration": 21600,
+    "lists": [
+      {
+        "id": "{taskListId}",
+        "order": 1
+      }
+    ]
+  }'
+```
+
+## 5) Fetch invoiceable time entries for invoicing export
+
+When work is completed (or in regular billing cycles), fetch billable but not-yet-billed time entries and map them back to your external project and task IDs.
+
+```sh title="Get invoiceable time entries for one awork project"
+curl -X GET "https://api.awork.com/api/v1/projects/{aworkProjectId}/timeentries?filterby=isBillable%20eq%20true%20and%20isBilled%20eq%20false" \
+  -H "Authorization: Bearer {token}"
+```
+
+Each time entry includes references such as:
+
+- `id` (awork time entry ID)
+- `projectId` and nested `project`
+- `taskId` and nested `task`
+- `duration`
+- `isBillable` and `isBilled`
+
+This gives your middleware enough data to transform entries into invoice lines in your PSA.
+
+If you instead need an export of already billed entries (for reconciliation), filter with `isBilled eq true`.
+
+## Optional: mark exported time entries as billed
+
+Some teams export billable, not-yet-billed entries and mark them as billed after successful export:
+
+```sh title="Mark time entries as billed"
+curl -X POST "https://api.awork.com/api/v1/timeentries/batch/setIsBilled" \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "timeEntryIds": [
+      "123e4567-e89b-12d3-a456-426614174000",
+      "123e4567-e89b-12d3-a456-426614174001"
+    ],
+    "isBilled": true
+  }'
+```
+
+## Implementation notes for your middleware tool
+
+- The transport mechanism is up to you (for example n8n, custom backend, iPaaS).
+- Store ID mappings in your middleware so you can always resolve both directions:
+  - `external project ID <-> awork project ID`
+  - `external task ID <-> awork task ID`
+- Use idempotency in your middleware (for example lookup by your stored external reference before creating).
+- Export times in windows (for example daily) and persist a sync checkpoint to avoid duplicates.
