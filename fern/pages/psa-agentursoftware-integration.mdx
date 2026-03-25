@@ -88,7 +88,7 @@ curl -X POST "https://api.awork.com/api/v1/projects/{aworkProjectId}/tasklists" 
 
 Use the returned `taskListId` to place tasks:
 
-Use `projectId` for project tasks. `entityId` is deprecated.
+For `POST /tasks`, pass the project ID in `entityId` when `baseType` is `projecttask`.
 
 ```sh title="Create project task in a list"
 curl -X POST "https://api.awork.com/api/v1/tasks" \
@@ -96,7 +96,7 @@ curl -X POST "https://api.awork.com/api/v1/tasks" \
   -H "Content-Type: application/json" \
   -d '{
     "baseType": "projecttask",
-    "projectId": "{aworkProjectId}",
+    "entityId": "{aworkProjectId}",
     "name": "Create first homepage design draft",
     "plannedDuration": 21600,
     "lists": [
