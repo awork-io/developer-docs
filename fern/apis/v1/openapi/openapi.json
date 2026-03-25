@@ -13776,6 +13776,83 @@
         }
       }
     },
+    "/projects/batch/{operation}": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Edits multiple projects using the specified operation.",
+        "description": "Returns MultiStatus including the list of successful and failed projects.\r\n            \r\n             Supported operations:\r\n             <ul>\r\n  <li>changeprojectstatus: changes the status of all selected projects.</li>\r\n  <li>changeprojecttype: changes the type of all selected projects.</li>\r\n  <li>linkworkflow: links a workflow to all selected projects.</li>\r\n  <li>setclient: sets the client for all selected projects.</li>\r\n  <li>setprojectlead: changes the responsible project member for all selected projects.</li>\r\n  <li>addteams: adds teams to all selected projects.</li>\r\n  <li>removeteams: removes teams from all selected projects.</li>\r\n  <li>setdates: sets or removes project start and due dates.</li>\r\n  <li>adjustdates: offsets project start and due dates by the specified amount of days.</li>\r\n  <li>addtags: adds tags to all selected projects.</li>\r\n  <li>removetags: removes tags from all selected projects.</li>\r\n  <li>delete: deletes all selected projects.</li>\r\n</ul><Check title=\"Required Permissions\" icon=\"key\">The user must have `write` permissions on all projects as well as related entities modified by the operation.</Check>",
+        "operationId": "PostProjectsBatchByOperation",
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "path",
+            "description": "Batch operation route key.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Validated request body for the selected operation.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectBatchOperationForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MultiStatusResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/projects/deletetags": {
       "post": {
         "tags": [
@@ -50748,6 +50825,72 @@
         "additionalProperties": false,
         "description": "A Type of work enriched with the list of external project ids in which this TypeOfWork exists."
       },
+      "ExternalWorkflow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Website Design and Implementation"
+          },
+          "icon": {
+            "type": "string",
+            "description": "The icon associated with this workflow.",
+            "nullable": true,
+            "example": "workflow"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Whether the workflow has been archived."
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if the workflow is coming from an external workspace (awork Connect).\nFalse otherwise."
+          },
+          "externalProjectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The ids of the connected (external) projects that use this workflow.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A workflow enriched with the list of external project ids in which this workflow exists."
+      },
       "Filter": {
         "type": "object",
         "properties": {
@@ -53969,6 +54112,143 @@
         },
         "additionalProperties": false
       },
+      "ProjectBatchOperationForm": {
+        "required": [
+          "projectIds"
+        ],
+        "type": "object",
+        "properties": {
+          "projectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Project ids affected by the batch operation."
+          },
+          "projectStatusId": {
+            "type": "string",
+            "description": "Target project status for `changeprojectstatus`.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectTypeId": {
+            "type": "string",
+            "description": "Target project type for `changeprojecttype`.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workflowId": {
+            "type": "string",
+            "description": "Workflow to link for `linkworkflow`.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectStatusMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectStatusMappingEntry"
+            },
+            "description": "Project status mappings used when linking a workflow.",
+            "nullable": true
+          },
+          "taskStatusMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskStatusMappingEntry"
+            },
+            "description": "Task status mappings used when linking a workflow.",
+            "nullable": true
+          },
+          "keepCustomFields": {
+            "type": "boolean",
+            "description": "Whether custom fields should be kept when linking a workflow.",
+            "nullable": true
+          },
+          "keepCustomAutomations": {
+            "type": "boolean",
+            "description": "Whether custom automations should be kept when linking a workflow.",
+            "nullable": true
+          },
+          "companyId": {
+            "type": "string",
+            "description": "Company to assign for `setclient`.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "responsibleUserId": {
+            "type": "string",
+            "description": "Responsible user to assign for `setprojectlead`.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "teamIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Team ids to add or remove for team batch operations.",
+            "nullable": true
+          },
+          "newStartDate": {
+            "type": "string",
+            "description": "New start date for `setdates`.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "newDueDate": {
+            "type": "string",
+            "description": "New due date for `setdates`.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "removeStartDate": {
+            "type": "boolean",
+            "description": "Whether the start date should be removed for `setdates`.",
+            "nullable": true
+          },
+          "removeDueDate": {
+            "type": "boolean",
+            "description": "Whether the due date should be removed for `setdates`.",
+            "nullable": true
+          },
+          "daysOffset": {
+            "type": "number",
+            "description": "Day offset for `adjustdates`.",
+            "format": "double",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagForm"
+            },
+            "description": "Tags to add for `addtags`.",
+            "nullable": true
+          },
+          "tagsToRemove": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeleteTagForm"
+            },
+            "description": "Tags to remove for `removetags`.",
+            "nullable": true
+          },
+          "deleteTimeTrackings": {
+            "type": "boolean",
+            "description": "Whether related time trackings should be deleted for `delete`.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request body for project batch operations."
+      },
       "ProjectConnection": {
         "type": "object",
         "properties": {
@@ -55045,6 +55325,10 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if the project status is coming from an external workspace (awork Connect)."
           }
         },
         "additionalProperties": false
@@ -57990,7 +58274,7 @@
           },
           "trackedDuration": {
             "type": "integer",
-            "description": "The summed up duration of all time trackings for this task.",
+            "description": "The summed up duration of all time trackings directly on this task (excluding subtasks).",
             "format": "int32",
             "nullable": true,
             "example": 1200
@@ -58550,6 +58834,10 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if the task status is coming from an external workspace (awork Connect)."
           }
         },
         "additionalProperties": false
@@ -62808,6 +63096,10 @@
           "isArchived": {
             "type": "boolean",
             "description": "Whether the workflow has been archived."
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "True if the workflow is coming from an external workspace (awork Connect).\nFalse otherwise."
           }
         },
         "additionalProperties": false,
