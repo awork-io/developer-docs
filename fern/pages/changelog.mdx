@@ -17,10 +17,6 @@ This section shows upcoming changes.
 🚨 Upcoming deprecations for API models:
 * The `RemainingDuration` and `TotalRemainingDuration` properties of the `TaskModel` are deprecated and will be removed at the end of the year.
 
-## Recent changes
-
-This section shows you recent changes that are already live in our API.
-
 ### Workflows: project and task statuses can be shared across projects 🚨
 
 With the Workflows feature, project and task statuses can now be inherited from a workflow and shared across all projects linked to that workflow.
@@ -90,7 +86,7 @@ curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5a
   -H "Authorization: Bearer {token}"
 ```
 
-Migration path (if you use global `GET /projectstatuses`):
+Migration path (if you need to keep using global `GET /projectstatuses`, as many integrations currently do):
 - Fetch the project first and read `workflowId`.
 - If `workflowId` is set, filter statuses by `workflowId`.
 - If `workflowId` is null, filter statuses by `projectId`.
@@ -111,6 +107,10 @@ curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5a
 curl -X GET "https://api.awork.com/api/v1/projectstatuses" \
   -H "Authorization: Bearer {token}"
 ```
+
+## Recent changes
+
+This section shows you recent changes that are already live in our API.
 
 ### Edge security update 🔐
 
