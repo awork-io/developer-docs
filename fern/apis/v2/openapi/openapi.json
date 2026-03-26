@@ -2296,10 +2296,7 @@
   },
   "security": [
     {
-      "bearer": [
-        "full_access",
-        "offline_access"
-      ]
+      "bearer": []
     },
     {
       "oauth2": [
