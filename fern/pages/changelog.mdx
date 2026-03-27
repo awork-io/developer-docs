@@ -17,6 +17,187 @@ This section shows upcoming changes.
 🚨 Upcoming deprecations for API models:
 * The `RemainingDuration` and `TotalRemainingDuration` properties of the `TaskModel` are deprecated and will be removed at the end of the year.
 
+### Workflows: project and task statuses can be shared across projects 🚨
+
+With the [Workflows feature](https://www.awork.com/roadmap), project and task statuses can now be inherited from a workflow and shared across all projects linked to that workflow.
+
+As a result, integrations that fetch statuses and filter by `projectId` only can miss relevant statuses. Status models can now return `workflowId` instead of `projectId`.
+
+<Warning>
+Latest rollout deadline for affected ERP/custom integrations: <strong>July 31, 2026</strong>.<br />
+Upgrade your integration before <strong>July 31, 2026</strong> to avoid issues.
+</Warning>
+
+Rollout note:
+- For workspaces with known ERP or custom integrations, the Workflows feature can remain deactivated until **July 31, 2026** at the latest.
+- Integrations should be upgraded before **July 31, 2026** to avoid issues when Workflows are enabled.
+- Workflows can be enabled earlier on request once the integration is ready.
+- [Please let us know](https://support.awork.com/en/articles/8778139-contact-support) once your integration has been updated or verified to be compatible, so we can enable Workflows for workspaces using that integration.
+
+Why this is breaking:
+- Previously, integrations often filtered status lists by `projectId`.
+- With workflow-based statuses, `projectId` can be `null` and `workflowId` is set.
+- Task statuses from different projects can now have the same `id` when those projects use the same workflow.
+- If your client aggregates task statuses from multiple projects into one list and keys by `id` only, this can lead to duplicate entries/collisions.
+
+Project status example before:
+
+```json
+{
+  "id": "8b10f329-4cf3-42a5-a216-4560e318db8f",
+  "name": "In Progress",
+  "projectId": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
+  "workflowId": null
+}
+```
+
+Project status example with Workflows:
+
+```json
+{
+  "id": "0f5f3318-8024-4b0b-a748-7e8ed6f13a60",
+  "name": "In Progress",
+  "projectId": null,
+  "workflowId": "49f36ad2-9372-4ce2-a697-9ece6126d5cf"
+}
+```
+
+Task status example with Workflows:
+
+```json
+{
+  "id": "4e4e6c4f-b4b0-449a-85ad-c6fcf3443b72",
+  "name": "Review",
+  "projectId": null,
+  "workflowId": "49f36ad2-9372-4ce2-a697-9ece6126d5cf"
+}
+```
+
+### Migration path
+
+<CardGroup cols={2}>
+  <Card title="Recommended path" icon="circle-check">
+    Use project-scoped endpoint to fetch project statuses.
+  </Card>
+  <Card title="Alternative path" icon="code-branch">
+    Keep using global endpoint and filter by `workflowId` or `projectId`.
+  </Card>
+</CardGroup>
+
+
+#### Recommended migration path
+
+<Check title="Recommended" icon="circle-check">
+  Switch to the project-specific endpoint to fetch project statuses.
+</Check>
+
+- For project statuses, use `GET /projects/{projectId}/projectstatuses`.
+- For task statuses, use `GET /projects/{projectId}/taskstatuses`.
+- These endpoints return statuses relevant for the project, regardless of whether they are project-specific or inherited from the linked workflow.
+- Complete this migration before **July 31, 2026** if your workspace currently has Workflows deactivated due to ERP/custom integrations.
+- For client-side mapping, use a composite key such as `projectId + id` (or `workflowId + id`) instead of `id` alone when combining statuses from multiple projects.
+
+```sh title="Project statuses for a specific project"
+curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5ad7a57ad/projectstatuses" \
+  -H "Authorization: Bearer {token}"
+```
+
+```json title="Project statuses response example if the project does not use workflows"
+[
+  {
+    "id": "8b10f329-4cf3-42a5-a216-4560e318db8f",
+    "name": "In Progress",
+    "projectId": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
+    "workflowId": null
+  }
+]
+```
+
+```json title="Project statuses response example if the project uses workflows"
+[
+  {
+    "id": "0f5f3318-8024-4b0b-a748-7e8ed6f13a60",
+    "name": "In Progress",
+    "projectId": null,
+    "workflowId": "49f36ad2-9372-4ce2-a697-9ece6126d5cf"
+  }
+]
+```
+
+```sh title="Task statuses for a specific project"
+curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5ad7a57ad/taskstatuses" \
+  -H "Authorization: Bearer {token}"
+```
+
+<Info>
+  Project and task statuses can either have the `projectId` or `workflowId` set, depending on whether they are project or workflow specific.
+</Info>
+
+#### Alternative migration path
+
+<Warning title="Not recommended">
+  Keep using global endpoint and filter by `workflowId` or `projectId`.
+</Warning>
+
+If you need to keep using the global endpoint, for example due to a high amount of projects:
+- Fetch the project statuses as before.
+- Fetch the project first and check `workflowId`.
+- If `workflowId` is set, filter statuses by `workflowId`.
+- If `workflowId` is null, filter statuses by `projectId`.
+
+<Info>
+  Projects with and without workflows can exist in the same workspace. This means that `GET /projectstatuses` will return project-scoped statuses as well as workflow-scoped statuses in one list.
+</Info>
+
+```sh title="1) Fetch all project statuses (as before)"
+curl -X GET "https://api.awork.com/api/v1/projectstatuses" \
+  -H "Authorization: Bearer {token}"
+```
+
+```json title="Project statuses response example"
+[
+  {
+    "id": "8b10f329-4cf3-42a5-a216-4560e318db8f",
+    "name": "In Progress",
+    "projectId": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
+    "workflowId": null
+  },
+  {
+    "id": "0f5f3318-8024-4b0b-a748-7e8ed6f13a60",
+    "name": "In Progress",
+    "projectId": null,
+    "workflowId": "49f36ad2-9372-4ce2-a697-9ece6126d5cf"
+  }
+]
+```
+
+```sh title="2) Fetch project and check whether the project uses a workflow"
+curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5ad7a57ad" \
+  -H "Authorization: Bearer {token}"
+```
+
+```json title="Project with a workflow"
+{
+  "id": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
+  "workflowId": "49f36ad2-9372-4ce2-a697-9ece6126d5cf"
+}
+```
+
+```json title="Project without a workflow"
+{
+  "id": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
+  "workflowId": null
+}
+```
+
+3) If the project has a `workflowId` set, filter the global list of project statuses you retrieved earlier by this `workflowId`. If it does not have a workflow set, use the `projectId` as before.
+
+
+### Questions and support
+
+If you have any questions or need support, please lets us know to our [awork Community Developer Forum](https://community.awork.com/c/developer-forum/17).
+
+
 ## Recent changes
 
 This section shows you recent changes that are already live in our API.
