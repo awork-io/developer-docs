@@ -19,23 +19,25 @@ This section shows upcoming changes.
 
 ### Workflows: project and task statuses can be shared across projects 🚨
 
-With the Workflows feature, project and task statuses can now be inherited from a workflow and shared across all projects linked to that workflow.
+With the [Workflows feature](https://www.awork.com/roadmap), project and task statuses can now be inherited from a workflow and shared across all projects linked to that workflow.
 
 As a result, integrations that fetch statuses and filter by `projectId` only can miss relevant statuses. Status models can now return `workflowId` instead of `projectId`.
 
 <Warning>
-Latest rollout deadline for affected ERP/custom integrations: <strong>June 30, 2026</strong>.<br />
-Upgrade your integration before <strong>June 30, 2026</strong> to avoid issues.
+Latest rollout deadline for affected ERP/custom integrations: <strong>July 31, 2026</strong>.<br />
+Upgrade your integration before <strong>July 31, 2026</strong> to avoid issues.
 </Warning>
 
 Rollout note:
-- For workspaces with known ERP or custom integrations, the Workflows feature can remain deactivated until **June 30, 2026** at the latest.
-- Integrations should be upgraded before **June 30, 2026** to avoid issues when Workflows are enabled.
+- For workspaces with known ERP or custom integrations, the Workflows feature can remain deactivated until **July 31, 2026** at the latest.
+- Integrations should be upgraded before **July 31, 2026** to avoid issues when Workflows are enabled.
 - Workflows can be enabled earlier on request once the integration is ready.
 
 Why this is breaking:
 - Previously, integrations often filtered status lists by `projectId`.
 - With workflow-based statuses, `projectId` can be `null` and `workflowId` is set.
+- Task statuses from different projects can now have the same `id` when those projects use the same workflow.
+- If your client aggregates task statuses from multiple projects into one list and keys by `id` only, this can lead to duplicate entries/collisions.
 
 Project status example before:
 
@@ -74,7 +76,8 @@ Migration path (recommended):
 - For project statuses, use `GET /projects/{projectId}/projectstatuses`.
 - For task statuses, use `GET /projects/{projectId}/taskstatuses`.
 - These endpoints return statuses relevant for the project, regardless of whether they are project-specific or inherited from the linked workflow.
-- Complete this migration before **June 30, 2026** if your workspace currently has Workflows deactivated due to ERP/custom integrations.
+- Complete this migration before **July 31, 2026** if your workspace currently has Workflows deactivated due to ERP/custom integrations.
+- For client-side mapping, use a composite key such as `projectId + id` (or `workflowId + id`) instead of `id` alone when combining statuses from multiple projects.
 
 ```sh title="Project statuses for a specific project"
 curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5ad7a57ad/projectstatuses" \
