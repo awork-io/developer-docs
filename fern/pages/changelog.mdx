@@ -32,6 +32,7 @@ Rollout note:
 - For workspaces with known ERP or custom integrations, the Workflows feature can remain deactivated until **July 31, 2026** at the latest.
 - Integrations should be upgraded before **July 31, 2026** to avoid issues when Workflows are enabled.
 - Workflows can be enabled earlier on request once the integration is ready.
+- Please let us know once your integration has been updated or verified to be compatible, so we can enable Workflows for workspaces using that integration.
 
 Why this is breaking:
 - Previously, integrations often filtered status lists by `projectId`.
@@ -72,7 +73,23 @@ Task status example with Workflows:
 }
 ```
 
-Migration path (recommended):
+### Migration path
+
+<CardGroup cols={2}>
+  <Card title="Recommended path" icon="circle-check">
+    Use project-scoped endpoints (`GET /projects/{projectId}/projectstatuses` and `GET /projects/{projectId}/taskstatuses`).
+  </Card>
+  <Card title="Alternative path" icon="code-branch">
+    Keep using global `GET /projectstatuses` and filter by `workflowId` or `projectId`.
+  </Card>
+</CardGroup>
+
+<Check title="Recommended" icon="circle-check">
+Use this migration path by default.
+</Check>
+
+#### Recommended migration path
+
 - For project statuses, use `GET /projects/{projectId}/projectstatuses`.
 - For task statuses, use `GET /projects/{projectId}/taskstatuses`.
 - These endpoints return statuses relevant for the project, regardless of whether they are project-specific or inherited from the linked workflow.
@@ -89,7 +106,9 @@ curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5a
   -H "Authorization: Bearer {token}"
 ```
 
-Migration path (if you need to keep using global `GET /projectstatuses`, as many integrations currently do):
+#### Alternative migration path (keep global `GET /projectstatuses`)
+
+If you need to keep using the global endpoint, as many integrations currently do:
 - Fetch the project first and read `workflowId`.
 - If `workflowId` is set, filter statuses by `workflowId`.
 - If `workflowId` is null, filter statuses by `projectId`.
