@@ -1648,7 +1648,7 @@
           "CommentFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -1694,6 +1694,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -1703,7 +1716,7 @@
           "CommentFiles"
         ],
         "summary": "Deletes the files of the specified comment.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentFiles",
         "parameters": [
           {
@@ -1721,6 +1734,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -1728,7 +1754,7 @@
           "CommentFiles"
         ],
         "summary": "Returns all files of the comment with the specified id.",
-        "description": "Returns all file metadata of the comment with the specified id.",
+        "description": "Returns all file metadata of the comment with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentFiles",
         "parameters": [
           {
@@ -1768,6 +1794,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -1775,7 +1814,7 @@
           "CommentFiles"
         ],
         "summary": "Creates a new comment file for the comment with the specified id..",
-        "description": "Uploads a new comment file for the comment with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new comment file for the comment with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateCommentFile",
         "parameters": [
           {
@@ -1826,6 +1865,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -1835,7 +1887,7 @@
           "CommentFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateCommentFileByUrl",
         "parameters": [
           {
@@ -1875,6 +1927,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -1884,7 +1949,7 @@
           "CommentFiles"
         ],
         "summary": "Deletes the comment file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentFile",
         "parameters": [
           {
@@ -1912,6 +1977,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -1919,7 +1997,7 @@
           "CommentFiles"
         ],
         "summary": "Returns the file with the specified id of the comment with the specified id.",
-        "description": "Returns the file metadata of the comment with the specified id.",
+        "description": "Returns the file metadata of the comment with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentFile",
         "parameters": [
           {
@@ -1954,6 +2032,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -1961,7 +2052,7 @@
           "CommentFiles"
         ],
         "summary": "Updates the metadata of the comment file with the specified id.",
-        "description": "Updates the metadata of the comment file with the specified id.",
+        "description": "Updates the metadata of the comment file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateCommentFile",
         "parameters": [
           {
@@ -2011,6 +2102,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2020,7 +2124,7 @@
           "CommentFiles"
         ],
         "summary": "Changes the comment this file belongs to.",
-        "description": "Changes the comment this file belongs to.\nSwitch to the specified comment or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the comment this file belongs to.\nSwitch to the specified comment or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeComment",
         "parameters": [
           {
@@ -2070,6 +2174,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2079,7 +2196,7 @@
           "CommentFiles"
         ],
         "summary": "Copies the file to a new comment.",
-        "description": "Copies the file to a new comment (meta and content).",
+        "description": "Copies the file to a new comment (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToComment",
         "parameters": [
           {
@@ -2129,6 +2246,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2138,7 +2268,7 @@
           "CommentFiles"
         ],
         "summary": "Returns the content of the comment file with the specified id.",
-        "description": "Returns the content of the comment file. Uses the latest file version.\nIf the comment file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the comment file. Uses the latest file version.\nIf the comment file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentFileContent",
         "parameters": [
           {
@@ -2200,6 +2330,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2209,7 +2352,7 @@
           "CommentFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the comment file. Uses the latest file version.",
+        "description": "Returns the content of the comment file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentFileContent",
         "parameters": [
           {
@@ -2254,6 +2397,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2263,7 +2419,7 @@
           "CommentFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -2298,6 +2454,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2307,7 +2476,7 @@
           "CommentFiles"
         ],
         "summary": "Returns all file versions of the specified comment file.",
-        "description": "Returns all file versions of the specified comment file.",
+        "description": "Returns all file versions of the specified comment file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentFileVersions",
         "parameters": [
           {
@@ -2357,6 +2526,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -2364,7 +2546,7 @@
           "CommentFiles"
         ],
         "summary": "Uploads a new version of the comment file with the specified id.",
-        "description": "Uploads a new version of an comment file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an comment file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateCommentFileVersion",
         "parameters": [
           {
@@ -2425,6 +2607,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2434,7 +2629,7 @@
           "CommentFiles"
         ],
         "summary": "Returns the comment file version with the specified id.",
-        "description": "Returns the comment file version with the specified id.",
+        "description": "Returns the comment file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentFileVersion",
         "parameters": [
           {
@@ -2479,6 +2674,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2488,7 +2696,7 @@
           "CommentFiles"
         ],
         "summary": "Returns the content of the comment file version with the specified id.",
-        "description": "Returns the content of the comment file version with the specified id.",
+        "description": "Returns the content of the comment file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentFileVersionContent",
         "parameters": [
           {
@@ -2533,6 +2741,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -2787,7 +3008,7 @@
           "SharedTags"
         ],
         "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "operationId": "PostTagsBatchByCompanyNameAndOperation",
         "parameters": [
           {
@@ -2849,6 +3070,20 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "workspace-manage-config": "write"
         }
       }
     },
@@ -3652,7 +3887,7 @@
           "CompanyFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -3698,6 +3933,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -3707,7 +3955,7 @@
           "CompanyFiles"
         ],
         "summary": "Deletes the files of the specified company.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCompanyFiles",
         "parameters": [
           {
@@ -3725,6 +3973,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -3732,7 +3993,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns all files of the company with the specified id.",
-        "description": "Returns all file metadata of the company with the specified id.",
+        "description": "Returns all file metadata of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCompanyFiles",
         "parameters": [
           {
@@ -3772,6 +4033,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -3779,7 +4053,7 @@
           "CompanyFiles"
         ],
         "summary": "Creates a new company file for the company with the specified id..",
-        "description": "Uploads a new company file for the company with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new company file for the company with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateCompanyFile",
         "parameters": [
           {
@@ -3830,6 +4104,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -3839,7 +4126,7 @@
           "CompanyFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateCompanyFileByUrl",
         "parameters": [
           {
@@ -3879,6 +4166,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -3888,7 +4188,7 @@
           "CompanyFiles"
         ],
         "summary": "Deletes the company file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCompanyFile",
         "parameters": [
           {
@@ -3916,6 +4216,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -3923,7 +4236,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns the file with the specified id of the company with the specified id.",
-        "description": "Returns the file metadata of the company with the specified id.",
+        "description": "Returns the file metadata of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCompanyFile",
         "parameters": [
           {
@@ -3958,6 +4271,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -3965,7 +4291,7 @@
           "CompanyFiles"
         ],
         "summary": "Updates the metadata of the company file with the specified id.",
-        "description": "Updates the metadata of the company file with the specified id.",
+        "description": "Updates the metadata of the company file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateCompanyFile",
         "parameters": [
           {
@@ -4015,6 +4341,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4024,7 +4363,7 @@
           "CompanyFiles"
         ],
         "summary": "Changes the company this file belongs to.",
-        "description": "Changes the company this file belongs to.\nSwitch to the specified company or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the company this file belongs to.\nSwitch to the specified company or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeCompany",
         "parameters": [
           {
@@ -4074,6 +4413,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4083,7 +4435,7 @@
           "CompanyFiles"
         ],
         "summary": "Copies the file to a new company.",
-        "description": "Copies the file to a new company (meta and content).",
+        "description": "Copies the file to a new company (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToCompany",
         "parameters": [
           {
@@ -4133,6 +4485,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4142,7 +4507,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns the content of the company file with the specified id.",
-        "description": "Returns the content of the company file. Uses the latest file version.\nIf the company file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the company file. Uses the latest file version.\nIf the company file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCompanyFileContent",
         "parameters": [
           {
@@ -4204,6 +4569,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4213,7 +4591,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the company file. Uses the latest file version.",
+        "description": "Returns the content of the company file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCompanyFileContent",
         "parameters": [
           {
@@ -4258,6 +4636,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4267,7 +4658,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -4302,6 +4693,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4311,7 +4715,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns all file versions of the specified company file.",
-        "description": "Returns all file versions of the specified company file.",
+        "description": "Returns all file versions of the specified company file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCompanyFileVersions",
         "parameters": [
           {
@@ -4361,6 +4765,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -4368,7 +4785,7 @@
           "CompanyFiles"
         ],
         "summary": "Uploads a new version of the company file with the specified id.",
-        "description": "Uploads a new version of an company file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an company file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateCompanyFileVersion",
         "parameters": [
           {
@@ -4429,6 +4846,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4438,7 +4868,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns the company file version with the specified id.",
-        "description": "Returns the company file version with the specified id.",
+        "description": "Returns the company file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCompanyFileVersion",
         "parameters": [
           {
@@ -4483,6 +4913,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -4492,7 +4935,7 @@
           "CompanyFiles"
         ],
         "summary": "Returns the content of the company file version with the specified id.",
-        "description": "Returns the content of the company file version with the specified id.",
+        "description": "Returns the content of the company file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCompanyFileVersionContent",
         "parameters": [
           {
@@ -4537,6 +4980,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -5427,7 +5883,7 @@
           "DocumentComments"
         ],
         "summary": "Deletes all comments of the specified document.",
-        "description": "Deletes all comments of the specified document.",
+        "description": "Deletes all comments of the specified document.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentsByDocumentNameAndDocumentId",
         "parameters": [
           {
@@ -5455,6 +5911,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -5462,7 +5931,7 @@
           "DocumentComments"
         ],
         "summary": "Returns all comments of the document with the specified id.",
-        "description": "Returns all comments of the document with the specified id. The user needs read permissions on the document.",
+        "description": "Returns all comments of the document with the specified id. The user needs read permissions on the document.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentsByDocumentNameAndDocumentId",
         "parameters": [
           {
@@ -5522,6 +5991,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -5529,7 +6011,7 @@
           "DocumentComments"
         ],
         "summary": "Creates a new comment on the document with the specified id.",
-        "description": "Creates a new comment on the document with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check>To create a comment the user must have at least `read` permissions on the specified document.</Check>",
+        "description": "Creates a new comment on the document with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">To create a comment the user must have at least `read` permissions on the specified document.</Check>",
         "operationId": "PostCommentsByDocumentNameAndDocumentId",
         "parameters": [
           {
@@ -5595,6 +6077,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -5604,7 +6099,7 @@
           "DocumentComments"
         ],
         "summary": "Deletes the comment with the specified id on the document with the specified id.",
-        "description": "Deletes the comment with the specified id on the document with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
+        "description": "Deletes the comment with the specified id on the document with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
@@ -5652,6 +6147,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -5659,7 +6167,7 @@
           "DocumentComments"
         ],
         "summary": "Returns the comment with the specified id of the document with the specified id.",
-        "description": "Returns the comment with the specified id of the document with the specified id.",
+        "description": "Returns the comment with the specified id of the document with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
@@ -5704,6 +6212,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -5711,7 +6232,7 @@
           "DocumentComments"
         ],
         "summary": "Updates the comment with the specified id on the document with the specified id.",
-        "description": "<Check>To update a comment the user must either have at least `read` permissions on the specified document, be the creator of the comment or be admin.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">To update a comment the user must either have at least `read` permissions on the specified document, be the creator of the comment or be admin.</Check>",
         "operationId": "PutCommentByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
@@ -5777,6 +6298,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -5786,7 +6320,7 @@
           "DocumentComments"
         ],
         "summary": "Updates the reactions of the comment with the specified id on the document with the specified id.",
-        "description": "<Check>To update a reaction of a comment the user must have at least `read` permissions on the specified document.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">To update a reaction of a comment the user must have at least `read` permissions on the specified document.</Check>",
         "operationId": "PostCommentReactByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
@@ -5845,6 +6379,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -5854,7 +6401,7 @@
           "DocumentComments"
         ],
         "summary": "Sets the resolved status of a comment.",
-        "description": "Sets the resolved status of a comment. Users need write permissions on the document to resolve/unresolve comments.\r\n            Currently, the IsResolved property is only available for document comments.",
+        "description": "Sets the resolved status of a comment. Users need write permissions on the document to resolve/unresolve comments.\r\n            Currently, the IsResolved property is only available for document comments.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostCommentSetResolvedByDocumentNameAndDocumentIdAndCommentId",
         "parameters": [
           {
@@ -5920,6 +6467,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6445,7 +7005,7 @@
           "DocumentFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -6491,6 +7051,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6500,7 +7073,7 @@
           "DocumentFiles"
         ],
         "summary": "Deletes the files of the specified document.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteDocumentFiles",
         "parameters": [
           {
@@ -6518,6 +7091,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -6525,7 +7111,7 @@
           "DocumentFiles"
         ],
         "summary": "Returns all files of the document with the specified id.",
-        "description": "Returns all file metadata of the document with the specified id.",
+        "description": "Returns all file metadata of the document with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetDocumentFiles",
         "parameters": [
           {
@@ -6565,6 +7151,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -6572,7 +7171,7 @@
           "DocumentFiles"
         ],
         "summary": "Creates a new document file for the document with the specified id..",
-        "description": "Uploads a new document file for the document with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new document file for the document with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateDocumentFile",
         "parameters": [
           {
@@ -6623,6 +7222,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6632,7 +7244,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file document from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file document from the uploaded file by providing the upload id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostUploadByUploadId",
         "parameters": [
           {
@@ -6678,6 +7290,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6687,7 +7312,7 @@
           "DocumentFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateDocumentFileByUrl",
         "parameters": [
           {
@@ -6727,6 +7352,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6736,7 +7374,7 @@
           "DocumentFiles"
         ],
         "summary": "Deletes the document file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteDocumentFile",
         "parameters": [
           {
@@ -6764,6 +7402,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -6771,7 +7422,7 @@
           "DocumentFiles"
         ],
         "summary": "Returns the file with the specified id of the document with the specified id.",
-        "description": "Returns the file metadata of the document with the specified id.",
+        "description": "Returns the file metadata of the document with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetDocumentFile",
         "parameters": [
           {
@@ -6806,6 +7457,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -6813,7 +7477,7 @@
           "DocumentFiles"
         ],
         "summary": "Updates the metadata of the document file with the specified id.",
-        "description": "Updates the metadata of the document file with the specified id.",
+        "description": "Updates the metadata of the document file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateDocumentFile",
         "parameters": [
           {
@@ -6863,6 +7527,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6872,7 +7549,7 @@
           "DocumentFiles"
         ],
         "summary": "Returns the content of the document file with the specified id.",
-        "description": "Returns the content of the document file. Uses the latest file version.\nIf the document file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the document file. Uses the latest file version.\nIf the document file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetDocumentFileContent",
         "parameters": [
           {
@@ -6934,6 +7611,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6943,7 +7633,7 @@
           "DocumentFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -6978,6 +7668,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -6987,7 +7690,7 @@
           "DocumentFiles"
         ],
         "summary": "Returns all file versions of the specified document file.",
-        "description": "Returns all file versions of the specified document file.",
+        "description": "Returns all file versions of the specified document file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetDocumentFileVersions",
         "parameters": [
           {
@@ -7037,6 +7740,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -7044,7 +7760,7 @@
           "DocumentFiles"
         ],
         "summary": "Uploads a new version of the document file with the specified id.",
-        "description": "Uploads a new version of an document file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an document file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateDocumentFileVersion",
         "parameters": [
           {
@@ -7105,6 +7821,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -7114,7 +7843,7 @@
           "DocumentFiles"
         ],
         "summary": "Returns the document file version with the specified id.",
-        "description": "Returns the document file version with the specified id.",
+        "description": "Returns the document file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetDocumentFileVersion",
         "parameters": [
           {
@@ -7159,6 +7888,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -7168,7 +7910,7 @@
           "DocumentFiles"
         ],
         "summary": "Returns the content of the document file version with the specified id.",
-        "description": "Returns the content of the document file version with the specified id.",
+        "description": "Returns the content of the document file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetDocumentFileVersionContent",
         "parameters": [
           {
@@ -7213,6 +7955,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -8512,7 +9267,7 @@
           "Images"
         ],
         "summary": "Deletes the profile image of the company with the specified id.",
-        "description": "Deletes the profile image of the company with the specified id.",
+        "description": "Deletes the profile image of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCompanyProfileImage",
         "parameters": [
           {
@@ -8530,6 +9285,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -8589,14 +9357,24 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.",
+        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostCompanyProfileImage",
         "parameters": [
           {
@@ -8647,6 +9425,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -8656,7 +9447,7 @@
           "Images"
         ],
         "summary": "Deletes the profile image of the contactperson with the specified id.",
-        "description": "Deletes the profile image of the contactperson with the specified id.",
+        "description": "Deletes the profile image of the contactperson with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteContactpersonProfileImage",
         "parameters": [
           {
@@ -8674,6 +9465,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -8733,14 +9537,24 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.",
+        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostContactpersonProfileImage",
         "parameters": [
           {
@@ -8791,6 +9605,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -8800,7 +9627,7 @@
           "Images"
         ],
         "summary": "Deletes the profile image of the project with the specified id.",
-        "description": "Deletes the profile image of the project with the specified id.",
+        "description": "Deletes the profile image of the project with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteProjectProfileImage",
         "parameters": [
           {
@@ -8818,6 +9645,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -8877,14 +9717,24 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.",
+        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostProjectProfileImage",
         "parameters": [
           {
@@ -8935,6 +9785,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -8944,7 +9807,7 @@
           "Images"
         ],
         "summary": "Deletes the profile image of the projecttemplate with the specified id.",
-        "description": "Deletes the profile image of the projecttemplate with the specified id.",
+        "description": "Deletes the profile image of the projecttemplate with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteProjectTemplateProfileImage",
         "parameters": [
           {
@@ -8962,6 +9825,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -9021,14 +9897,24 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.",
+        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostProjectTemplateProfileImage",
         "parameters": [
           {
@@ -9079,6 +9965,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -9088,7 +9987,7 @@
           "Images"
         ],
         "summary": "Deletes the profile image of the user with the specified id.",
-        "description": "Deletes the profile image of the user with the specified id.",
+        "description": "Deletes the profile image of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteUserProfileImage",
         "parameters": [
           {
@@ -9106,6 +10005,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -9165,14 +10077,24 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.",
+        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostUserProfileImage",
         "parameters": [
           {
@@ -9223,6 +10145,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -9232,7 +10167,7 @@
           "Images"
         ],
         "summary": "Deletes the profile image of the workspace with the specified id.",
-        "description": "Deletes the profile image of the workspace with the specified id.",
+        "description": "Deletes the profile image of the workspace with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteWorkspaceProfileImage",
         "parameters": [
           {
@@ -9250,6 +10185,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -9309,14 +10257,24 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ]
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.",
+        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostWorkspaceProfileImage",
         "parameters": [
           {
@@ -9367,6 +10325,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -13222,7 +14193,7 @@
           "SharedTags"
         ],
         "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "operationId": "PostTagsBatchByProjectNameAndOperation",
         "parameters": [
           {
@@ -13284,6 +14255,20 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "workspace-manage-config": "write"
         }
       }
     },
@@ -13506,7 +14491,7 @@
           "Project Activities"
         ],
         "summary": "Returns all activities of the project with the specified id.",
-        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\n            This contains changes to first-level properties of the project, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\n            This does not include activities of sub-entities, like tasks of a project or comments on a task.",
+        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\n            This contains changes to first-level properties of the project, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\n            This does not include activities of sub-entities, like tasks of a project or comments on a task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectActivities",
         "parameters": [
           {
@@ -13576,6 +14561,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -13818,7 +14816,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all files of the project including the ones of tasks linked to that project, with the specified id.",
+        "description": "Returns all files of the project including the ones of tasks linked to that project, with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetAllProjectFiles",
         "parameters": [
           {
@@ -13858,6 +14856,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15067,7 +16078,7 @@
           "ProjectComments"
         ],
         "summary": "Deletes all comments of the specified project.",
-        "description": "Deletes all comments of the specified project.",
+        "description": "Deletes all comments of the specified project.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentsByProjectNameAndProjectId",
         "parameters": [
           {
@@ -15095,6 +16106,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -15102,7 +16126,7 @@
           "ProjectComments"
         ],
         "summary": "Returns all comments of the project with the specified id.",
-        "description": "Returns all comments of the project with the specified id. The user needs read permissions on the project.",
+        "description": "Returns all comments of the project with the specified id. The user needs read permissions on the project.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentsByProjectNameAndProjectId",
         "parameters": [
           {
@@ -15162,6 +16186,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -15169,7 +16206,7 @@
           "ProjectComments"
         ],
         "summary": "Creates a new comment on the project with the specified id.",
-        "description": "Creates a new comment on the project with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check>To create a comment the user must have at least `read` permissions on the specified project.</Check>",
+        "description": "Creates a new comment on the project with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">To create a comment the user must have at least `read` permissions on the specified project.</Check>",
         "operationId": "PostCommentsByProjectNameAndProjectId",
         "parameters": [
           {
@@ -15235,6 +16272,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15244,7 +16294,7 @@
           "ProjectComments"
         ],
         "summary": "Deletes the comment with the specified id on the project with the specified id.",
-        "description": "Deletes the comment with the specified id on the project with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
+        "description": "Deletes the comment with the specified id on the project with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
@@ -15292,6 +16342,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -15299,7 +16362,7 @@
           "ProjectComments"
         ],
         "summary": "Returns the comment with the specified id of the project with the specified id.",
-        "description": "Returns the comment with the specified id of the project with the specified id.",
+        "description": "Returns the comment with the specified id of the project with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
@@ -15344,6 +16407,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -15351,7 +16427,7 @@
           "ProjectComments"
         ],
         "summary": "Updates the comment with the specified id on the project with the specified id.",
-        "description": "<Check>To update a comment the user must either have at least `read` permissions on the specified project, be the creator of the comment or be admin.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">To update a comment the user must either have at least `read` permissions on the specified project, be the creator of the comment or be admin.</Check>",
         "operationId": "PutCommentByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
@@ -15417,6 +16493,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15426,7 +16515,7 @@
           "ProjectComments"
         ],
         "summary": "Updates the reactions of the comment with the specified id on the project with the specified id.",
-        "description": "<Check>To update a reaction of a comment the user must have at least `read` permissions on the specified project.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">To update a reaction of a comment the user must have at least `read` permissions on the specified project.</Check>",
         "operationId": "PostCommentReactByProjectNameAndProjectIdAndCommentId",
         "parameters": [
           {
@@ -15485,6 +16574,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15934,7 +17036,7 @@
           "ProjectFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -15980,6 +17082,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -15989,7 +17104,7 @@
           "ProjectFiles"
         ],
         "summary": "Deletes the files of the specified project.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteProjectFiles",
         "parameters": [
           {
@@ -16007,6 +17122,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -16014,7 +17142,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns all files of the project with the specified id.",
-        "description": "Returns all file metadata of the project with the specified id.",
+        "description": "Returns all file metadata of the project with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectFiles",
         "parameters": [
           {
@@ -16054,6 +17182,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -16061,7 +17202,7 @@
           "ProjectFiles"
         ],
         "summary": "Creates a new project file for the project with the specified id..",
-        "description": "Uploads a new project file for the project with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new project file for the project with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateProjectFile",
         "parameters": [
           {
@@ -16112,6 +17253,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16121,7 +17275,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file project from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file project from the uploaded file by providing the upload id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostUploadByUploadId",
         "parameters": [
           {
@@ -16167,6 +17321,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16176,7 +17343,7 @@
           "ProjectFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateProjectFileByUrl",
         "parameters": [
           {
@@ -16216,6 +17383,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16225,7 +17405,7 @@
           "ProjectFiles"
         ],
         "summary": "Deletes the project file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteProjectFile",
         "parameters": [
           {
@@ -16253,6 +17433,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -16260,7 +17453,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns the file with the specified id of the project with the specified id.",
-        "description": "Returns the file metadata of the project with the specified id.",
+        "description": "Returns the file metadata of the project with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectFile",
         "parameters": [
           {
@@ -16295,6 +17488,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -16302,7 +17508,7 @@
           "ProjectFiles"
         ],
         "summary": "Updates the metadata of the project file with the specified id.",
-        "description": "Updates the metadata of the project file with the specified id.",
+        "description": "Updates the metadata of the project file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateProjectFile",
         "parameters": [
           {
@@ -16352,6 +17558,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16361,7 +17580,7 @@
           "ProjectFiles"
         ],
         "summary": "Changes the project this file belongs to.",
-        "description": "Changes the project this file belongs to.\nSwitch to the specified project or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the project this file belongs to.\nSwitch to the specified project or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeProject",
         "parameters": [
           {
@@ -16411,6 +17630,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16420,7 +17652,7 @@
           "ProjectFiles"
         ],
         "summary": "Copies the file to a new project.",
-        "description": "Copies the file to a new project (meta and content).",
+        "description": "Copies the file to a new project (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToProject",
         "parameters": [
           {
@@ -16470,6 +17702,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16479,7 +17724,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns the content of the project file with the specified id.",
-        "description": "Returns the content of the project file. Uses the latest file version.\nIf the project file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the project file. Uses the latest file version.\nIf the project file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectFileContent",
         "parameters": [
           {
@@ -16541,6 +17786,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16550,7 +17808,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the project file. Uses the latest file version.",
+        "description": "Returns the content of the project file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectFileContent",
         "parameters": [
           {
@@ -16595,6 +17853,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16604,7 +17875,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -16639,6 +17910,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16648,7 +17932,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns all file versions of the specified project file.",
-        "description": "Returns all file versions of the specified project file.",
+        "description": "Returns all file versions of the specified project file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectFileVersions",
         "parameters": [
           {
@@ -16698,6 +17982,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -16705,7 +18002,7 @@
           "ProjectFiles"
         ],
         "summary": "Uploads a new version of the project file with the specified id.",
-        "description": "Uploads a new version of an project file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an project file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateProjectFileVersion",
         "parameters": [
           {
@@ -16766,6 +18063,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16775,7 +18085,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns the project file version with the specified id.",
-        "description": "Returns the project file version with the specified id.",
+        "description": "Returns the project file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectFileVersion",
         "parameters": [
           {
@@ -16820,6 +18130,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -16829,7 +18152,7 @@
           "ProjectFiles"
         ],
         "summary": "Returns the content of the project file version with the specified id.",
-        "description": "Returns the content of the project file version with the specified id.",
+        "description": "Returns the content of the project file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectFileVersionContent",
         "parameters": [
           {
@@ -16874,6 +18197,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -19909,7 +21245,7 @@
           "TimeEntries"
         ],
         "summary": "Returns all time entries of the specified project.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTimeEntries",
         "parameters": [
           {
@@ -19949,6 +21285,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23399,7 +24748,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -23445,6 +24794,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23454,7 +24816,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Deletes the files of the specified projecttemplate.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteProjectTemplateFiles",
         "parameters": [
           {
@@ -23472,6 +24834,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -23479,7 +24854,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns all files of the projecttemplate with the specified id.",
-        "description": "Returns all file metadata of the projecttemplate with the specified id.",
+        "description": "Returns all file metadata of the projecttemplate with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateFiles",
         "parameters": [
           {
@@ -23519,6 +24894,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -23526,7 +24914,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Creates a new projecttemplate file for the projecttemplate with the specified id..",
-        "description": "Uploads a new projecttemplate file for the projecttemplate with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new projecttemplate file for the projecttemplate with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateProjectTemplateFile",
         "parameters": [
           {
@@ -23577,6 +24965,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23586,7 +24987,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateProjectTemplateFileByUrl",
         "parameters": [
           {
@@ -23626,6 +25027,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23635,7 +25049,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Deletes the projecttemplate file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteProjectTemplateFile",
         "parameters": [
           {
@@ -23663,6 +25077,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -23670,7 +25097,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns the file with the specified id of the projecttemplate with the specified id.",
-        "description": "Returns the file metadata of the projecttemplate with the specified id.",
+        "description": "Returns the file metadata of the projecttemplate with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateFile",
         "parameters": [
           {
@@ -23705,6 +25132,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -23712,7 +25152,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Updates the metadata of the projecttemplate file with the specified id.",
-        "description": "Updates the metadata of the projecttemplate file with the specified id.",
+        "description": "Updates the metadata of the projecttemplate file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateProjectTemplateFile",
         "parameters": [
           {
@@ -23762,6 +25202,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23771,7 +25224,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Changes the projecttemplate this file belongs to.",
-        "description": "Changes the projecttemplate this file belongs to.\nSwitch to the specified projecttemplate or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the projecttemplate this file belongs to.\nSwitch to the specified projecttemplate or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeProjectTemplate",
         "parameters": [
           {
@@ -23821,6 +25274,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23830,7 +25296,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Copies the file to a new projecttemplate.",
-        "description": "Copies the file to a new projecttemplate (meta and content).",
+        "description": "Copies the file to a new projecttemplate (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToProjectTemplate",
         "parameters": [
           {
@@ -23880,6 +25346,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23889,7 +25368,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns the content of the projecttemplate file with the specified id.",
-        "description": "Returns the content of the projecttemplate file. Uses the latest file version.\nIf the projecttemplate file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the projecttemplate file. Uses the latest file version.\nIf the projecttemplate file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateFileContent",
         "parameters": [
           {
@@ -23951,6 +25430,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -23960,7 +25452,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the projecttemplate file. Uses the latest file version.",
+        "description": "Returns the content of the projecttemplate file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateFileContent",
         "parameters": [
           {
@@ -24005,6 +25497,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -24014,7 +25519,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -24049,6 +25554,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -24058,7 +25576,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns all file versions of the specified projecttemplate file.",
-        "description": "Returns all file versions of the specified projecttemplate file.",
+        "description": "Returns all file versions of the specified projecttemplate file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateFileVersions",
         "parameters": [
           {
@@ -24108,6 +25626,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -24115,7 +25646,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Uploads a new version of the projecttemplate file with the specified id.",
-        "description": "Uploads a new version of an projecttemplate file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an projecttemplate file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateProjectTemplateFileVersion",
         "parameters": [
           {
@@ -24176,6 +25707,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -24185,7 +25729,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns the projecttemplate file version with the specified id.",
-        "description": "Returns the projecttemplate file version with the specified id.",
+        "description": "Returns the projecttemplate file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateFileVersion",
         "parameters": [
           {
@@ -24230,6 +25774,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -24239,7 +25796,7 @@
           "ProjectTemplateFiles"
         ],
         "summary": "Returns the content of the projecttemplate file version with the specified id.",
-        "description": "Returns the content of the projecttemplate file version with the specified id.",
+        "description": "Returns the content of the projecttemplate file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateFileVersionContent",
         "parameters": [
           {
@@ -24284,6 +25841,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -29263,7 +30833,7 @@
           "SharedTags"
         ],
         "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "operationId": "PostTagsBatchByTaskNameAndOperation",
         "parameters": [
           {
@@ -29325,6 +30895,20 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "workspace-manage-config": "write"
         }
       }
     },
@@ -29540,7 +31124,7 @@
           "Task Activities"
         ],
         "summary": "Returns all activities of the task with the specified id.",
-        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\n            This contains changes to first-level properties of the task, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\n            This does not include activities of sub-entities, like tasks of a project or comments on a task.",
+        "description": "The activities contain information about the type of the activity, which property was changed and by whom.\r\n            This contains changes to first-level properties of the task, like name, description, status, etc., as well as several related entities, such as tags, assignments, etc.\r\n            This does not include activities of sub-entities, like tasks of a project or comments on a task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskActivities",
         "parameters": [
           {
@@ -29610,6 +31194,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -30160,7 +31757,7 @@
           "TaskComments"
         ],
         "summary": "Deletes all comments of the specified task.",
-        "description": "Deletes all comments of the specified task.",
+        "description": "Deletes all comments of the specified task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentsByTaskNameAndTaskId",
         "parameters": [
           {
@@ -30188,6 +31785,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -30195,7 +31805,7 @@
           "TaskComments"
         ],
         "summary": "Returns all comments of the task with the specified id.",
-        "description": "Returns all comments of the task with the specified id. The user needs read permissions on the task.",
+        "description": "Returns all comments of the task with the specified id. The user needs read permissions on the task.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentsByTaskNameAndTaskId",
         "parameters": [
           {
@@ -30255,6 +31865,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -30262,7 +31885,7 @@
           "TaskComments"
         ],
         "summary": "Creates a new comment on the task with the specified id.",
-        "description": "Creates a new comment on the task with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check>To create a comment the user must have at least `read` permissions on the specified task.</Check>",
+        "description": "Creates a new comment on the task with the specified id.\r\n            A user can only create a comment for him/herself, except for admins and api users.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">To create a comment the user must have at least `read` permissions on the specified task.</Check>",
         "operationId": "PostCommentsByTaskNameAndTaskId",
         "parameters": [
           {
@@ -30328,6 +31951,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -30337,7 +31973,7 @@
           "TaskComments"
         ],
         "summary": "Deletes the comment with the specified id on the task with the specified id.",
-        "description": "Deletes the comment with the specified id on the task with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.",
+        "description": "Deletes the comment with the specified id on the task with the specified id.\r\n            The delete includes the reactions of the comment.\r\n            If there are any replies to the comment, they will be deleted as well.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteCommentByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
@@ -30385,6 +32021,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -30392,7 +32041,7 @@
           "TaskComments"
         ],
         "summary": "Returns the comment with the specified id of the task with the specified id.",
-        "description": "Returns the comment with the specified id of the task with the specified id.",
+        "description": "Returns the comment with the specified id of the task with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetCommentByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
@@ -30437,6 +32086,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -30444,7 +32106,7 @@
           "TaskComments"
         ],
         "summary": "Updates the comment with the specified id on the task with the specified id.",
-        "description": "<Check>To update a comment the user must either have at least `read` permissions on the specified task, be the creator of the comment or be admin.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">To update a comment the user must either have at least `read` permissions on the specified task, be the creator of the comment or be admin.</Check>",
         "operationId": "PutCommentByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
@@ -30510,6 +32172,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -30519,7 +32194,7 @@
           "TaskComments"
         ],
         "summary": "Updates the reactions of the comment with the specified id on the task with the specified id.",
-        "description": "<Check>To update a reaction of a comment the user must have at least `read` permissions on the specified task.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">To update a reaction of a comment the user must have at least `read` permissions on the specified task.</Check>",
         "operationId": "PostCommentReactByTaskNameAndTaskIdAndCommentId",
         "parameters": [
           {
@@ -30578,6 +32253,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -30791,7 +32479,7 @@
           "TaskFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -30837,6 +32525,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -30846,7 +32547,7 @@
           "TaskFiles"
         ],
         "summary": "Deletes the files of the specified task.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteTaskFiles",
         "parameters": [
           {
@@ -30864,6 +32565,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -30871,7 +32585,7 @@
           "TaskFiles"
         ],
         "summary": "Returns all files of the task with the specified id.",
-        "description": "Returns all file metadata of the task with the specified id.",
+        "description": "Returns all file metadata of the task with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskFiles",
         "parameters": [
           {
@@ -30911,6 +32625,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -30918,7 +32645,7 @@
           "TaskFiles"
         ],
         "summary": "Creates a new task file for the task with the specified id..",
-        "description": "Uploads a new task file for the task with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new task file for the task with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateTaskFile",
         "parameters": [
           {
@@ -30969,6 +32696,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -30978,7 +32718,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file task from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file task from the uploaded file by providing the upload id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostUploadByUploadId",
         "parameters": [
           {
@@ -31024,6 +32764,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31033,7 +32786,7 @@
           "TaskFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateTaskFileByUrl",
         "parameters": [
           {
@@ -31073,6 +32826,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31082,7 +32848,7 @@
           "TaskFiles"
         ],
         "summary": "Deletes the task file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteTaskFile",
         "parameters": [
           {
@@ -31110,6 +32876,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -31117,7 +32896,7 @@
           "TaskFiles"
         ],
         "summary": "Returns the file with the specified id of the task with the specified id.",
-        "description": "Returns the file metadata of the task with the specified id.",
+        "description": "Returns the file metadata of the task with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskFile",
         "parameters": [
           {
@@ -31152,6 +32931,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -31159,7 +32951,7 @@
           "TaskFiles"
         ],
         "summary": "Updates the metadata of the task file with the specified id.",
-        "description": "Updates the metadata of the task file with the specified id.",
+        "description": "Updates the metadata of the task file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateTaskFile",
         "parameters": [
           {
@@ -31209,6 +33001,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31218,7 +33023,7 @@
           "TaskFiles"
         ],
         "summary": "Changes the task this file belongs to.",
-        "description": "Changes the task this file belongs to.\nSwitch to the specified task or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the task this file belongs to.\nSwitch to the specified task or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeTask",
         "parameters": [
           {
@@ -31268,6 +33073,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31277,7 +33095,7 @@
           "TaskFiles"
         ],
         "summary": "Copies the file to a new task.",
-        "description": "Copies the file to a new task (meta and content).",
+        "description": "Copies the file to a new task (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToTask",
         "parameters": [
           {
@@ -31327,6 +33145,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31336,7 +33167,7 @@
           "TaskFiles"
         ],
         "summary": "Returns the content of the task file with the specified id.",
-        "description": "Returns the content of the task file. Uses the latest file version.\nIf the task file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the task file. Uses the latest file version.\nIf the task file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskFileContent",
         "parameters": [
           {
@@ -31398,6 +33229,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31407,7 +33251,7 @@
           "TaskFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the task file. Uses the latest file version.",
+        "description": "Returns the content of the task file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskFileContent",
         "parameters": [
           {
@@ -31452,6 +33296,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31461,7 +33318,7 @@
           "TaskFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -31496,6 +33353,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31505,7 +33375,7 @@
           "TaskFiles"
         ],
         "summary": "Returns all file versions of the specified task file.",
-        "description": "Returns all file versions of the specified task file.",
+        "description": "Returns all file versions of the specified task file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskFileVersions",
         "parameters": [
           {
@@ -31555,6 +33425,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -31562,7 +33445,7 @@
           "TaskFiles"
         ],
         "summary": "Uploads a new version of the task file with the specified id.",
-        "description": "Uploads a new version of an task file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an task file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateTaskFileVersion",
         "parameters": [
           {
@@ -31623,6 +33506,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31632,7 +33528,7 @@
           "TaskFiles"
         ],
         "summary": "Returns the task file version with the specified id.",
-        "description": "Returns the task file version with the specified id.",
+        "description": "Returns the task file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskFileVersion",
         "parameters": [
           {
@@ -31677,6 +33573,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -31686,7 +33595,7 @@
           "TaskFiles"
         ],
         "summary": "Returns the content of the task file version with the specified id.",
-        "description": "Returns the content of the task file version with the specified id.",
+        "description": "Returns the content of the task file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskFileVersionContent",
         "parameters": [
           {
@@ -31731,6 +33640,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -32261,7 +34183,7 @@
           "TimeEntries"
         ],
         "summary": "Returns all time entries of the specified task.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTimeEntries",
         "parameters": [
           {
@@ -32301,6 +34223,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33405,7 +35340,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -33451,6 +35386,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33460,7 +35408,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Deletes the files of the specified tasktemplate.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteTaskTemplateFiles",
         "parameters": [
           {
@@ -33478,6 +35426,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -33485,7 +35446,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns all files of the tasktemplate with the specified id.",
-        "description": "Returns all file metadata of the tasktemplate with the specified id.",
+        "description": "Returns all file metadata of the tasktemplate with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTemplateFiles",
         "parameters": [
           {
@@ -33525,6 +35486,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -33532,7 +35506,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Creates a new tasktemplate file for the tasktemplate with the specified id..",
-        "description": "Uploads a new tasktemplate file for the tasktemplate with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new tasktemplate file for the tasktemplate with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateTaskTemplateFile",
         "parameters": [
           {
@@ -33583,6 +35557,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33592,7 +35579,7 @@
           "FileUpload"
         ],
         "summary": "Creates a file from an upload id.",
-        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file tasktemplate from the uploaded file by providing the upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file tasktemplate from the uploaded file by providing the upload id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostUploadByUploadId",
         "parameters": [
           {
@@ -33638,6 +35625,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33647,7 +35647,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateTaskTemplateFileByUrl",
         "parameters": [
           {
@@ -33687,6 +35687,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33696,7 +35709,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Deletes the tasktemplate file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteTaskTemplateFile",
         "parameters": [
           {
@@ -33724,6 +35737,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -33731,7 +35757,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns the file with the specified id of the tasktemplate with the specified id.",
-        "description": "Returns the file metadata of the tasktemplate with the specified id.",
+        "description": "Returns the file metadata of the tasktemplate with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTemplateFile",
         "parameters": [
           {
@@ -33766,6 +35792,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -33773,7 +35812,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Updates the metadata of the tasktemplate file with the specified id.",
-        "description": "Updates the metadata of the tasktemplate file with the specified id.",
+        "description": "Updates the metadata of the tasktemplate file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateTaskTemplateFile",
         "parameters": [
           {
@@ -33823,6 +35862,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33832,7 +35884,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Changes the tasktemplate this file belongs to.",
-        "description": "Changes the tasktemplate this file belongs to.\nSwitch to the specified tasktemplate or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the tasktemplate this file belongs to.\nSwitch to the specified tasktemplate or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeTaskTemplate",
         "parameters": [
           {
@@ -33882,6 +35934,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33891,7 +35956,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Copies the file to a new tasktemplate.",
-        "description": "Copies the file to a new tasktemplate (meta and content).",
+        "description": "Copies the file to a new tasktemplate (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToTaskTemplate",
         "parameters": [
           {
@@ -33941,6 +36006,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -33950,7 +36028,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns the content of the tasktemplate file with the specified id.",
-        "description": "Returns the content of the tasktemplate file. Uses the latest file version.\nIf the tasktemplate file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the tasktemplate file. Uses the latest file version.\nIf the tasktemplate file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTemplateFileContent",
         "parameters": [
           {
@@ -34012,6 +36090,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -34021,7 +36112,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the tasktemplate file. Uses the latest file version.",
+        "description": "Returns the content of the tasktemplate file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTemplateFileContent",
         "parameters": [
           {
@@ -34066,6 +36157,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -34075,7 +36179,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -34110,6 +36214,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -34119,7 +36236,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns all file versions of the specified tasktemplate file.",
-        "description": "Returns all file versions of the specified tasktemplate file.",
+        "description": "Returns all file versions of the specified tasktemplate file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTemplateFileVersions",
         "parameters": [
           {
@@ -34169,6 +36286,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -34176,7 +36306,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Uploads a new version of the tasktemplate file with the specified id.",
-        "description": "Uploads a new version of an tasktemplate file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an tasktemplate file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateTaskTemplateFileVersion",
         "parameters": [
           {
@@ -34237,6 +36367,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -34246,7 +36389,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns the tasktemplate file version with the specified id.",
-        "description": "Returns the tasktemplate file version with the specified id.",
+        "description": "Returns the tasktemplate file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTemplateFileVersion",
         "parameters": [
           {
@@ -34291,6 +36434,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -34300,7 +36456,7 @@
           "TaskTemplateFiles"
         ],
         "summary": "Returns the content of the tasktemplate file version with the specified id.",
-        "description": "Returns the content of the tasktemplate file version with the specified id.",
+        "description": "Returns the content of the tasktemplate file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTemplateFileVersionContent",
         "parameters": [
           {
@@ -34345,6 +36501,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -37413,7 +39582,7 @@
           "SharedTags"
         ],
         "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
         "operationId": "PostTagsBatchByUserNameAndOperation",
         "parameters": [
           {
@@ -37475,6 +39644,20 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "workspace-manage-config": "write"
         }
       }
     },
@@ -38953,7 +41136,7 @@
           "UserFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -38999,6 +41182,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39008,7 +41204,7 @@
           "UserFiles"
         ],
         "summary": "Deletes the files of the specified user.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteUserFiles",
         "parameters": [
           {
@@ -39026,6 +41222,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -39033,7 +41242,7 @@
           "UserFiles"
         ],
         "summary": "Returns all files of the user with the specified id.",
-        "description": "Returns all file metadata of the user with the specified id.",
+        "description": "Returns all file metadata of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetUserFiles",
         "parameters": [
           {
@@ -39073,6 +41282,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -39080,7 +41302,7 @@
           "UserFiles"
         ],
         "summary": "Creates a new user file for the user with the specified id..",
-        "description": "Uploads a new user file for the user with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new user file for the user with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateUserFile",
         "parameters": [
           {
@@ -39131,6 +41353,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39140,7 +41375,7 @@
           "UserFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateUserFileByUrl",
         "parameters": [
           {
@@ -39180,6 +41415,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39189,7 +41437,7 @@
           "UserFiles"
         ],
         "summary": "Deletes the user file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteUserFile",
         "parameters": [
           {
@@ -39217,6 +41465,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -39224,7 +41485,7 @@
           "UserFiles"
         ],
         "summary": "Returns the file with the specified id of the user with the specified id.",
-        "description": "Returns the file metadata of the user with the specified id.",
+        "description": "Returns the file metadata of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetUserFile",
         "parameters": [
           {
@@ -39259,6 +41520,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -39266,7 +41540,7 @@
           "UserFiles"
         ],
         "summary": "Updates the metadata of the user file with the specified id.",
-        "description": "Updates the metadata of the user file with the specified id.",
+        "description": "Updates the metadata of the user file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateUserFile",
         "parameters": [
           {
@@ -39316,6 +41590,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39325,7 +41612,7 @@
           "UserFiles"
         ],
         "summary": "Changes the user this file belongs to.",
-        "description": "Changes the user this file belongs to.\nSwitch to the specified user or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the user this file belongs to.\nSwitch to the specified user or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeUser",
         "parameters": [
           {
@@ -39375,6 +41662,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39384,7 +41684,7 @@
           "UserFiles"
         ],
         "summary": "Copies the file to a new user.",
-        "description": "Copies the file to a new user (meta and content).",
+        "description": "Copies the file to a new user (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToUser",
         "parameters": [
           {
@@ -39434,6 +41734,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39443,7 +41756,7 @@
           "UserFiles"
         ],
         "summary": "Returns the content of the user file with the specified id.",
-        "description": "Returns the content of the user file. Uses the latest file version.\nIf the user file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the user file. Uses the latest file version.\nIf the user file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetUserFileContent",
         "parameters": [
           {
@@ -39505,6 +41818,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39514,7 +41840,7 @@
           "UserFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the user file. Uses the latest file version.",
+        "description": "Returns the content of the user file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetUserFileContent",
         "parameters": [
           {
@@ -39559,6 +41885,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39568,7 +41907,7 @@
           "UserFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -39603,6 +41942,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39612,7 +41964,7 @@
           "UserFiles"
         ],
         "summary": "Returns all file versions of the specified user file.",
-        "description": "Returns all file versions of the specified user file.",
+        "description": "Returns all file versions of the specified user file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetUserFileVersions",
         "parameters": [
           {
@@ -39662,6 +42014,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -39669,7 +42034,7 @@
           "UserFiles"
         ],
         "summary": "Uploads a new version of the user file with the specified id.",
-        "description": "Uploads a new version of an user file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an user file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateUserFileVersion",
         "parameters": [
           {
@@ -39730,6 +42095,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39739,7 +42117,7 @@
           "UserFiles"
         ],
         "summary": "Returns the user file version with the specified id.",
-        "description": "Returns the user file version with the specified id.",
+        "description": "Returns the user file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetUserFileVersion",
         "parameters": [
           {
@@ -39784,6 +42162,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -39793,7 +42184,7 @@
           "UserFiles"
         ],
         "summary": "Returns the content of the user file version with the specified id.",
-        "description": "Returns the content of the user file version with the specified id.",
+        "description": "Returns the content of the user file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetUserFileVersionContent",
         "parameters": [
           {
@@ -39838,6 +42229,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -41881,7 +44285,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Endpoint to batch create external files without uploading.",
-        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.",
+        "description": "Endpoint to create file infos with batch operation.\nCreated file infos don't have a version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateExternalFiles",
         "parameters": [
           {
@@ -41927,6 +44331,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -41936,7 +44353,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Deletes the files of the specified workspace.",
-        "description": "Deletes the metadata and the different versions of the files.",
+        "description": "Deletes the metadata and the different versions of the files.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteWorkspaceFiles",
         "parameters": [
           {
@@ -41954,6 +44371,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -41961,7 +44391,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns all files of the workspace with the specified id.",
-        "description": "Returns all file metadata of the workspace with the specified id.",
+        "description": "Returns all file metadata of the workspace with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetWorkspaceFiles",
         "parameters": [
           {
@@ -42001,6 +44431,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -42008,7 +44451,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Creates a new workspace file for the workspace with the specified id..",
-        "description": "Uploads a new workspace file for the workspace with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new workspace file for the workspace with the specified id.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateWorkspaceFile",
         "parameters": [
           {
@@ -42059,6 +44502,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42068,7 +44524,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Uploads a new file by providing an url.",
-        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.",
+        "description": "The file needs to be a public available url.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateWorkspaceFileByUrl",
         "parameters": [
           {
@@ -42108,6 +44564,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42117,7 +44586,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Deletes the workspace file with the specified id.",
-        "description": "Deletes the metadata and the different versions of the file.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "DeleteWorkspaceFile",
         "parameters": [
           {
@@ -42145,6 +44614,19 @@
           "204": {
             "description": "No Content"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "get": {
@@ -42152,7 +44634,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns the file with the specified id of the workspace with the specified id.",
-        "description": "Returns the file metadata of the workspace with the specified id.",
+        "description": "Returns the file metadata of the workspace with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetWorkspaceFile",
         "parameters": [
           {
@@ -42187,6 +44669,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "put": {
@@ -42194,7 +44689,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Updates the metadata of the workspace file with the specified id.",
-        "description": "Updates the metadata of the workspace file with the specified id.",
+        "description": "Updates the metadata of the workspace file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "UpdateWorkspaceFile",
         "parameters": [
           {
@@ -42244,6 +44739,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42253,7 +44761,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Changes the workspace this file belongs to.",
-        "description": "Changes the workspace this file belongs to.\nSwitch to the specified workspace or to a global file\nif the 'EntityId' of the model is set to null.",
+        "description": "Changes the workspace this file belongs to.\nSwitch to the specified workspace or to a global file\nif the 'EntityId' of the model is set to null.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "ChangeWorkspace",
         "parameters": [
           {
@@ -42303,6 +44811,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42312,7 +44833,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Copies the file to a new workspace.",
-        "description": "Copies the file to a new workspace (meta and content).",
+        "description": "Copies the file to a new workspace (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CopyToWorkspace",
         "parameters": [
           {
@@ -42362,6 +44883,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42371,7 +44905,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns the content of the workspace file with the specified id.",
-        "description": "Returns the content of the workspace file. Uses the latest file version.\nIf the workspace file is an image and the width and height are set,\nthe image will be resized before it is returned.",
+        "description": "Returns the content of the workspace file. Uses the latest file version.\nIf the workspace file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetWorkspaceFileContent",
         "parameters": [
           {
@@ -42433,6 +44967,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42442,7 +44989,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns the content of the file with the specified id as pdf.\ntype or conversion not possible.",
-        "description": "Returns the content of the workspace file. Uses the latest file version.",
+        "description": "Returns the content of the workspace file. Uses the latest file version.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetWorkspaceFileContent",
         "parameters": [
           {
@@ -42487,6 +45034,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42496,7 +45056,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns an url to share the file.",
-        "description": "Returns a url to share the file.",
+        "description": "Returns a url to share the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetPublicToken",
         "parameters": [
           {
@@ -42531,6 +45091,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42540,7 +45113,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns all file versions of the specified workspace file.",
-        "description": "Returns all file versions of the specified workspace file.",
+        "description": "Returns all file versions of the specified workspace file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetWorkspaceFileVersions",
         "parameters": [
           {
@@ -42590,6 +45163,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       },
       "post": {
@@ -42597,7 +45183,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Uploads a new version of the workspace file with the specified id.",
-        "description": "Uploads a new version of an workspace file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.",
+        "description": "Uploads a new version of an workspace file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "CreateWorkspaceFileVersion",
         "parameters": [
           {
@@ -42658,6 +45244,19 @@
           "400": {
             "description": "Bad Request"
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42667,7 +45266,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns the workspace file version with the specified id.",
-        "description": "Returns the workspace file version with the specified id.",
+        "description": "Returns the workspace file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetWorkspaceFileVersion",
         "parameters": [
           {
@@ -42712,6 +45311,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -42721,7 +45333,7 @@
           "WorkspaceFiles"
         ],
         "summary": "Returns the content of the workspace file version with the specified id.",
-        "description": "Returns the content of the workspace file version with the specified id.",
+        "description": "Returns the content of the workspace file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetWorkspaceFileVersionContent",
         "parameters": [
           {
@@ -42766,6 +45378,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     }
@@ -47539,6 +50164,55 @@
           "userId": {
             "type": "string",
             "description": "The id of the user this contributor references.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CopyProjectForm": {
+        "type": "object",
+        "properties": {
+          "copyProjectFiles": {
+            "type": "boolean"
+          },
+          "copyProjectDocuments": {
+            "type": "boolean"
+          },
+          "copyProjectMembers": {
+            "type": "boolean"
+          },
+          "copyTaskAssignees": {
+            "type": "boolean"
+          },
+          "copyTaskStatuses": {
+            "type": "boolean"
+          },
+          "nameOverride": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "operationId": {
+            "type": "string",
+            "description": "A unique id to track the copy operation, provided by the client.\nWill be returned in the websocket events related to this async process.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CopyProjectResponse": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "operationId": {
+            "type": "string",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }

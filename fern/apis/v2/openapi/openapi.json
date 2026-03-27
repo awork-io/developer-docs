@@ -323,7 +323,7 @@
           "TimeEntries"
         ],
         "summary": "Returns all time entries of the specified project.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTimeEntriesV2",
         "parameters": [
           {
@@ -363,6 +363,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -372,7 +385,7 @@
           "TimeEntries"
         ],
         "summary": "Returns all time entries of the specified task.",
-        "description": "",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTaskTimeEntriesV2",
         "parameters": [
           {
@@ -412,6 +425,19 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v2"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
