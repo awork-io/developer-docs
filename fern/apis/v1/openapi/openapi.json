@@ -212,13 +212,13 @@
       }
     },
     "/absenceregions/me/assign": {
-      "put": {
+      "post": {
         "tags": [
           "AbsenceRegions"
         ],
         "summary": "Assign/remove current user to/from an absence region.",
         "description": "Assigns or removes the current user to/from an absence region.\r\n            A user can be assigned to only one absence region.\r\n            If a user is already assigned to an absence region, they will be removed from the previous one and assigned to the new one.\r\n            Providing a null region id will remove the user from any absence region.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
-        "operationId": "PutMeAbsenceRegionsAssign",
+        "operationId": "PostMeAbsenceRegionsAssign",
         "requestBody": {
           "description": "The model to assign or unassign the current user to/from an absence region.",
           "content": {
@@ -269,9 +269,126 @@
           "admin": "true",
           "user-planning-data": "write"
         }
+      },
+      "put": {
+        "tags": [
+          "AbsenceRegions"
+        ],
+        "summary": "Assign/remove current user to/from an absence region.",
+        "description": "Assigns or removes the current user to/from an absence region.\r\n            A user can be assigned to only one absence region.\r\n            If a user is already assigned to an absence region, they will be removed from the previous one and assigned to the new one.\r\n            Providing a null region id will remove the user from any absence region.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "operationId": "PutMeAbsenceRegionsAssign",
+        "requestBody": {
+          "description": "The model to assign or unassign the current user to/from an absence region.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignUserToAbsenceRegionForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true,
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "user-planning-data": "write"
+        }
       }
     },
     "/absenceregions/users/assign": {
+      "post": {
+        "tags": [
+          "AbsenceRegions"
+        ],
+        "summary": "Assigns or unassigns users to/from an absence region.",
+        "description": "A user can be assigned to only one absence region.\r\n            If a user is already assigned to an absence region, they will be removed from the previous one and assigned to the new one.\r\n            Providing an empty list of user ids will remove all users from the absence region.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `user-planning-data:write` permissions.</Check>",
+        "operationId": "PostAbsenceRegionsUsersAssign",
+        "requestBody": {
+          "description": "The model to assign or unassign users to/from an absence region.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignUsersToAbsenceRegionForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "user-planning-data": "write"
+        }
+      },
       "put": {
         "tags": [
           "AbsenceRegions"
@@ -315,6 +432,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "oauth2": [
@@ -12561,10 +12679,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeTracking"
-                  }
+                  "$ref": "#/components/schemas/TimeTracking"
                 }
               }
             }
@@ -12574,10 +12689,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeTracking"
-                  }
+                  "$ref": "#/components/schemas/TimeTracking"
                 }
               }
             }
@@ -18429,8 +18541,8 @@
         "tags": [
           "ProjectStatuses"
         ],
-        "summary": "Returns all project statuses of the project with the specified id.\n            If the project is linked to a workflow, the workflow's project statuses are returned.",
-        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either be admin, have `project-master-data:read` permissions or be the creator of the project.</Check>",
+        "summary": "Returns all project statuses of the project with the specified id.",
+        "description": "Returns all project statuses relevant to the project with the specified id. If the project is linked to a workflow, the workflow's project statuses are returned.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must either be admin, have `project-master-data:read` permissions or be the creator of the project.</Check>",
         "operationId": "GetProjectProjectStatusesByProjectId",
         "parameters": [
           {
@@ -20812,8 +20924,8 @@
         "tags": [
           "TaskStatuses"
         ],
-        "summary": "Returns all task statuses of the project with the specified id.\n            If the project is linked to a workflow, the workflow's task statuses are returned.",
-        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-master-data:read` permissions or be assigned to a task on the specified project.</Check>",
+        "summary": "Returns all task statuses of the project with the specified id.",
+        "description": "Returns all task statuses relevant to the project with the specified id. If the project is linked to a workflow, the workflow's task statuses are returned.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have either `project-master-data:read` permissions or be assigned to a task on the specified project.</Check>",
         "operationId": "GetProjectTaskStatusesByProjectId",
         "parameters": [
           {
@@ -37991,7 +38103,7 @@
           "TimeEntries"
         ],
         "summary": "Edits multiple time entries using the specified operation.",
-        "description": "The user is only allowed to edit time entries they have permissions for.\r\n             Returns MultiStatus. Includes the list of successfully changed, not found, unauthorized, and invalid time entry ids.\r\n             Returns BadRequest if the validation of the form fails, f.e. the new type of work cannot be found.\r\n            \r\n             Supported Operations:\r\n             delete: Deletes all time entries. Only admins can delete already billed time entries.\r\n             setTypeOfWork: Changes the type of work for a list of time entries. TODO: check if only admins should be able to change\r\n             for billed.\r\n             setIsBillable: Changes the billability for a list of time entries. Already billed time entries can only be changed to\r\n             being unbillable by admins. In this case, the IsBilled flag is also set to false.\r\n             setIsBilled: Changes the billing status for a list of time entries. Only admins can change the billing status back to\r\n             unbilled for already billed time entries.\r\n             setProject: Changes the project for a list of time entries. Only admins can change the project for already billed time\r\n             entries. Setting the project unsets the previous project and task.\r\n             setTask: Changes the task for a list of time entries. Only admins can change the task for already billed time entries.\r\n             Setting the task automatically sets the project if that task is a project task.\r\n             setUser: Changes the user for a list of time entries. Only admins can change the user for already billed time entries.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "The user is only allowed to edit time entries they have permissions for.\r\n             Returns MultiStatus. Includes the list of successfully changed, not found, unauthorized, and invalid time entry ids.\r\n             Returns BadRequest if the validation of the form fails, f.e. the new type of work cannot be found.\r\n             Returns NotFound if the operation route value is not supported.\r\n            \r\n             Supported Operations:\r\n             <ul>\r\n  <li>\r\n    <i>delete</i>: Deletes all time entries. Only admins can delete already billed time entries.</li>\r\n  <li>\r\n    <i>setTypeOfWork</i>: Changes the type of work for a list of time entries.</li>\r\n  <li>\r\n    <i>setIsBillable</i>: Changes the billability for a list of time entries. Already billed time entries can only be changed to\r\n             being unbillable by admins. In this case, the IsBilled flag is also set to false.</li>\r\n  <li>\r\n    <i>setIsBilled</i>: Changes the billing status for a list of time entries. Only admins can change the billing status back to\r\n             unbilled for already billed time entries.</li>\r\n  <li>\r\n    <i>setProject</i>: Changes the project for a list of time entries. Only admins can change the project for already billed time\r\n             entries. Setting the project unsets the previous project and task.</li>\r\n  <li>\r\n    <i>setTask</i>: Changes the task for a list of time entries. Only admins can change the task for already billed time entries.\r\n             Setting the task automatically sets the project if that task is a project task.</li>\r\n  <li>\r\n    <i>setUser</i>: Changes the user for a list of time entries. Only admins can change the user for already billed time entries.</li>\r\n</ul>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostTimeEntriesBatchByOperation",
         "parameters": [
           {
@@ -38028,6 +38140,16 @@
           },
           "400": {
             "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
@@ -43184,10 +43306,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeTracking"
-                  }
+                  "$ref": "#/components/schemas/TimeTracking"
                 }
               }
             }
@@ -43197,10 +43316,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeTracking"
-                  }
+                  "$ref": "#/components/schemas/TimeTracking"
                 }
               }
             }
