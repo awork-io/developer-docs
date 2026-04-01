@@ -43,10 +43,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeEntry"
-                  }
+                  "$ref": "#/components/schemas/TimeEntry"
                 }
               }
             }
@@ -56,10 +53,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeEntry"
-                  }
+                  "$ref": "#/components/schemas/TimeEntry"
                 }
               }
             }
@@ -832,10 +826,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeEntry"
-                  }
+                  "$ref": "#/components/schemas/TimeEntry"
                 }
               }
             }
@@ -845,10 +836,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeEntry"
-                  }
+                  "$ref": "#/components/schemas/TimeEntry"
                 }
               }
             }
