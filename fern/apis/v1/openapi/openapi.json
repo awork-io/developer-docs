@@ -5246,7 +5246,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomFieldDefinition"
+                  "$ref": "#/components/schemas/CustomFieldDefinitionWithSelectionOptions"
                 }
               }
             }
@@ -50565,7 +50565,8 @@
               "coloredSelect",
               "link",
               "boolean",
-              "user"
+              "user",
+              "client"
             ],
             "type": "string",
             "description": "The type of the custom field definition.",
@@ -50744,7 +50745,8 @@
               "coloredSelect",
               "link",
               "boolean",
-              "user"
+              "user",
+              "client"
             ],
             "type": "string",
             "description": "The type of the custom field definition.",
@@ -50830,7 +50832,8 @@
               "coloredSelect",
               "link",
               "boolean",
-              "user"
+              "user",
+              "client"
             ],
             "type": "string",
             "description": "The type of the custom field definition.",
@@ -51498,6 +51501,51 @@
           }
         },
         "additionalProperties": false
+      },
+      "DeleteWorkflowForm": {
+        "type": "object",
+        "properties": {
+          "deleteOperation": {
+            "type": "string",
+            "description": "Defines how linked projects and project templates should be handled before deletion.\nSupported values are 'unlink' and 'migrate'.",
+            "nullable": true
+          },
+          "newWorkflowId": {
+            "type": "string",
+            "description": "The workflow to migrate linked projects and project templates to.\nRequired when DeleteOperation is 'migrate'.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectStatusMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectStatusMappingEntry"
+            },
+            "description": "Maps source workflow project statuses to target workflow project statuses during migration.",
+            "nullable": true
+          },
+          "taskStatusMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskStatusMappingEntry"
+            },
+            "description": "Maps source workflow task statuses to target workflow task statuses during migration.",
+            "nullable": true
+          },
+          "keepCustomFields": {
+            "type": "boolean",
+            "description": "Whether to keep existing non-workflow custom fields when migrating.\nDefault: true.",
+            "nullable": true
+          },
+          "keepCustomAutomations": {
+            "type": "boolean",
+            "description": "Whether to keep existing non-workflow automations when migrating.\nDefault: true.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The form for deleting a workflow."
       },
       "DeleteWorkflowProjectStatusForm": {
         "type": "object",
