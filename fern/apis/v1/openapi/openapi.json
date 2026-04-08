@@ -52118,6 +52118,10 @@
             "description": "The name of the document space.",
             "nullable": true
           },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this document space is coming from an external workspace (awork Connect)."
+          },
           "emoji": {
             "type": "string",
             "description": "The emoji of the document space.",
@@ -54741,6 +54745,45 @@
         "additionalProperties": false,
         "description": "This repeated model (copy of NestedTeamModel) is required to avoid a bug\nof the Automapper.Extensions.EspressionMapping library that throws an error if in the same expression\nwe apply a filter to 2 different models containing the same submodel (e.g: Teams contained in both Project, User and\nTasks))\nPlease do not remove it."
       },
+      "ObjectPagedResult": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {},
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortPropertyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "$ref": "#/components/schemas/SortOrder"
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ObjectSyncResponse": {
         "type": "object",
         "properties": {
@@ -54951,6 +54994,9 @@
             "type": "string",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean"
           },
           "workspaceAccessLevel": {
             "type": "string",
@@ -58977,6 +59023,14 @@
         },
         "additionalProperties": false,
         "description": "The simplified time tracking model."
+      },
+      "SortOrder": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "StartTimeTrackingForm": {
         "required": [
@@ -68993,6 +69047,9 @@
             "type": "string",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isExternal": {
+            "type": "boolean"
           },
           "name": {
             "type": "string",
