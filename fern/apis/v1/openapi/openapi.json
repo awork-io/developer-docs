@@ -64892,6 +64892,13 @@
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
+          "filterId": {
+            "type": "string",
+            "description": "The id of the filter that the widget is referencing.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
           "createdOn": {
             "type": "string",
             "description": "The creation date.",
@@ -64970,6 +64977,13 @@
           "entityId": {
             "type": "string",
             "description": "The id of the entity that the widget is referencing.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "filterId": {
+            "type": "string",
+            "description": "The id of the filter that the widget is referencing.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
