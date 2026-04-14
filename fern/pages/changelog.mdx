@@ -77,7 +77,7 @@ Task status example with Workflows:
 
 <CardGroup cols={2}>
   <Card title="Recommended path" icon="circle-check">
-    Use project-scoped endpoint to fetch project statuses.
+    Use project or project-template scoped endpoints to fetch statuses.
   </Card>
   <Card title="Alternative path" icon="code-branch">
     Keep using global endpoint and filter by `workflowId` or `projectId`.
@@ -88,14 +88,16 @@ Task status example with Workflows:
 #### Recommended migration path
 
 <Check title="Recommended" icon="circle-check">
-  Switch to the project-specific endpoint to fetch project statuses.
+  Switch to entity-specific endpoints to fetch statuses.
 </Check>
 
 - For project statuses, use `GET /projects/{projectId}/projectstatuses`.
 - For task statuses, use `GET /projects/{projectId}/taskstatuses`.
-- These endpoints return statuses relevant for the project, regardless of whether they are project-specific or inherited from the linked workflow.
+- For project template statuses, use `GET /projecttemplates/{projectTemplateId}/projectstatuses`.
+- For project template task statuses, use `GET /projecttemplates/{projectTemplateId}/taskstatuses`.
+- These endpoints return statuses relevant for the requested project or project template, regardless of whether they are entity-specific or inherited from the linked workflow.
+- `GET /projecttemplates` can now return nested `projectStatuses` that are inherited from the linked workflow.
 - Complete this migration before **July 31, 2026** if your workspace currently has Workflows deactivated due to ERP/custom integrations.
-- For client-side mapping, use a composite key such as `projectId + id` (or `workflowId + id`) instead of `id` alone when combining statuses from multiple projects.
 
 ```sh title="Project statuses for a specific project"
 curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5ad7a57ad/projectstatuses" \
@@ -129,8 +131,18 @@ curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5a
   -H "Authorization: Bearer {token}"
 ```
 
+```sh title="Project statuses for a specific project template"
+curl -X GET "https://api.awork.com/api/v1/projecttemplates/3e664818-9503-4ec8-9f1f-35d5ad7a57ad/projectstatuses" \
+  -H "Authorization: Bearer {token}"
+```
+
+```sh title="Task statuses for a specific project template"
+curl -X GET "https://api.awork.com/api/v1/projecttemplates/3e664818-9503-4ec8-9f1f-35d5ad7a57ad/taskstatuses" \
+  -H "Authorization: Bearer {token}"
+```
+
 <Info>
-  Project and task statuses can either have the `projectId` or `workflowId` set, depending on whether they are project or workflow specific.
+  Project and task statuses can either have the `projectId` or `workflowId` set, depending on whether they are project or workflow specific. Project template statuses can either have the `projectTemplateId` or `workflowId` set, depending on whether they are template-specific or inherited from a workflow.
 </Info>
 
 #### Alternative migration path
