@@ -3120,91 +3120,6 @@
         }
       }
     },
-    "/companies/tags/batch/{operation}": {
-      "post": {
-        "tags": [
-          "SharedTags"
-        ],
-        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostTagsBatchByCompanyNameAndOperation",
-        "parameters": [
-          {
-            "name": "operation",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagBatchOperationForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "207": {
-            "description": "Multi-Status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "workspace-manage-config": "write"
-        }
-      }
-    },
     "/companies/updatetags": {
       "post": {
         "tags": [
@@ -8516,8 +8431,8 @@
               }
             }
           },
-          "402": {
-            "description": "Payment Required",
+          "404": {
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
@@ -8611,7 +8526,7 @@
           "DocumentSpaces"
         ],
         "summary": "Updates the document space with the specified id.",
-        "description": "\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Professional` plan or higher.</Note>\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
         "operationId": "PutDocumentSpaceById",
         "parameters": [
           {
@@ -8680,9 +8595,6 @@
         ],
         "x-access": {
           "admin": "true"
-        },
-        "x-subscriptionlevel": {
-          "minimumPlan": "professional"
         }
       }
     },
@@ -14296,91 +14208,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/projects/tags/batch/{operation}": {
-      "post": {
-        "tags": [
-          "SharedTags"
-        ],
-        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostTagsBatchByProjectNameAndOperation",
-        "parameters": [
-          {
-            "name": "operation",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagBatchOperationForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "207": {
-            "description": "Multi-Status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "workspace-manage-config": "write"
         }
       }
     },
@@ -22111,7 +21938,7 @@
         "tags": [
           "ProjectTemplates"
         ],
-        "summary": "Retrieves a paginated list of all project templates with details.",
+        "summary": "Retrieves all project templates.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplates",
         "parameters": [
@@ -22161,7 +21988,7 @@
         "tags": [
           "ProjectTemplates"
         ],
-        "summary": "Creates a new project template with default statuses and task bundle.",
+        "summary": "Creates a new project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "operationId": "PostProjectTemplate",
         "requestBody": {
@@ -22386,7 +22213,7 @@
         "tags": [
           "ProjectTemplates"
         ],
-        "summary": "Deletes a project template by its ID.",
+        "summary": "Deletes a project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "operationId": "DeleteProjectTemplateById",
         "parameters": [
@@ -22425,7 +22252,7 @@
         "tags": [
           "ProjectTemplates"
         ],
-        "summary": "Retrieves a specific project template by its ID with all related details.",
+        "summary": "Retrieves a specific project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetProjectTemplateById",
         "parameters": [
@@ -22480,7 +22307,7 @@
         "tags": [
           "ProjectTemplates"
         ],
-        "summary": "Updates an existing project template with new values and configuration.",
+        "summary": "Updates an existing project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "operationId": "PutProjectTemplateById",
         "parameters": [
@@ -24055,9 +23882,67 @@
       }
     },
     "/projecttemplates/{projectTemplateId}/projectstatuses": {
+      "get": {
+        "tags": [
+          "ProjectTemplates"
+        ],
+        "summary": "Retrieves all project statuses of a project template.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetProjectTemplateProjectStatusesByProjectTemplateId",
+        "parameters": [
+          {
+            "name": "projectTemplateId",
+            "in": "path",
+            "description": "The id of the project template to retrieve statuses for.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectStatus"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
       "post": {
         "tags": [
-          "ProjectStatuses"
+          "ProjectTemplates"
         ],
         "summary": "Adds a project status to a project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
@@ -30936,91 +30821,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/tasks/tags/batch/{operation}": {
-      "post": {
-        "tags": [
-          "SharedTags"
-        ],
-        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostTagsBatchByTaskNameAndOperation",
-        "parameters": [
-          {
-            "name": "operation",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagBatchOperationForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "207": {
-            "description": "Multi-Status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "workspace-manage-config": "write"
         }
       }
     },
@@ -39695,91 +39495,6 @@
         ],
         "x-access": {
           "any": "true"
-        }
-      }
-    },
-    "/users/tags/batch/{operation}": {
-      "post": {
-        "tags": [
-          "SharedTags"
-        ],
-        "summary": "Applies a batch tag operation to all entities of the specified type in the workspace.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostTagsBatchByUserNameAndOperation",
-        "parameters": [
-          {
-            "name": "operation",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TagBatchOperationForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "207": {
-            "description": "Multi-Status",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TagBatchMultiStatusResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "admin": "true",
-          "workspace-manage-config": "write"
         }
       }
     },
@@ -57562,8 +57277,9 @@
             "items": {
               "$ref": "#/components/schemas/ProjectStatus"
             },
-            "description": "The project statuses of the template.",
-            "nullable": true
+            "description": "Deprecated. Use `GET /projectTemplates/{projectTemplateId}/projectStatuses` instead.\nThe list of project statuses associated with the template. This can be either workflow statuses or template-specific statuses depending on whether the template is linked to a workflow or not.",
+            "nullable": true,
+            "deprecated": true
           },
           "hasImage": {
             "type": "boolean",
@@ -72065,10 +71781,6 @@
     {
       "name": "Roles",
       "description": "The roles endpoints allow you to configure the permissions of users.\n            You have the possibility to manage roles and assign users to these roles."
-    },
-    {
-      "name": "SharedTags",
-      "description": "Manage shared tag batch operations across supported entity types."
     },
     {
       "name": "TaskBundles",
