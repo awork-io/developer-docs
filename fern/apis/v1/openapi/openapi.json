@@ -24226,7 +24226,7 @@
     "/projecttemplates/{projectTemplateId}/taskstatuses": {
       "get": {
         "tags": [
-          "TaskStatuses"
+          "ProjectTemplates"
         ],
         "summary": "Returns all task statuses of the project template with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
@@ -24296,7 +24296,7 @@
       },
       "post": {
         "tags": [
-          "TaskStatuses"
+          "ProjectTemplates"
         ],
         "summary": "Creates a new task status for the specified project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
@@ -24375,7 +24375,7 @@
     "/projecttemplates/{projectTemplateId}/taskstatuses/{taskStatusId}": {
       "delete": {
         "tags": [
-          "TaskStatuses"
+          "ProjectTemplates"
         ],
         "summary": "Deletes the task status of the project template with the specified id.",
         "description": "The last status of type 'todo' or 'done' cannot be deleted.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
@@ -24444,7 +24444,7 @@
       },
       "get": {
         "tags": [
-          "TaskStatuses"
+          "ProjectTemplates"
         ],
         "summary": "Returns the task status of the project template with the specified id.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
@@ -24509,7 +24509,7 @@
       },
       "put": {
         "tags": [
-          "TaskStatuses"
+          "ProjectTemplates"
         ],
         "summary": "Updates a task status for the specified project template.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
