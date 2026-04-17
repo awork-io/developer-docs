@@ -28182,7 +28182,7 @@
           }
         ],
         "requestBody": {
-          "description": "The task Bundle form payload.",
+          "description": "The task bundle form payload.",
           "content": {
             "application/json": {
               "schema": {
@@ -28844,7 +28844,7 @@
           {
             "name": "taskListTemplateId",
             "in": "path",
-            "description": "The task List Template Id.",
+            "description": "The task list template id.",
             "required": true,
             "schema": {
               "type": "string",
@@ -28909,7 +28909,7 @@
           {
             "name": "taskListTemplateId",
             "in": "path",
-            "description": "The task List Template Id.",
+            "description": "The task list template id.",
             "required": true,
             "schema": {
               "type": "string",
@@ -28918,7 +28918,7 @@
           }
         ],
         "requestBody": {
-          "description": "The task List Bundle Put form.",
+          "description": "The task list bundle put form.",
           "content": {
             "application/json": {
               "schema": {
@@ -29169,7 +29169,7 @@
           {
             "name": "taskListTemplateId",
             "in": "path",
-            "description": "The task List Template Id.",
+            "description": "The task list template id.",
             "required": true,
             "schema": {
               "type": "string",
@@ -29239,7 +29239,7 @@
           {
             "name": "taskListTemplateId",
             "in": "path",
-            "description": "The task List Template Id.",
+            "description": "The task list template id.",
             "required": true,
             "schema": {
               "type": "string",
@@ -34634,6 +34634,164 @@
         }
       }
     },
+    "/tasktemplates/deletetags": {
+      "post": {
+        "tags": [
+          "TaskTemplateTags"
+        ],
+        "summary": "Removes a tag from all task templates.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "operationId": "PostDeleteTagForAllTaskTemplates",
+        "requestBody": {
+          "description": "The model to remove the tag from all task templates.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteTagForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "task-manage-config": "write"
+        }
+      }
+    },
+    "/tasktemplates/tags": {
+      "get": {
+        "tags": [
+          "TaskTemplateTags"
+        ],
+        "summary": "Returns all tags that are currently in use by task templates.",
+        "description": "Returns all tags that are currently in use by task templates ordered by count.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTaskTemplateTags",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BaseTagModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/tasktemplates/updatetags": {
+      "post": {
+        "tags": [
+          "TaskTemplateTags"
+        ],
+        "summary": "Updates a tag globally for all task templates.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "operationId": "PostTaskTemplatesUpdateTags",
+        "requestBody": {
+          "description": "The model containing the tag updates.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TagUpdateForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "task-manage-config": "write"
+        }
+      }
+    },
     "/tasktemplates/{taskTemplateId}": {
       "get": {
         "tags": [
@@ -34688,6 +34846,91 @@
         ],
         "x-access": {
           "any": "true"
+        }
+      }
+    },
+    "/tasktemplates/{taskTemplateId}/addtags": {
+      "post": {
+        "tags": [
+          "TaskTemplateTags"
+        ],
+        "summary": "Adds a batch of tags to the task template with the specified id.",
+        "description": "The request fails if one of the tags is invalid (e.g. empty or duplicate).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "operationId": "PostCreateTaskTemplateTag",
+        "parameters": [
+          {
+            "name": "taskTemplateId",
+            "in": "path",
+            "description": "The id of the task template to add tags to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model with the tags to be added.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TagForm"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BaseTagModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "task-manage-config": "write"
         }
       }
     },
@@ -34910,7 +35153,7 @@
           {
             "name": "checklistItemTemplateId",
             "in": "path",
-            "description": "The checklist Item Template Id.",
+            "description": "The checklist item template id.",
             "required": true,
             "schema": {
               "type": "string",
@@ -35043,13 +35286,142 @@
         }
       }
     },
+    "/tasktemplates/{taskTemplateId}/deleterecurrency": {
+      "post": {
+        "tags": [
+          "TaskBundles"
+        ],
+        "summary": "Deletes recurrence information from a task template.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "operationId": "PostTaskTemplateDeleteRecurrencyByTaskTemplateId",
+        "parameters": [
+          {
+            "name": "taskTemplateId",
+            "in": "path",
+            "description": "The id of the task template.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "task-manage-config": "write"
+        }
+      }
+    },
+    "/tasktemplates/{taskTemplateId}/deletetags": {
+      "post": {
+        "tags": [
+          "TaskTemplateTags"
+        ],
+        "summary": "Removes tags from the task template with the specified id.",
+        "description": "Returns 204 NoContent if all tags have been removed successfully.\r\n            Returns 207 MultiStatus if at least one tag could not be removed, including the reasons.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "operationId": "PostDeleteTaskTemplatesTags",
+        "parameters": [
+          {
+            "name": "taskTemplateId",
+            "in": "path",
+            "description": "The id of the task template to remove tags from.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The list of tags to remove from the task template.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeleteTagForm"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "207": {
+            "description": "Multi-Status"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "task-manage-config": "write"
+        }
+      }
+    },
     "/tasktemplates/{taskTemplateId}/recurrency": {
       "get": {
         "tags": [
           "TaskBundles"
         ],
         "summary": "Gets recurrency details for a task template.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:read` permissions.</Check>",
         "operationId": "GetTaskTemplateRecurrencyByTaskTemplateId",
         "parameters": [
           {
@@ -35096,7 +35468,8 @@
           "v1"
         ],
         "x-access": {
-          "any": "true"
+          "admin": "true",
+          "task-manage-config": "read"
         }
       }
     },
@@ -35172,6 +35545,118 @@
         "x-access": {
           "admin": "true",
           "project-manage-config": "write"
+        }
+      }
+    },
+    "/tasktemplates/{taskTemplateId}/setrecurrency": {
+      "post": {
+        "tags": [
+          "TaskBundles"
+        ],
+        "summary": "Adds or updates a recurrence rule for a task template.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `task-manage-config:write` permissions.</Check>",
+        "operationId": "PostTaskTemplateSetRecurrencyByTaskTemplateId",
+        "parameters": [
+          {
+            "name": "taskTemplateId",
+            "in": "path",
+            "description": "The id of the task template.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model describing the recurrence rule to apply.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskBundleRecurrencyForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "task-manage-config": "write"
+        }
+      }
+    },
+    "/tasktemplates/{taskTemplateId}/tags": {
+      "get": {
+        "tags": [
+          "TaskTemplateTags"
+        ],
+        "summary": "Returns the tags of the task template with the specified id.",
+        "description": "Returns the tags of the task template with the specified id ordered by name.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTagsByTaskTemplateId",
+        "parameters": [
+          {
+            "name": "taskTemplateId",
+            "in": "path",
+            "description": "The id of the task template.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BaseTagModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -54460,45 +54945,6 @@
         "additionalProperties": false,
         "description": "This repeated model (copy of NestedTeamModel) is required to avoid a bug\nof the Automapper.Extensions.EspressionMapping library that throws an error if in the same expression\nwe apply a filter to 2 different models containing the same submodel (e.g: Teams contained in both Project, User and\nTasks))\nPlease do not remove it."
       },
-      "ObjectPagedResult": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {},
-            "nullable": true
-          },
-          "totalCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sortPropertyName": {
-            "type": "string",
-            "nullable": true
-          },
-          "sortOrder": {
-            "$ref": "#/components/schemas/SortOrder"
-          },
-          "nextCursor": {
-            "type": "string",
-            "nullable": true
-          },
-          "itemCount": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ObjectSyncResponse": {
         "type": "object",
         "properties": {
@@ -58739,14 +59185,6 @@
         },
         "additionalProperties": false,
         "description": "The simplified time tracking model."
-      },
-      "SortOrder": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "StartTimeTrackingForm": {
         "required": [
@@ -64429,6 +64867,82 @@
         },
         "additionalProperties": false,
         "description": "A tag model used for the timetrackings UserModelForTimeTrackings.\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
+      },
+      "UserTaskAccessValidationResult": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "expectedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actualCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "missingCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mismatchedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isValid": {
+            "type": "boolean"
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTaskAccessValidationSample"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserTaskAccessValidationSample": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "taskId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "sourceMask": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "expectedSourceMask": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "UserTeamModelForTimeTrackings": {
         "type": "object",
@@ -71817,6 +72331,10 @@
     {
       "name": "TaskTemplates",
       "description": "The task templates endpoints can be used for managing task templates within task bundles."
+    },
+    {
+      "name": "TaskTemplateTags",
+      "description": "Manage tags for task templates."
     },
     {
       "name": "TaskViews",
