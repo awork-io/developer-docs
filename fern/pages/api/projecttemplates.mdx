@@ -6,6 +6,55 @@ slug: projecttemplates
 
 Learn more about [project templates](https://support.awork.com/en/articles/5419200-project-templates).
 
+## Workflows and project templates
+
+Project templates can be connected to workflows so new projects created from that template use shared workflow statuses.
+
+The flow is:
+1. Create the project template.
+2. Link the template to a workflow.
+
+### Creating a project template
+
+```sh title="Create a project template" {4}
+curl -X POST https://api.awork.com/api/v1/projecttemplates \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Client Delivery Template"
+  }'
+```
+
+### Linking a project template to a workflow
+
+```sh title="Link template to workflow" {4}
+curl -X POST https://api.awork.com/api/v1/projecttemplates/123e4567-e89b-12d3-a456-426614174000/linkworkflow \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "workflowId": "223e4567-e89b-12d3-a456-426614174000",
+    "projectStatusMapping": [
+      {
+        "oldProjectStatusId": "323e4567-e89b-12d3-a456-426614174000",
+        "newProjectStatusId": "423e4567-e89b-12d3-a456-426614174000"
+      }
+    ],
+    "taskStatusMapping": [
+      {
+        "oldTaskStatusId": "523e4567-e89b-12d3-a456-426614174000",
+        "newTaskStatusId": "623e4567-e89b-12d3-a456-426614174000"
+      }
+    ],
+    "keepCustomFields": true,
+    "keepCustomAutomations": true
+  }'
+```
+
+### Unlinking a project template from a workflow
+
+```sh title="Unlink template from workflow"
+curl -X POST https://api.awork.com/api/v1/projecttemplates/123e4567-e89b-12d3-a456-426614174000/unlinkworkflow \
+  -H 'Content-Type: application/json'
+```
+
 ## Task Bundles
 
 **Task Bundles** (called "Task Templates" in the awork UI) are reusable containers that hold templates for tasks and task lists. They simplify recurring processes by allowing you to import a complete set of tasks and lists into projects.

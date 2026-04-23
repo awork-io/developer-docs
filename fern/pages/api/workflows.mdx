@@ -1,0 +1,99 @@
+---
+title: Workflows
+description: Workflows API Reference.
+slug: workflows
+---
+
+Workflows are reusable process definitions that let you share project statuses and task statuses across multiple projects. Instead of maintaining statuses per project, you can manage them once in a workflow and keep linked projects aligned.
+
+## How to work with workflows
+
+### Create a workflow
+
+Create a reusable workflow in your workspace.
+
+```sh title="Create a workflow"
+curl -X POST https://api.awork.com/api/v1/workflows \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Client Delivery Workflow",
+    "icon": "workflow"
+  }'
+```
+
+### Link a workflow to a project
+
+Linking applies workflow-controlled statuses to the project. If the project already has statuses, provide mappings to migrate safely.
+
+```sh title="Link workflow to a project" {4}
+curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/linkworkflow \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "workflowId": "223e4567-e89b-12d3-a456-426614174000",
+    "projectStatusMapping": [
+      {
+        "oldProjectStatusId": "323e4567-e89b-12d3-a456-426614174000",
+        "newProjectStatusId": "423e4567-e89b-12d3-a456-426614174000"
+      }
+    ],
+    "taskStatusMapping": [
+      {
+        "oldTaskStatusId": "523e4567-e89b-12d3-a456-426614174000",
+        "newTaskStatusId": "623e4567-e89b-12d3-a456-426614174000"
+      }
+    ],
+    "keepCustomFields": true,
+    "keepCustomAutomations": true
+  }'
+```
+
+### Create a workflow from an existing project
+
+Use an existing project as a blueprint and optionally link that project to the newly created workflow.
+
+```sh title="Create workflow from project configuration"
+curl -X POST https://api.awork.com/api/v1/workflows/fromproject/123e4567-e89b-12d3-a456-426614174000 \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Workflow from Consulting Template",
+    "copyProjectStatuses": true,
+    "copyTaskStatuses": true,
+    "copyCustomFields": true,
+    "copyAutomations": true,
+    "linkProjectToWorkflow": true
+  }'
+```
+
+### Manage shared statuses in a workflow
+
+You can manage workflow-level statuses, which are then shared across linked projects.
+
+```sh title="Create task status in a workflow"
+curl -X POST https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/taskstatuses \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Client Feedback",
+    "type": "review",
+    "order": 3,
+    "icon": "comment"
+  }'
+```
+
+```sh title="Create project status in a workflow"
+curl -X POST https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/projectstatuses \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Blocked by Client",
+    "type": "stuck"
+  }'
+```
+
+### Unlink a workflow from a project
+
+Unlinking decouples the project from workflow sync and clones workflow statuses into editable project-specific statuses.
+
+```sh title="Unlink workflow from project"
+curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/unlinkworkflow \
+  -H 'Content-Type: application/json'
+```
+
