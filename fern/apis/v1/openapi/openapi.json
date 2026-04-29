@@ -41344,8 +41344,25 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostUserDeactivateByUserIdResponse"
+                }
+              }
+            }
+          },
           "204": {
-            "description": "No Content"
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostUserDeactivateByUserIdResponse"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -55932,6 +55949,20 @@
         },
         "additionalProperties": false
       },
+      "PostUserDeactivateByUserIdResponse": {
+        "type": "object",
+        "properties": {
+          "privateProjectManagersReassignedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "privateProjectsDeletedCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "PreviewResult": {
         "type": "object",
         "properties": {
@@ -67172,6 +67203,16 @@
             "description": "This is the project template the automations will be copied to.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CopyProjectAutomationsToWorkflowForm": {
+        "type": "object",
+        "properties": {
+          "convertSourceProjectAutomationsToWorkflowLinks": {
+            "type": "boolean",
+            "description": "Whether the source project automations should be marked as workflow-linked to the copied workflow automations."
           }
         },
         "additionalProperties": false
