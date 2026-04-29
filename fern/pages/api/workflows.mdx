@@ -6,6 +6,10 @@ slug: workflows
 
 Workflows are reusable process definitions that let you share project statuses and task statuses across multiple projects. Instead of maintaining statuses per project, you can manage them once in a workflow and keep linked projects aligned.
 
+<Note>
+  Workflows are being rolled out gradually across workspaces and might not be available in every workspace yet.
+</Note>
+
 ## How to work with workflows
 
 ### Create a workflow
@@ -96,4 +100,3 @@ Unlinking decouples the project from workflow sync and clones workflow statuses 
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/unlinkworkflow \
   -H 'Content-Type: application/json'
 ```
-
