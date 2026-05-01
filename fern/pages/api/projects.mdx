@@ -22,6 +22,46 @@ curl -X POST "https://api.awork.com/api/v1/projects" \
          }'
 ```
 
+### Creating a project with a workflow
+
+You can create and link a project to a workflow directly in `POST /projects` by passing `workflowId`.
+If needed, you can also pass a valid `projectStatusId` from that workflow.
+
+```sh title="Request" {5-6}
+curl -X POST "https://api.awork.com/api/v1/projects" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "My workflow-based project",
+           "workflowId": "223e4567-e89b-12d3-a456-426614174000",
+           "projectStatusId": "323e4567-e89b-12d3-a456-426614174000"
+         }'
+```
+
+### Getting valid statuses for workflow-based project creation
+
+Before creating a project with `workflowId`, fetch the workflow statuses and pick a valid `projectStatusId`.
+
+```sh title="Get workflow project statuses"
+curl -X GET "https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/projectstatuses"
+```
+
+```sh title="Get workflow task statuses"
+curl -X GET "https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/taskstatuses"
+```
+
+### Getting valid statuses for an existing project
+
+Use project-scoped endpoints to fetch the statuses that are valid for one specific project.
+These endpoints already return the correct set, including workflow-inherited statuses when the project is linked to a workflow.
+
+```sh title="Get valid project statuses for a project"
+curl -X GET "https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/projectstatuses"
+```
+
+```sh title="Get valid task statuses for a project"
+curl -X GET "https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/taskstatuses"
+```
+
 ### Creating a project from a template
 
 To create a project from a project template, the `projectTemplateId` has to be passed in the `POST /projects` request.

@@ -156,10 +156,15 @@ navigation:
   - project templates
   - task bundles
   - task templates
+  - task template tags
   - task dependency templates
   - project template tags
   - project milestone templates
   - project template automations
+  - page: Workflows Overview
+    path: ./pages/api/workflows.mdx
+    icon: diagram-project
+  - workflows
   - page: Login & Access Overview
     path: ./pages/api/login.mdx
     icon: key

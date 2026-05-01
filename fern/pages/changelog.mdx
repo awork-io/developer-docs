@@ -75,12 +75,9 @@ Task status example with Workflows:
 
 ### Migration path
 
-<CardGroup cols={2}>
+<CardGroup cols={1}>
   <Card title="Recommended path" icon="circle-check">
     Use project or project-template scoped endpoints to fetch statuses.
-  </Card>
-  <Card title="Alternative path" icon="code-branch">
-    Keep using global endpoint and filter by `workflowId` or `projectId`.
   </Card>
 </CardGroup>
 
@@ -144,65 +141,6 @@ curl -X GET "https://api.awork.com/api/v1/projecttemplates/3e664818-9503-4ec8-9f
 <Info>
   Project and task statuses can either have the `projectId` or `workflowId` set, depending on whether they are project or workflow specific. Project template statuses can either have the `projectTemplateId` or `workflowId` set, depending on whether they are template-specific or inherited from a workflow.
 </Info>
-
-#### Alternative migration path
-
-<Warning title="Not recommended">
-  Keep using global endpoint and filter by `workflowId` or `projectId`.
-</Warning>
-
-If you need to keep using the global endpoint, for example due to a high amount of projects:
-- Fetch the project statuses as before.
-- Fetch the project first and check `workflowId`.
-- If `workflowId` is set, filter statuses by `workflowId`.
-- If `workflowId` is null, filter statuses by `projectId`.
-
-<Info>
-  Projects with and without workflows can exist in the same workspace. This means that `GET /projectstatuses` will return project-scoped statuses as well as workflow-scoped statuses in one list.
-</Info>
-
-```sh title="1) Fetch all project statuses (as before)"
-curl -X GET "https://api.awork.com/api/v1/projectstatuses" \
-  -H "Authorization: Bearer {token}"
-```
-
-```json title="Project statuses response example"
-[
-  {
-    "id": "8b10f329-4cf3-42a5-a216-4560e318db8f",
-    "name": "In Progress",
-    "projectId": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
-    "workflowId": null
-  },
-  {
-    "id": "0f5f3318-8024-4b0b-a748-7e8ed6f13a60",
-    "name": "In Progress",
-    "projectId": null,
-    "workflowId": "49f36ad2-9372-4ce2-a697-9ece6126d5cf"
-  }
-]
-```
-
-```sh title="2) Fetch project and check whether the project uses a workflow"
-curl -X GET "https://api.awork.com/api/v1/projects/3e664818-9503-4ec8-9f1f-35d5ad7a57ad" \
-  -H "Authorization: Bearer {token}"
-```
-
-```json title="Project with a workflow"
-{
-  "id": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
-  "workflowId": "49f36ad2-9372-4ce2-a697-9ece6126d5cf"
-}
-```
-
-```json title="Project without a workflow"
-{
-  "id": "3e664818-9503-4ec8-9f1f-35d5ad7a57ad",
-  "workflowId": null
-}
-```
-
-3) If the project has a `workflowId` set, filter the global list of project statuses you retrieved earlier by this `workflowId`. If it does not have a workflow set, use the `projectId` as before.
 
 
 ### Questions and support
