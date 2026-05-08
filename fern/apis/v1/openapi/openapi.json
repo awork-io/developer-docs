@@ -69056,6 +69056,19 @@
         },
         "additionalProperties": false
       },
+      "FileUploadModel": {
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "additionalProperties": false
+      },
       "FileVersion": {
         "type": "object",
         "properties": {
@@ -69174,6 +69187,28 @@
             "description": "The new workspace id to migrate the user private files to.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicFileUploadResult": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "publicUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "mimeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "validUpTo": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
