@@ -27167,6 +27167,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -27376,6 +27386,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -27519,6 +27539,16 @@
           },
           "400": {
             "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {
               "application/json": {
                 "schema": {
@@ -27748,6 +27778,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -27802,6 +27842,16 @@
           },
           "404": {
             "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {
               "application/json": {
                 "schema": {
@@ -57597,45 +57647,6 @@
         "additionalProperties": false,
         "description": "This repeated model (copy of NestedTeamModel) is required to avoid a bug\nof the Automapper.Extensions.EspressionMapping library that throws an error if in the same expression\nwe apply a filter to 2 different models containing the same submodel (e.g: Teams contained in both Project, User and\nTasks))\nPlease do not remove it."
       },
-      "ObjectPagedResult": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {},
-            "nullable": true
-          },
-          "totalCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sortPropertyName": {
-            "type": "string",
-            "nullable": true
-          },
-          "sortOrder": {
-            "$ref": "#/components/schemas/SortOrder"
-          },
-          "nextCursor": {
-            "type": "string",
-            "nullable": true
-          },
-          "itemCount": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ObjectSyncResponse": {
         "type": "object",
         "properties": {
@@ -61890,14 +61901,6 @@
         },
         "additionalProperties": false,
         "description": "The simplified time tracking model."
-      },
-      "SortOrder": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "StartTimeTrackingForm": {
         "required": [
@@ -67335,6 +67338,67 @@
         "additionalProperties": false,
         "description": "The user model with the account id to create a new user."
       },
+      "UserProjectAccessStaleDirtyStateResult": {
+        "type": "object",
+        "properties": {
+          "totalIndexedDirtyUsers": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "staleDirtyUsersCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "oldestDirtyAgeMinutes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserProjectAccessStaleDirtyStateSample"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserProjectAccessStaleDirtyStateSample": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdTraceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedTraceId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UserProjectAccessValidationResult": {
         "type": "object",
         "properties": {
@@ -68992,6 +69056,19 @@
         },
         "additionalProperties": false
       },
+      "FileUploadModel": {
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "additionalProperties": false
+      },
       "FileVersion": {
         "type": "object",
         "properties": {
@@ -69110,6 +69187,28 @@
             "description": "The new workspace id to migrate the user private files to.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicFileUploadResult": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "publicUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "mimeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "validUpTo": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
