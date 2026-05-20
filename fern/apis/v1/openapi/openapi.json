@@ -46830,7 +46830,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UnlinkCustomFieldDefinitionForm"
+                "$ref": "#/components/schemas/UnlinkWorkflowCustomFieldDefinitionForm"
               }
             }
           },
@@ -66418,6 +66418,26 @@
         },
         "additionalProperties": false,
         "description": "Represents a form for unlinking a custom field definition."
+      },
+      "UnlinkWorkflowCustomFieldDefinitionForm": {
+        "required": [
+          "customFieldDefinitionId"
+        ],
+        "type": "object",
+        "properties": {
+          "customFieldDefinitionId": {
+            "type": "string",
+            "description": "The id of the custom field definition.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "unlinkCustomFieldFromLinkedProjects": {
+            "type": "boolean",
+            "description": "Gets or sets a value indicating whether the custom field should also be unlinked\nfrom workflow-linked projects, including deleting task custom field values."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a form for unlinking a custom field definition from a workflow."
       },
       "UpdateCalculatedSQLValuesForm": {
         "type": "object",
