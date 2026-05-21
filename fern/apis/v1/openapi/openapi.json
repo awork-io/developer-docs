@@ -688,7 +688,7 @@
           "Absences"
         ],
         "summary": "Creates an absence.",
-        "description": "The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\n             These values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\n             The end date needs to be the same or after the start date.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">User planning data permissions are required if the calling user is not the owner of the absence or admin.</Check>\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Standard` plan or higher.</Note>",
+        "description": "The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\n             These values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\n             The end date needs to be the same or after the start date.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">User planning data permissions are required if the calling user is not the owner of the absence or admin.</Check>",
         "operationId": "PostAbsence",
         "requestBody": {
           "description": "The model to create the absence.",
@@ -745,9 +745,6 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "x-subscriptionlevel": {
-          "minimumPlan": "standard"
         }
       }
     },
@@ -46830,7 +46827,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UnlinkCustomFieldDefinitionForm"
+                "$ref": "#/components/schemas/UnlinkWorkflowCustomFieldDefinitionForm"
               }
             }
           },
@@ -66418,6 +66415,26 @@
         },
         "additionalProperties": false,
         "description": "Represents a form for unlinking a custom field definition."
+      },
+      "UnlinkWorkflowCustomFieldDefinitionForm": {
+        "required": [
+          "customFieldDefinitionId"
+        ],
+        "type": "object",
+        "properties": {
+          "customFieldDefinitionId": {
+            "type": "string",
+            "description": "The id of the custom field definition.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "unlinkCustomFieldFromLinkedProjects": {
+            "type": "boolean",
+            "description": "Gets or sets a value indicating whether the custom field should also be unlinked\nfrom workflow-linked projects, including deleting task custom field values."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a form for unlinking a custom field definition from a workflow."
       },
       "UpdateCalculatedSQLValuesForm": {
         "type": "object",
