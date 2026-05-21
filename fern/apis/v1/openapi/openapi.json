@@ -688,7 +688,7 @@
           "Absences"
         ],
         "summary": "Creates an absence.",
-        "description": "The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\n             These values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\n             The end date needs to be the same or after the start date.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">User planning data permissions are required if the calling user is not the owner of the absence or admin.</Check>\r\n\r\n<Note title=\"Subscription Level\" icon=\"layer-group\">This endpoint requires the `Standard` plan or higher.</Note>",
+        "description": "The startOn and endOn get rounded to 00:00:00, 12:00:00, or 23:59:59 in UTC.\r\n             These values can be used to set a half-day (pre or post mid-day) absence, or absences that start or end at mid-day.\r\n             The end date needs to be the same or after the start date.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">User planning data permissions are required if the calling user is not the owner of the absence or admin.</Check>",
         "operationId": "PostAbsence",
         "requestBody": {
           "description": "The model to create the absence.",
@@ -745,9 +745,6 @@
         ],
         "x-access": {
           "any": "true"
-        },
-        "x-subscriptionlevel": {
-          "minimumPlan": "standard"
         }
       }
     },
