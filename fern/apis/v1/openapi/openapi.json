@@ -1279,95 +1279,6 @@
         }
       }
     },
-    "/autopilot/availablealerts": {
-      "get": {
-        "tags": [
-          "Autopilot"
-        ],
-        "summary": "Returns all available alerts for autopilots.",
-        "description": "Returns all available alerts for autopilots.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAvailableAlerts",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "example": [
-                  "behind_schedule",
-                  "overdue"
-                ]
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/autopilot/{autopilotId}": {
-      "get": {
-        "tags": [
-          "Autopilot"
-        ],
-        "summary": "Returns the autopilot with the specified id.",
-        "description": "Returns the autopilot including its alerts.\nTo get the autopilot data the user needs to be the owner of the project or 'read' permissions\nof the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetById",
-        "parameters": [
-          {
-            "name": "autopilotId",
-            "in": "path",
-            "description": "The id of the autopilot.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Autopilot"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
     "/clientapplications": {
       "get": {
         "tags": [
@@ -5388,14 +5299,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",
@@ -7234,14 +7138,7 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentSpaceModel"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "401": {
             "description": "Unauthorized",
@@ -11435,14 +11332,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -11492,14 +11382,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -11548,14 +11431,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -11671,14 +11547,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -14465,218 +14334,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/projects/{projectId}/autopilot": {
-      "delete": {
-        "tags": [
-          "Autopilot"
-        ],
-        "summary": "Deletes the autopilot of the project with the specified id.",
-        "description": "Deletes the autopilot of the project with the specified id.\nTo access and modify the autopilot data the user needs to be the owner of the project or\nmust have 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteAutopilot",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Autopilot"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Autopilot"
-        ],
-        "summary": "Returns the autopilot of the project with the specified id.",
-        "description": "Returns NoContent if the project does not have an autopilot setup.\nTo get the autopilot data the user needs to be the owner of the project or\nmust have 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAutopilotForProject",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Autopilot"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "post": {
-        "tags": [
-          "Autopilot"
-        ],
-        "summary": "Creates a new autopilot for the project with the specified id.",
-        "description": "Creates a new autopilot for the project with the specified id.\nAlso creates and enables all alerts for the new autopilot.\nFor this action, the user needs to be the owner of the project or must have 'read' permissions\nof the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostAutopilot",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model used to create the autopilot.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutopilotPostForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutopilotPostForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Autopilot"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "put": {
-        "tags": [
-          "Autopilot"
-        ],
-        "summary": "Updates the autopilot of the project with the specified id.",
-        "description": "Updates the autopilot of the project with the specified id.\nTo access and modify the autopilot data the user needs to be the owner of the project or\nmust have 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutAutopilot",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model used to update the autopilot.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutopilotPutForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutopilotPutForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Autopilot"
                 }
               }
             }
@@ -26366,14 +26023,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PermissionOfProjectRole"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",
@@ -38881,14 +38531,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AutofillUser"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -40478,6 +40121,15 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "includeSummary",
+            "in": "query",
+            "description": "Whether to return the private project orphan resolution summary.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
         "responses": {
@@ -40492,14 +40144,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PostUserDeactivateByUserIdResponse"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",
@@ -42666,14 +42311,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -42724,14 +42362,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -42781,14 +42412,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -42906,14 +42530,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -69072,199 +68689,6 @@
         },
         "additionalProperties": false
       },
-      "AlertForm": {
-        "required": [
-          "alert",
-          "channel",
-          "enabled",
-          "id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The id of the alert.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "alert": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The alert indicator.",
-            "example": "due_soon"
-          },
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether the alert is enabled.",
-            "example": true
-          },
-          "channel": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The channel of the alert.",
-            "example": "email"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AlertPostForm": {
-        "required": [
-          "alert",
-          "channel",
-          "enabled"
-        ],
-        "type": "object",
-        "properties": {
-          "alert": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The alert indicator.",
-            "example": "due_soon"
-          },
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether the alert is enabled.",
-            "example": true
-          },
-          "channel": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The channel of the alert.",
-            "example": "email"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Autopilot": {
-        "required": [
-          "alerts",
-          "enabled",
-          "type"
-        ],
-        "type": "object",
-        "properties": {
-          "type": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The type of the autopilot.",
-            "example": "agile"
-          },
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether the autopilot is enabled.",
-            "example": true
-          },
-          "alerts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AlertForm"
-            },
-            "description": "The alerts of the autopilot."
-          },
-          "id": {
-            "type": "string",
-            "description": "The id of the autopilot.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "createdOn": {
-            "type": "string",
-            "description": "The date this object was created.",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "The id of the user who created this object.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "description": "The date this object was last modified.",
-            "format": "date-time"
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "The id of the user who last modified this object.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AutopilotPostForm": {
-        "required": [
-          "type"
-        ],
-        "type": "object",
-        "properties": {
-          "type": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The type of the autopilot.",
-            "example": "agile"
-          },
-          "alerts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AlertPostForm"
-            },
-            "description": "The alerts of the autopilot.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AutopilotPutForm": {
-        "required": [
-          "alerts",
-          "enabled",
-          "type"
-        ],
-        "type": "object",
-        "properties": {
-          "type": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The type of the autopilot.",
-            "example": "agile"
-          },
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether the autopilot is enabled.",
-            "example": true
-          },
-          "alerts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AlertForm"
-            },
-            "description": "The alerts of the autopilot."
-          }
-        },
-        "additionalProperties": false
-      },
-      "BriefingPostForm": {
-        "required": [
-          "enabled",
-          "type"
-        ],
-        "type": "object",
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "description": "If the briefing should be enabled or disabled.",
-            "example": true
-          },
-          "type": {
-            "minLength": 1,
-            "type": "string",
-            "description": "The type of the weekly mail: briefing or summary.",
-            "example": "summary"
-          }
-        },
-        "additionalProperties": false
-      },
       "ActivityModel": {
         "type": "object",
         "properties": {
@@ -73573,10 +72997,6 @@
     {
       "name": "Webhooks",
       "description": "Endpoints to manage webhook configurations, tests, and external integrations."
-    },
-    {
-      "name": "Autopilot",
-      "description": "These endpoints allow you to manage the awork autopilot for projects."
     },
     {
       "name": "Search",
