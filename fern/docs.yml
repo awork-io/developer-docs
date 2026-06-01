@@ -133,7 +133,6 @@ navigation:
   - project files
   - task files
   - company files
-  - comment files
   - document files
   - user files
   - workspace files
@@ -165,6 +164,7 @@ navigation:
     path: ./pages/api/workflows.mdx
     icon: diagram-project
   - workflows
+  - workflow automations
   - page: Login & Access Overview
     path: ./pages/api/login.mdx
     icon: key
