@@ -1279,6 +1279,95 @@
         }
       }
     },
+    "/autopilot/availablealerts": {
+      "get": {
+        "tags": [
+          "Autopilot"
+        ],
+        "summary": "Returns all available alerts for autopilots.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAutopilotAvailableAlerts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "behind_schedule",
+                  "overdue"
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/autopilot/{autopilotId}": {
+      "get": {
+        "tags": [
+          "Autopilot"
+        ],
+        "summary": "Returns the autopilot with the specified id.",
+        "description": "Returns the autopilot including its alerts.\r\n            To get the autopilot data the user needs to be the owner of the project or 'read' permissions\r\n            of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAutopilotByAutopilotId",
+        "parameters": [
+          {
+            "name": "autopilotId",
+            "in": "path",
+            "description": "The id of the autopilot.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Autopilot"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/clientapplications": {
       "get": {
         "tags": [
@@ -14334,6 +14423,206 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/projects/{projectId}/autopilot": {
+      "delete": {
+        "tags": [
+          "Autopilot"
+        ],
+        "summary": "Deletes the autopilot of the project with the specified id.",
+        "description": "Deletes the autopilot of the project with the specified id.\r\n            To access and modify the autopilot data the user needs to be the owner of the project or\r\n            must have 'read' permissions of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteProjectsAutopilotByProjectId",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "get": {
+        "tags": [
+          "Autopilot"
+        ],
+        "summary": "Returns the autopilot of the project with the specified id.",
+        "description": "Returns NoContent if the project does not have an autopilot setup.\r\n            To get the autopilot data the user needs to be the owner of the project or\r\n            must have 'read' permissions of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetProjectsAutopilotByProjectId",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Autopilot"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "post": {
+        "tags": [
+          "Autopilot"
+        ],
+        "summary": "Creates a new autopilot for the project with the specified id.",
+        "description": "Creates a new autopilot for the project with the specified id.\r\n            Also creates and enables all alerts for the new autopilot.\r\n            For this action, the user needs to be the owner of the project or must have 'read' permissions\r\n            of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostProjectsAutopilotByProjectId",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model used to create the autopilot.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutopilotPostForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Autopilot"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Autopilot"
+        ],
+        "summary": "Updates the autopilot of the project with the specified id.",
+        "description": "Updates the autopilot of the project with the specified id.\r\n            To access and modify the autopilot data the user needs to be the owner of the project or\r\n            must have 'read' permissions of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PutProjectsAutopilotByProjectId",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "The id of the project.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model used to update the autopilot.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutopilotPutForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Autopilot"
                 }
               }
             }
@@ -68765,6 +69054,709 @@
         },
         "additionalProperties": false
       },
+      "AlertForm": {
+        "required": [
+          "alert",
+          "channel",
+          "enabled",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the alert.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "alert": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The alert indicator.",
+            "example": "due_soon"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the alert is enabled.",
+            "example": true
+          },
+          "channel": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The channel of the alert.",
+            "example": "email"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AlertPostForm": {
+        "required": [
+          "alert",
+          "channel",
+          "enabled"
+        ],
+        "type": "object",
+        "properties": {
+          "alert": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The alert indicator.",
+            "example": "due_soon"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the alert is enabled.",
+            "example": true
+          },
+          "channel": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The channel of the alert.",
+            "example": "email"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Autopilot": {
+        "required": [
+          "alerts",
+          "enabled",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The type of the autopilot.",
+            "example": "agile"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the autopilot is enabled.",
+            "example": true
+          },
+          "alerts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertForm"
+            },
+            "description": "The alerts of the autopilot."
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the autopilot.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this object was created.",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this object.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this object was last modified.",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this object.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AutopilotPostForm": {
+        "required": [
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The type of the autopilot.",
+            "example": "agile"
+          },
+          "alerts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertPostForm"
+            },
+            "description": "The alerts of the autopilot.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AutopilotPutForm": {
+        "required": [
+          "alerts",
+          "enabled",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The type of the autopilot.",
+            "example": "agile"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the autopilot is enabled.",
+            "example": true
+          },
+          "alerts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertForm"
+            },
+            "description": "The alerts of the autopilot."
+          }
+        },
+        "additionalProperties": false
+      },
+      "BriefingPostForm": {
+        "required": [
+          "enabled",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "If the briefing should be enabled or disabled.",
+            "example": true
+          },
+          "type": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The type of the weekly mail: briefing or summary.",
+            "example": "summary"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultOrderedTaskListModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Website Design and Implementation"
+          },
+          "orderOfTask": {
+            "type": "number",
+            "description": "The order of the task in the list.",
+            "format": "double",
+            "example": 1
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the list.",
+            "format": "double",
+            "example": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultTaskStatusModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Website Design and Implementation"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the status.",
+            "nullable": true,
+            "example": "todo"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the task status in a project.",
+            "format": "double",
+            "nullable": true,
+            "example": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "DynamicDurationFormatSetting": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "Duration setting for formatting time. Can be DecimalDays or HoursMinutes. Defaults to DecimalDays",
+        "format": "int32"
+      },
+      "EmailEvent": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmailInformation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmailInformation": {
+        "type": "object",
+        "properties": {
+          "mailType": {
+            "type": "string",
+            "description": "The type of the email",
+            "nullable": true,
+            "example": "project-due-soon"
+          },
+          "receivers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LimitedMemberModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExtendedProjectMemberModel": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectRoleId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectRoleName": {
+            "type": "string",
+            "description": "The role name of the user",
+            "nullable": true,
+            "example": "Lead Designer"
+          },
+          "isResponsible": {
+            "type": "boolean"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user",
+            "nullable": true,
+            "example": "Carla"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the user",
+            "nullable": true,
+            "example": "Creative"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LimitedMemberModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the mail receiver",
+            "nullable": true,
+            "example": "Philip Founder"
+          },
+          "isResponisble": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberEmail": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The user's email address",
+            "nullable": true,
+            "example": "carla.creative@ncnstn.com"
+          },
+          "language": {
+            "type": "string",
+            "description": "The language of the email sent to this member",
+            "nullable": true,
+            "example": "en-GB"
+          },
+          "sendEmail": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationEvent": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the event to simulate",
+            "nullable": true,
+            "example": "SetDueDateEvent"
+          },
+          "value": {
+            "description": "The event value as serialized JSON object",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationPostForm": {
+        "type": "object",
+        "properties": {
+          "member": {
+            "$ref": "#/components/schemas/MemberEmail"
+          },
+          "lead": {
+            "$ref": "#/components/schemas/MemberEmail"
+          },
+          "autopilotType": {
+            "type": "string",
+            "description": "The type of autopilot to simulate",
+            "nullable": true,
+            "example": "agile"
+          },
+          "project": {
+            "$ref": "#/components/schemas/SimulationProjectModel"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimulationTaskModel"
+            },
+            "description": "The list of the tasks for this simulation",
+            "nullable": true
+          },
+          "format": {
+            "$ref": "#/components/schemas/DynamicDurationFormatSetting"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationProjectModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Gets or sets the id of the nested model.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the project.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the project",
+            "nullable": true,
+            "example": "Gathering ideas for the brand design"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExtendedProjectMemberModel"
+            },
+            "nullable": true
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "description": "The planned duration of this project in seconds",
+            "format": "int32",
+            "nullable": true,
+            "example": 28800
+          },
+          "timeBudget": {
+            "type": "integer",
+            "description": "The remaining time budget for this project",
+            "format": "int32",
+            "nullable": true,
+            "example": 14400
+          },
+          "trackedDuration": {
+            "type": "integer",
+            "description": "The total time tracked for this project (in seconds)",
+            "format": "int32",
+            "nullable": true,
+            "example": 14400
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/NestedStatusModel"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startedOn": {
+            "type": "string",
+            "description": "The date the project was set into progress.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimulationEvent"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationResult": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeline": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmailEvent"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationTaskModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity of the entity task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/DefaultTaskStatusModel"
+          },
+          "closedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dueOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "format": {
+            "$ref": "#/components/schemas/DynamicDurationFormatSetting"
+          },
+          "trackedDuration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "startOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserModel"
+            },
+            "description": "The assigned users of this task.",
+            "nullable": true
+          },
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultOrderedTaskListModel"
+            },
+            "description": "The lists to which the task is assigned to.",
+            "nullable": true
+          },
+          "dueDateTable": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "dueDateTableColor": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "trackedTimeString": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "assigneeNames": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "progress": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "progressColor": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "list": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimulationEvent"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ActivityModel": {
         "type": "object",
         "properties": {
@@ -73073,6 +74065,10 @@
     {
       "name": "Webhooks",
       "description": "Endpoints to manage webhook configurations, tests, and external integrations."
+    },
+    {
+      "name": "Autopilot",
+      "description": "Endpoints to manage awork autopilot settings for projects."
     },
     {
       "name": "Search",
