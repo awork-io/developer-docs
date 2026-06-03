@@ -54618,6 +54618,10 @@
           "filterDefinition": {
             "$ref": "#/components/schemas/FilterDefinition"
           },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this filter is coming from an external workspace (awork Connect)."
+          },
           "entityType": {
             "type": "string",
             "description": "The entity type this filter targets. Can be 'projects', 'tasks', 'companies', 'users'.",
