@@ -1285,8 +1285,8 @@
           "Autopilot"
         ],
         "summary": "Returns all available alerts for autopilots.",
-        "description": "Returns all available alerts for autopilots.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAvailableAlerts",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAutopilotAvailableAlerts",
         "responses": {
           "200": {
             "description": "OK",
@@ -1327,8 +1327,8 @@
           "Autopilot"
         ],
         "summary": "Returns the autopilot with the specified id.",
-        "description": "Returns the autopilot including its alerts.\nTo get the autopilot data the user needs to be the owner of the project or 'read' permissions\nof the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetById",
+        "description": "Returns the autopilot including its alerts.\r\n            To get the autopilot data the user needs to be the owner of the project or 'read' permissions\r\n            of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAutopilotByAutopilotId",
         "parameters": [
           {
             "name": "autopilotId",
@@ -5388,14 +5388,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",
@@ -7234,14 +7227,7 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentSpaceModel"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "401": {
             "description": "Unauthorized",
@@ -11435,14 +11421,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -11492,14 +11471,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -11548,14 +11520,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -11671,14 +11636,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -14491,8 +14449,8 @@
           "Autopilot"
         ],
         "summary": "Deletes the autopilot of the project with the specified id.",
-        "description": "Deletes the autopilot of the project with the specified id.\nTo access and modify the autopilot data the user needs to be the owner of the project or\nmust have 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteAutopilot",
+        "description": "Deletes the autopilot of the project with the specified id.\r\n            To access and modify the autopilot data the user needs to be the owner of the project or\r\n            must have 'read' permissions of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteProjectsAutopilotByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14506,15 +14464,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Autopilot"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -14536,8 +14487,8 @@
           "Autopilot"
         ],
         "summary": "Returns the autopilot of the project with the specified id.",
-        "description": "Returns NoContent if the project does not have an autopilot setup.\nTo get the autopilot data the user needs to be the owner of the project or\nmust have 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAutopilotForProject",
+        "description": "Returns NoContent if the project does not have an autopilot setup.\r\n            To get the autopilot data the user needs to be the owner of the project or\r\n            must have 'read' permissions of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetProjectsAutopilotByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14560,6 +14511,9 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
           }
         },
         "security": [
@@ -14581,8 +14535,8 @@
           "Autopilot"
         ],
         "summary": "Creates a new autopilot for the project with the specified id.",
-        "description": "Creates a new autopilot for the project with the specified id.\nAlso creates and enables all alerts for the new autopilot.\nFor this action, the user needs to be the owner of the project or must have 'read' permissions\nof the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostAutopilot",
+        "description": "Creates a new autopilot for the project with the specified id.\r\n            Also creates and enables all alerts for the new autopilot.\r\n            For this action, the user needs to be the owner of the project or must have 'read' permissions\r\n            of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostProjectsAutopilotByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14602,13 +14556,9 @@
               "schema": {
                 "$ref": "#/components/schemas/AutopilotPostForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutopilotPostForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -14641,8 +14591,8 @@
           "Autopilot"
         ],
         "summary": "Updates the autopilot of the project with the specified id.",
-        "description": "Updates the autopilot of the project with the specified id.\nTo access and modify the autopilot data the user needs to be the owner of the project or\nmust have 'read' permissions of the feature 'project-master-data' globally or in his project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutAutopilot",
+        "description": "Updates the autopilot of the project with the specified id.\r\n            To access and modify the autopilot data the user needs to be the owner of the project or\r\n            must have 'read' permissions of the feature 'project-master-data' globally or in their project role.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PutProjectsAutopilotByProjectId",
         "parameters": [
           {
             "name": "projectId",
@@ -14662,13 +14612,9 @@
               "schema": {
                 "$ref": "#/components/schemas/AutopilotPutForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AutopilotPutForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -26366,14 +26312,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PermissionOfProjectRole"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",
@@ -36817,10 +36756,10 @@
     "/temporaryfiles": {
       "get": {
         "tags": [
-          "TemporaryFiles"
+          "Temporary Files"
         ],
         "summary": "Returns all temporary files of the current user.",
-        "description": "Returns the meta information of all temporary files\nof the current user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetTemporaryFiles",
         "parameters": [
           {
@@ -36867,30 +36806,16 @@
       },
       "post": {
         "tags": [
-          "TemporaryFiles"
+          "Temporary Files"
         ],
         "summary": "Creates a new temporary file.",
-        "description": "Uploads a new temporary file.\nUse this to upload a file as a form value along with the basic file meta data.\nThe file size must not exceed 1GB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostTemporaryFile",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostTemporaryFiles",
         "requestBody": {
           "content": {
             "multipart/form-data": {
               "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/FileUploadModel"
               }
             }
           }
@@ -36907,7 +36832,14 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -36928,16 +36860,15 @@
     "/temporaryfiles/{fileId}": {
       "get": {
         "tags": [
-          "TemporaryFiles"
+          "Temporary Files"
         ],
         "summary": "Returns the temporary file with the specified id.",
-        "description": "Returns the meta information of the temporary file\nof the current user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTemporaryFile",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTemporaryFilesByFileId",
         "parameters": [
           {
             "name": "fileId",
             "in": "path",
-            "description": "The id of the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -36952,6 +36883,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -36973,16 +36914,15 @@
       },
       "put": {
         "tags": [
-          "TemporaryFiles"
+          "Temporary Files"
         ],
         "summary": "Updates the meta information of the temporary file with the specified id.",
-        "description": "Updates the meta information of the temporary file with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutTemporaryFile",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PutTemporaryFilesByFileId",
         "parameters": [
           {
             "name": "fileId",
             "in": "path",
-            "description": "The id of the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -36991,19 +36931,14 @@
           }
         ],
         "requestBody": {
-          "description": "The model to update the temporary file with the specified id.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FileInfoUpdateForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/FileInfoUpdateForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -37012,6 +36947,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -37035,16 +36990,15 @@
     "/temporaryfiles/{fileId}/download": {
       "get": {
         "tags": [
-          "TemporaryFiles"
+          "Temporary Files"
         ],
         "summary": "Returns the content of the temporary file with the specified id.",
-        "description": "Returns the content of the temporary file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTemporaryFileContent",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetTemporaryFilesDownloadByFileId",
         "parameters": [
           {
             "name": "fileId",
             "in": "path",
-            "description": "The id of the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -37054,12 +37008,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -37083,16 +37039,15 @@
     "/temporaryfiles/{fileId}/setentity": {
       "post": {
         "tags": [
-          "TemporaryFiles"
+          "Temporary Files"
         ],
         "summary": "Sets the temporary file to a global or entity file.",
-        "description": "Links the temporary file to the specified entity or switches\nto a global file if the 'EntityId' of the model is set to null.\nThe file is no longer a temporary file afterwards and\nbecomes visible.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "SetTemporaryFileEntity",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostTemporaryFilesSetEntityByFileId",
         "parameters": [
           {
             "name": "fileId",
             "in": "path",
-            "description": "The id of the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -37101,19 +37056,14 @@
           }
         ],
         "requestBody": {
-          "description": "The model to set the entity information of the file.",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FileEntityForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/FileEntityForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -37122,6 +37072,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -38881,14 +38851,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AutofillUser"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -40478,6 +40441,15 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "includeSummary",
+            "in": "query",
+            "description": "Whether to return the private project orphan resolution summary.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
         "responses": {
@@ -40492,14 +40464,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PostUserDeactivateByUserIdResponse"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request",
@@ -42666,14 +42631,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -42724,14 +42682,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -42781,14 +42732,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -42906,14 +42850,7 @@
             }
           },
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TimeTracking"
-                }
-              }
-            }
+            "description": "No Content"
           }
         },
         "security": [
@@ -49720,6 +49657,29 @@
         "additionalProperties": false,
         "description": "Form to specify the options for adjusting the start/end dates of a project and related entities."
       },
+      "AgentUserPostForm": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "description": "The display name of the agent user."
+          },
+          "roleId": {
+            "type": "string",
+            "description": "The role id to assign to the agent user.\nIf omitted, the active admin role is used.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The model to create an agent user."
+      },
       "AggregatedBillableDuration": {
         "type": "object",
         "properties": {
@@ -52058,6 +52018,9 @@
             "type": "boolean"
           },
           "copyTaskStatuses": {
+            "type": "boolean"
+          },
+          "resetCustomFieldValues": {
             "type": "boolean"
           },
           "nameOverride": {
@@ -54407,6 +54370,11 @@
             "description": "Whether the user has been deactivated.",
             "example": false
           },
+          "isAgent": {
+            "type": "boolean",
+            "description": "Whether this user represents an agent.",
+            "example": false
+          },
           "deactivatedOn": {
             "type": "string",
             "description": "The date the user was deactivated.",
@@ -54649,6 +54617,10 @@
           },
           "filterDefinition": {
             "$ref": "#/components/schemas/FilterDefinition"
+          },
+          "isExternal": {
+            "type": "boolean",
+            "description": "Whether this filter is coming from an external workspace (awork Connect)."
           },
           "entityType": {
             "type": "string",
@@ -65447,6 +65419,11 @@
             "description": "Whether the user has been deactivated.",
             "example": false
           },
+          "isAgent": {
+            "type": "boolean",
+            "description": "Whether this user represents an agent.",
+            "example": false
+          },
           "deactivatedOn": {
             "type": "string",
             "description": "The date the user was deactivated.",
@@ -65604,6 +65581,11 @@
           "isDeactivated": {
             "type": "boolean",
             "description": "Whether the user has been deactivated.",
+            "example": false
+          },
+          "isAgent": {
+            "type": "boolean",
+            "description": "Whether this user represents an agent.",
             "example": false
           },
           "deactivatedOn": {
@@ -65993,6 +65975,10 @@
           "isApiKeyUser": {
             "type": "boolean",
             "description": "Whether this user is an API key user.\nAPI key users should always be archived."
+          },
+          "isAgent": {
+            "type": "boolean",
+            "description": "Whether this user represents an agent."
           },
           "isExternal": {
             "type": "boolean",
@@ -67949,6 +67935,11 @@
             "description": "The relative API URL with the option to append a filter.",
             "nullable": true,
             "example": "projects/123e4567-e89b-12d3-a456-426614174000/projecttasks"
+          },
+          "showDoneTasks": {
+            "type": "boolean",
+            "description": "Whether done tasks should be included in task exports.",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -69261,6 +69252,516 @@
             "type": "string",
             "description": "The type of the weekly mail: briefing or summary.",
             "example": "summary"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultOrderedTaskListModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Website Design and Implementation"
+          },
+          "orderOfTask": {
+            "type": "number",
+            "description": "The order of the task in the list.",
+            "format": "double",
+            "example": 1
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the list.",
+            "format": "double",
+            "example": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "DefaultTaskStatusModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The date this entity was created.",
+            "format": "date-time",
+            "example": "2022-03-11T15:33:47.100Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this entity was last modified.",
+            "format": "date-time",
+            "example": "2022-03-11T21:15:00.100Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last modified this entity.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Website Design and Implementation"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the status.",
+            "nullable": true,
+            "example": "todo"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the task status in a project.",
+            "format": "double",
+            "nullable": true,
+            "example": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "DynamicDurationFormatSetting": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "Duration setting for formatting time. Can be DecimalDays or HoursMinutes. Defaults to DecimalDays",
+        "format": "int32"
+      },
+      "EmailEvent": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmailInformation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmailInformation": {
+        "type": "object",
+        "properties": {
+          "mailType": {
+            "type": "string",
+            "description": "The type of the email",
+            "nullable": true,
+            "example": "project-due-soon"
+          },
+          "receivers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LimitedMemberModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExtendedProjectMemberModel": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectRoleId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectRoleName": {
+            "type": "string",
+            "description": "The role name of the user",
+            "nullable": true,
+            "example": "Lead Designer"
+          },
+          "isResponsible": {
+            "type": "boolean"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user",
+            "nullable": true,
+            "example": "Carla"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the user",
+            "nullable": true,
+            "example": "Creative"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LimitedMemberModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the mail receiver",
+            "nullable": true,
+            "example": "Philip Founder"
+          },
+          "isResponisble": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberEmail": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The user's email address",
+            "nullable": true,
+            "example": "carla.creative@ncnstn.com"
+          },
+          "language": {
+            "type": "string",
+            "description": "The language of the email sent to this member",
+            "nullable": true,
+            "example": "en-GB"
+          },
+          "sendEmail": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationEvent": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the event to simulate",
+            "nullable": true,
+            "example": "SetDueDateEvent"
+          },
+          "value": {
+            "description": "The event value as serialized JSON object",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationPostForm": {
+        "type": "object",
+        "properties": {
+          "member": {
+            "$ref": "#/components/schemas/MemberEmail"
+          },
+          "lead": {
+            "$ref": "#/components/schemas/MemberEmail"
+          },
+          "autopilotType": {
+            "type": "string",
+            "description": "The type of autopilot to simulate",
+            "nullable": true,
+            "example": "agile"
+          },
+          "project": {
+            "$ref": "#/components/schemas/SimulationProjectModel"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimulationTaskModel"
+            },
+            "description": "The list of the tasks for this simulation",
+            "nullable": true
+          },
+          "format": {
+            "$ref": "#/components/schemas/DynamicDurationFormatSetting"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationProjectModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Gets or sets the id of the nested model.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true,
+            "example": "Design"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the project.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the project",
+            "nullable": true,
+            "example": "Gathering ideas for the brand design"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExtendedProjectMemberModel"
+            },
+            "nullable": true
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "description": "The planned duration of this project in seconds",
+            "format": "int32",
+            "nullable": true,
+            "example": 28800
+          },
+          "timeBudget": {
+            "type": "integer",
+            "description": "The remaining time budget for this project",
+            "format": "int32",
+            "nullable": true,
+            "example": 14400
+          },
+          "trackedDuration": {
+            "type": "integer",
+            "description": "The total time tracked for this project (in seconds)",
+            "format": "int32",
+            "nullable": true,
+            "example": 14400
+          },
+          "projectStatus": {
+            "$ref": "#/components/schemas/NestedStatusModel"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startedOn": {
+            "type": "string",
+            "description": "The date the project was set into progress.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimulationEvent"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationResult": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeline": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmailEvent"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationTaskModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity of the entity task.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the entity.",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/DefaultTaskStatusModel"
+          },
+          "closedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dueOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "format": {
+            "$ref": "#/components/schemas/DynamicDurationFormatSetting"
+          },
+          "trackedDuration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "startOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "assignees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserModel"
+            },
+            "description": "The assigned users of this task.",
+            "nullable": true
+          },
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DefaultOrderedTaskListModel"
+            },
+            "description": "The lists to which the task is assigned to.",
+            "nullable": true
+          },
+          "dueDateTable": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "dueDateTableColor": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "trackedTimeString": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "assigneeNames": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "progress": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "progressColor": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "list": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimulationEvent"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -73555,8 +74056,8 @@
       "description": "These file endpoints are used to get shared files and public profile images."
     },
     {
-      "name": "TemporaryFiles",
-      "description": "The temporary file endpoints allow you to upload and update files \n    that do not have a connection to any entity. The files can be linked to an entity later.\n    They don’t show up in awork before they are either linked to a file or marked as a global file. \n    Only the user who uploaded the file has access to the temporary file."
+      "name": "Temporary Files",
+      "description": "The temporary file endpoints allow you to upload and update files\n        that do not have a connection to any entity. The files can be linked to an entity later.\n        They don't show up in awork before they are either linked to a file or marked as a global file.\n        Only the user who uploaded the file has access to the temporary file."
     },
     {
       "name": "Project Automations",
@@ -73576,7 +74077,7 @@
     },
     {
       "name": "Autopilot",
-      "description": "These endpoints allow you to manage the awork autopilot for projects."
+      "description": "Endpoints to manage awork autopilot settings for projects."
     },
     {
       "name": "Search",
