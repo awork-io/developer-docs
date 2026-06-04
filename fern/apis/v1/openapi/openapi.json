@@ -67935,6 +67935,11 @@
             "description": "The relative API URL with the option to append a filter.",
             "nullable": true,
             "example": "projects/123e4567-e89b-12d3-a456-426614174000/projecttasks"
+          },
+          "showDoneTasks": {
+            "type": "boolean",
+            "description": "Whether done tasks should be included in task exports.",
+            "nullable": true
           }
         },
         "additionalProperties": false,
