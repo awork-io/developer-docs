@@ -3830,7 +3830,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -6798,7 +6799,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -14361,7 +14363,7 @@
           "Project Automations"
         ],
         "summary": "Executes a manual automation for a task.",
-        "description": "Can be used to trigger an automation that uses a manual trigger for a specific task.\r\n            The calling user becomes the initiator of the automation execution.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
+        "description": "Can be used to trigger an automation that uses a manual trigger for a specific task.\r\n            The calling user becomes the initiator of the automation execution.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have write permissions on the specified task.</Check>",
         "operationId": "PostExecuteProjectAutomation",
         "parameters": [
           {
@@ -16915,7 +16917,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -24850,7 +24853,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -32623,7 +32627,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -35969,7 +35974,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -41665,7 +41671,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -47182,7 +47189,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -67602,10 +67610,6 @@
             "nullable": true
           }
         },
-        "additionalProperties": false
-      },
-      "File": {
-        "type": "object",
         "additionalProperties": false
       },
       "FileCopyForm": {
