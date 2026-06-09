@@ -145,6 +145,19 @@ The request body will contain the event metadata as well as the entity that trig
 }
 ```
 
+Events of type `deleted` use the same metadata structure. The returned entity can include additional deletion metadata, such as `deletedOn` and `deletedBy`, depending on the entity model:
+
+```json
+{
+    "eventType": "absence_deleted",
+    "entity": {
+        "...": "...",
+        "deletedOn": "2025-07-24T14:28:39.5966465+00:00",
+        "deletedBy": "123e4567-e89b-12d3-a456-426614174000"
+    }
+}
+```
+
 | Metadata Property | Description                                                                                                                                                                                                 |
 |-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `timestamp`       | The date and time this event was triggered.                                                                                                                                                                 |
