@@ -72852,6 +72852,57 @@
         },
         "additionalProperties": false
       },
+      "PublicWorkspaceLookup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the workspace.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The workspace name.",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the workspace has uploaded a workspace image."
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this workspace was last modified.",
+            "format": "date-time"
+          },
+          "subdomains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubdomainBase"
+            },
+            "description": "The workspace's subdomains.",
+            "nullable": true
+          },
+          "allowSSOLogin": {
+            "type": "boolean",
+            "description": "Whether the user can login via an external SSO provider."
+          },
+          "allowSocialLogin": {
+            "type": "boolean",
+            "description": "Whether the social login via apple and google is allowed."
+          },
+          "allowCredentialsLogin": {
+            "type": "boolean",
+            "description": "Whether the user can login with username and password."
+          },
+          "requireMfa": {
+            "type": "boolean",
+            "description": "Whether the workspace requires multi-factor authentication for all users."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public workspace information needed to bootstrap unauthenticated login flows."
+      },
       "RegisterLoginForm": {
         "type": "object",
         "properties": {
