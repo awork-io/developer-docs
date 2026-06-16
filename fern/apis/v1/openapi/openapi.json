@@ -49337,6 +49337,10 @@
             "description": "The URL params to add to the link for verification.\nUsed for user tracking.",
             "nullable": true,
             "example": "utm=true&campaign=email"
+          },
+          "useTrialStartSetPasswordEmail": {
+            "type": "boolean",
+            "description": "Whether auto-generated-password accounts should receive trial-start copy in the set-password email."
           }
         },
         "additionalProperties": false,
@@ -50672,7 +50676,7 @@
           },
           "roleId": {
             "type": "string",
-            "description": "The role id to assign to the agent user.\nIf omitted, the active admin role is used.",
+            "description": "Deprecated. The value is ignored, agent users are always assigned to the fixed agent role.\nKept for backwards compatibility of the request payload.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -61424,6 +61428,11 @@
             "description": "The id of the role.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isAgentRole": {
+            "type": "boolean",
+            "description": "Whether this role is the fixed agent role used by agent users.\nThe agent role cannot be modified.",
+            "example": false
           },
           "isPreset": {
             "type": "boolean",
