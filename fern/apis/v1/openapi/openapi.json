@@ -929,6 +929,171 @@
         }
       }
     },
+    "/accounts/me/authorizedclients": {
+      "delete": {
+        "tags": [
+          "Client Applications"
+        ],
+        "summary": "Revokes the current account's authorizations and refresh tokens for all third-party OAuth client applications.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteAccountsAuthorizedClients",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizedClientApplicationRevocationResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "get": {
+        "tags": [
+          "Client Applications"
+        ],
+        "summary": "Returns the third-party OAuth client applications authorized by the current account.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAccountsAuthorizedClients",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuthorizedClientApplication"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/accounts/me/authorizedclients/{clientId}": {
+      "delete": {
+        "tags": [
+          "Client Applications"
+        ],
+        "summary": "Revokes the current account's authorization and refresh tokens for one third-party OAuth client application.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteAccountsAuthorizedClientsByClientId",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizedClientApplicationRevocationResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/accounts/{accountId}": {
       "put": {
         "tags": [
@@ -8198,19 +8363,27 @@
         }
       }
     },
-    "/files/images/companies/{companyId}": {
+    "/files/images/{entityName}/{entityId}": {
       "delete": {
         "tags": [
           "Images"
         ],
-        "summary": "Deletes the profile image of the company with the specified id.",
-        "description": "Deletes the profile image of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteCompanyProfileImage",
+        "summary": "Deletes the profile image of the entity with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteFilesImagesByEntityNameAndEntityId",
         "parameters": [
           {
-            "name": "companyId",
+            "name": "entityName",
             "in": "path",
-            "description": "The id of the company the file is linked to.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -8221,6 +8394,26 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -8241,14 +8434,22 @@
         "tags": [
           "Images"
         ],
-        "summary": "Returns the image of the company with the specified id.",
-        "description": "Returns the image of the company with the specified id.",
-        "operationId": "GetCompanyImage",
+        "summary": "Returns the image of the entity with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
+        "operationId": "GetFilesImagesByEntityNameAndEntityId",
         "parameters": [
           {
-            "name": "companyId",
+            "name": "entityName",
             "in": "path",
-            "description": "The id of the company the file is linked to.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -8258,7 +8459,6 @@
           {
             "name": "width",
             "in": "query",
-            "description": "Set width to resize.",
             "schema": {
               "type": "number",
               "format": "double"
@@ -8267,7 +8467,6 @@
           {
             "name": "height",
             "in": "query",
-            "description": "Set height to resize.",
             "schema": {
               "type": "number",
               "format": "double"
@@ -8276,7 +8475,6 @@
           {
             "name": "crop",
             "in": "query",
-            "description": "Whether to crop the image when resizing it.",
             "schema": {
               "type": "boolean"
             }
@@ -8293,6 +8491,46 @@
                 }
               }
             }
+          },
+          "304": {
+            "description": "Not Modified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -8304,20 +8542,31 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "anonymous": "true"
+        }
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostCompanyProfileImage",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostFilesImagesByEntityNameAndEntityId",
         "parameters": [
           {
-            "name": "companyId",
+            "name": "entityName",
             "in": "path",
-            "description": "The id of the company the file is linked to.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -8329,21 +8578,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/FileUploadModel"
               }
             }
           }
@@ -8360,907 +8595,24 @@
             }
           },
           "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/contactpersons/{contactpersonId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the contactperson with the specified id.",
-        "description": "Deletes the profile image of the contactperson with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteContactpersonProfileImage",
-        "parameters": [
-          {
-            "name": "contactpersonId",
-            "in": "path",
-            "description": "The id of the contactperson the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the contactperson with the specified id.",
-        "description": "Returns the image of the contactperson with the specified id.",
-        "operationId": "GetContactpersonImage",
-        "parameters": [
-          {
-            "name": "contactpersonId",
-            "in": "path",
-            "description": "The id of the contactperson the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostContactpersonProfileImage",
-        "parameters": [
-          {
-            "name": "contactpersonId",
-            "in": "path",
-            "description": "The id of the contactperson the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
+          },
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/projects/{projectId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the project with the specified id.",
-        "description": "Deletes the profile image of the project with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteProjectProfileImage",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the project with the specified id.",
-        "description": "Returns the image of the project with the specified id.",
-        "operationId": "GetProjectImage",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostProjectProfileImage",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/projecttemplates/{projecttemplateId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the projecttemplate with the specified id.",
-        "description": "Deletes the profile image of the projecttemplate with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteProjectTemplateProfileImage",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "The id of the projecttemplate the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the projecttemplate with the specified id.",
-        "description": "Returns the image of the projecttemplate with the specified id.",
-        "operationId": "GetProjectTemplateImage",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "The id of the projecttemplate the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostProjectTemplateProfileImage",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "The id of the projecttemplate the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/users/{userId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the user with the specified id.",
-        "description": "Deletes the profile image of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteUserProfileImage",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the user with the specified id.",
-        "description": "Returns the image of the user with the specified id.",
-        "operationId": "GetUserImage",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostUserProfileImage",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/workspaces/{workspaceId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the workspace with the specified id.",
-        "description": "Deletes the profile image of the workspace with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteWorkspaceProfileImage",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "The id of the workspace the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the workspace with the specified id.",
-        "description": "Returns the image of the workspace with the specified id.",
-        "operationId": "GetWorkspaceImage",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "The id of the workspace the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostWorkspaceProfileImage",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "The id of the workspace the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
           }
         },
         "security": [
@@ -48820,6 +48172,54 @@
           "internal"
         ],
         "type": "string"
+      },
+      "AuthorizedClientApplication": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string",
+            "description": "The client application's public identifier.",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "description": "The client application's display name.",
+            "nullable": true
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The granted OAuth scopes.",
+            "nullable": true
+          },
+          "authorizedOn": {
+            "type": "string",
+            "description": "The date when the client was first authorized.",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An OAuth client application authorized by the current account."
+      },
+      "AuthorizedClientApplicationRevocationResponse": {
+        "type": "object",
+        "properties": {
+          "revokedClientCount": {
+            "type": "integer",
+            "description": "The number of client applications whose grants were revoked.",
+            "format": "int32"
+          },
+          "revokedRefreshTokenCount": {
+            "type": "integer",
+            "description": "The number of refresh tokens marked as revoked.",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The result of revoking OAuth client application access."
       },
       "ChangePasswordForm": {
         "type": "object",
