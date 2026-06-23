@@ -55366,8 +55366,6 @@
             "example": "Create logo concept"
           },
           "description": {
-            "maxLength": 25000,
-            "minLength": 0,
             "type": "string",
             "description": "The description of the task. Max allowed length: 25000 characters.",
             "nullable": true,
@@ -55424,8 +55422,6 @@
             "example": "Create logo concept"
           },
           "description": {
-            "maxLength": 25000,
-            "minLength": 0,
             "type": "string",
             "description": "The description of the task. Max allowed length: 25000 characters.",
             "nullable": true,
