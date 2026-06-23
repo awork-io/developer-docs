@@ -49,6 +49,12 @@ The [OAuth 2.0](https://oauth.net/2/) flow allows users to sign in with their ow
 awork supports and recommends [OAuth 2.1](https://oauth.net/2.1/) for improved security and usability. [Authorization Code Flow with Proof Key for Code Exchange (PKCE)](https://oauth.net/2/pkce/) is the recommended flow for user authentication.
 </Tip>
 
+### Proof Key for Code Exchange (PKCE)
+
+PKCE protects the authorization code flow by binding the authorization request to the token request. Generate a unique `code_verifier` for each authorization attempt, send its SHA-256 challenge as `code_challenge` in the authorization request, and send the original `code_verifier` when exchanging the authorization code for tokens.
+
+Public clients such as web apps, mobile apps, CLI tools, and MCP clients should use PKCE because they cannot safely store a client secret.
+
 ### Definitions
 
 #### Client Application

@@ -14,12 +14,13 @@ https://api.awork.com/api/v1/mcp
 
 The MCP server requires authentication using one of the following methods:
 
-### OAuth 2.1 with PKCE
+### Dynamic Client Registration
 
-The MCP server supports [OAuth 2.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13) authentication with Proof Key for Code Exchange (PKCE) for secure authorization flows. This is the recommended approach for applications that can securely handle the OAuth flow.
+The awork MCP server supports [Dynamic Client Registration](https://datatracker.ietf.org/doc/html/rfc7591). MCP clients that support this flow can register an OAuth client automatically during setup, so you do not need to create a client application in awork manually.
 
-awork supports [Dynamic Client Registration](https://datatracker.ietf.org/doc/html/rfc7591) which means clients can register themselves during the configuration process. The MCP server will use the registered client to perform the OAuth flow.
+### OAuth 2.1
 
+The MCP server supports [OAuth 2.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13) authentication. MCP clients that use OAuth will ask you to log in with your awork credentials and authorize access to your workspace.
 
 ### Bearer Token Authentication
 
@@ -34,11 +35,11 @@ To obtain an API key, see [Getting an API key](/authentication#getting-an-api-ke
 
 ## Supported Actions
 
-The MCP server provides access to core awork functionality, allowing AI assistants to perform various actions on behalf of users:
+The awork MCP server provides access to all capabilities of the awork API. This means connected AI assistants can work with the same resources that are available through the public API, such as projects, tasks, time entries, users, companies, files, webhooks, and more.
 
-### Additional Capabilities
+Instead of exposing a separate MCP tool for every single API endpoint, the server provides guidance that helps the language model generate the required API code for your request. The MCP server then executes that code with your authenticated awork access and returns the result to the assistant.
 
-The MCP server continues to expand its capabilities. For the most up-to-date list of supported actions, consult the **Tools** list of the MCP server after connecting to it.
+Depending on the request, this can either retrieve information from awork or perform an action in awork, such as creating, updating, or deleting data. All actions are still limited by the permissions of the authenticated user or API token.
 
 ## Rate Limiting
 
@@ -81,7 +82,11 @@ It will then prompt you to enter the awork API Key when starting the server. Mor
 
 ### ChatGPT
 
-In ChatGPT, add the MCP server via `Settings` > `Connectors` > `Create`. Use `https://api.awork.com/api/v1/mcp` as the MCP Server URL and select `OAuth` as the authentication method. You will then be asked to log in with your awork credentials.
+In ChatGPT, the awork MCP server is available under `Apps`. Open `Apps`, search for `awork`, and select `Connect`.
+
+<img src="/assets/api/chatgpt-awork-app.png" alt="The awork app detail page in ChatGPT Apps with a Connect button" />
+
+ChatGPT uses Dynamic Client Registration for setup, and you will then be asked to log in with your awork credentials.
 Find more details [here](https://help.openai.com/en/articles/11487775-connectors-in-chatgpt).
 
 ### Claude Code
