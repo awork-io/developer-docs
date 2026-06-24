@@ -46436,8 +46436,8 @@
           "Workspaces"
         ],
         "summary": "Returns all available workspace types.",
-        "description": "Returns all available workspace types.",
-        "operationId": "GetWorkspaceTypes",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
+        "operationId": "GetWorkspacesTypes",
         "responses": {
           "200": {
             "description": "OK",
@@ -46462,7 +46462,10 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "anonymous": "true"
+        }
       }
     },
     "/workspaces/{workspaceId}": {
