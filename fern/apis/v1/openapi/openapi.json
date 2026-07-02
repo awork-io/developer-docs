@@ -10163,93 +10163,6 @@
         }
       }
     },
-    "/me/filters/{entityType}/fromprompt": {
-      "post": {
-        "tags": [
-          "Filters"
-        ],
-        "summary": "Generates a filter from a natural language prompt using AI without persisting it.",
-        "description": "The AI analyzes the prompt and generates an appropriate filter definition.\r\n             The filter is returned but not saved — it can be applied or saved separately.\r\n            \r\n             Examples:\r\n             - \"Show all my tasks that are overdue\"\r\n             - \"Active projects updated this month\"\r\n             - \"High priority tasks due this week\"\r\n             - \"Users with email addresses\"\r\n            \r\n             The Filter Feature supports a subset of OData operators for better UX:\r\n             - Basic comparisons (eq, ne, gt, lt, ge, le)\r\n             - String matching (contains via substringof)\r\n             - Collections (any, count, and not(any(...)) for negation)\r\n             - Computed values (me.id, today, sow, eow, etc.)\r\n            \r\n             NOT supported: startswith, endswith (use contains instead)\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMeFilterFromPrompt",
-        "parameters": [
-          {
-            "name": "entityType",
-            "in": "path",
-            "description": "Route segment identifying the entity type (tasks, projects, companies, users).",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The prompt describing the desired filter.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FilterFromPromptForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Filter"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
     "/me/filters/{entityType}/fromquery": {
       "post": {
         "tags": [
@@ -52503,6 +52416,9 @@
           "copyTaskStatuses": {
             "type": "boolean"
           },
+          "copyWatchers": {
+            "type": "boolean"
+          },
           "resetCustomFieldValues": {
             "type": "boolean"
           },
@@ -55287,6 +55203,9 @@
             "type": "string",
             "description": "The natural language prompt describing the desired filter.",
             "example": "Show all my tasks that are overdue"
+          },
+          "existingFilterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
           }
         },
         "additionalProperties": false,
@@ -55323,6 +55242,46 @@
           }
         },
         "additionalProperties": false
+      },
+      "FilterSuggestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable suggestion identifier for UI tracking.",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "description": "Short label shown to the user.",
+            "nullable": true
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Natural-language prompt represented by the suggestion.",
+            "nullable": true
+          },
+          "filterQuery": {
+            "type": "string",
+            "description": "OData query fragment represented by the suggestion.",
+            "nullable": true
+          },
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A suggested filter extension that can be applied to a filter definition."
+      },
+      "FilterSuggestionsForm": {
+        "type": "object",
+        "properties": {
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Form for generating filter suggestions around an optional existing filter."
       },
       "FilterValue": {
         "type": "object",
