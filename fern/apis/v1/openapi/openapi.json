@@ -69766,6 +69766,12 @@
             "format": "double",
             "nullable": true,
             "example": 1
+          },
+          "icon": {
+            "type": "string",
+            "description": "The icon of the task status.",
+            "nullable": true,
+            "example": "arrow_forward"
           }
         },
         "additionalProperties": false
@@ -73615,6 +73621,12 @@
             "description": "The project management tool used before awork, set during the onboarding. Optional.",
             "nullable": true
           },
+          "aiUsage": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "How the team uses AI, set during the onboarding. Optional.",
+            "nullable": true
+          },
           "department": {
             "maxLength": 100,
             "type": "string",
@@ -73853,6 +73865,12 @@
             "description": "The project management tool used before awork, set during the onboarding. Optional.",
             "nullable": true
           },
+          "aiUsage": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "How the team uses AI, set during the onboarding. Optional.",
+            "nullable": true
+          },
           "department": {
             "maxLength": 100,
             "type": "string",
@@ -73925,6 +73943,12 @@
             "maxLength": 100,
             "type": "string",
             "description": "The project management tool used before awork, set during the onboarding. Optional.",
+            "nullable": true
+          },
+          "aiUsage": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "How the team uses AI, set during the onboarding. Optional.",
             "nullable": true
           },
           "department": {
