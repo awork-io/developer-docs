@@ -929,6 +929,171 @@
         }
       }
     },
+    "/accounts/me/authorizedclients": {
+      "delete": {
+        "tags": [
+          "Client Applications"
+        ],
+        "summary": "Revokes the current account's authorizations and refresh tokens for all third-party OAuth client applications.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteAccountsAuthorizedClients",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizedClientApplicationRevocationResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "get": {
+        "tags": [
+          "Client Applications"
+        ],
+        "summary": "Returns the third-party OAuth client applications authorized by the current account.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAccountsAuthorizedClients",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuthorizedClientApplication"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/accounts/me/authorizedclients/{clientId}": {
+      "delete": {
+        "tags": [
+          "Client Applications"
+        ],
+        "summary": "Revokes the current account's authorization and refresh tokens for one third-party OAuth client application.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteAccountsAuthorizedClientsByClientId",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizedClientApplicationRevocationResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/accounts/{accountId}": {
       "put": {
         "tags": [
@@ -1371,10 +1536,10 @@
     "/clientapplications": {
       "get": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Returns all client applications.",
-        "description": "Returns all client applications.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
         "operationId": "GetClientApplications",
         "responses": {
           "200": {
@@ -1408,11 +1573,11 @@
       },
       "post": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Registers a new client application.",
-        "description": "Registers a new client application.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PostClientApplication",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "operationId": "PostClientApplications",
         "requestBody": {
           "description": "The client application model.",
           "content": {
@@ -1421,7 +1586,8 @@
                 "$ref": "#/components/schemas/ClientApplicationCreateForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -1430,6 +1596,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClientApplicationCreateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1454,20 +1630,21 @@
     "/clientapplications/register": {
       "post": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Dynamically registers a new OAuth 2.0 client according to RFC 7591.",
-        "description": "This endpoint implements the OAuth 2.0 Dynamic Client Registration Protocol.\nIt allows clients to register themselves with the authorization server dynamically.",
-        "operationId": "RegisterClientApplication",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
+        "operationId": "PostClientApplicationsRegister",
         "requestBody": {
           "description": "The dynamic client registration request.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DynamicClientRegistrationRequest"
+                "$ref": "#/components/schemas/DynamicClientRegistrationEndpointRequest"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "201": {
@@ -1485,7 +1662,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DynamicClientRegistrationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1500,17 +1677,20 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "anonymous": "true"
+        }
       }
     },
     "/clientapplications/{clientId}": {
       "delete": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Deletes the specified client application.",
-        "description": "Deletes the specified client application.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "DeleteClientApplication",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "operationId": "DeleteClientApplicationsByClientId",
         "parameters": [
           {
             "name": "clientId",
@@ -1519,13 +1699,32 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "example": "googlesheet"
+            }
           }
         ],
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1545,11 +1744,11 @@
       },
       "get": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Returns the client application with the specified id.",
-        "description": "Returns the client application with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
-        "operationId": "GetClientApplication",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
+        "operationId": "GetClientApplicationsByClientId",
         "parameters": [
           {
             "name": "clientId",
@@ -1558,8 +1757,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "example": "googlesheet"
+            }
           }
         ],
         "responses": {
@@ -1569,6 +1767,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClientApplication"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1591,11 +1799,11 @@
       },
       "put": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Updates the client application with the specified id.",
-        "description": "Updates the client application with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "PutClientApplication",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "operationId": "PutClientApplicationsByClientId",
         "parameters": [
           {
             "name": "clientId",
@@ -1604,8 +1812,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "example": "integration"
+            }
           }
         ],
         "requestBody": {
@@ -1616,7 +1823,8 @@
                 "$ref": "#/components/schemas/ClientApplicationUpdateForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -1625,6 +1833,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClientApplication"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1649,11 +1877,11 @@
     "/clientapplications/{clientId}/generateapikey": {
       "post": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Generates an API key for the specified client application.",
-        "description": "Generates an API key for the specified client application.\nRequires an API user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
-        "operationId": "GenerateApiKey",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:read` permissions.</Check>",
+        "operationId": "PostClientApplicationsGenerateApiKeyByClientId",
         "parameters": [
           {
             "name": "clientId",
@@ -1662,8 +1890,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "example": "googlesheet"
+            }
           }
         ],
         "requestBody": {
@@ -1673,13 +1900,9 @@
               "schema": {
                 "$ref": "#/components/schemas/ClientApplicationApiKeyForm"
               }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClientApplicationApiKeyForm"
-              }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -1688,6 +1911,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1712,11 +1955,11 @@
     "/clientapplications/{clientId}/generatesecret": {
       "post": {
         "tags": [
-          "ClientApplications"
+          "Client Applications"
         ],
         "summary": "Generates a new secret for the specified client application.",
-        "description": "Generates a new secret for the specified client application.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
-        "operationId": "GenerateClientApplicationSecret",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `workspace-manage-config:write` permissions.</Check>",
+        "operationId": "PostClientApplicationsGenerateSecretByClientId",
         "parameters": [
           {
             "name": "clientId",
@@ -1725,8 +1968,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "example": "googlesheet"
+            }
           }
         ],
         "responses": {
@@ -1736,6 +1978,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ClientApplicationGeneratePasswordResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3830,7 +4092,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -6798,7 +7061,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -8099,19 +8363,27 @@
         }
       }
     },
-    "/files/images/companies/{companyId}": {
+    "/files/images/{entityName}/{entityId}": {
       "delete": {
         "tags": [
           "Images"
         ],
-        "summary": "Deletes the profile image of the company with the specified id.",
-        "description": "Deletes the profile image of the company with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteCompanyProfileImage",
+        "summary": "Deletes the profile image of the entity with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteFilesImagesByEntityNameAndEntityId",
         "parameters": [
           {
-            "name": "companyId",
+            "name": "entityName",
             "in": "path",
-            "description": "The id of the company the file is linked to.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -8122,6 +8394,26 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -8142,14 +8434,22 @@
         "tags": [
           "Images"
         ],
-        "summary": "Returns the image of the company with the specified id.",
-        "description": "Returns the image of the company with the specified id.",
-        "operationId": "GetCompanyImage",
+        "summary": "Returns the image of the entity with the specified id.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
+        "operationId": "GetFilesImagesByEntityNameAndEntityId",
         "parameters": [
           {
-            "name": "companyId",
+            "name": "entityName",
             "in": "path",
-            "description": "The id of the company the file is linked to.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -8159,7 +8459,6 @@
           {
             "name": "width",
             "in": "query",
-            "description": "Set width to resize.",
             "schema": {
               "type": "number",
               "format": "double"
@@ -8168,7 +8467,6 @@
           {
             "name": "height",
             "in": "query",
-            "description": "Set height to resize.",
             "schema": {
               "type": "number",
               "format": "double"
@@ -8177,7 +8475,6 @@
           {
             "name": "crop",
             "in": "query",
-            "description": "Whether to crop the image when resizing it.",
             "schema": {
               "type": "boolean"
             }
@@ -8194,6 +8491,46 @@
                 }
               }
             }
+          },
+          "304": {
+            "description": "Not Modified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -8205,20 +8542,31 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "anonymous": "true"
+        }
       },
       "post": {
         "tags": [
           "Images"
         ],
         "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostCompanyProfileImage",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostFilesImagesByEntityNameAndEntityId",
         "parameters": [
           {
-            "name": "companyId",
+            "name": "entityName",
             "in": "path",
-            "description": "The id of the company the file is linked to.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -8230,21 +8578,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/FileUploadModel"
               }
             }
           }
@@ -8261,7 +8595,24 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -8279,126 +8630,27 @@
         }
       }
     },
-    "/files/images/contactpersons/{contactpersonId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the contactperson with the specified id.",
-        "description": "Deletes the profile image of the contactperson with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteContactpersonProfileImage",
-        "parameters": [
-          {
-            "name": "contactpersonId",
-            "in": "path",
-            "description": "The id of the contactperson the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the contactperson with the specified id.",
-        "description": "Returns the image of the contactperson with the specified id.",
-        "operationId": "GetContactpersonImage",
-        "parameters": [
-          {
-            "name": "contactpersonId",
-            "in": "path",
-            "description": "The id of the contactperson the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
+    "/files/images/{entityName}/{entityId}/byuploadid": {
       "post": {
         "tags": [
           "Images"
         ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostContactpersonProfileImage",
+        "summary": "Sets a profile image from a previously uploaded file.",
+        "description": "After an image has been uploaded to an upload URL generated by the /files/generateuploadurl endpoint, this endpoint sets the uploaded image as the profile image of the entity by providing the upload id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostFilesImagesByUploadIdByEntityNameAndEntityId",
         "parameters": [
           {
-            "name": "contactpersonId",
+            "name": "entityName",
             "in": "path",
-            "description": "The id of the contactperson the file is linked to.",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z]*$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -8408,26 +8660,13 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -8441,727 +8680,24 @@
             }
           },
           "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/projects/{projectId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the project with the specified id.",
-        "description": "Deletes the profile image of the project with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteProjectProfileImage",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the project with the specified id.",
-        "description": "Returns the image of the project with the specified id.",
-        "operationId": "GetProjectImage",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostProjectProfileImage",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "The id of the project the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
+          },
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/projecttemplates/{projecttemplateId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the projecttemplate with the specified id.",
-        "description": "Deletes the profile image of the projecttemplate with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteProjectTemplateProfileImage",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "The id of the projecttemplate the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the projecttemplate with the specified id.",
-        "description": "Returns the image of the projecttemplate with the specified id.",
-        "operationId": "GetProjectTemplateImage",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "The id of the projecttemplate the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostProjectTemplateProfileImage",
-        "parameters": [
-          {
-            "name": "projecttemplateId",
-            "in": "path",
-            "description": "The id of the projecttemplate the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/users/{userId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the user with the specified id.",
-        "description": "Deletes the profile image of the user with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteUserProfileImage",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the user with the specified id.",
-        "description": "Returns the image of the user with the specified id.",
-        "operationId": "GetUserImage",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostUserProfileImage",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The id of the user the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/files/images/workspaces/{workspaceId}": {
-      "delete": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Deletes the profile image of the workspace with the specified id.",
-        "description": "Deletes the profile image of the workspace with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "DeleteWorkspaceProfileImage",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "The id of the workspace the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Returns the image of the workspace with the specified id.",
-        "description": "Returns the image of the workspace with the specified id.",
-        "operationId": "GetWorkspaceImage",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "The id of the workspace the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ]
-      },
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "summary": "Uploads a new profile image.",
-        "description": "The profile image file needs to be sent in the body as multipart data.\nThe file size must not exceed 100MB.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostWorkspaceProfileImage",
-        "parameters": [
-          {
-            "name": "workspaceId",
-            "in": "path",
-            "description": "The id of the workspace the file is linked to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "File"
-                ],
-                "type": "object",
-                "properties": {
-                  "File": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "File": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
           }
         },
         "security": [
@@ -9376,6 +8912,736 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the current user's filters.",
+        "description": "Returns the union of filters owned by the requesting user and filters explicitly shared with the requesting user.\r\n            Use the specialized created-by-me and shared-with-me endpoints when only one category is needed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{entityType}": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the current user's filters for the specified user type.",
+        "description": "Returns the union of filters owned by the requesting user and filters explicitly shared with the requesting user\r\n            for the requested user type.\r\n            Use the specialized created-by-me and shared-with-me endpoints when only one category is needed.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFiltersByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type route value.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{entityType}/evaluate": {
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Evaluates a filter definition against the specified user type and returns the filtered results without saving the filter.\n            This endpoint is designed for quick filters where the frontend builds a FilterDefinition dynamically\n            and needs to evaluate it immediately without persisting it to the database.\n            Supports standard paging, ordering, and additional query constraints from query parameters.",
+        "description": "Evaluates an ad-hoc filter without persisting it. Useful for testing filters before saving or for temporary filtering needs.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostFilterEvaluateByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type name (tasks, projects, companies, users).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The filter application form containing the FilterDefinition to evaluate.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplyFilterForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectPagedResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{filterId}/contributors": {
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Adds explicit contributors to the specified filter.",
+        "description": "Adding filter contributors grants explicit access to the filter with the specified access levels.\r\n             Existing explicit contributors are ignored and therefore not recreated.\r\n             The filter creator cannot be added as an explicit contributor because ownership is handled implicitly.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PostFilterContributorsByFilterId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that should receive explicit contributors.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The contributor permissions to add.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContributorPostForm"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinimalContributorModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{filterId}/contributors/{filterContributorId}": {
+      "delete": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Removes an explicit contributor from the specified filter.",
+        "description": "Removing a filter contributor revokes that contributor's explicit access to the filter.\r\n             The contributor entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "DeleteFilterContributorByFilterIdAndFilterContributorId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the contributor entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterContributorId",
+            "in": "path",
+            "description": "The contributor entry to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Updates the access level of an explicit filter contributor.",
+        "description": "Updating a filter contributor changes that contributor's explicit access level for the filter.\r\n             The contributor entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PutFilterContributorByFilterIdAndFilterContributorId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the contributor entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterContributorId",
+            "in": "path",
+            "description": "The contributor entry to update.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The new contributor permission payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContributorForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalContributorModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{filterId}/teams": {
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Adds explicit team permissions to the specified filter.",
+        "description": "Adding filter teams grants explicit access to the filter for all members of the specified teams.\r\n             Existing explicit team permissions are ignored and therefore not recreated.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PostFilterTeamsByFilterId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that should receive explicit team permissions.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The team permissions to add.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityToTeamPostForm"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/filters/{filterId}/teams/{filterToTeamId}": {
+      "delete": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Removes an explicit team permission from the specified filter.",
+        "description": "Removing a filter team permission revokes that team's explicit access to the filter.\r\n             The team permission entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "DeleteFilterTeamByFilterIdAndFilterToTeamId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the team permission entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterToTeamId",
+            "in": "path",
+            "description": "The team permission entry to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Updates the access level of an explicit team permission on the specified filter.",
+        "description": "Updating a filter team permission changes the explicit access level of the referenced team for the filter.\r\n             The team permission entry must belong to the specified filter.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `manage` permissions for the specified filter.</Check>",
+        "operationId": "PutFilterTeamByFilterIdAndFilterToTeamId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter that owns the team permission entry.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filterToTeamId",
+            "in": "path",
+            "description": "The team permission entry to update.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The new team permission payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityToTeamForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinimalEntityToTeamModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -9771,6 +10037,665 @@
         ],
         "x-access": {
           "owner": "true"
+        }
+      }
+    },
+    "/me/filters": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the filters created by the current user.",
+        "description": "Returns filters that were created by and are owned by the requesting user.\r\n            Shared filters are excluded, even if the requesting user also has explicit access through contributor, team, or workspace permissions.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeFilters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/filters/{entityType}": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns the filters created by the current user for the specified user type.",
+        "description": "Returns filters that were created by and are owned by the requesting user and match the requested user type.\r\n            Shared filters are excluded, even if the requesting user also has explicit access through contributor, team, or workspace permissions.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeFiltersByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type route value.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Creates a persisted filter definition for the specified user type.",
+        "description": "Creates a new filter owned by the current user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostMeFilterByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "Route segment identifying the entity type (tasks, projects, companies, users).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The filter definition payload supplied by the caller.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Filter"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/filters/{entityType}/fromquery": {
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Creates a persisted filter from an OData query string.\n            Convenience endpoint for external API consumers who want to create filters using familiar OData syntax.",
+        "description": "Creates a filter from an OData filterby query string.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostMeFilterFromQueryByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "Route segment identifying the entity type (tasks, projects, companies, users).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The filter query payload containing the filter name, sharing settings, and query string.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterFromQueryForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Filter"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/filters/{filterId}": {
+      "delete": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Deletes a filter.",
+        "description": "Deletes the filter when the current user has manage access.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteMeFilterById",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "Identifier of the filter to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns a single filter by its identifier for the current user.",
+        "description": "Returns the filter if the current user has read access.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeFilterById",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The filter identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Filter"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      },
+      "put": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Updates an existing filter definition.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PutMeFilterById",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "Identifier of the filter to update.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The updated filter definition supplied by the caller.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Filter"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/filters/{filterId}/copy": {
+      "post": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Creates a copy of an existing filter.",
+        "description": "Copies the filter definition and query.\r\n            The copied filter will be owned only by the requesting user.\r\n            The name of the copied filter will be \"{original name} (Copy)\" or \"{original name} (Kopie)\" for German users.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostMeFilterCopyByFilterId",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The identifier of the filter to copy.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Filter"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/filters/{filterId}/{entityType}": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Evaluates a filter by applying it to the specified target user type and returning the filtered results.\n             Supports standard paging, ordering, and additional query constraints from query parameters.",
+        "description": "Retrieves and evaluates a saved filter to return matching entities.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeFilterByFilterIdAndUserType",
+        "parameters": [
+          {
+            "name": "filterId",
+            "in": "path",
+            "description": "The identifier of the filter to evaluate.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type name (tasks, projects, companies, users).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectPagedResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -10845,6 +11770,139 @@
         }
       }
     },
+    "/me/sharedfilters": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns filters explicitly shared with the current user.",
+        "description": "Returns filters where the requesting user has been granted explicit access through user permissions,\r\n            team permissions, or workspace-wide filter permissions.\r\n            Excludes filters owned by the requesting user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeSharedFilters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/me/sharedfilters/{entityType}": {
+      "get": {
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Returns filters explicitly shared with the current user for the specified user type.",
+        "description": "Returns filters where the requesting user has been granted explicit access through user permissions,\r\n            team permissions, or workspace-wide filter permissions and that match the requested user type.\r\n            Excludes filters owned by the requesting user.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetMeSharedFiltersByUserType",
+        "parameters": [
+          {
+            "name": "entityType",
+            "in": "path",
+            "description": "The entity type route value.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Filter"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/me/tasks/tags": {
       "get": {
         "tags": [
@@ -10863,513 +11921,6 @@
                   "items": {
                     "$ref": "#/components/schemas/BaseTagModel"
                   }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/me/taskviews": {
-      "get": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Returns all task views that the current user subscribed to.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMeTaskViews",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskView"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "post": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Creates a new task view and directly subscribes the current user to it.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMeTaskView",
-        "requestBody": {
-          "description": "The model to create the task view.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskViewForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/me/taskviews/subscribe": {
-      "post": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Subscribes the current user to a shared task view.",
-        "description": "After subscribing, the user can retrieve the tasks matching the view from `/me/taskViews/:taskViewId/tasks`.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMeTaskViewsSubscribe",
-        "requestBody": {
-          "description": "The model to subscribe to the task view.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskViewSubscriptionForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/me/taskviews/unsubscribe": {
-      "post": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Removes a subscription of the current user from a shared task view.",
-        "description": "Only shared task views can be unsubscribed from.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PostMeTaskViewsUnsubscribe",
-        "requestBody": {
-          "description": "The model to unsubscribe from the task view.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskViewSubscriptionForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/me/taskviews/{taskViewId}": {
-      "delete": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Deletes the specified task view.",
-        "description": "Deleting a task view also removes all subscriptions of the task view.\r\n            \r\n            <Check title=\"Required Permissions\" icon=\"key\">Shared task views can be deleted by the creator or users with admin permissions. Private task views can only be deleted by the creator.</Check>",
-        "operationId": "DeleteMeTaskViewById",
-        "parameters": [
-          {
-            "name": "taskViewId",
-            "in": "path",
-            "description": "The id of the task view.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "get": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Returns the specified task view of the current user.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMeTaskViewById",
-        "parameters": [
-          {
-            "name": "taskViewId",
-            "in": "path",
-            "description": "The id of the task view.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      },
-      "put": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Updates the specified task view of the current user.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "PutMeTaskViewById",
-        "parameters": [
-          {
-            "name": "taskViewId",
-            "in": "path",
-            "description": "The id of the task view.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The model used to update the task view.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaskViewPutForm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/me/taskviews/{taskViewId}/tasks": {
-      "get": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Returns all tasks matching the filter of the specified task view.",
-        "description": "The user permissions are taken into account when returning the tasks.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetMeTaskViewTasksByTaskViewId",
-        "parameters": [
-          {
-            "name": "taskViewId",
-            "in": "path",
-            "description": "The id of the task view.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskModel"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -14361,7 +14912,7 @@
           "Project Automations"
         ],
         "summary": "Executes a manual automation for a task.",
-        "description": "Can be used to trigger an automation that uses a manual trigger for a specific task.\r\n            The calling user becomes the initiator of the automation execution.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must be owner of the project or must have `project-master-data:write` permissions on the specified project.</Check>",
+        "description": "Can be used to trigger an automation that uses a manual trigger for a specific task.\r\n            The calling user becomes the initiator of the automation execution.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have write permissions on the specified task.</Check>",
         "operationId": "PostExecuteProjectAutomation",
         "parameters": [
           {
@@ -16915,7 +17466,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -24850,7 +25402,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -32623,7 +33176,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -35969,116 +36523,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/taskviews": {
-      "get": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Returns all shared task views.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskViews",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/page"
-          },
-          {
-            "$ref": "#/components/parameters/pageSize"
-          },
-          {
-            "$ref": "#/components/parameters/orderby"
-          },
-          {
-            "$ref": "#/components/parameters/filterby"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskView"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/taskviews/{taskViewId}": {
-      "get": {
-        "tags": [
-          "TaskViews"
-        ],
-        "summary": "Returns the specified shared task view.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskViewById",
-        "parameters": [
-          {
-            "name": "taskViewId",
-            "in": "path",
-            "description": "The id of the shared task view.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskView"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -41665,7 +42111,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -44737,7 +45184,7 @@
           "Workflows"
         ],
         "summary": "Returns all project statuses of the workflow with the specified id.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either have `project-master-data:read` permissions for a linked project, be assigned to a non-deleted task in a linked project, be allowed to see the external workflow, or have admin / `project-manage-config:read` permissions.</Check>",
         "operationId": "GetWorkflowProjectStatusesByWorkflowId",
         "parameters": [
           {
@@ -44776,6 +45223,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -44798,8 +45255,7 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "read"
+          "any": "true"
         }
       },
       "post": {
@@ -44884,7 +45340,7 @@
           "Workflows"
         ],
         "summary": "Returns the project status of the workflow with the specified id.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either have `project-master-data:read` permissions for a linked project, be assigned to a non-deleted task in a linked project, be allowed to see the external workflow, or have admin / `project-manage-config:read` permissions.</Check>",
         "operationId": "GetWorkflowProjectStatusByWorkflowIdAndProjectStatusId",
         "parameters": [
           {
@@ -44917,6 +45373,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -44939,8 +45405,7 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "read"
+          "any": "true"
         }
       },
       "put": {
@@ -45193,7 +45658,7 @@
           "Workflows"
         ],
         "summary": "Returns all task statuses of the workflow with the specified id.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either have `project-master-data:read` permissions for a linked project, be assigned to a non-deleted task in a linked project, be allowed to see the external workflow, or have admin / `project-manage-config:read` permissions.</Check>",
         "operationId": "GetWorkflowTaskStatusesByWorkflowId",
         "parameters": [
           {
@@ -45232,6 +45697,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -45254,8 +45729,7 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "read"
+          "any": "true"
         }
       },
       "post": {
@@ -45340,7 +45814,7 @@
           "Workflows"
         ],
         "summary": "Returns the task status of the workflow with the specified id.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:read` permissions.</Check>",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must either have `project-master-data:read` permissions for a linked project, be assigned to a non-deleted task in a linked project, be allowed to see the external workflow, or have admin / `project-manage-config:read` permissions.</Check>",
         "operationId": "GetWorkflowTaskStatusByWorkflowIdAndTaskStatusId",
         "parameters": [
           {
@@ -45373,6 +45847,16 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -45395,8 +45879,7 @@
           "v1"
         ],
         "x-access": {
-          "admin": "true",
-          "project-manage-config": "read"
+          "any": "true"
         }
       },
       "put": {
@@ -45951,8 +46434,8 @@
           "Workspaces"
         ],
         "summary": "Returns all available workspace types.",
-        "description": "Returns all available workspace types.",
-        "operationId": "GetWorkspaceTypes",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
+        "operationId": "GetWorkspacesTypes",
         "responses": {
           "200": {
             "description": "OK",
@@ -45977,7 +46460,10 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "anonymous": "true"
+        }
       }
     },
     "/workspaces/{workspaceId}": {
@@ -47182,7 +47668,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/File"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -47723,6 +48210,54 @@
         ],
         "type": "string"
       },
+      "AuthorizedClientApplication": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string",
+            "description": "The client application's public identifier.",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "description": "The client application's display name.",
+            "nullable": true
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The granted OAuth scopes.",
+            "nullable": true
+          },
+          "authorizedOn": {
+            "type": "string",
+            "description": "The date when the client was first authorized.",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An OAuth client application authorized by the current account."
+      },
+      "AuthorizedClientApplicationRevocationResponse": {
+        "type": "object",
+        "properties": {
+          "revokedClientCount": {
+            "type": "integer",
+            "description": "The number of client applications whose grants were revoked.",
+            "format": "int32"
+          },
+          "revokedRefreshTokenCount": {
+            "type": "integer",
+            "description": "The number of refresh tokens marked as revoked.",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The result of revoking OAuth client application access."
+      },
       "ChangePasswordForm": {
         "type": "object",
         "properties": {
@@ -48052,26 +48587,7 @@
         ],
         "type": "string"
       },
-      "DynamicClientRegistrationError": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "A single error code from the defined set.",
-            "nullable": true,
-            "example": "invalid_redirect_uri"
-          },
-          "error_description": {
-            "type": "string",
-            "description": "Human-readable text providing additional information about the error.",
-            "nullable": true,
-            "example": "The redirect URI is invalid."
-          }
-        },
-        "additionalProperties": false,
-        "description": "Error response for OAuth 2.0 Dynamic Client Registration as defined in RFC 7591."
-      },
-      "DynamicClientRegistrationRequest": {
+      "DynamicClientRegistrationEndpointRequest": {
         "type": "object",
         "properties": {
           "redirect_uris": {
@@ -48079,107 +48595,68 @@
             "items": {
               "type": "string"
             },
-            "description": "Array of redirection URI strings for use in redirect-based flows.",
-            "nullable": true,
-            "example": [
-              "https://app.ncnstn.com/oauth/callback",
-              "https://app.ncnstn.com/oauth/callback-2"
-            ]
+            "nullable": true
           },
           "client_name": {
             "type": "string",
-            "description": "Human-readable name of the client to be presented to the end-user.",
-            "nullable": true,
-            "example": "NCNSTN Integration"
+            "nullable": true
           },
           "token_endpoint_auth_method": {
             "type": "string",
-            "description": "Requested authentication method for the token endpoint.",
-            "nullable": true,
-            "example": "client_secret_basic"
+            "nullable": true
           },
           "grant_types": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Array of OAuth 2.0 grant types that the client will use.",
-            "nullable": true,
-            "example": [
-              "authorization_code",
-              "refresh_token"
-            ]
+            "nullable": true
           },
           "response_types": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Array of OAuth 2.0 response types that the client will use.",
-            "nullable": true,
-            "example": [
-              "code"
-            ]
+            "nullable": true
           },
           "scope": {
             "type": "string",
-            "description": "Space-delimited list of OAuth 2.0 scope values.",
-            "nullable": true,
-            "example": "openid profile email offline_access"
+            "nullable": true
           },
           "application_type": {
             "type": "string",
-            "description": "Kind of the application.",
-            "nullable": true,
-            "example": "web"
+            "nullable": true
           },
           "contacts": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Array of e-mail addresses of people responsible for this client.",
-            "nullable": true,
-            "example": [
-              "carla@ncnstn.com",
-              "dev@ncnstn.com"
-            ]
+            "nullable": true
           },
           "logo_uri": {
             "type": "string",
-            "description": "URL that references a logo for the client application.",
-            "nullable": true,
-            "example": "https://app.ncnstn.com/logo.png"
+            "nullable": true
           },
           "client_uri": {
             "type": "string",
-            "description": "URL of the home page of the client application.",
-            "nullable": true,
-            "example": "https://app.ncnstn.com"
+            "nullable": true
           },
           "policy_uri": {
             "type": "string",
-            "description": "URL that the client provides to the end-user with information about how the client uses their data.",
-            "nullable": true,
-            "example": "https://app.ncnstn.com/privacy"
+            "nullable": true
           },
           "tos_uri": {
             "type": "string",
-            "description": "URL that the client provides to the end-user to read about the client's terms of service.",
-            "nullable": true,
-            "example": "https://app.ncnstn.com/terms"
+            "nullable": true
           },
           "software_id": {
             "type": "string",
-            "description": "A unique identifier string (e.g., a Universally Unique Identifier (UUID)) assigned by the client developer.",
-            "nullable": true,
-            "example": "a3f8c3a1-6f1b-4ac7-8cb3-9d4c2b2b8f9f"
+            "nullable": true
           },
           "software_version": {
             "type": "string",
-            "description": "A version identifier string for the client software identified by software_id.",
-            "nullable": true,
-            "example": "1.0.0"
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -48336,6 +48813,10 @@
             "description": "The URL params to add to the link for verification.\nUsed for user tracking.",
             "nullable": true,
             "example": "utm=true&campaign=email"
+          },
+          "useTrialStartSetPasswordEmail": {
+            "type": "boolean",
+            "description": "Whether auto-generated-password accounts should receive trial-start copy in the set-password email."
           }
         },
         "additionalProperties": false,
@@ -49671,7 +50152,7 @@
           },
           "roleId": {
             "type": "string",
-            "description": "The role id to assign to the agent user.\nIf omitted, the active admin role is used.",
+            "description": "Deprecated. The value is ignored, agent users are always assigned to the fixed agent role.\nKept for backwards compatibility of the request payload.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
@@ -52020,6 +52501,9 @@
           "copyTaskStatuses": {
             "type": "boolean"
           },
+          "copyWatchers": {
+            "type": "boolean"
+          },
           "resetCustomFieldValues": {
             "type": "boolean"
           },
@@ -52832,6 +53316,16 @@
             "description": "The id of the user that the dashboard belongs to.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The creation date.",
+            "format": "date-time"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date when the entity was last updated.",
+            "format": "date-time"
           },
           "widgets": {
             "type": "array",
@@ -54804,6 +55298,9 @@
             "type": "string",
             "description": "The natural language prompt describing the desired filter.",
             "example": "Show all my tasks that are overdue"
+          },
+          "existingFilterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
           }
         },
         "additionalProperties": false,
@@ -54840,6 +55337,46 @@
           }
         },
         "additionalProperties": false
+      },
+      "FilterSuggestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable suggestion identifier for UI tracking.",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "description": "Short label shown to the user.",
+            "nullable": true
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Natural-language prompt represented by the suggestion.",
+            "nullable": true
+          },
+          "filterQuery": {
+            "type": "string",
+            "description": "OData query fragment represented by the suggestion.",
+            "nullable": true
+          },
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          }
+        },
+        "additionalProperties": false,
+        "description": "A suggested filter extension that can be applied to a filter definition."
+      },
+      "FilterSuggestionsForm": {
+        "type": "object",
+        "properties": {
+          "filterDefinition": {
+            "$ref": "#/components/schemas/FilterDefinition"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Form for generating filter suggestions around an optional existing filter."
       },
       "FilterValue": {
         "type": "object",
@@ -54886,8 +55423,6 @@
             "example": "Create logo concept"
           },
           "description": {
-            "maxLength": 25000,
-            "minLength": 0,
             "type": "string",
             "description": "The description of the task. Max allowed length: 25000 characters.",
             "nullable": true,
@@ -54944,8 +55479,6 @@
             "example": "Create logo concept"
           },
           "description": {
-            "maxLength": 25000,
-            "minLength": 0,
             "type": "string",
             "description": "The description of the task. Max allowed length: 25000 characters.",
             "nullable": true,
@@ -60424,6 +60957,11 @@
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
+          "isAgentRole": {
+            "type": "boolean",
+            "description": "Whether this role is the fixed agent role used by agent users.\nThe agent role cannot be modified.",
+            "example": false
+          },
           "isPreset": {
             "type": "boolean",
             "description": "Whether this role is one of the preset roles.\nPreset roles can be edited, archived and deleted.",
@@ -63016,135 +63554,6 @@
             "format": "double",
             "nullable": true,
             "example": 5
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskView": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The id of the task view.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "isShared": {
-            "type": "boolean",
-            "description": "Whether this task view is shared within the workspace.",
-            "example": true
-          },
-          "filter": {
-            "type": "string",
-            "description": "The filter query that is applied to the tasks results.\nThe syntax follows the normal filter coventions that can be used on GET routes.",
-            "nullable": true,
-            "example": "(project/company ne null)"
-          },
-          "filterSettings": {
-            "type": "string",
-            "description": "The filter settings to display.",
-            "nullable": true,
-            "example": "(json data representing the filter settings. Too long to show in doc)"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the task view.",
-            "nullable": true,
-            "example": "Projects with defined company"
-          },
-          "createdOn": {
-            "type": "string",
-            "description": "The date this task view was created.",
-            "format": "date-time",
-            "example": "2022-03-10T16:03:49.100Z"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "The id of the user who created this task view.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "updatedOn": {
-            "type": "string",
-            "description": "The date this task view was last modified.",
-            "format": "date-time",
-            "example": "2022-03-15T16:55:00.100Z"
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "The id of the user who last modified this task view.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskViewForm": {
-        "type": "object",
-        "properties": {
-          "filter": {
-            "type": "string",
-            "description": "The filter query that is applied to the tasks results.\nThe syntax follows the normal filter conventions that can be used on GET routes.",
-            "nullable": true,
-            "example": "(project/company ne null)"
-          },
-          "filterSettings": {
-            "type": "string",
-            "description": "The filter settings to display.",
-            "nullable": true,
-            "example": "(json data representing the filter settings. Too long to show in doc)"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the task view.",
-            "nullable": true,
-            "example": "Projects with defined company"
-          },
-          "isShared": {
-            "type": "boolean",
-            "description": "If the taskview is shared or not.",
-            "example": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskViewPutForm": {
-        "type": "object",
-        "properties": {
-          "filter": {
-            "type": "string",
-            "description": "The filter query that is applied to the tasks results.\nThe syntax follows the normal filter conventions that can be used on GET routes.",
-            "nullable": true,
-            "example": "(project/company ne null)"
-          },
-          "filterSettings": {
-            "type": "string",
-            "description": "The filter settings to display.",
-            "nullable": true,
-            "example": "(json data representing the filter settings. Too long to show in doc)"
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the task view.",
-            "nullable": true,
-            "example": "Projects with defined company"
-          },
-          "isShared": {
-            "type": "boolean",
-            "description": "If the taskview is shared or not.",
-            "example": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskViewSubscriptionForm": {
-        "type": "object",
-        "properties": {
-          "taskViewId": {
-            "type": "string",
-            "description": "The id of the task view the user subscribes to.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false
@@ -67532,6 +67941,26 @@
         "additionalProperties": false,
         "description": "Statistics about workspace usage for plan validation.\nUsed to determine if a workspace can downgrade to a specific plan\nbased on their current usage of limited features."
       },
+      "BulkDownloadForm": {
+        "required": [
+          "fileIds"
+        ],
+        "type": "object",
+        "properties": {
+          "fileIds": {
+            "maxItems": 500,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Gets or sets the file IDs in the order in which archive entries must be emitted."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request form for an ordered bulk file download."
+      },
       "DefaultModel": {
         "type": "object",
         "properties": {
@@ -67602,10 +68031,6 @@
             "nullable": true
           }
         },
-        "additionalProperties": false
-      },
-      "File": {
-        "type": "object",
         "additionalProperties": false
       },
       "FileCopyForm": {
@@ -69361,6 +69786,12 @@
             "format": "double",
             "nullable": true,
             "example": 1
+          },
+          "icon": {
+            "type": "string",
+            "description": "The icon of the task status.",
+            "nullable": true,
+            "example": "arrow_forward"
           }
         },
         "additionalProperties": false
@@ -72848,6 +73279,57 @@
         },
         "additionalProperties": false
       },
+      "PublicWorkspaceLookup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The id of the workspace.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The workspace name.",
+            "nullable": true
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether the workspace has uploaded a workspace image."
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The date this workspace was last modified.",
+            "format": "date-time"
+          },
+          "subdomains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubdomainBase"
+            },
+            "description": "The workspace's subdomains.",
+            "nullable": true
+          },
+          "allowSSOLogin": {
+            "type": "boolean",
+            "description": "Whether the user can login via an external SSO provider."
+          },
+          "allowSocialLogin": {
+            "type": "boolean",
+            "description": "Whether the social login via apple and google is allowed."
+          },
+          "allowCredentialsLogin": {
+            "type": "boolean",
+            "description": "Whether the user can login with username and password."
+          },
+          "requireMfa": {
+            "type": "boolean",
+            "description": "Whether the workspace requires multi-factor authentication for all users."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Public workspace information needed to bootstrap unauthenticated login flows."
+      },
       "RegisterLoginForm": {
         "type": "object",
         "properties": {
@@ -73159,6 +73641,12 @@
             "description": "The project management tool used before awork, set during the onboarding. Optional.",
             "nullable": true
           },
+          "aiUsage": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "How the team uses AI, set during the onboarding. Optional.",
+            "nullable": true
+          },
           "department": {
             "maxLength": 100,
             "type": "string",
@@ -73397,6 +73885,12 @@
             "description": "The project management tool used before awork, set during the onboarding. Optional.",
             "nullable": true
           },
+          "aiUsage": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "How the team uses AI, set during the onboarding. Optional.",
+            "nullable": true
+          },
           "department": {
             "maxLength": 100,
             "type": "string",
@@ -73469,6 +73963,12 @@
             "maxLength": 100,
             "type": "string",
             "description": "The project management tool used before awork, set during the onboarding. Optional.",
+            "nullable": true
+          },
+          "aiUsage": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "How the team uses AI, set during the onboarding. Optional.",
             "nullable": true
           },
           "department": {
@@ -73836,8 +74336,8 @@
       "description": "The accounts endpoints allow you to manage the basic account details of a user."
     },
     {
-      "name": "ClientApplications",
-      "description": "Client applications are important for the external login flow used by your applications. These endpoints allow you to manage the client applications registered by your workspace."
+      "name": "Client Applications",
+      "description": "Client applications are used by external login flows and workspace-registered applications."
     },
     {
       "name": "AbsenceRegions",
@@ -73882,6 +74382,10 @@
     {
       "name": "DocumentSpaces",
       "description": "The document spaces endpoints allow you to create and manage document spaces and related entities such as contributors or connected teams."
+    },
+    {
+      "name": "Filters",
+      "description": "Provides endpoints to manage and share saved filters."
     },
     {
       "name": "Permissions",
@@ -73982,10 +74486,6 @@
     {
       "name": "TaskTemplateTags",
       "description": "Manage tags for task templates."
-    },
-    {
-      "name": "TaskViews",
-      "description": "Task views are saved filters on project tasks. They can be stored by users and shared within the workspace. Users can subscribe to shared task views to use them."
     },
     {
       "name": "Teams",
