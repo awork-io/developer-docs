@@ -67941,6 +67941,26 @@
         "additionalProperties": false,
         "description": "Statistics about workspace usage for plan validation.\nUsed to determine if a workspace can downgrade to a specific plan\nbased on their current usage of limited features."
       },
+      "BulkDownloadForm": {
+        "required": [
+          "fileIds"
+        ],
+        "type": "object",
+        "properties": {
+          "fileIds": {
+            "maxItems": 500,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Gets or sets the file IDs in the order in which archive entries must be emitted."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request form for an ordered bulk file download."
+      },
       "DefaultModel": {
         "type": "object",
         "properties": {
