@@ -110,6 +110,7 @@ navigation:
     path: ./pages/api/search.mdx
     icon: magnifying-glass
   - search
+  - filters
   - page: Companies Overview
     path: ./pages/api/companies.mdx
     icon: crown
