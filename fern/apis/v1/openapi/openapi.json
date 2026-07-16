@@ -6654,6 +6654,78 @@
         }
       }
     },
+    "/documents/{documentId}/files/{fileId}/copy": {
+      "post": {
+        "tags": [
+          "DocumentFiles"
+        ],
+        "summary": "Copies the file to a new document.",
+        "description": "Copies the file to a new document (meta and content).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "CopyToDocument",
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The id of the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model to change the entity information of the file.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FileCopyForm"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FileCopyForm"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/documents/{documentId}/files/{fileId}/download": {
       "get": {
         "tags": [
@@ -9663,35 +9735,20 @@
       }
     },
     "/invitations": {
-      "post": {
+      "get": {
         "tags": [
           "Invitations"
         ],
-        "summary": "Invites a user to the workspace.",
-        "description": "Invites the user with the email address to the workspace with the specified id.\nSends an invitation email to the user with a link to accept the invitation.\nFor automated invitation flows, sending the email can be skipped by setting the\n'skipSendingEmail' flag to 'true'.\nAdditionally, the invitation code, which is valid for 24 hours,\nis returned so that the caller can accept the invitation right away.",
-        "operationId": "Post",
-        "requestBody": {
-          "description": "The model to invite a user to the workspace.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Invitation"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Invitation"
-              }
-            }
-          }
-        },
+        "summary": "Prevents GET requests to the invitations route from throwing errors.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
+        "operationId": "GetInvitations",
         "responses": {
-          "200": {
-            "description": "OK",
+          "404": {
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/InvitationResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -9706,7 +9763,10 @@
         ],
         "x-api-versions": [
           "v1"
-        ]
+        ],
+        "x-access": {
+          "anonymous": "true"
+        }
       }
     },
     "/invitations/accept": {
