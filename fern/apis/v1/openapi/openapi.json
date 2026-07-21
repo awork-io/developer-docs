@@ -1444,6 +1444,41 @@
         }
       }
     },
+    "/automations/catalog": {
+      "get": {
+        "tags": [
+          "Automation Catalog"
+        ],
+        "summary": "Returns all supported automation trigger and action types.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAutomationsCatalog",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutomationCatalogModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/autopilot/availablealerts": {
       "get": {
         "tags": [
@@ -69140,6 +69175,26 @@
         },
         "additionalProperties": false
       },
+      "AutomationCatalogModel": {
+        "type": "object",
+        "properties": {
+          "triggerTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "actionTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AutomationExecuteForm": {
         "required": [
           "taskId"
@@ -74684,6 +74739,10 @@
     {
       "name": "Temporary Files",
       "description": "The temporary file endpoints allow you to upload and update files\n        that do not have a connection to any entity. The files can be linked to an entity later.\n        They don't show up in awork before they are either linked to a file or marked as a global file.\n        Only the user who uploaded the file has access to the temporary file."
+    },
+    {
+      "name": "Automation Catalog",
+      "description": "Automation trigger and action catalog."
     },
     {
       "name": "Project Automations",
