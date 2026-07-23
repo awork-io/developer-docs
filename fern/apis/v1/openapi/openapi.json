@@ -50295,29 +50295,6 @@
         "additionalProperties": false,
         "description": "Form to specify the options for adjusting the start/end dates of a project and related entities."
       },
-      "AgentUserPostForm": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "maxLength": 255,
-            "minLength": 0,
-            "type": "string",
-            "description": "The display name of the agent user."
-          },
-          "roleId": {
-            "type": "string",
-            "description": "Deprecated. The value is ignored, agent users are always assigned to the fixed agent role.\nKept for backwards compatibility of the request payload.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          }
-        },
-        "additionalProperties": false,
-        "description": "The model to create an agent user."
-      },
       "AggregatedBillableDuration": {
         "type": "object",
         "properties": {
@@ -51412,6 +51389,18 @@
           "user": {
             "$ref": "#/components/schemas/ConnectedUserModel"
           },
+          "agentId": {
+            "type": "string",
+            "description": "The agent that visibly authored this comment, when it was created by an agent run.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "agentNameSnapshot": {
+            "type": "string",
+            "description": "The agent name captured when the comment was created.",
+            "nullable": true
+          },
           "updatedOn": {
             "type": "string",
             "description": "The date this object was last modified.",
@@ -51543,6 +51532,18 @@
           },
           "user": {
             "$ref": "#/components/schemas/ConnectedUserModel"
+          },
+          "agentId": {
+            "type": "string",
+            "description": "The agent that visibly authored this comment, when it was created by an agent run.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "agentNameSnapshot": {
+            "type": "string",
+            "description": "The agent name captured when the comment was created.",
+            "nullable": true
           },
           "updatedOn": {
             "type": "string",
@@ -56103,6 +56104,15 @@
             "description": "All users which have been mentioned in the comment.",
             "nullable": true
           },
+          "agentIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Stable ids of agents mentioned directly in the comment.",
+            "nullable": true
+          },
           "everyUserHadPermissions": {
             "type": "boolean",
             "description": "If every user was able to receive the mention notification. If not, one of the users had no permissions to.",
@@ -59042,6 +59052,14 @@
           "color": {
             "maxLength": 14,
             "minLength": 0,
+            "enum": [
+              "blue",
+              "purple",
+              "red",
+              "yellow",
+              "green",
+              "asphalt"
+            ],
             "type": "string",
             "description": "The color of the milestone.",
             "example": "green"
@@ -59109,6 +59127,14 @@
           "color": {
             "maxLength": 14,
             "minLength": 0,
+            "enum": [
+              "blue",
+              "purple",
+              "red",
+              "yellow",
+              "green",
+              "asphalt"
+            ],
             "type": "string",
             "description": "The color of the milestone.",
             "example": "green"
@@ -59145,6 +59171,14 @@
           "color": {
             "maxLength": 14,
             "minLength": 0,
+            "enum": [
+              "blue",
+              "purple",
+              "red",
+              "yellow",
+              "green",
+              "asphalt"
+            ],
             "type": "string",
             "description": "The color of the milestone.",
             "example": "green"
@@ -61116,7 +61150,7 @@
           },
           "isAgentRole": {
             "type": "boolean",
-            "description": "Whether this role is the fixed agent role used by agent users.\nThe agent role cannot be modified.",
+            "description": "Whether this is a retained role from the legacy agent-as-user model.\nThe role cannot be modified.",
             "example": false
           },
           "isPreset": {
@@ -70380,6 +70414,48 @@
           "id": {
             "type": "string",
             "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "originType": {
+            "type": "string",
+            "description": "Gets or sets whether the activity originated from a human or an agent.",
+            "nullable": true
+          },
+          "threadId": {
+            "type": "string",
+            "description": "Gets or sets the originating agent thread.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "threadAvailable": {
+            "type": "boolean",
+            "description": "Gets or sets whether the originating thread can still be opened."
+          },
+          "agentId": {
+            "type": "string",
+            "description": "Gets or sets the agent that produced the activity.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "agentNameSnapshot": {
+            "type": "string",
+            "description": "Gets or sets the agent name captured when the run was accepted.",
+            "nullable": true
+          },
+          "executingUserId": {
+            "type": "string",
+            "description": "Gets or sets the user whose permissions and ownership applied to the run.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "triggeredByUserId": {
+            "type": "string",
+            "description": "Gets or sets the user who triggered the run when different from the executing user.",
+            "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "entityType": {
