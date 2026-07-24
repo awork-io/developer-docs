@@ -1447,7 +1447,7 @@
     "/automations/catalog": {
       "get": {
         "tags": [
-          "Automation Catalog"
+          "Project Automations"
         ],
         "summary": "Returns all supported automation trigger and action types.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
@@ -8887,68 +8887,6 @@
         ],
         "x-access": {
           "anonymous": "true"
-        }
-      }
-    },
-    "/files/{fileId}/copy": {
-      "post": {
-        "tags": [
-          "EntityFiles"
-        ],
-        "summary": "Copies a file to a new entity and resolves its source entity from the file metadata.",
-        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have read access to the source entity and write access to the target entity.</Check>",
-        "operationId": "CopyToEntity",
-        "parameters": [
-          {
-            "name": "fileId",
-            "in": "path",
-            "description": "The id of the source file.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The target entity information.",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FileCopyForm"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/FileCopyForm"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
         }
       }
     },
@@ -74793,12 +74731,8 @@
       "description": "Use those endpoints to define workspace wide absences. A WorkspaceAbsence is an absence that is applied to all the users of the workspace. \n                  It is useful for defining company specific events/holidays, for example."
     },
     {
-      "name": "EntityFiles",
-      "description": "The entity file endpoints allow you to attach files to several entities."
-    },
-    {
       "name": "Files",
-      "description": "The file endpoints to get non shared and non temporay files."
+      "description": "File export endpoints."
     },
     {
       "name": "FileUpload",
@@ -74815,10 +74749,6 @@
     {
       "name": "Temporary Files",
       "description": "The temporary file endpoints allow you to upload and update files\n        that do not have a connection to any entity. The files can be linked to an entity later.\n        They don't show up in awork before they are either linked to a file or marked as a global file.\n        Only the user who uploaded the file has access to the temporary file."
-    },
-    {
-      "name": "Automation Catalog",
-      "description": "Automation trigger and action catalog."
     },
     {
       "name": "Project Automations",
