@@ -13510,6 +13510,73 @@
         }
       }
     },
+    "/projects/importitem": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Creates a project while preserving a key supplied by an external system.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-create:write` permissions.</Check>",
+        "operationId": "PostImportedProject",
+        "requestBody": {
+          "description": "The imported project payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportedProjectPostForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "admin": "true",
+          "project-create": "write"
+        }
+      }
+    },
     "/projects/key/{projectKey}": {
       "get": {
         "tags": [
@@ -30442,6 +30509,72 @@
         "x-access": {
           "admin": "true",
           "project-planning-data": "write"
+        }
+      }
+    },
+    "/tasks/importitem": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Creates a project task while preserving a number supplied by an external system.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostImportedTask",
+        "requestBody": {
+          "description": "The imported task payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportedTaskPostForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
         }
       }
     },
@@ -55979,6 +56112,280 @@
           }
         },
         "additionalProperties": false
+      },
+      "ImportedProjectPostForm": {
+        "required": [
+          "name",
+          "projectKey"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the Project. Max allowed length: 1000 characters.",
+            "example": "Website Design"
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "description": "Whether this is a private project only visible to members and the creator.\nDefaults to false.\nCan only be changed from public to private if no times have been tracked on this project.\nCan always be made public.",
+            "example": false
+          },
+          "description": {
+            "maxLength": 25000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The project description. Max allowed length: 25000 characters.",
+            "nullable": true,
+            "example": "Sitemap, design, assets and implementation of the new online presence."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The start date of the project.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-03-01T00:00:00Z"
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the project.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-05-01T00:00:00Z"
+          },
+          "companyId": {
+            "type": "string",
+            "description": "The id of the company.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "timeBudget": {
+            "type": "integer",
+            "description": "The time budget the project has, in seconds.",
+            "format": "int32",
+            "nullable": true,
+            "example": 576000
+          },
+          "isBillableByDefault": {
+            "type": "boolean",
+            "description": "Whether project times should be billable by default.",
+            "nullable": true,
+            "example": true
+          },
+          "projectTypeId": {
+            "type": "string",
+            "description": "The id of the project type of this project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "color": {
+            "maxLength": 14,
+            "minLength": 0,
+            "type": "string",
+            "description": "The color of the project for display purposes in awork.\nThe supported colors are defined by the awork frontend.\nCan be null when no color assigned.",
+            "nullable": true,
+            "example": "purple"
+          },
+          "deductNonBillableHours": {
+            "type": "boolean",
+            "description": "Whether to deduct non-billable hours from project budgets."
+          },
+          "isProjectKeyVisible": {
+            "type": "boolean",
+            "description": "Whether project key should be visible for this project.\nIf null, it will use the workspace default setting.",
+            "nullable": true
+          },
+          "projectStatusId": {
+            "type": "string",
+            "description": "Optional existing status to use when creating from a workflow or template source.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "projectTemplateId": {
+            "type": "string",
+            "description": "The id of the template which is used to create the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "publicProjectTemplateId": {
+            "type": "string",
+            "description": "The id of the public template which is used to create the project.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "workflowId": {
+            "type": "string",
+            "description": "The id of the workflow to link to the project.\nCannot be specified if ProjectTemplateId is set.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "referenceDateType": {
+            "enum": [
+              "today",
+              "start",
+              "end",
+              "custom"
+            ],
+            "type": "string",
+            "description": "(optional, default = TODAY) Defines the starting date from which the reference date is calculated.\nThe reference date is the date from which the Start/DueOn date of a task is calculated, based on the ReferenceDateAnchor.",
+            "nullable": true
+          },
+          "referenceDateAnchor": {
+            "enum": [
+              "starts_on_reference_date",
+              "ends_on_reference_date"
+            ],
+            "type": "string",
+            "description": "(optional, default = START) Defines what the reference date represents for the schedule (start of first task or end of last task).",
+            "nullable": true
+          },
+          "customReferenceDate": {
+            "type": "string",
+            "description": "(optional) The custom reference date when ReferenceDateType is set to 'custom'.",
+            "format": "date",
+            "nullable": true
+          },
+          "projectKey": {
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string",
+            "description": "The project key to preserve from the external system."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Form for creating a project with a key supplied by an external system."
+      },
+      "ImportedTaskPostForm": {
+        "required": [
+          "baseType",
+          "name",
+          "taskNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The name of the task. Max allowed length: 1000 characters.",
+            "example": "Create logo concept"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the task. Max allowed length: 25000 characters.",
+            "nullable": true,
+            "example": "We need to create a new impactful concept for the customer logo"
+          },
+          "isPrio": {
+            "type": "boolean",
+            "description": "Whether this task is marked as priority.",
+            "nullable": true,
+            "example": true
+          },
+          "startOn": {
+            "type": "string",
+            "description": "The expected start date and time of the task.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2023-03-03T17:00:00Z"
+          },
+          "dueOn": {
+            "type": "string",
+            "description": "The expected due date and time of the task.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2023-03-18T17:00:00Z"
+          },
+          "laneOrder": {
+            "type": "integer",
+            "description": "The lane order defines the vertical position in the task board.",
+            "format": "int32",
+            "nullable": true
+          },
+          "plannedDuration": {
+            "type": "integer",
+            "description": "The expected planned workload of the task, in seconds.",
+            "format": "int32",
+            "nullable": true,
+            "example": 21600
+          },
+          "typeOfWorkId": {
+            "type": "string",
+            "description": "The id of the type of work for this task.\nIf not provided, defaults to the first type of work in the workspace.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "taskStatusId": {
+            "type": "string",
+            "description": "The id of the status for this task.\nIf not provided, defaults to the first status of type 'todo'.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "order": {
+            "type": "number",
+            "description": "The order of the task in a task status column.",
+            "format": "double",
+            "nullable": true,
+            "example": 3
+          },
+          "subtaskOrder": {
+            "type": "number",
+            "description": "The order of the subtask relative to its parent task.",
+            "format": "double",
+            "nullable": true,
+            "example": 1
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The id of the entity the task is related to.\nFor private tasks, this is optional and will default to the current user's ID if not provided.\nFor project tasks, this is required and must be the project ID.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "baseType": {
+            "minLength": 1,
+            "enum": [
+              "private",
+              "projecttask"
+            ],
+            "type": "string",
+            "description": "The base type of the task. Can be 'private' for a private task or 'projecttask' for a project task.",
+            "example": "projecttask"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "The id of the parent task. Setting this value means this is a subtask.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListAssignment"
+            },
+            "description": "The list(s) the new task should be added to.",
+            "nullable": true
+          },
+          "taskNumber": {
+            "maximum": 1073741823,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The positive task number to preserve from the external system.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Form for creating a project task with a number supplied by an external system."
       },
       "InitialDashboardModel": {
         "type": "object",
