@@ -4037,11 +4037,11 @@
     "/companies/{companyId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "CompanyFiles"
+          "Company Files"
         ],
         "summary": "Returns the company file version with the specified id.",
-        "description": "Returns the company file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetCompanyFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByCompanyNameAndCompanyIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "companyId",
@@ -4081,6 +4081,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -7098,11 +7118,11 @@
     "/documents/{documentId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "DocumentFiles"
+          "Document Files"
         ],
         "summary": "Returns the document file version with the specified id.",
-        "description": "Returns the document file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetDocumentFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByDocumentNameAndDocumentIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "documentId",
@@ -7142,6 +7162,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -17578,11 +17618,11 @@
     "/projects/{projectId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "ProjectFiles"
+          "Project Files"
         ],
         "summary": "Returns the project file version with the specified id.",
-        "description": "Returns the project file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByProjectNameAndProjectIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "projectId",
@@ -17622,6 +17662,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -25534,11 +25594,11 @@
     "/projecttemplates/{projecttemplateId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "ProjectTemplateFiles"
+          "ProjectTemplate Files"
         ],
         "summary": "Returns the projecttemplate file version with the specified id.",
-        "description": "Returns the projecttemplate file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetProjectTemplateFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByProjectTemplateNameAndProjectTemplateIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "projecttemplateId",
@@ -25578,6 +25638,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -33394,11 +33474,11 @@
     "/tasks/{taskId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "TaskFiles"
+          "Task Files"
         ],
         "summary": "Returns the task file version with the specified id.",
-        "description": "Returns the task file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByTaskNameAndTaskIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "taskId",
@@ -33438,6 +33518,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -36761,11 +36861,11 @@
     "/tasktemplates/{tasktemplateId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "TaskTemplateFiles"
+          "TaskTemplate Files"
         ],
         "summary": "Returns the tasktemplate file version with the specified id.",
-        "description": "Returns the tasktemplate file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetTaskTemplateFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByTaskTemplateNameAndTaskTemplateIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "tasktemplateId",
@@ -36805,6 +36905,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -42369,11 +42489,11 @@
     "/users/{userId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "UserFiles"
+          "User Files"
         ],
         "summary": "Returns the user file version with the specified id.",
-        "description": "Returns the user file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetUserFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByUserNameAndUserIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "userId",
@@ -42413,6 +42533,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -47895,11 +48035,11 @@
     "/workspaces/{workspaceId}/files/{fileId}/versions/{versionId}": {
       "get": {
         "tags": [
-          "WorkspaceFiles"
+          "Workspace Files"
         ],
         "summary": "Returns the workspace file version with the specified id.",
-        "description": "Returns the workspace file version with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetWorkspaceFileVersion",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetFilesVersionsByWorkspaceNameAndWorkspaceIdAndFileIdAndVersionId",
         "parameters": [
           {
             "name": "workspaceId",
@@ -47939,6 +48079,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FileVersion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -61572,7 +61732,8 @@
             "description": "Whether the project start and due dates should be synced to the retainer start and end dates."
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Creates or updates a monthly retainer contract. When `SyncProjectDates` is false, `StartDate` must be\nthe first day of a month and `EndDate`, when set, must be the last day of a month and later than `StartDate`."
       },
       "Role": {
         "required": [
@@ -64805,7 +64966,8 @@
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Creates a time entry from either UTC date/time fields or local date/time fields.\nDo not mix the UTC and local field groups in one request. Set either `StartDateUtc` with the other UTC fields,\nor `StartDateLocal` with the other local fields."
       },
       "TimeFrameModel": {
         "type": "object",
@@ -70240,7 +70402,7 @@
             "items": {
               "$ref": "#/components/schemas/AlertForm"
             },
-            "description": "The alerts of the autopilot."
+            "description": "The alerts of the autopilot. The collection must contain every alert type returned by\nGET /autopilot/availablealerts, including alerts that should be disabled."
           },
           "id": {
             "type": "string",
@@ -70290,7 +70452,7 @@
             "items": {
               "$ref": "#/components/schemas/AlertPostForm"
             },
-            "description": "The alerts of the autopilot.",
+            "description": "The alerts of the autopilot. Omit this collection or provide an empty collection to enable every available alert\nwith its default settings. A non-empty collection must contain every alert type returned by GET /autopilot/availablealerts.",
             "nullable": true
           }
         },
@@ -70320,7 +70482,7 @@
             "items": {
               "$ref": "#/components/schemas/AlertForm"
             },
-            "description": "The alerts of the autopilot."
+            "description": "The alerts of the autopilot. The collection must contain every alert type returned by\nGET /autopilot/availablealerts, including alerts that should be disabled."
           }
         },
         "additionalProperties": false
