@@ -57862,6 +57862,10 @@
             "description": "The list of entity Ids that changed since the last sync but the user no longer has access to.\nThese are entities that the user previously had access to (and may exist in the frontend store from previous syncs)\nbut can no longer access due to permission changes (e.g., removed as project member, role downgraded).\nThe frontend should remove these entities from the store.",
             "nullable": true
           },
+          "reconciliationRequired": {
+            "type": "boolean",
+            "description": "Indicates that a permission-triggered full sync omitted cleanup IDs and the client must reconcile its tracked IDs."
+          },
           "lastSync": {
             "type": "string",
             "description": "The timestamp of the last sync operation. This indicates the point in time when the data was last synchronized.",
@@ -64007,6 +64011,40 @@
             "description": "The new task status id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskSyncReconciliationForm": {
+        "required": [
+          "entityIds"
+        ],
+        "type": "object",
+        "properties": {
+          "entityIds": {
+            "maxItems": 500,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Gets or sets the locally tracked task IDs to check for current accessibility."
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskSyncReconciliationResponse": {
+        "type": "object",
+        "properties": {
+          "accessibleEntityIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The tracked task IDs that are still active and accessible to the requesting user.",
+            "nullable": true
           }
         },
         "additionalProperties": false
