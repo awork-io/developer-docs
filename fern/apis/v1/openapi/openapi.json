@@ -4752,8 +4752,8 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Creates a new document.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Creates a new document. Optional content must be UTF-8 HTML for the awork rich-text editor; Markdown is not supported.",
+        "description": "When content is provided, it must be UTF-8 HTML formatted for the awork rich-text editor. Markdown is not supported.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostDocument",
         "requestBody": {
           "content": {
@@ -5777,8 +5777,8 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Updates the content of the document with the specified id.",
-        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
+        "summary": "Updates document content using UTF-8 HTML for the awork rich-text editor; Markdown is not supported.",
+        "description": "Content must be UTF-8 HTML formatted for the awork rich-text editor. Markdown is not supported.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
         "operationId": "PutDocumentContentByDocumentId",
         "parameters": [
           {
@@ -19001,7 +19001,7 @@
           "Retainers"
         ],
         "summary": "Endpoint to update the retainer for a project.",
-        "description": "The end date of the retainer can only be updated via the POST /setDates endpoint.\r\n            The start date, the retainer period, and the timezone can not be updated. Delete the retainer and create a new one instead.\r\n            \r\n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Date changes must not overlap another retainer for the project. The retainer period cannot be changed.\r\n            \r\n            The user needs to have the ProjectMasterData write permission for the project to access this endpoint.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PutProjectRetainerByProjectIdAndRetainerId",
         "parameters": [
           {
@@ -52614,14 +52614,14 @@
             "maxLength": 25,
             "minLength": 0,
             "type": "string",
-            "description": "The type of the contact info. Possible values are: 'phone', 'email', 'address', 'custom'.",
+            "description": "The type of the contact info. Possible values are: 'phone', 'email', 'address', 'url', 'custom'.",
             "example": "address"
           },
           "subType": {
             "maxLength": 25,
             "minLength": 0,
             "type": "string",
-            "description": "The subtype of the contact info, Possible values are:\nphone: [ 'central', 'other' ]\nemail: [ 'central', 'invoice', 'other' ]\naddress: [ 'central', 'invoice', 'other' ] url: [ 'primary', 'other']",
+            "description": "The subtype of the contact info. Required for all types except 'custom'. Possible values are:\nphone: [ 'central', 'other' ]\nemail: [ 'central', 'invoice', 'other' ]\naddress: [ 'central', 'invoice', 'other' ]\nurl: [ 'primary', 'other' ]",
             "nullable": true,
             "example": "central"
           },
@@ -52733,14 +52733,14 @@
             "maxLength": 25,
             "minLength": 0,
             "type": "string",
-            "description": "The type of the contact info. Possible values are: 'phone', 'email', 'address', 'custom'.",
+            "description": "The type of the contact info. Possible values are: 'phone', 'email', 'address', 'url', 'custom'.",
             "example": "address"
           },
           "subType": {
             "maxLength": 25,
             "minLength": 0,
             "type": "string",
-            "description": "The subtype of the contact info, Possible values are:\nphone: [ 'central', 'other' ]\nemail: [ 'central', 'invoice', 'other' ]\naddress: [ 'central', 'invoice', 'other' ] url: [ 'primary', 'other']",
+            "description": "The subtype of the contact info. Required for all types except 'custom'. Possible values are:\nphone: [ 'central', 'other' ]\nemail: [ 'central', 'invoice', 'other' ]\naddress: [ 'central', 'invoice', 'other' ]\nurl: [ 'primary', 'other' ]",
             "nullable": true,
             "example": "central"
           },
@@ -54351,7 +54351,7 @@
         "properties": {
           "content": {
             "type": "string",
-            "description": "The content of the document.",
+            "description": "The UTF-8 HTML content of the document, formatted for the awork rich-text editor. Markdown is not supported.",
             "format": "binary"
           }
         },
@@ -54738,7 +54738,7 @@
           },
           "content": {
             "type": "string",
-            "description": "The content of the document.",
+            "description": "The optional UTF-8 HTML content of the document, formatted for the awork rich-text editor. Markdown is not supported.",
             "format": "binary",
             "nullable": true
           }
