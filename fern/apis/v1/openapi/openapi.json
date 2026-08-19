@@ -4752,8 +4752,8 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Creates a new document. Optional content must be UTF-8 HTML for the awork rich-text editor; Markdown is not supported.",
-        "description": "When content is provided, it must be UTF-8 HTML formatted for the awork rich-text editor. Markdown is not supported.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Creates a new document with optional HTML or Markdown content.",
+        "description": "When content is provided, set `contentFormat` to `html` or `markdown`. HTML is the default. Canonical awork Markdown preserves safe editor structures during re-import.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostDocument",
         "requestBody": {
           "content": {
@@ -5777,8 +5777,8 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Updates document content using UTF-8 HTML for the awork rich-text editor; Markdown is not supported.",
-        "description": "Content must be UTF-8 HTML formatted for the awork rich-text editor. Markdown is not supported.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
+        "summary": "Updates document content using UTF-8 HTML or Markdown.",
+        "description": "Set `contentFormat` to `html` or `markdown`. HTML is the default. Canonical awork Markdown preserves safe editor structures during re-import.\r\n            \r\n             <Check title=\"Required Permissions\" icon=\"key\">The user must have at least `write` permissions for the specified document.</Check>",
         "operationId": "PutDocumentContentByDocumentId",
         "parameters": [
           {
@@ -54218,8 +54218,17 @@
         "properties": {
           "content": {
             "type": "string",
-            "description": "The UTF-8 HTML content of the document, formatted for the awork rich-text editor. Markdown is not supported.",
+            "description": "The UTF-8 document content. Use Awork.Core.Models.Documents.Documents.DocumentContentForm.ContentFormat to select HTML or Markdown input.",
             "format": "binary"
+          },
+          "contentFormat": {
+            "enum": [
+              "html",
+              "markdown"
+            ],
+            "type": "string",
+            "description": "The input format of Awork.Core.Models.Documents.Documents.DocumentContentForm.Content. Defaults to `html`. Canonical awork Markdown supports lossless re-import of safe editor content.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -54605,8 +54614,17 @@
           },
           "content": {
             "type": "string",
-            "description": "The optional UTF-8 HTML content of the document, formatted for the awork rich-text editor. Markdown is not supported.",
+            "description": "The optional UTF-8 document content. Use Awork.Core.Models.Documents.Documents.DocumentPostForm.ContentFormat to select HTML or Markdown input.",
             "format": "binary",
+            "nullable": true
+          },
+          "contentFormat": {
+            "enum": [
+              "html",
+              "markdown"
+            ],
+            "type": "string",
+            "description": "The input format of Awork.Core.Models.Documents.Documents.DocumentPostForm.Content. Defaults to `html`. Canonical awork Markdown supports lossless re-import of safe editor content.",
             "nullable": true
           }
         },
@@ -54837,6 +54855,54 @@
           }
         },
         "additionalProperties": false
+      },
+      "DocumentsContentPostForm": {
+        "required": [
+          "ids"
+        ],
+        "type": "object",
+        "properties": {
+          "ids": {
+            "maxItems": 200,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The document identifiers."
+          },
+          "format": {
+            "type": "string",
+            "description": "The response format. Supported values are `html` and `markdown`.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Identifies the documents whose current content should be returned."
+      },
+      "DocumentsContentResultModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The document identifier.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "content": {
+            "type": "string",
+            "description": "The current document content, when available.",
+            "nullable": true
+          },
+          "error": {
+            "type": "string",
+            "description": "The content read error, when the content is not available.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains the current content result for one document."
       },
       "EntityTimeTrackingStats": {
         "type": "object",
@@ -64450,6 +64516,10 @@
             "type": "boolean",
             "description": "Set the billed flag for time entries. Required for operation 'setIsBilled'.",
             "nullable": true
+          },
+          "requireAllTimeEntries": {
+            "type": "boolean",
+            "description": "Whether the operation must leave every requested time entry unchanged when any entry cannot be updated."
           },
           "newUserId": {
             "type": "string",
