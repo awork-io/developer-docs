@@ -55094,6 +55094,13 @@
             "description": "Whether project key should be visible for this project.\nIf null, it will use the workspace default setting.",
             "nullable": true
           },
+          "projectKey": {
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string",
+            "description": "The optional project key. It must be unique within the workspace and contain 1-32 letters, numbers,\ndashes, or underscores. Lowercase letters are normalized to uppercase.\nWhen omitted, a key is generated from the project name.",
+            "nullable": true
+          },
           "projectStatusId": {
             "type": "string",
             "description": "Optional existing status to use when creating from a workflow or template source.",
