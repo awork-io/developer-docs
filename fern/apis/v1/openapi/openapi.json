@@ -26567,7 +26567,7 @@
           "admin": "true",
           "workspace-manage-config": "read"
         },
-        "x-internal": "true"
+        "x-internal": true
       }
     },
     "/roles/{roleId}": {
@@ -68743,7 +68743,8 @@
           },
           "content": {
             "description": "Content in JSON format.",
-            "nullable": true
+            "nullable": true,
+            "example": "(JSON formatted response)"
           }
         },
         "additionalProperties": false
@@ -70474,7 +70475,8 @@
           },
           "value": {
             "description": "The event value as serialized JSON object",
-            "nullable": true
+            "nullable": true,
+            "example": "(JSON serialized data)"
           }
         },
         "additionalProperties": false
@@ -74953,12 +74955,15 @@
       "description": "The dashboards endpoints allow you to work with user's dashboards."
     },
     {
-      "name": "Documents",
-      "description": "The documents endpoints allow you to create and manage documents, their versions and related entities such as contributors or connected teams."
+      "name": "DocumentComments"
     },
     {
       "name": "DocumentSpaces",
       "description": "The document spaces endpoints allow you to create and manage document spaces and related entities such as contributors or connected teams."
+    },
+    {
+      "name": "Documents",
+      "description": "The documents endpoints allow you to create and manage documents, their versions and related entities such as contributors or connected teams."
     },
     {
       "name": "Filters",
@@ -74973,24 +74978,23 @@
       "description": "Private tasks belong to a single user.\n                     Only the users themselves have access to their tasks and they can only be assigned to them.\n                     It is possible to create and assign private tasks to another user in which case both users have access to the task."
     },
     {
-      "name": "ProjectMembers",
-      "description": "Project Members feature allows you to manage the members of a project, including adding users, assigning roles, and setting responsible members. Only users with the appropriate permissions can add or modify project members. Roles and responsibilities are enforced according to project type and permissions."
+      "name": "ProjectComments"
     },
     {
-      "name": "ProjectMilestones",
-      "description": "The project milestone endpoints allow you to work with the basic project milestone data."
+      "name": "ProjectMembers",
+      "description": "Project Members feature allows you to manage the members of a project, including adding users, assigning roles, and setting responsible members. Only users with the appropriate permissions can add or modify project members. Roles and responsibilities are enforced according to project type and permissions."
     },
     {
       "name": "ProjectMilestoneTemplates",
       "description": "The project milestone template endpoints allow you to work with milestone templates for project templates."
     },
     {
-      "name": "ProjectRoles",
-      "description": "The project roles endpoints allow you to define roles for your project members.\n                                   You can assign members to these roles on each project.\n                                   If the roles are linked to the project types then the roles are available in every project using this type.\n                                   When you want to delete a project role which is still in use, you are required to specify which role the currently assigned members should be assigned to instead."
+      "name": "ProjectMilestones",
+      "description": "The project milestone endpoints allow you to work with the basic project milestone data."
     },
     {
-      "name": "Projects",
-      "description": "The projects endpoints allow you to work with the basic project data.\n                             If you don't assign a customer to the project, the project will be an internal project.\n                             In addition to the normal operation you can handle the project members and tags of the projects.\n                             When you assign a user to this project as a project member, you need to specify a project role for this project member. The available roles depend on the type of the project.\n                             You can also make one member responsible for the project, which means that we will notify this person if anything of interest happens in the project.\n                             The tags help you to add additional values to your projects and to find them faster.\n                             If you create new tags, they will be available for all other projects, too."
+      "name": "ProjectRoles",
+      "description": "The project roles endpoints allow you to define roles for your project members.\n                                   You can assign members to these roles on each project.\n                                   If the roles are linked to the project types then the roles are available in every project using this type.\n                                   When you want to delete a project role which is still in use, you are required to specify which role the currently assigned members should be assigned to instead."
     },
     {
       "name": "ProjectStatuses",
@@ -75005,16 +75009,20 @@
       "description": "The project tasks are linked to projects.\n                            Only members of the project or users with project management 'read' permissions have access to these tasks."
     },
     {
-      "name": "ProjectTemplates",
-      "description": "The project templates endpoints allow you to define different templates for projects."
-    },
-    {
       "name": "ProjectTemplateTags",
       "description": "Manage tags for project templates."
     },
     {
+      "name": "ProjectTemplates",
+      "description": "The project templates endpoints allow you to define different templates for projects."
+    },
+    {
       "name": "ProjectTypes",
       "description": "The project types endpoints allow you to define different types for projects."
+    },
+    {
+      "name": "Projects",
+      "description": "The projects endpoints allow you to work with the basic project data.\n                             If you don't assign a customer to the project, the project will be an internal project.\n                             In addition to the normal operation you can handle the project members and tags of the projects.\n                             When you assign a user to this project as a project member, you need to specify a project role for this project member. The available roles depend on the type of the project.\n                             You can also make one member responsible for the project, which means that we will notify this person if anything of interest happens in the project.\n                             The tags help you to add additional values to your projects and to find them faster.\n                             If you create new tags, they will be available for all other projects, too."
     },
     {
       "name": "Retainers",
@@ -75029,6 +75037,9 @@
       "description": "Task bundles are reusable templates for task lists, tasks, and assignments that can be added to projects or created from existing project data."
     },
     {
+      "name": "TaskComments"
+    },
+    {
       "name": "TaskDependencies",
       "description": "The TaskDependencies endpoints allow you to get all task dependencies of a project or a task.\n                    A task can have multiple predecessors and multiple successors through separate dependency relationships."
     },
@@ -75039,10 +75050,6 @@
     {
       "name": "TaskLists",
       "description": "Task lists are a way to group tasks into user-defined lists.\n                            Task lists are currently available in projects and for users.\n                            This way, each project and each user can have a set of ordered task lists.\n                            Task lists can be reordered as well as the tasks within the list.\n                            Since tasks can be in multiple lists, the order is only applied to one list and does not affect others."
-    },
-    {
-      "name": "Tasks",
-      "description": "The Tasks endpoints can be used for general task operations and batch operations.\n        The batch operations include changing the task status, assigning users and more."
     },
     {
       "name": "TaskSchedules",
@@ -75057,12 +75064,16 @@
       "description": "Manage tags for tasks."
     },
     {
+      "name": "TaskTemplateTags",
+      "description": "Manage tags for task templates."
+    },
+    {
       "name": "TaskTemplates",
       "description": "The task templates endpoints can be used for managing task templates within task bundles."
     },
     {
-      "name": "TaskTemplateTags",
-      "description": "Manage tags for task templates."
+      "name": "Tasks",
+      "description": "The Tasks endpoints can be used for general task operations and batch operations.\n        The batch operations include changing the task status, assigning users and more."
     },
     {
       "name": "Teams",
@@ -75097,12 +75108,12 @@
       "description": "The user capacity endpoints allow you to define the work capacity of users."
     },
     {
-      "name": "Users",
-      "description": "The users endpoints allow you to manage the users of your workspace as well as their contact details."
-    },
-    {
       "name": "UserTags",
       "description": "The user tags endpoints allow you to manage tags on users."
+    },
+    {
+      "name": "Users",
+      "description": "The users endpoints allow you to manage the users of your workspace as well as their contact details."
     },
     {
       "name": "Workflows",
@@ -75117,24 +75128,72 @@
       "description": "Use those endpoints to define workspace wide absences. A WorkspaceAbsence is an absence that is applied to all the users of the workspace. \n                  It is useful for defining company specific events/holidays, for example."
     },
     {
-      "name": "Files",
-      "description": "File export endpoints."
+      "name": "Company Files"
+    },
+    {
+      "name": "CompanyFiles"
+    },
+    {
+      "name": "Document Files"
+    },
+    {
+      "name": "DocumentFiles"
     },
     {
       "name": "FileUpload",
       "description": "These endpoints can be used to upload files to the workspace."
     },
     {
+      "name": "Files",
+      "description": "File export endpoints."
+    },
+    {
       "name": "Images",
       "description": "The image endpoints are used to upload and download profile images, for example for users, projects and your workspace.\n                             These endpoints also allow you to crop and scale the image to the size you need."
+    },
+    {
+      "name": "Project Files"
+    },
+    {
+      "name": "ProjectFiles"
+    },
+    {
+      "name": "ProjectTemplate Files"
+    },
+    {
+      "name": "ProjectTemplateFiles"
     },
     {
       "name": "SharedFiles",
       "description": "These file endpoints are used to get shared files and public profile images."
     },
     {
+      "name": "Task Files"
+    },
+    {
+      "name": "TaskFiles"
+    },
+    {
+      "name": "TaskTemplate Files"
+    },
+    {
+      "name": "TaskTemplateFiles"
+    },
+    {
       "name": "Temporary Files",
       "description": "The temporary file endpoints allow you to upload and update files\n        that do not have a connection to any entity. The files can be linked to an entity later.\n        They don't show up in awork before they are either linked to a file or marked as a global file.\n        Only the user who uploaded the file has access to the temporary file."
+    },
+    {
+      "name": "User Files"
+    },
+    {
+      "name": "UserFiles"
+    },
+    {
+      "name": "Workspace Files"
+    },
+    {
+      "name": "WorkspaceFiles"
     },
     {
       "name": "Project Automations",
@@ -75155,6 +75214,12 @@
     {
       "name": "Autopilot",
       "description": "Endpoints to manage awork autopilot settings for projects."
+    },
+    {
+      "name": "Project Activities"
+    },
+    {
+      "name": "Task Activities"
     },
     {
       "name": "Search",
