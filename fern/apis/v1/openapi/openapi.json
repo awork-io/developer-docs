@@ -1156,6 +1156,186 @@
         }
       }
     },
+    "/agents/{agentId}/files": {
+      "get": {
+        "tags": [
+          "AgentFiles"
+        ],
+        "summary": "Returns all files of the agent with the specified id.",
+        "description": "Returns all file metadata of the agent with the specified id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAgentFiles",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "description": "The id of the agent.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/pageSize"
+          },
+          {
+            "$ref": "#/components/parameters/orderby"
+          },
+          {
+            "$ref": "#/components/parameters/filterby"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FileInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/agents/{agentId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "FileUpload"
+        ],
+        "summary": "Creates a file from an upload id.",
+        "description": "After a file has been uploaded to an upload URL generated from the <see cref=\"T:Awork.Files.Service.Feature.FileUpload.Endpoints.PostGenerateUploadURL\" /> endpoint, this endpoint can be used to create a file agent from the uploaded file by providing the upload id.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostUploadByUploadId",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "description": "The id of the agent to attach the file to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The model describing the uploaded file metadata.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadByUploadIdForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/agents/{agentId}/files/{fileId}": {
+      "delete": {
+        "tags": [
+          "AgentFiles"
+        ],
+        "summary": "Deletes the agent file with the specified id.",
+        "description": "Deletes the metadata and the different versions of the file.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "DeleteAgentFile",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "description": "The id of the agent.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The id of the file.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/apiusers": {
       "get": {
         "tags": [
@@ -54876,6 +55056,14 @@
             "type": "string",
             "description": "The response format. Supported values are `html` and `markdown`.",
             "nullable": true
+          },
+          "maximumContentBytes": {
+            "maximum": 104857600,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The optional maximum aggregate UTF-8 bytes returned for document content.",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -75126,6 +75314,9 @@
     {
       "name": "WorkspaceAbsences",
       "description": "Use those endpoints to define workspace wide absences. A WorkspaceAbsence is an absence that is applied to all the users of the workspace. \n                  It is useful for defining company specific events/holidays, for example."
+    },
+    {
+      "name": "AgentFiles"
     },
     {
       "name": "Company Files"
