@@ -55490,11 +55490,6 @@
             "description": "Whether the user has been deactivated.",
             "example": false
           },
-          "isAgent": {
-            "type": "boolean",
-            "description": "Whether this user represents an agent.",
-            "example": false
-          },
           "deactivatedOn": {
             "type": "string",
             "description": "The date the user was deactivated.",
@@ -60343,78 +60338,6 @@
         },
         "additionalProperties": false,
         "description": "A tag model used for the timetrackings ProjectModelForTimeTrackings.\nDo not delete, we need to create copies of the tag model for each entity to avoid issues with Automapper."
-      },
-      "ProjectTaskKeyMigrationResult": {
-        "type": "object",
-        "properties": {
-          "workspaceId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "succeeded": {
-            "type": "boolean"
-          },
-          "wasSkipped": {
-            "type": "boolean"
-          },
-          "validationExecuted": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
-          },
-          "projectsMissingKeysBefore": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tasksMissingNumbersBefore": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tasksWithInvalidIdentifiersBefore": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "projectsProcessed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tasksNumbered": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "taskIdentifiersFixed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "projectKeyGenerationFailures": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "projectsMissingKeysAfter": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tasksMissingNumbersAfter": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tasksWithInvalidIdentifiersAfter": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sequenceDriftCountAfter": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
       },
       "ProjectTeamModel": {
         "type": "object",
@@ -66531,11 +66454,6 @@
             "description": "Whether the user has been deactivated.",
             "example": false
           },
-          "isAgent": {
-            "type": "boolean",
-            "description": "Whether this user represents an agent.",
-            "example": false
-          },
           "deactivatedOn": {
             "type": "string",
             "description": "The date the user was deactivated.",
@@ -66693,11 +66611,6 @@
           "isDeactivated": {
             "type": "boolean",
             "description": "Whether the user has been deactivated.",
-            "example": false
-          },
-          "isAgent": {
-            "type": "boolean",
-            "description": "Whether this user represents an agent.",
             "example": false
           },
           "deactivatedOn": {
@@ -67087,10 +67000,6 @@
           "isApiKeyUser": {
             "type": "boolean",
             "description": "Whether this user is an API key user.\nAPI key users should always be archived."
-          },
-          "isAgent": {
-            "type": "boolean",
-            "description": "Whether this user represents an agent."
           },
           "isExternal": {
             "type": "boolean",
