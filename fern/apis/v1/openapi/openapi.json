@@ -1156,6 +1156,167 @@
         }
       }
     },
+    "/agents/threads/{threadId}/files/{fileId}": {
+      "get": {
+        "tags": [
+          "Entity Files"
+        ],
+        "summary": "Returns a file from the specified agent thread.",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have read access to the agent thread.</Check>",
+        "operationId": "GetAgentsThreadsFilesByThreadIdAndFileId",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "description": "The agent thread id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
+    "/agents/threads/{threadId}/files/{fileId}/download": {
+      "get": {
+        "tags": [
+          "EntityFiles"
+        ],
+        "summary": "Returns the content of a file from the specified agent thread.",
+        "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have read access to the agent thread.</Check>",
+        "operationId": "GetAgentThreadFileContent",
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "description": "The agent thread id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "The file id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "description": "The optional image width.",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "The optional image height.",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "crop",
+            "in": "query",
+            "description": "Whether to crop the image when resizing it.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/agents/{agentId}/files": {
       "get": {
         "tags": [
@@ -1319,167 +1480,6 @@
         "responses": {
           "204": {
             "description": "No Content"
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/agentthreads/{agentthreadId}/files/{fileId}": {
-      "get": {
-        "tags": [
-          "Agentthread Files"
-        ],
-        "summary": "Returns the file with the specified id of the agentthread with the specified id.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetFilesByAgentthreadNameAndAgentthreadIdAndFileId",
-        "parameters": [
-          {
-            "name": "agentthreadId",
-            "in": "path",
-            "description": "The id of the agentthread.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "fileId",
-            "in": "path",
-            "description": "The id of the file.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfo"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "any": "true"
-        }
-      }
-    },
-    "/agentthreads/{agentthreadId}/files/{fileId}/download": {
-      "get": {
-        "tags": [
-          "AgentthreadFiles"
-        ],
-        "summary": "Returns the content of the agentthread file with the specified id.",
-        "description": "Returns the content of the agentthread file. Uses the latest file version.\nIf the agentthread file is an image and the width and height are set,\nthe image will be resized before it is returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAgentthreadFileContent",
-        "parameters": [
-          {
-            "name": "agentthreadId",
-            "in": "path",
-            "description": "The id of the agentthread.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "fileId",
-            "in": "path",
-            "description": "The id of the file.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "width",
-            "in": "query",
-            "description": "Set width to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "height",
-            "in": "query",
-            "description": "Set height to resize.",
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "crop",
-            "in": "query",
-            "description": "Whether to crop the image when resizing it.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -75393,12 +75393,6 @@
       "name": "AgentFiles"
     },
     {
-      "name": "Agentthread Files"
-    },
-    {
-      "name": "AgentthreadFiles"
-    },
-    {
       "name": "Company Files"
     },
     {
@@ -75409,6 +75403,14 @@
     },
     {
       "name": "DocumentFiles"
+    },
+    {
+      "name": "Entity Files",
+      "description": "Endpoints for files attached to entities."
+    },
+    {
+      "name": "EntityFiles",
+      "description": "The entity file endpoints allow you to attach files to several entities."
     },
     {
       "name": "FileUpload",
