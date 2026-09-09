@@ -2197,6 +2197,26 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -50662,22 +50682,35 @@
           },
           "modelPresetKey": {
             "type": "string",
-            "description": "The published model preset key.",
+            "description": "The target workspace model preset key used when importing.",
             "nullable": true
           },
           "modelProvider": {
             "type": "string",
-            "description": "The published direct model provider.",
+            "description": "The current provider resolved from the workspace Balanced preset.",
             "nullable": true
           },
           "modelName": {
             "type": "string",
-            "description": "The published direct model name.",
+            "description": "The current model resolved from the workspace Balanced preset.",
             "nullable": true
           },
           "reasoningLevel": {
             "type": "string",
-            "description": "The published reasoning level.",
+            "description": "The current reasoning level resolved from the workspace Balanced preset.",
+            "nullable": true
+          },
+          "importBlocker": {
+            "type": "string",
+            "description": "The import blocker from AgentPresetAvailabilityCodes, when Balanced is unavailable.\nNull when the template can be imported. Import checks availability again.",
+            "nullable": true
+          },
+          "importWarnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Availability codes for capabilities disabled on import. These do not block import.",
             "nullable": true
           },
           "webSearchEnabled": {
@@ -52756,7 +52789,7 @@
             "nullable": true,
             "example": 24.3
           },
-          "primaryPeriodEnd": {
+          "primaryPeriodEndOn": {
             "type": "string",
             "description": "The exclusive end of the current primary credit period.",
             "format": "date-time",
@@ -53250,6 +53283,23 @@
               "$ref": "#/components/schemas/WorkerBootstrapContextFileModel"
             },
             "description": "Context files for the agent thread.",
+            "nullable": true
+          },
+          "temporaryFileIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The uploaded temporary file identifiers for the first message.",
+            "nullable": true
+          },
+          "temporaryFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemporaryFileReference"
+            },
+            "description": "The display metadata for the first message's temporary files.",
             "nullable": true
           },
           "title": {
@@ -53969,7 +54019,7 @@
         "properties": {
           "accessSource": {
             "type": "string",
-            "description": "Whether the assignment is paid through Chargebee, sponsored by awork, or included with the base plan.",
+            "description": "Whether the assignment is paid through Chargebee, sponsored by awork, a trial, or included with the base plan.",
             "nullable": true
           },
           "workspaceId": {
@@ -54009,13 +54059,13 @@
             "nullable": true,
             "example": "2026-09-01T00:00:00Z"
           },
-          "primaryPeriodStart": {
+          "primaryPeriodStartOn": {
             "type": "string",
             "description": "Inclusive UTC start of the workspace's current shared monthly quota period.",
             "format": "date-time",
             "example": "2026-08-01T00:00:00Z"
           },
-          "primaryPeriodEnd": {
+          "primaryPeriodEndOn": {
             "type": "string",
             "description": "Exclusive UTC end of the workspace's current shared monthly quota period.",
             "format": "date-time",
@@ -54153,7 +54203,7 @@
             "format": "double",
             "nullable": true
           },
-          "primaryPeriodEnd": {
+          "primaryPeriodEndOn": {
             "type": "string",
             "description": "The exclusive end of the current primary credit period.",
             "format": "date-time",
@@ -54376,6 +54426,20 @@
         },
         "additionalProperties": false,
         "description": "Contains safe connection metadata for workspace AI administration."
+      },
+      "ConnectionAuthorizationInitiationRequestModel": {
+        "type": "object",
+        "properties": {
+          "desktopCallbackScheme": {
+            "pattern": "^awork(?:-(?:develop|local))?$",
+            "type": "string",
+            "description": "The registered desktop protocol that receives the completed OAuth flow.",
+            "nullable": true,
+            "example": "awork"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes the client that starts a connector authorization flow."
       },
       "ConnectionAuthorizationInitiationResponseModel": {
         "type": "object",
