@@ -18,93 +18,6 @@
     }
   ],
   "paths": {
-    "/.well-known/oauth-protected-resource": {
-      "get": {
-        "tags": [
-          "OAuth"
-        ],
-        "summary": "Returns the OAuth 2.0 Protected Resource metadata.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
-        "operationId": "GetOAuthProtectedResourceMetadata",
-        "parameters": [
-          {
-            "name": "resource",
-            "in": "query",
-            "description": "The resource to get the metadata for.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "anonymous": "true"
-        }
-      }
-    },
-    "/.well-known/oauth-protected-resource/{resource}": {
-      "get": {
-        "tags": [
-          "OAuth"
-        ],
-        "summary": "Returns the OAuth 2.0 Protected Resource metadata.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Allows unauthenticated access.</Check>",
-        "operationId": "GetOAuthProtectedResourceMetadata2",
-        "parameters": [
-          {
-            "name": "resource",
-            "in": "path",
-            "description": "The resource to get the metadata for.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "oauth2": [
-              "full_access"
-            ]
-          }
-        ],
-        "x-api-versions": [
-          "v1"
-        ],
-        "x-access": {
-          "anonymous": "true"
-        }
-      }
-    },
     "/absenceregions": {
       "get": {
         "tags": [
@@ -1246,10 +1159,10 @@
     "/agents": {
       "get": {
         "tags": [
-          "AgentRuntime"
+          "Custom Agents"
         ],
-        "summary": "Returns the custom agents visible to the requesting user.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Returns all custom agents.",
+        "description": "Only agents visible to the requesting user are returned.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetAgents",
         "responses": {
           "200": {
@@ -1282,13 +1195,13 @@
       },
       "post": {
         "tags": [
-          "AgentRuntime"
+          "Custom Agents"
         ],
         "summary": "Creates a new custom agent.",
-        "description": "Set <see cref=\"P:AiService.Feature.AgentRuntime.Models.CreateAgentRequestModel.ForkedFromAgentId\" /> to copy an existing agent. Otherwise, specify either a preset or a model provider and model name.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Set <see cref=\"P:AiService.Feature.CustomAgents.Models.CreateAgentRequestModel.ForkedFromAgentId\" /> to copy an existing agent. Otherwise, specify either a preset or a model provider and model name.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostAgents",
         "requestBody": {
-          "description": "The request payload.",
+          "description": "The configuration for the new agent.",
           "content": {
             "application/json": {
               "schema": {
@@ -2153,8 +2066,8 @@
         "tags": [
           "AgentThreads"
         ],
-        "summary": "Creates an agent thread.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Creates a conversation with the awork Agent or a custom agent.",
+        "description": "Supply content or attachments to submit the first message and start processing.\r\n            Personal-agent threads can be created without a message; custom-agent threads require text or an attachment.\r\n            The response contains the thread and accepted first-message identifiers, not the agent's reply.\r\n            Read GET /agents/threads/{threadId}/messages to retrieve replies.\r\n            Each request creates a new thread. Retrying after a lost response can create another thread.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostAgentsThreads",
         "requestBody": {
           "description": "The thread creation payload.",
@@ -2296,7 +2209,7 @@
         "tags": [
           "AgentThreads"
         ],
-        "summary": "Cancels a Custom agent thread.",
+        "summary": "Cancels the active run for the specified agent thread.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostAgentsThreadsCancelByThreadId",
         "parameters": [
@@ -2428,7 +2341,7 @@
     "/agents/threads/{threadId}/files/{fileId}/download": {
       "get": {
         "tags": [
-          "EntityFiles"
+          "Agent Thread Files"
         ],
         "summary": "Returns the content of a file from the specified agent thread.",
         "description": "<Check title=\"Required Permissions\" icon=\"key\">The user must have read access to the agent thread.</Check>",
@@ -2572,8 +2485,8 @@
         "tags": [
           "AgentThreads"
         ],
-        "summary": "Sends an agent thread message.",
-        "description": "The workspace must have remaining AI tokens and credits to process the message.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The specified thread must belong to the current user.</Check>",
+        "summary": "Submits a message to an agent conversation.",
+        "description": "Provide text, attachments, or both. The message starts processing or enters the thread's queue.\r\n            The response confirms acceptance; it does not contain the agent's reply.\r\n            Read GET /agents/threads/{threadId}/messages to retrieve replies.\r\n            Each request submits a new message. Retrying after a lost response can submit the message again.\r\n            Processing is subject to the workspace's AI availability and usage limits.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have permission to contribute to the thread.</Check>",
         "operationId": "PostAgentsThreadsMessagesByThreadId",
         "parameters": [
           {
@@ -2592,7 +2505,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AiThreadMessageRequestModel"
+                "$ref": "#/components/schemas/AgentThreadMessageRequestModel"
               }
             }
           },
@@ -2655,14 +2568,14 @@
         }
       }
     },
-    "/agents/threads/{threadId}/messages/{clientMessageId}/status": {
+    "/agents/threads/{threadId}/messages/{messageId}/status": {
       "get": {
         "tags": [
           "AgentThreads"
         ],
         "summary": "Gets agent thread message status.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
-        "operationId": "GetAgentsThreadsMessagesStatusByThreadIdAndClientMessageId",
+        "operationId": "GetAgentsThreadsMessagesStatusByThreadIdAndMessageId",
         "parameters": [
           {
             "name": "threadId",
@@ -2675,12 +2588,13 @@
             }
           },
           {
-            "name": "clientMessageId",
+            "name": "messageId",
             "in": "path",
-            "description": "The client-supplied id of the message to inspect.",
+            "description": "The accepted message id returned by the server.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -2724,10 +2638,10 @@
     "/agents/{agentId}": {
       "get": {
         "tags": [
-          "AgentRuntime"
+          "Custom Agents"
         ],
-        "summary": "Retrieves an agent by id.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Returns the custom agent's configuration.",
+        "description": "The requesting user must have read access to the agent. The response includes their access level.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetAgentsByAgentId",
         "parameters": [
           {
@@ -2789,10 +2703,10 @@
       },
       "put": {
         "tags": [
-          "AgentRuntime"
+          "Custom Agents"
         ],
-        "summary": "Replaces the complete editable agent form and records prompt history when the prompt changes.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Replaces the custom agent's editable configuration.",
+        "description": "Saves a new system prompt version if the prompt changes.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PutAgentsByAgentId",
         "parameters": [
           {
@@ -2807,7 +2721,7 @@
           }
         ],
         "requestBody": {
-          "description": "The request payload.",
+          "description": "The new agent configuration.",
           "content": {
             "application/json": {
               "schema": {
@@ -2877,7 +2791,7 @@
     "/agents/{agentId}/connectors/{connectorId}": {
       "delete": {
         "tags": [
-          "AgentRuntime"
+          "Custom Agents"
         ],
         "summary": "Unlinks a connector from an agent.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
@@ -2945,7 +2859,7 @@
       },
       "post": {
         "tags": [
-          "AgentRuntime"
+          "Custom Agents"
         ],
         "summary": "Links a connector to an agent.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
@@ -3202,7 +3116,7 @@
     "/agents/{agentId}/setarchived": {
       "post": {
         "tags": [
-          "AgentRuntime"
+          "Custom Agents"
         ],
         "summary": "Archives or unarchives an agent.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
@@ -3220,7 +3134,7 @@
           }
         ],
         "requestBody": {
-          "description": "The request payload.",
+          "description": "Whether to archive or unarchive the agent.",
           "content": {
             "application/json": {
               "schema": {
@@ -50229,7 +50143,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Represents the request payload to change the access level of an existing agent share."
+        "description": "Changes a contributor's access level for an agent."
       },
       "AgentConnectorConfigurationRequestModel": {
         "required": [
@@ -50245,18 +50159,18 @@
               "specificConnection"
             ],
             "type": "string",
-            "description": "How the agent resolves a connection for the connector."
+            "description": "How the agent selects a connection for the connector."
           },
           "connectionId": {
             "type": "string",
-            "description": "The connection identifier to configure. It is the fixed connection in specific-connection mode\nand the current user's selected connection in acting-user mode.",
+            "description": "The connection id to use.",
             "format": "uuid",
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           }
         },
         "additionalProperties": false,
-        "description": "Configures how an agent resolves connections for a connector."
+        "description": "Configures an agent's connector connection."
       },
       "AgentConnectorUserConnectionRequestModel": {
         "required": [
@@ -50272,7 +50186,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Selects the current user's connection for an acting-user connector."
+        "description": "Selects the current user's connection for a connector."
       },
       "AgentContributorRequestModel": {
         "type": "object",
@@ -50293,14 +50207,14 @@
           }
         },
         "additionalProperties": false,
-        "description": "Represents the request payload to share an agent with a user."
+        "description": "Shares an agent with a user."
       },
       "AgentContributorResponseModel": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "The access grant identifier.",
+            "description": "The access grant id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -50388,7 +50302,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The delegation identifier.",
+            "description": "The delegation id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -50657,7 +50571,7 @@
           },
           "versionNumber": {
             "type": "integer",
-            "description": "The product-facing preset version number.",
+            "description": "The preset version number.",
             "format": "int32"
           },
           "name": {
@@ -50687,22 +50601,22 @@
           },
           "modelProvider": {
             "type": "string",
-            "description": "The current provider resolved from the workspace Balanced preset.",
+            "description": "The model provider from the workspace Balanced preset.",
             "nullable": true
           },
           "modelName": {
             "type": "string",
-            "description": "The current model resolved from the workspace Balanced preset.",
+            "description": "The model from the workspace Balanced preset.",
             "nullable": true
           },
           "reasoningLevel": {
             "type": "string",
-            "description": "The current reasoning level resolved from the workspace Balanced preset.",
+            "description": "The reasoning level from the workspace Balanced preset.",
             "nullable": true
           },
           "importBlocker": {
             "type": "string",
-            "description": "The import blocker from AgentPresetAvailabilityCodes, when Balanced is unavailable.\nNull when the template can be imported. Import checks availability again.",
+            "description": "The code that explains why the preset cannot be imported.",
             "nullable": true
           },
           "importWarnings": {
@@ -50710,40 +50624,40 @@
             "items": {
               "type": "string"
             },
-            "description": "Availability codes for capabilities disabled on import. These do not block import.",
+            "description": "Codes for capabilities that will be disabled on import.",
             "nullable": true
           },
           "webSearchEnabled": {
             "type": "boolean",
-            "description": "Whether web search is enabled in the published snapshot."
+            "description": "Whether web search is enabled in the preset."
           },
           "aworkAccessEnabled": {
             "type": "boolean",
-            "description": "Whether awork access is enabled in the published snapshot."
+            "description": "Whether awork access is enabled in the preset."
           },
           "googleGenAiAccessEnabled": {
             "type": "boolean",
-            "description": "Whether Google image generation is enabled in the published snapshot."
+            "description": "Whether Google image generation is enabled in the preset."
           },
           "openAiImageGenerationAccessEnabled": {
             "type": "boolean",
-            "description": "Whether OpenAI image generation is enabled in the published snapshot."
+            "description": "Whether OpenAI image generation is enabled in the preset."
           },
           "hasAvatar": {
             "type": "boolean",
-            "description": "Whether the published snapshot includes an avatar."
+            "description": "Whether the preset has an avatar."
           },
           "skillNames": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "The skill names included in the published snapshot.",
+            "description": "The skill names included in the preset.",
             "nullable": true
           }
         },
         "additionalProperties": false,
-        "description": "Represents the latest published localized preset available during agent creation."
+        "description": "Describes an agent preset available to import."
       },
       "AgentPresetDefinitionResponseModel": {
         "type": "object",
@@ -50756,7 +50670,7 @@
           },
           "sourceAgentName": {
             "type": "string",
-            "description": "The source agent name from the published snapshot.",
+            "description": "The source agent name when the preset was published.",
             "nullable": true
           },
           "language": {
@@ -50775,7 +50689,7 @@
           },
           "latestPublishedVersionNumber": {
             "type": "integer",
-            "description": "The latest product-facing version number.",
+            "description": "The active preset version number.",
             "format": "int32"
           },
           "nextVersionNumber": {
@@ -50788,19 +50702,19 @@
             "items": {
               "$ref": "#/components/schemas/AgentPresetVersionSummaryResponseModel"
             },
-            "description": "The bounded product-facing release history.",
+            "description": "The saved preset version history.",
             "nullable": true
           }
         },
         "additionalProperties": false,
-        "description": "Represents one preset in the internal authoring catalog."
+        "description": "Describes an agent preset and its publication status."
       },
       "AgentPresetSourceAgentResponseModel": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "The source agent identifier.",
+            "description": "The source agent id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -50816,7 +50730,7 @@
           },
           "presetKey": {
             "type": "string",
-            "description": "The stored model preset identity.",
+            "description": "The model preset key.",
             "nullable": true
           },
           "modelProvider": {
@@ -50868,19 +50782,19 @@
             "items": {
               "type": "string"
             },
-            "description": "The skill names that will be copied into an imported preset agent.",
+            "description": "The names of skills copied when the preset is imported.",
             "nullable": true
           }
         },
         "additionalProperties": false,
-        "description": "Represents a normal authoring-workspace agent that can be selected as a preset source."
+        "description": "Describes a custom agent used as a source for a preset."
       },
       "AgentPresetVersionSummaryResponseModel": {
         "type": "object",
         "properties": {
           "versionNumber": {
             "type": "integer",
-            "description": "The product-facing version number.",
+            "description": "The preset version number.",
             "format": "int32"
           },
           "publishedOn": {
@@ -50894,11 +50808,11 @@
           },
           "isActive": {
             "type": "boolean",
-            "description": "Whether this version is the active customer-facing version."
+            "description": "Whether this version is currently available to import."
           }
         },
         "additionalProperties": false,
-        "description": "Represents one product release marker in UIC."
+        "description": "Describes an agent preset version."
       },
       "AgentRuntimeModelResponseModel": {
         "type": "object",
@@ -51320,13 +51234,18 @@
           },
           "prompt": {
             "type": "string",
-            "description": "The additional prompt guidance sent as the scheduled run's initial message.",
+            "description": "Optional custom instructions. An omitted or null prompt means no custom instructions.",
             "nullable": true
           },
           "cronRule": {
             "type": "string",
             "description": "The normalized cron rule used for recurring execution.",
             "nullable": true
+          },
+          "recurrenceInterval": {
+            "type": "integer",
+            "description": "The number of matching cron occurrences between scheduled runs.",
+            "format": "int32"
           },
           "timezone": {
             "type": "string",
@@ -51398,7 +51317,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The agent-skill link identifier.",
+            "description": "The agent-skill link id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -51410,7 +51329,7 @@
           },
           "skillId": {
             "type": "string",
-            "description": "The linked skill identifier.",
+            "description": "The linked skill id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -51489,7 +51408,7 @@
           },
           "currentSystemPromptVersionId": {
             "type": "string",
-            "description": "The current immutable system prompt version.",
+            "description": "The current system prompt version.",
             "format": "uuid",
             "nullable": true,
             "example": "fd077515-d4a8-4f79-9fbf-19271bd0123d"
@@ -51508,7 +51427,7 @@
           },
           "presetKey": {
             "type": "string",
-            "description": "The configured workspace preset identity.",
+            "description": "The configured workspace model preset key.",
             "nullable": true,
             "example": "balanced"
           },
@@ -51520,7 +51439,7 @@
           },
           "systemPrompt": {
             "type": "string",
-            "description": "The authoritative current system prompt.",
+            "description": "The current system prompt.",
             "nullable": true,
             "example": "Prepare concise client-ready project updates from awork data."
           },
@@ -51630,6 +51549,27 @@
         "additionalProperties": false,
         "description": "Describes a file produced by an agent thread."
       },
+      "AgentThreadAttachmentRequestModel": {
+        "type": "object",
+        "properties": {
+          "temporaryFileId": {
+            "type": "string",
+            "description": "The identifier returned when uploading a temporary file. Do not also supply aworkFileId.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "af6ac9db-479a-49b8-8e1b-994ba79e940f"
+          },
+          "aworkFileId": {
+            "type": "string",
+            "description": "The identifier of an existing awork file the caller can read. Do not also supply temporaryFileId.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "7a5c994a-320a-4850-a7a8-dad86809d3ef"
+          }
+        },
+        "additionalProperties": false,
+        "description": "References an attached file. Supply exactly one of temporaryFileId or aworkFileId."
+      },
       "AgentThreadEventResponseModel": {
         "type": "object",
         "properties": {
@@ -51689,6 +51629,81 @@
         ],
         "type": "string",
         "description": "Identifies how an agent thread starts."
+      },
+      "AgentThreadMessageRequestModel": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "The message text. Required when no attachments are supplied.",
+            "nullable": true,
+            "example": "Summarize this project's progress, risks, and next steps."
+          },
+          "attachments": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentThreadAttachmentRequestModel"
+            },
+            "description": "Up to 20 distinct files attached to this message. Upload new files before submitting their identifiers.",
+            "nullable": true
+          },
+          "modelProvider": {
+            "type": "string",
+            "description": "The provider for a model override. Supply it together with modelName.",
+            "nullable": true,
+            "example": "openai"
+          },
+          "modelName": {
+            "type": "string",
+            "description": "The model to use for this message. It must be available in the workspace.",
+            "nullable": true,
+            "example": "gpt-5.6-terra"
+          },
+          "reasoningLevel": {
+            "type": "string",
+            "description": "The reasoning level for this message. Supported values depend on the selected model.",
+            "nullable": true,
+            "example": "medium"
+          },
+          "toolAccess": {
+            "$ref": "#/components/schemas/AgentToolAccessOptionsModel"
+          },
+          "connectorIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The connector selection for this message.",
+            "nullable": true
+          },
+          "connectorConnections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentMessageConnectorConnectionRequestModel"
+            },
+            "description": "Connection choices for custom-agent connectors. These do not change agent settings.",
+            "nullable": true
+          },
+          "skillIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The skill selection for this message.",
+            "nullable": true
+          },
+          "answerToInterruptId": {
+            "type": "string",
+            "description": "The interrupt identifier returned with the question being answered.",
+            "nullable": true,
+            "example": "interrupt_01K4CLIENTSTATUS"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Submits a follow-up message or answers a pending question in an agent conversation."
       },
       "AgentThreadMessageResponseModel": {
         "type": "object",
@@ -52216,14 +52231,14 @@
           }
         },
         "additionalProperties": false,
-        "description": "Represents the request payload to share an agent with a team."
+        "description": "Shares an agent with a team."
       },
       "AgentToTeamResponseModel": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "The access grant identifier.",
+            "description": "The access grant id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -52531,7 +52546,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The workflow step identifier.",
+            "description": "The workflow step id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -52902,7 +52917,7 @@
             "additionalProperties": {
               "$ref": "#/components/schemas/AiQuotaPlanOptions"
             },
-            "description": "Quota definitions keyed by the required logical plan names `Starter`, `Plus`, `Pro`, and `Max`.",
+            "description": "Quota definitions keyed by logical paid plan name. `Starter` is required; additional plan names are allowed.",
             "nullable": true,
             "example": {
               "Starter": {
@@ -52964,6 +52979,23 @@
                     "role": "Primary",
                     "amountType": "AbsoluteCredits",
                     "amountValue": 16000,
+                    "windowType": "Aligned",
+                    "windowUnit": "Month",
+                    "windowLength": 1,
+                    "windowAnchor": "QuotaPeriodStart",
+                    "enforcement": "HardBlock",
+                    "priority": 1
+                  }
+                ]
+              },
+              "Ultra": {
+                "creditsPerUsd": 100,
+                "limits": [
+                  {
+                    "key": "monthly",
+                    "role": "Primary",
+                    "amountType": "AbsoluteCredits",
+                    "amountValue": 64000,
                     "windowType": "Aligned",
                     "windowUnit": "Month",
                     "windowLength": 1,
@@ -53238,87 +53270,94 @@
         "description": "Represents a user who explicitly joined an agent thread."
       },
       "AiThreadCreateRequestModel": {
+        "required": [
+          "type"
+        ],
         "type": "object",
         "properties": {
-          "type": {
-            "enum": [
-              "personal-agent",
-              "custom-agent"
-            ],
+          "content": {
             "type": "string",
-            "description": "The thread type.",
+            "description": "The message text. Required when no attachments are supplied.",
             "nullable": true,
-            "example": "custom-agent"
+            "example": "Summarize this project's progress, risks, and next steps."
           },
-          "agentId": {
-            "type": "string",
-            "description": "The Custom agent or agent-owned skill owner.",
-            "format": "uuid",
-            "example": "4d22e163-2b4a-4d47-b51c-5b2217f84f57"
-          },
-          "skillId": {
-            "type": "string",
-            "description": "The skill id for a guided skill flow.",
-            "format": "uuid",
-            "example": "0d291ab9-5b6d-4dd7-a0bd-842aca19a9e2"
-          },
-          "setupFlow": {
-            "enum": [
-              "agent-setup",
-              "agent-improvement",
-              "skill-improvement",
-              "workspace-context"
-            ],
-            "type": "string",
-            "description": "The optional setup flow.",
-            "nullable": true,
-            "example": "skill-improvement"
-          },
-          "initialMessage": {
-            "$ref": "#/components/schemas/InitialAgentSessionMessageRequestModel"
-          },
-          "contextFiles": {
+          "attachments": {
+            "maxItems": 20,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/WorkerBootstrapContextFileModel"
+              "$ref": "#/components/schemas/AgentThreadAttachmentRequestModel"
             },
-            "description": "Context files for the agent thread.",
+            "description": "Up to 20 distinct files attached to this message. Upload new files before submitting their identifiers.",
             "nullable": true
           },
-          "temporaryFileIds": {
+          "modelProvider": {
+            "type": "string",
+            "description": "The provider for a model override. Supply it together with modelName.",
+            "nullable": true,
+            "example": "openai"
+          },
+          "modelName": {
+            "type": "string",
+            "description": "The model to use for this message. It must be available in the workspace.",
+            "nullable": true,
+            "example": "gpt-5.6-terra"
+          },
+          "reasoningLevel": {
+            "type": "string",
+            "description": "The reasoning level for this message. Supported values depend on the selected model.",
+            "nullable": true,
+            "example": "medium"
+          },
+          "toolAccess": {
+            "$ref": "#/components/schemas/AgentToolAccessOptionsModel"
+          },
+          "connectorIds": {
             "type": "array",
             "items": {
               "type": "string",
               "format": "uuid"
             },
-            "description": "The uploaded temporary file identifiers for the first message.",
+            "description": "The connector selection for this message.",
             "nullable": true
           },
-          "temporaryFiles": {
+          "connectorConnections": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TemporaryFileReference"
+              "$ref": "#/components/schemas/AgentMessageConnectorConnectionRequestModel"
             },
-            "description": "The display metadata for the first message's temporary files.",
+            "description": "Connection choices for custom-agent connectors. These do not change agent settings.",
             "nullable": true
+          },
+          "skillIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The skill selection for this message.",
+            "nullable": true
+          },
+          "type": {
+            "minLength": 1,
+            "enum": [
+              "personal-agent",
+              "custom-agent"
+            ],
+            "type": "string",
+            "description": "Select personal-agent for the awork Agent, or custom-agent for a configured workspace agent.",
+            "example": "custom-agent"
+          },
+          "agentId": {
+            "type": "string",
+            "description": "The configured agent to run. Required for custom-agent threads; omit for ordinary personal-agent threads.",
+            "format": "uuid",
+            "example": "4d22e163-2b4a-4d47-b51c-5b2217f84f57"
           },
           "title": {
             "type": "string",
             "description": "The thread title.",
             "nullable": true,
             "example": "Weekly client status report"
-          },
-          "sourceType": {
-            "$ref": "#/components/schemas/AgentSessionSourceType"
-          },
-          "invocationType": {
-            "$ref": "#/components/schemas/AgentThreadInvocationType"
-          },
-          "sourceId": {
-            "type": "string",
-            "description": "The external source reference for the thread.",
-            "nullable": true,
-            "example": "api-client-status-run"
           },
           "projectId": {
             "type": "string",
@@ -53347,53 +53386,6 @@
             "format": "uuid",
             "nullable": true,
             "example": "5a442338-8da3-49e9-a702-b45d6f829d43"
-          },
-          "modelProvider": {
-            "type": "string",
-            "description": "The model provider selected for the initial message.",
-            "nullable": true,
-            "example": "openai"
-          },
-          "modelName": {
-            "type": "string",
-            "description": "The model name selected for the initial message.",
-            "nullable": true,
-            "example": "gpt-5.6-terra"
-          },
-          "reasoningLevel": {
-            "type": "string",
-            "description": "The reasoning level selected for the initial message.",
-            "nullable": true,
-            "example": "medium"
-          },
-          "toolAccess": {
-            "$ref": "#/components/schemas/AgentToolAccessOptionsModel"
-          },
-          "connectorIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "The exact connector list selected for the initial message.",
-            "nullable": true
-          },
-          "connectorConnections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AgentMessageConnectorConnectionRequestModel"
-            },
-            "description": "Custom agent connector choices.",
-            "nullable": true
-          },
-          "skillIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "The exact skill list selected for the initial message.",
-            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -53415,6 +53407,13 @@
             "nullable": true,
             "example": "8f934a03-8f8b-44ea-9137-3ca563bb75e8"
           },
+          "acceptedMessageId": {
+            "type": "string",
+            "description": "The accepted first-message id, or null when the thread was created without a message.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "66fcbdc5-2ae6-43bd-b3ab-f18ccd24909a"
+          },
           "type": {
             "type": "string",
             "description": "The thread type.",
@@ -53428,10 +53427,15 @@
             "example": "Weekly client status report"
           },
           "status": {
+            "enum": [
+              "ready",
+              "accepted",
+              "queued",
+              "failed"
+            ],
             "type": "string",
-            "description": "The thread status.",
-            "nullable": true,
-            "example": "running"
+            "description": "The creation result: ready without a first message, accepted with a first message, queued when the first message waits for a run, or failed to start.",
+            "example": "accepted"
           },
           "createdOn": {
             "type": "string",
@@ -53493,12 +53497,6 @@
             "format": "uuid",
             "nullable": true,
             "example": "5a442338-8da3-49e9-a702-b45d6f829d43"
-          },
-          "lastSequence": {
-            "type": "integer",
-            "description": "The latest persisted event sequence.",
-            "format": "int64",
-            "example": 42
           }
         },
         "additionalProperties": false,
@@ -53520,15 +53518,9 @@
             "nullable": true,
             "example": "8f934a03-8f8b-44ea-9137-3ca563bb75e8"
           },
-          "clientMessageId": {
-            "type": "string",
-            "description": "The client idempotency key.",
-            "nullable": true,
-            "example": "client-status-2026-08-29"
-          },
           "acceptedMessageId": {
             "type": "string",
-            "description": "The persisted thread message id when the message started immediately.",
+            "description": "The server-assigned message id. This identity is retained while queued and when execution starts.",
             "format": "uuid",
             "nullable": true,
             "example": "66fcbdc5-2ae6-43bd-b3ab-f18ccd24909a"
@@ -53552,17 +53544,15 @@
             "description": "Whether the backend stored the message in the queue.",
             "example": false
           },
-          "lastSequence": {
-            "type": "integer",
-            "description": "The last thread event sequence produced by immediate acceptance.",
-            "format": "int64",
-            "example": 42
-          },
           "status": {
+            "enum": [
+              "accepted",
+              "queued",
+              "failed"
+            ],
             "type": "string",
-            "description": "The processing status.",
-            "nullable": true,
-            "example": "in_progress"
+            "description": "Whether the message was accepted for execution, queued behind another message, or failed to start.",
+            "example": "accepted"
           }
         },
         "additionalProperties": false,
@@ -53571,11 +53561,11 @@
       "AiThreadMessageProcessingStatusResponseModel": {
         "type": "object",
         "properties": {
-          "clientMessageId": {
+          "messageId": {
             "type": "string",
-            "description": "The client-generated message id.",
-            "nullable": true,
-            "example": "client-status-2026-08-29"
+            "description": "The server-generated identifier of the accepted user message.",
+            "format": "uuid",
+            "example": "66fcbdc5-2ae6-43bd-b3ab-f18ccd24909a"
           },
           "status": {
             "type": "string",
@@ -53610,120 +53600,6 @@
         },
         "additionalProperties": false,
         "description": "Represents the processing status for a thread message."
-      },
-      "AiThreadMessageRequestModel": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "description": "The message content.",
-            "nullable": true,
-            "example": "Add the latest budget and launch-date risks to the Acme client report."
-          },
-          "modelProvider": {
-            "type": "string",
-            "description": "The model provider selected for this message.",
-            "nullable": true,
-            "example": "openai"
-          },
-          "modelName": {
-            "type": "string",
-            "description": "The model name selected for this message.",
-            "nullable": true,
-            "example": "gpt-5.6-terra"
-          },
-          "reasoningLevel": {
-            "type": "string",
-            "description": "The reasoning level selected for this message.",
-            "nullable": true,
-            "example": "medium"
-          },
-          "toolAccess": {
-            "$ref": "#/components/schemas/AgentToolAccessOptionsModel"
-          },
-          "connectorIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "The exact connector list selected for this message.",
-            "nullable": true
-          },
-          "connectorConnections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AgentMessageConnectorConnectionRequestModel"
-            },
-            "description": "Custom agent connector choices.",
-            "nullable": true
-          },
-          "skillIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "The exact skill list selected for this message.",
-            "nullable": true
-          },
-          "clientMessageId": {
-            "type": "string",
-            "description": "Client-generated idempotency key for the user message.",
-            "nullable": true,
-            "example": "client-status-2026-08-29"
-          },
-          "answerToInterruptId": {
-            "type": "string",
-            "description": "The interrupt identifier of the user question this message answers.",
-            "nullable": true,
-            "example": "interrupt_01K4CLIENTSTATUS"
-          },
-          "url": {
-            "type": "string",
-            "description": "The page URL where the message was sent.",
-            "nullable": true,
-            "example": "https://app.awork.com/northstar/projects/acme-website"
-          },
-          "useCompanySearch": {
-            "type": "boolean",
-            "description": "Whether the agent must search company sources for this message before answering.",
-            "example": false
-          },
-          "runId": {
-            "type": "string",
-            "description": "Optional Agent-UI (AG-UI) run identifier for this streamed response.",
-            "nullable": true,
-            "example": "run_01K4CLIENTSTATUS"
-          },
-          "temporaryFileIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "Optional temporary file identifiers uploaded by the chat client.",
-            "nullable": true
-          },
-          "temporaryFiles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TemporaryFileReference"
-            },
-            "description": "Optional display metadata for the temporary files attached to this message.",
-            "nullable": true
-          },
-          "contextFiles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkerBootstrapContextFileModel"
-            },
-            "description": "The context files to add to an agent runtime thread message.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false,
-        "description": "Adds an agent thread message."
       },
       "AiThreadQueueResponseModel": {
         "type": "object",
@@ -53809,7 +53685,15 @@
             "example": "Add client-ready risks and next steps to the status report."
           },
           "payload": {
-            "$ref": "#/components/schemas/AiThreadMessageRequestModel"
+            "$ref": "#/components/schemas/AgentThreadMessageRequestModel"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemporaryFileReference"
+            },
+            "description": "Attachment display metadata resolved by the server. This metadata is not part of the editable request.",
+            "nullable": true
           },
           "responsibleUserId": {
             "type": "string",
@@ -53832,25 +53716,34 @@
         "properties": {
           "content": {
             "type": "string",
-            "description": "The message content.",
+            "description": "The message text. Required when no attachments are supplied.",
             "nullable": true,
-            "example": "Add the latest budget and launch-date risks to the Acme client report."
+            "example": "Summarize this project's progress, risks, and next steps."
+          },
+          "attachments": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentThreadAttachmentRequestModel"
+            },
+            "description": "Up to 20 distinct files attached to this message. Upload new files before submitting their identifiers.",
+            "nullable": true
           },
           "modelProvider": {
             "type": "string",
-            "description": "The model provider selected for this message.",
+            "description": "The provider for a model override. Supply it together with modelName.",
             "nullable": true,
             "example": "openai"
           },
           "modelName": {
             "type": "string",
-            "description": "The model name selected for this message.",
+            "description": "The model to use for this message. It must be available in the workspace.",
             "nullable": true,
             "example": "gpt-5.6-terra"
           },
           "reasoningLevel": {
             "type": "string",
-            "description": "The reasoning level selected for this message.",
+            "description": "The reasoning level for this message. Supported values depend on the selected model.",
             "nullable": true,
             "example": "medium"
           },
@@ -53863,7 +53756,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "The exact connector list selected for this message.",
+            "description": "The connector selection for this message.",
             "nullable": true
           },
           "connectorConnections": {
@@ -53871,7 +53764,7 @@
             "items": {
               "$ref": "#/components/schemas/AgentMessageConnectorConnectionRequestModel"
             },
-            "description": "Custom agent connector choices.",
+            "description": "Connection choices for custom-agent connectors. These do not change agent settings.",
             "nullable": true
           },
           "skillIds": {
@@ -53880,62 +53773,14 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "The exact skill list selected for this message.",
+            "description": "The skill selection for this message.",
             "nullable": true
-          },
-          "clientMessageId": {
-            "type": "string",
-            "description": "Client-generated idempotency key for the user message.",
-            "nullable": true,
-            "example": "client-status-2026-08-29"
           },
           "answerToInterruptId": {
             "type": "string",
-            "description": "The interrupt identifier of the user question this message answers.",
+            "description": "The interrupt identifier returned with the question being answered.",
             "nullable": true,
             "example": "interrupt_01K4CLIENTSTATUS"
-          },
-          "url": {
-            "type": "string",
-            "description": "The page URL where the message was sent.",
-            "nullable": true,
-            "example": "https://app.awork.com/northstar/projects/acme-website"
-          },
-          "useCompanySearch": {
-            "type": "boolean",
-            "description": "Whether the agent must search company sources for this message before answering.",
-            "example": false
-          },
-          "runId": {
-            "type": "string",
-            "description": "Optional Agent-UI (AG-UI) run identifier for this streamed response.",
-            "nullable": true,
-            "example": "run_01K4CLIENTSTATUS"
-          },
-          "temporaryFileIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "Optional temporary file identifiers uploaded by the chat client.",
-            "nullable": true
-          },
-          "temporaryFiles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TemporaryFileReference"
-            },
-            "description": "Optional display metadata for the temporary files attached to this message.",
-            "nullable": true
-          },
-          "contextFiles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/WorkerBootstrapContextFileModel"
-            },
-            "description": "The context files to add to an agent runtime thread message.",
-            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -55115,26 +54960,26 @@
           },
           "forkedFromAgentId": {
             "type": "string",
-            "description": "The agent to copy. When set, the new agent inherits the source agent's configuration.",
+            "description": "The agent to copy.",
             "format": "uuid",
             "nullable": true,
             "example": "1107cc84-1750-40e1-a86c-86f68d1f05c5"
           },
           "modelProvider": {
             "type": "string",
-            "description": "The provider that hosts the model. Required with AiService.Feature.AgentRuntime.Models.CreateAgentRequestModel.ModelName when no preset or source agent is specified.",
+            "description": "The provider that hosts the model.",
             "nullable": true,
             "example": "openai"
           },
           "modelName": {
             "type": "string",
-            "description": "The model to run. Required with AiService.Feature.AgentRuntime.Models.CreateAgentRequestModel.ModelProvider when no preset or source agent is specified.",
+            "description": "The model to run.",
             "nullable": true,
             "example": "gpt-5.6-terra"
           },
           "presetKey": {
             "type": "string",
-            "description": "The workspace model preset to use instead of a provider and model.",
+            "description": "The workspace model preset to use.",
             "nullable": true,
             "example": "balanced"
           },
@@ -55181,8 +55026,7 @@
       "CreateAgentScheduleRequestModel": {
         "required": [
           "cronRule",
-          "name",
-          "prompt"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -55195,9 +55039,9 @@
           },
           "prompt": {
             "maxLength": 25000,
-            "minLength": 1,
             "type": "string",
-            "description": "The additional prompt guidance sent as the scheduled run's initial message.",
+            "description": "Optional custom instructions for the initial message. Omitted, null, or blank input clears custom instructions.",
+            "nullable": true,
             "example": "Summarize progress, risks, and next steps for the Acme website project."
           },
           "cronRule": {
@@ -55206,6 +55050,15 @@
             "type": "string",
             "description": "The cron rule used for recurring execution.",
             "example": "0 9 * * 1"
+          },
+          "recurrenceInterval": {
+            "maximum": 99,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The number of matching cron occurrences between scheduled runs.",
+            "format": "int32",
+            "nullable": true,
+            "example": 2
           },
           "timezone": {
             "maxLength": 100,
@@ -56012,30 +55865,11 @@
             "maxLength": 255,
             "minLength": 1,
             "type": "string",
-            "description": "The name of the normal agent created in the workspace."
+            "description": "The name of the new custom agent."
           }
         },
         "additionalProperties": false,
-        "description": "Defines the workspace-agent identity used when importing the latest preset release."
-      },
-      "InitialAgentSessionMessageRequestModel": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "description": "The message content.",
-            "nullable": true,
-            "example": "Summarize progress, risks, and next steps for the Acme website project."
-          },
-          "clientMessageId": {
-            "type": "string",
-            "description": "The client-generated idempotency key for the message.",
-            "nullable": true,
-            "example": "client-status-2026-08-29"
-          }
-        },
-        "additionalProperties": false,
-        "description": "Defines the first agent thread message."
+        "description": "Sets the name of a custom agent created from a preset."
       },
       "ModelDisablePreflightResponseModel": {
         "type": "object",
@@ -56433,7 +56267,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Defines the preset metadata for one source agent publication."
+        "description": "Sets the language and description for an agent preset."
       },
       "RememberAgentSessionMessageRequestModel": {
         "type": "object",
@@ -56457,7 +56291,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Represents the set agent archived request payload for the agent runtime API."
+        "description": "Sets whether an agent is archived."
       },
       "SetAgentScheduleEnabledRequestModel": {
         "required": [
@@ -56962,24 +56796,24 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The prompt version identifier.",
+            "description": "The prompt version id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "agentId": {
             "type": "string",
-            "description": "The agent identifier.",
+            "description": "The agent id.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
           "versionNumber": {
             "type": "integer",
-            "description": "The creation-order version number.",
+            "description": "The version number, assigned in order of creation.",
             "format": "int32"
           },
           "isCurrent": {
             "type": "boolean",
-            "description": "Whether this row is the agent's current prompt."
+            "description": "Whether this is the agent's current system prompt."
           },
           "systemPrompt": {
             "type": "string",
@@ -57001,7 +56835,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Represents one immutable system prompt history row."
+        "description": "Describes a saved system prompt version."
       },
       "TableAuditEventModel": {
         "type": "object",
@@ -57263,7 +57097,7 @@
           },
           "presetKey": {
             "type": "string",
-            "description": "The workspace model preset to use instead of a provider and model.",
+            "description": "The workspace model preset to use.",
             "nullable": true,
             "example": "balanced"
           },
@@ -57276,7 +57110,7 @@
           "systemPrompt": {
             "maxLength": 25000,
             "type": "string",
-            "description": "The authoritative system prompt.",
+            "description": "The instructions that control the agent's behavior.",
             "example": "Prepare concise client-ready project updates from awork data."
           },
           "webSearchEnabled": {
@@ -57306,8 +57140,7 @@
       "UpdateAgentScheduleRequestModel": {
         "required": [
           "cronRule",
-          "name",
-          "prompt"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -57320,9 +57153,9 @@
           },
           "prompt": {
             "maxLength": 25000,
-            "minLength": 1,
             "type": "string",
-            "description": "The additional prompt guidance sent as the scheduled run's initial message.",
+            "description": "Optional custom instructions for the initial message. Omitted, null, or blank input clears custom instructions.",
+            "nullable": true,
             "example": "Summarize progress, risks, and next steps for the Acme website project."
           },
           "cronRule": {
@@ -57331,6 +57164,15 @@
             "type": "string",
             "description": "The cron rule used for recurring execution.",
             "example": "0 9 * * 1"
+          },
+          "recurrenceInterval": {
+            "maximum": 99,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The number of matching cron occurrences between scheduled runs.",
+            "format": "int32",
+            "nullable": true,
+            "example": 2
           },
           "timezone": {
             "maxLength": 100,
@@ -57700,45 +57542,6 @@
         },
         "additionalProperties": false,
         "description": "The validation error response."
-      },
-      "WorkerBootstrapContextFileModel": {
-        "type": "object",
-        "properties": {
-          "path": {
-            "type": "string",
-            "description": "The destination path relative to the worker workspace.",
-            "nullable": true,
-            "example": "context/uploads/acme-client-brief.md"
-          },
-          "content": {
-            "type": "string",
-            "description": "The UTF-8 text content.",
-            "nullable": true,
-            "example": "Client: Acme. Launch target: 4 September 2026."
-          },
-          "contentBase64": {
-            "type": "string",
-            "description": "The Base64-encoded content for a binary file.",
-            "nullable": true,
-            "example": "JVBERi0xLjQ="
-          },
-          "temporaryFileId": {
-            "type": "string",
-            "description": "The temporary file to materialize directly into the sandbox.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "c2e765ec-8aad-49f7-ae21-e54916a7e907"
-          },
-          "aworkFileId": {
-            "type": "string",
-            "description": "The awork file to materialize directly into the sandbox.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "8f77f578-ec66-47d9-98d1-5daf2ae5c6c3"
-          }
-        },
-        "additionalProperties": false,
-        "description": "Provides one context file to an agent runtime worker."
       },
       "WorkspaceContextCatalogStatus": {
         "enum": [
@@ -77986,6 +77789,28 @@
         "additionalProperties": false,
         "description": "Statistics about workspace usage for plan validation.\nUsed to determine if a workspace can downgrade to a specific plan\nbased on their current usage of limited features."
       },
+      "AttachmentFileMetadataModel": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "Gets or sets the stored file name.",
+            "nullable": true
+          },
+          "mimeType": {
+            "type": "string",
+            "description": "Gets or sets the stored media type.",
+            "nullable": true
+          },
+          "size": {
+            "type": "integer",
+            "description": "Gets or sets the latest file version's size in bytes.",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains the display metadata needed to attach an existing file to an agent message."
+      },
       "BulkDownloadForm": {
         "required": [
           "fileIds"
@@ -84449,8 +84274,8 @@
       "description": "Manages agent threads."
     },
     {
-      "name": "OAuth",
-      "description": "The OAuth feature provides OAuth 2.0 discovery endpoints for authorization server and protected resource metadata."
+      "name": "Custom Agents",
+      "description": "Create and configure custom agents, sharing, skills, connectors, delegations, workflows, and presets."
     },
     {
       "name": "Accounts",
@@ -84687,10 +84512,6 @@
     },
     {
       "name": "DocumentFiles"
-    },
-    {
-      "name": "EntityFiles",
-      "description": "The entity file endpoints allow you to attach files to several entities."
     },
     {
       "name": "FileUpload",
