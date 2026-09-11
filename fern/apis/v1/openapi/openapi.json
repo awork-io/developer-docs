@@ -81822,7 +81822,7 @@
           "plannedDuration": {
             "type": "integer",
             "description": "The total planned time of the project, in seconds.\nThe time is calculated as te sum of the planned duration by all project tasks.",
-            "format": "int32",
+            "format": "int64",
             "nullable": true,
             "example": 432000
           },
