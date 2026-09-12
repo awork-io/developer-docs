@@ -51201,6 +51201,60 @@
         "additionalProperties": false,
         "description": "Represents one effective workspace model switch."
       },
+      "AgentScheduleNextOccurrenceRequestModel": {
+        "required": [
+          "cronRule",
+          "recurrenceInterval",
+          "timezone"
+        ],
+        "type": "object",
+        "properties": {
+          "cronRule": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "The cron rule used for recurring execution."
+          },
+          "recurrenceInterval": {
+            "maximum": 99,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The number of matching cron occurrences between scheduled runs.",
+            "format": "int32"
+          },
+          "timezone": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "The IANA timezone used to evaluate the cron rule."
+          },
+          "scheduleId": {
+            "type": "string",
+            "description": "The optional existing schedule whose current cadence phase is used.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents the cadence used to preview the next scheduled agent run."
+      },
+      "AgentScheduleNextOccurrenceResponseModel": {
+        "type": "object",
+        "properties": {
+          "nextRunOn": {
+            "type": "string",
+            "description": "The next selected occurrence in UTC.",
+            "format": "date-time"
+          },
+          "isFirstRun": {
+            "type": "boolean",
+            "description": "Whether the occurrence starts a new cadence phase."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents the next scheduled agent run preview."
+      },
       "AgentScheduleResponseModel": {
         "type": "object",
         "properties": {
