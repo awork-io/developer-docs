@@ -4,6 +4,8 @@ description: Project Templates API Reference.
 slug: projecttemplates
 ---
 
+<img src="/assets/api/project-templates-overview.png" alt="awork project templates illustration" width="212" align="center" />
+
 Learn more about [project templates](https://support.awork.com/en/articles/project-templates-DhvJCSuVBExv).
 
 ## Workflows and project templates
@@ -16,8 +18,9 @@ The flow is:
 
 ### Creating a project template
 
-```sh title="Create a project template" {4}
+```sh title="Create a project template" {5}
 curl -X POST https://api.awork.com/api/v1/projecttemplates \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Client Delivery Template"
@@ -26,8 +29,9 @@ curl -X POST https://api.awork.com/api/v1/projecttemplates \
 
 ### Linking a project template to a workflow
 
-```sh title="Link template to workflow" {4}
+```sh title="Link template to workflow" {5}
 curl -X POST https://api.awork.com/api/v1/projecttemplates/123e4567-e89b-12d3-a456-426614174000/linkworkflow \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "workflowId": "223e4567-e89b-12d3-a456-426614174000",
@@ -52,6 +56,7 @@ curl -X POST https://api.awork.com/api/v1/projecttemplates/123e4567-e89b-12d3-a4
 
 ```sh title="Unlink template from workflow"
 curl -X POST https://api.awork.com/api/v1/projecttemplates/123e4567-e89b-12d3-a456-426614174000/unlinkworkflow \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json'
 ```
 
@@ -73,8 +78,9 @@ When a task bundle is applied to a project, it creates actual task lists and tas
 
 The only required field for creating a task bundle is the `name`:
 
-```sh title="Create a new task bundle" {4}
+```sh title="Create a new task bundle" {5}
 curl -X POST https://api.awork.com/api/v1/taskbundles \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Website Launch",
@@ -87,8 +93,9 @@ curl -X POST https://api.awork.com/api/v1/taskbundles \
 
 Once you have a task bundle, you can create task list templates within it:
 
-```sh title="Create a task list template" {4}
+```sh title="Create a task list template" {5}
 curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasklisttemplates \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Design",
@@ -100,8 +107,9 @@ curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-42
 
 Create task templates within a task bundle:
 
-```sh title="Create a task template" {4-8}
+```sh title="Create a task template" {5-9}
 curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasktemplates \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Create wireframe mockups",
@@ -118,6 +126,7 @@ Assign task templates to specific task list templates:
 
 ```sh title="Assign task templates to a list"
 curl -X POST https://api.awork.com/api/v1/taskbundles/123e4567-e89b-12d3-a456-426614174000/tasklisttemplates/456e4567-e89b-12d3-a456-426614174000/addtasktemplates \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '[
     {
@@ -134,8 +143,9 @@ When a task bundle is applied:
 - **Tasks** are always created in the project
 - **Task lists** are merged based on their name (existing lists with matching names are reused)
 
-```sh title="Apply task bundle to project" {4}
+```sh title="Apply task bundle to project" {5}
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/addtaskbundle \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "taskBundleId": "123e4567-e89b-12d3-a456-426614174000"

@@ -32,6 +32,7 @@ To create a custom field, you need to send a POST request to the custom field de
 
 ```sh title="Create a text custom field"
 curl -X POST https://api.awork.com/api/v1/customfielddefinitions \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "name": "Service Level",
@@ -48,6 +49,7 @@ Next, the custom field must be linked to a project before a value can be set for
 
 ```sh title="Link a custom field to a project"
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/linkcustomfielddefinition \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "customFieldDefinitionId": "123e4567-e89b-12d3-a456-426614174000",
@@ -63,6 +65,7 @@ Finally, you can set a value for the custom field for a task. To do so, you need
 
 ```sh title="Set a custom field value for a task"
 curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/setcustomfields \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '[
             {
@@ -80,6 +83,7 @@ To get the values of custom fields of a task, you simply need to fetch the task.
 
 ```sh title="Get the custom field values of a task"
 curl -X GET https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000 \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json"
 ```
 ```json title="Response"

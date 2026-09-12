@@ -6,12 +6,24 @@ slug: users
 
 Users represent the people who are part of an awork workspace. They can be assigned to tasks, projects, and other resources. Users can have different roles and permissions in the workspace.
 
+Use `GET /users` when you need a directory, and `GET /users/me` when you need the identity and workspace associated with the current token. User ids returned by these endpoints are used when assigning work, inviting members, or adding contact information.
+
+## Listing users
+
+```sh title="List active users"
+curl 'https://api.awork.com/api/v1/users?page=1&pageSize=50' \
+  -H 'Authorization: Bearer {token}'
+```
+
+The list endpoint supports the standard [filtering](/filtering), [ordering](/ordering), and [pagination](/pagination) parameters. Archived users are omitted unless you set `showArchived=true`.
+
 ## Inviting Users
 
 To invite a new user to an awork workspace, you need to make a request to `POST /invitations`. This is one of the few requests that requires a `workspaceId`.
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/invitations \
+  -H 'Authorization: Bearer {token}' \
   -H 'Content-Type: application/json' \
   -d '{
 	"email": "carla.creative@ncnstn.com",
@@ -24,7 +36,8 @@ curl -X POST https://api.awork.com/api/v1/invitations \
 You can find the workspace id of the current user by making a request to the `/users/me` endpoint.
 
 ```sh title="Request"
-curl -X GET https://api.awork.com/api/v1/users/me
+curl -X GET https://api.awork.com/api/v1/users/me \
+  -H 'Authorization: Bearer {token}'
 ```
 ```json title="Response" {4}
 {
@@ -35,4 +48,27 @@ curl -X GET https://api.awork.com/api/v1/users/me
 		"url": "https://ncnstn.awork.com"
 	}
 }
+```
+
+## Updating a user
+
+Update profile fields with `PUT /users/{userId}`. Use the dedicated activate, deactivate, and archive operations for account state changes.
+
+```sh title="Update a user's profile"
+curl -X PUT 'https://api.awork.com/api/v1/users/123e4567-e89b-12d3-a456-426614174000' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "firstName": "Carla",
+    "lastName": "Creative",
+    "position": "Senior Designer",
+    "language": "en-GB"
+  }'
+```
+
+For example, temporarily disable a user without deleting their historical assignments:
+
+```sh title="Deactivate a user"
+curl -X POST 'https://api.awork.com/api/v1/users/123e4567-e89b-12d3-a456-426614174000/deactivate' \
+  -H 'Authorization: Bearer {token}'
 ```

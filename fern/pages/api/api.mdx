@@ -4,4 +4,81 @@ description: API Management related endpoints Reference.
 slug: api
 ---
 
-These endpoints allow you to manage interactions with the awork API. Please see the individual endpoint documentation for more information.
+These endpoints let administrators manage the credentials and delivery mechanisms used by integrations: API users, OAuth client applications, and webhooks. They require an administrator role or the corresponding `workspace-manage-config` permission.
+
+## Creating an API user
+
+API users are non-human accounts for server-to-server integrations. Assign a least-privileged role with `roleId`; omitting it creates an administrator, which is rarely appropriate for production:
+
+```sh title="Create an API user"
+curl -X POST 'https://api.awork.com/api/v1/apiusers' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Billing sync",
+    "roleId": "323e4567-e89b-12d3-a456-426614174002",
+    "clientId": "billing-sync"
+  }'
+```
+
+The response contains the API user's id and the role it was assigned:
+
+```json title="Response"
+{
+  "id": "423e4567-e89b-12d3-a456-426614174003",
+  "name": "Billing sync",
+  "roleId": "323e4567-e89b-12d3-a456-426614174002",
+  "clientId": "billing-sync",
+  "createdOn": "2026-09-12T09:00:00Z"
+}
+```
+
+Use `GET /apiusers` to audit existing API users. API users also appear in `GET /users?showArchived=true`; store the returned id with your integration configuration.
+
+## Registering an OAuth client
+
+For an interactive integration, register a client application and provide the exact redirect URI used by your OAuth callback. Set `isConfidential` to `true` only when the client secret can be kept on a server:
+
+```sh title="Register an OAuth client"
+curl -X POST 'https://api.awork.com/api/v1/clientapplications' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "clientId": "northstar-reporting",
+    "displayName": "Northstar Reporting",
+    "redirectUris": ["https://reports.example.com/oauth/callback"],
+    "isConfidential": true
+  }'
+```
+
+```json title="Response"
+{
+  "clientId": "northstar-reporting",
+  "displayName": "Northstar Reporting",
+  "redirectUris": ["https://reports.example.com/oauth/callback"],
+  "isConfidential": true,
+  "clientSecret": "store-this-secret-securely"
+}
+```
+
+The response contains the registered `clientId` and, for confidential clients, a `clientSecret`. Treat the secret like a password. See [Authentication](/authentication) for the authorization-code flow.
+
+## Receiving changes with a webhook
+
+First list valid event names with `GET /webhooks/eventtypes`. Then create a webhook. The receiver type is inferred from the URI; any non-Slack URI is treated as a custom webhook:
+
+```sh title="Create a webhook"
+curl -X POST 'https://api.awork.com/api/v1/webhooks' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Project changes",
+    "uri": "https://integrations.example.com/awork/events",
+    "events": "project_added,project_updated",
+    "isActive": true,
+    "authenticationType": "header",
+    "authentication": "X-Integration-Key=replace-with-secret"
+  }'
+```
+
+Use `GET /webhooks/{webhookId}/logs` to troubleshoot deliveries. Webhook payloads are sent to the configured URI and include the event metadata and the entity that changed; see the [Webhooks guide](/webhooks) for payload details.

@@ -6,6 +6,8 @@ slug: timetracking
 
 Time Tracking and the resulting Time Entries allow project progress to be tracked and ultimately billed to a client.
 
+<img src="/assets/api/timetracking-overview.webp" alt="awork time tracking analytics with project budget, tracked hours, and user totals" width="80%" align="center" />
+
 ## How to work with time tracking
 
 Time Tracking in awork is based on Time Entries. Time Entries are created for a specific project and task and are always assigned to a user. There are two ways to create time entries: manually or using the timer.
@@ -14,8 +16,9 @@ Time Tracking in awork is based on Time Entries. Time Entries are created for a 
 
 There are multiple ways to create time entries. The easiest way is by specifying the `startDateUtc` and `duration`. The only other required fields for creating a time entry are the `timezone`, `typeOfWorkId` and `userId`.
 
-```sh title="Request" {4-8}
+```sh title="Request" {5-9}
 curl -X POST "https://api.awork.com/api/v1/timeentries" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "timezone": "Europe/Berlin",
@@ -30,8 +33,9 @@ Alternatively, you can also specify the `startDateUtc` and `endDateUtc` fields t
 
 Additionally, you can assign the time entry to a specific project and task by providing the `projectId` and `taskId` fields.
 
-```sh title="Request" {7-8}
+```sh title="Request" {8-9}
 curl -X POST "https://api.awork.com/api/v1/timeentries" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "timezone": "Europe/Berlin",
@@ -50,6 +54,7 @@ The timer is a convenient way to track time while working on a task or project. 
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/users/123e4567-e89b-12d3-a456-426614174000/timetracking/start \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "timezone": "Europe/Berlin",

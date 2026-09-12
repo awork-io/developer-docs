@@ -4,7 +4,7 @@ description: Workflows API Reference.
 slug: workflows
 ---
 
-<img src="/assets/api/workflows-visual-en.png" alt="Workflows overview visual" />
+<img src="/assets/api/workflows-overview.png" alt="awork workflow status mapping from existing project statuses to a shared workflow" width="80%" align="center" />
 
 Workflows are reusable process definitions that let you share project statuses and task statuses across multiple projects. Instead of maintaining statuses per project, you can manage them once in a workflow and keep linked projects aligned.
 
@@ -20,6 +20,7 @@ Create a reusable workflow in your workspace.
 
 ```sh title="Create a workflow"
 curl -X POST https://api.awork.com/api/v1/workflows \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Client Delivery Workflow",
@@ -31,8 +32,9 @@ curl -X POST https://api.awork.com/api/v1/workflows \
 
 Linking applies workflow-controlled statuses to the project. If the project already has statuses, provide mappings to migrate safely.
 
-```sh title="Link workflow to a project" {4}
+```sh title="Link workflow to a project" {5}
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/linkworkflow \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "workflowId": "223e4567-e89b-12d3-a456-426614174000",
@@ -59,6 +61,7 @@ Use an existing project as a blueprint and optionally link that project to the n
 
 ```sh title="Create workflow from project configuration"
 curl -X POST https://api.awork.com/api/v1/workflows/fromproject/123e4567-e89b-12d3-a456-426614174000 \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Workflow from Consulting Template",
@@ -76,6 +79,7 @@ You can manage workflow-level statuses, which are then shared across linked proj
 
 ```sh title="Create task status in a workflow"
 curl -X POST https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/taskstatuses \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Client Feedback",
@@ -87,6 +91,7 @@ curl -X POST https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-4266
 
 ```sh title="Create project status in a workflow"
 curl -X POST https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/projectstatuses \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Blocked by Client",
@@ -100,5 +105,6 @@ Unlinking decouples the project from workflow sync and clones workflow statuses 
 
 ```sh title="Unlink workflow from project"
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/unlinkworkflow \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json'
 ```

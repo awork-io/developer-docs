@@ -4,4 +4,53 @@ description: Login & Access API Reference.
 slug: login
 ---
 
+<img src="/assets/api/login-access-overview.png" alt="awork permissions and access illustration" width="212" align="center" />
+
+The Login & Access endpoints help you identify the current account, invite workspace members, and inspect the roles and permissions that control API access. Use the [Authentication guide](/authentication) to obtain the Bearer token before calling these endpoints.
+
+## Inspecting the current user's access
+
+Start with `GET /me/permissions` to discover the features available to the authenticated user. This is useful for integrations that enable or hide functionality based on workspace permissions:
+
+```sh title="Get current user permissions"
+curl 'https://api.awork.com/api/v1/me/permissions' \
+  -H 'Authorization: Bearer {token}'
+```
+
+To identify the user and workspace the token belongs to, call `GET /users/me`:
+
+```sh title="Get current user and workspace"
+curl 'https://api.awork.com/api/v1/users/me' \
+  -H 'Authorization: Bearer {token}'
+```
+
+```json title="Response"
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "workspace": {
+    "id": "223e4567-e89b-12d3-a456-426614174001",
+    "name": "Northstar Creative",
+    "url": "https://northstar.awork.com"
+  }
+}
+```
+
+## Inviting a workspace member
+
+Invitations are one of the few API calls that require an explicit `workspaceId`. Get that id from `/users/me`, then provide the role that the new member should receive:
+
+```sh title="Invite a user"
+curl -X POST 'https://api.awork.com/api/v1/invitations' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "carla.creative@example.com",
+    "invitationFlow": "invite",
+    "workspaceId": "223e4567-e89b-12d3-a456-426614174001",
+    "roleId": "323e4567-e89b-12d3-a456-426614174002"
+  }'
+```
+
+The caller must have permission to invite users. Use `GET /roles` to list valid role ids before creating the invitation. The recipient completes the process with the invitation link; integrations do not need to handle the acceptance request themselves.
+
 Learn more about awork's [permission management](https://support.awork.com/en/articles/permissions-management-in-awork-qVeVCScCl9db).
