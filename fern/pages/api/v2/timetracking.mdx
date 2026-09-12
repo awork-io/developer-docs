@@ -22,8 +22,9 @@ There are two ways to create time entries: manually or using the timer.
 
 There are multiple ways to create time entries. The easiest way is by specifying the `startDate` and `duration`. The only other required fields for creating a time entry are the `timezone`, `typeOfWorkId` and `userId`.
 
-```sh title="Request" {4-8}
+```sh title="Request" {5-9}
 curl -X POST "https://api.awork.com/api/v2/timeentries" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "timezone": "Europe/Berlin",
@@ -39,8 +40,9 @@ If you specify both `duration`and `endDate`, the `endDate` takes precedence and 
 
 Additionally, you can assign the time entry to a specific project and task by providing the `projectId` and `taskId` fields.
 
-```sh title="Request" {7-8}
+```sh title="Request" {8-9}
 curl -X POST "https://api.awork.com/api/v2/timeentries" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "timezone": "Europe/Berlin",
@@ -59,6 +61,7 @@ The timer is a convenient way to track time while working on a task or project. 
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-426614174000/timetracking/start \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
             "timezone": "Europe/Berlin",
@@ -69,7 +72,8 @@ curl -X POST https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-42661417
 To find the currently running time entry of a user, you can use the `GET /v2/users/:userId/timeentries/last` endpoint and check whether the returned time entry has a duration of 0, which indicates that the timer is running. If the duration is > 0, no timer is running.
 
 ```sh title="Request"
-curl -X GET https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-426614174000/timeentries/last
+curl -X GET https://api.awork.com/api/v2/users/123e4567-e89b-12d3-a456-426614174000/timeentries/last \
+-H "Authorization: Bearer {token}"
 ```
 
 You can additionally specify the project and task to start the timer for. You can then also pause, resume and stop the timer. There can only be one active timer per user. Timers are automatically stopped after 24h or when the time entry reaches the maximum allowed time for that user and day.
@@ -88,5 +92,6 @@ Breaks cannot be created/updated/deleted manually. They are only created when th
 If you want to remove the breaks, you can do so by making a request to `POST /v2/timeentries/:timeEntryId/removeBreaks`.
 
 ```sh title="Request"
-curl -X POST https://api.awork.com/api/v2/timeentries/123e4567-e89b-12d3-a456-426614174000/removeBreaks
+curl -X POST https://api.awork.com/api/v2/timeentries/123e4567-e89b-12d3-a456-426614174000/removeBreaks \
+-H "Authorization: Bearer {token}"
 ```

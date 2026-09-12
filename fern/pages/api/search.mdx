@@ -4,6 +4,76 @@ description: Search API Reference.
 slug: search
 ---
 
-The search endpoint allows you to find entities by text in awork.
+The search endpoint allows you to find entities by text in awork. It searches across the entities the authenticated user can access and ranks matches by relevance.
+
+## Searching the workspace
+
+Pass the search text in `searchTerm`. Limit the search to one or more entity types with the comma-separated `searchTypes` parameter, and use `top` to control how many matches are returned. The default is 20 results. Include completed or closed records with `includeClosedAndStuck=true` when you need historical results.
+
+```sh title="Search projects and tasks"
+curl 'https://api.awork.com/api/v1/search?searchTerm=website%20launch&searchTypes=project,task&top=10' \
+  -H 'Authorization: Bearer {token}'
+```
+
+The response includes an overall count and grouped result collections. Each result contains the matching entity and its relevance score:
+
+```json title="Response"
+{
+  "totalCount": 2,
+  "maxScore": 0.93,
+  "top": [
+    {
+      "type": "project",
+      "score": 0.93,
+      "entity": {
+        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "name": "Website Launch"
+      }
+    },
+    {
+      "type": "task",
+      "score": 0.81,
+      "entity": {
+        "id": "223e4567-e89b-12d3-a456-426614174001",
+        "name": "Review launch checklist"
+      }
+    }
+  ],
+  "projectHits": {
+    "totalCount": 1,
+    "maxScore": 0.93,
+    "hasHits": true,
+    "hits": [
+      {
+        "type": "project",
+        "score": 0.93,
+        "entity": {
+          "id": "123e4567-e89b-12d3-a456-426614174000",
+          "name": "Website Launch",
+          "isOpen": true
+        }
+      }
+    ]
+  },
+  "taskHits": {
+    "totalCount": 1,
+    "maxScore": 0.81,
+    "hasHits": true,
+    "hits": [
+      {
+        "type": "task",
+        "score": 0.81,
+        "entity": {
+          "id": "223e4567-e89b-12d3-a456-426614174001",
+          "name": "Review launch checklist",
+          "isOpen": true
+        }
+      }
+    ]
+  }
+}
+```
+
+Supported search types include `task`, `project`, `user`, `company`, `comment`, `timeentry`, `timereport`, `file`, `document`, `tasklist`, and `dashboardnote`. Use `searchTypes=all` to search every supported type. `searchTerm` is required and may contain up to 50 characters.
 
 [Learn more](https://support.awork.com/en/articles/the-main-menu-tEMWckKpWoHa) about how to search for your data in awork.

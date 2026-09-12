@@ -6,6 +6,8 @@ slug: tasks
 
 Tasks represent the smallest unit of work in awork. They are used to break down larger chunks of work, track progress, and collaborate with others.
 
+<img src="/assets/api/tasks-overview.png" alt="awork task list with statuses, due dates, progress, and assignees" width="80%" align="center" />
+
 ## Types of Tasks
 
 There are two types of tasks: project tasks and private tasks. This is identified by the `baseType` field in the task object, which can be either `projecttask` or `private`.
@@ -23,8 +25,9 @@ There are two types of tasks: project tasks and private tasks. This is identifie
 
 The following properties are required when creating a task:
 
-```sh title="Request" {4-8}
+```sh title="Request" {5-9}
 curl -X POST https://api.awork.com/api/v1/tasks \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "My first task",
@@ -39,8 +42,9 @@ curl -X POST https://api.awork.com/api/v1/tasks \
 
 Subtasks have almost the same properties as tasks, but they also have a `parentId` property that references the parent task. This is how you can create a subtask:
 
-```sh title="Request" {9}
+```sh title="Request" {10}
 curl -X POST https://api.awork.com/api/v1/tasks \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "My first task",
@@ -62,6 +66,7 @@ Each task comes with a checklist of simple items that can be checked off. This i
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/checklistItems \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "My first checklist item"
@@ -76,6 +81,7 @@ Tasks can be in one or several task lists. This is how you can add a task to a t
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/tasks/changelists \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '[
 	{
@@ -95,6 +101,7 @@ Task comments allow for discussions and communication about tasks. You can add c
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/comments \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "message": "This is a comment on the task"
@@ -107,6 +114,7 @@ You can mention users in comments by using a special syntax with the user's Id. 
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/comments \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "message": "<p>~[userId:123e4567-e89b-12d3-a456-426614174000] Take a look at this task</p>"
@@ -121,6 +129,7 @@ In addition to mentioning specific users, you can notify all users watching a ta
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/comments \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "message": "<p>~[task] This will notify all users watching this task</p>"

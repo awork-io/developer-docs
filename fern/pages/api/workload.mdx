@@ -4,4 +4,41 @@ description: Workload & Planning API Reference.
 slug: workload
 ---
 
+<img src="/assets/api/workload-planning-overview.png" alt="awork workload planning calendar with tasks, meetings, and availability" width="80%" align="center" />
+
+Workload data shows how much capacity users have available for planned work on each day. The calculation includes assigned and scheduled tasks, time bookings, calendar events, recurring tasks, weekly availability, and absences.
+
+<Note>
+  Workload is available to administrators and users with `user-planning-data:read` permission. The endpoint uses OAuth with the `full_access` scope.
+</Note>
+
+## Getting a user's workload
+
+Provide one or more user ids and an interval. `roughPlanningFrom` is the number of days from today at which rough planning starts; set it to `0` for a normal daily view. User ids are passed as a comma-separated list.
+
+```sh title="Get workload for a week"
+curl 'https://api.awork.com/api/v1/users/workload?userIds=123e4567-e89b-12d3-a456-426614174000&intervalStart=2026-09-14T00:00:00Z&intervalEnd=2026-09-20T23:59:59Z&roughPlanningFrom=0' \
+  -H 'Authorization: Bearer {token}'
+```
+
+The response contains one entry per requested user and a workload record for each day:
+
+```json title="Response"
+[
+  {
+    "userId": "123e4567-e89b-12d3-a456-426614174000",
+    "workloads": [
+      {
+        "date": "2026-09-14T00:00:00Z",
+        "duration": 21600,
+        "userCapacity": 28800,
+        "remainingUserCapacity": 7200
+      }
+    ]
+  }
+]
+```
+
+`duration`, `userCapacity`, and `remainingUserCapacity` are measured in seconds. For a single-day query, add `fetchDetails=true` to include the projects, tasks, appointments, and calendar absences contributing to the calculation. If calendar data is not needed, `ignoreCalendarEvents=true` can improve response time.
+
 Learn more about [workload & planning](https://support.awork.com/en/articles/the-planner-x2LDBA9A1rIq).

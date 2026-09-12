@@ -15,6 +15,7 @@ Uploading a file takes three steps.
 
 ```sh title="Generate Upload URL"
 curl -X POST https://api.awork.com/api/v1/files/generateUploadURL \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json'
 ```
 
@@ -37,6 +38,7 @@ curl -X PUT https://upload.awork.com/... \
 Once that is done, link the uploaded file with a task:
 ```sh title="Link File with Task"
 curl -X POST https://api.awork.com/api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/files/byUploadId \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
         "uploadId": "123e4567-e89b-12d3-a456-426614174000",
@@ -50,6 +52,7 @@ Several entities in awork support profile images. This is how you can upload an 
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/files/images/projects/123e4567-e89b-12d3-a456-426614174000 \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: multipart/form-data' \
   -F 'File=@/path/to/file.png'
 ```
