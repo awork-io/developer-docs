@@ -412,8 +412,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Returns all time entries.",
-        "description": "Returns all time entries.\r\n            Depending on the time entry, the calling users has to have several permissions to get the time entry.\r\n            No permissions are required if the calling user is owner of this time entry (this includes external timetrackings from connected projects).\r\n            If the calling user is not the creator of the time entry and the time entry is connected to a project, 'write'\r\n            permissions on the 'project-timetracking' feature are necessary (this does NOT include external timetrackings from connected projects).\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Returns time entries in the workspace.",
+        "description": "Returns time entries in the workspace. The result includes entries the current user is allowed to view.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must own the time entry or have `project-timetracking:read` permission for connected project entries.</Check>",
         "operationId": "GetTimeEntriesV2",
         "parameters": [
           {
@@ -537,8 +537,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Retrieves all time entries with a simplified model based on the grouping parameter.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Returns simplified time entries.",
+        "description": "Returns simplified time entries grouped by the requested property when one is supplied.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have permission to view the returned time entries.</Check>",
         "operationId": "GetTimeEntriesSimplifiedV2",
         "parameters": [
           {
@@ -597,8 +597,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Get a time entry by id.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Returns the specified time entry.",
+        "description": "Returns the specified time entry when it is visible to the current user.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must own the time entry or have permission to view it.</Check>",
         "operationId": "GetTimeEntryByIdV2",
         "parameters": [
           {
@@ -730,8 +730,8 @@
         "tags": [
           "TimeEntries"
         ],
-        "summary": "Handles removing all breaks from a time entry, effectively resuming the timer.",
-        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Removes breaks from the specified time entry.",
+        "description": "Removes all breaks from the specified time entry and resumes its timer.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have permission to edit the time entry.</Check>",
         "operationId": "PostTimeEntryRemoveBreaksV2",
         "parameters": [
           {
