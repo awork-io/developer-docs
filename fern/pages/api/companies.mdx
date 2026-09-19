@@ -6,14 +6,74 @@ slug: companies
 
 Companies (Clients in the awork UI) are the contacts or organizations that you work with. Projects are usually connected to Companies.
 
+Most company integrations follow the same pattern: create or find the company, store its id in your system, then add contact information and link projects to it. Company endpoints require the `company-master-data` permission (or an administrator role).
+
 ## Creating a company
 
 Creating a company is easy. The only required field for creating a company is the `name`.
 
 ```sh title="Request" {4}
 curl -X POST "https://api.awork.com/api/v1/companies" \
+     -H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
-           "name": "My first company"
+           "name": "Northstar Creative",
+           "description": "Brand and product design partner",
+           "industry": "Design agency"
          }'
 ```
+
+Save the returned company `id` for subsequent requests:
+
+```json title="Response"
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "Northstar Creative",
+  "description": "Brand and product design partner",
+  "industry": "Design agency",
+  "projectsCount": 0,
+  "projectsInProgressCount": 0
+}
+```
+
+## Finding and updating a company
+
+Use the list endpoint to find companies by name or another field with the standard [filtering](/filtering) and [pagination](/pagination) parameters:
+
+```sh title="List companies"
+curl 'https://api.awork.com/api/v1/companies?page=1&pageSize=25&filterby=name%20eq%20%22Northstar%20Creative%22' \
+     -H "Authorization: Bearer {token}"
+```
+
+Update only the fields you want to change. The `name` remains required on the update form:
+
+```sh title="Update a company"
+curl -X PUT "https://api.awork.com/api/v1/companies/123e4567-e89b-12d3-a456-426614174000" \
+     -H "Authorization: Bearer {token}" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "Northstar Creative GmbH",
+           "industry": "Brand agency"
+         }'
+```
+
+## Adding contact information
+
+Contact information is managed separately from the company. For example, add a billing address and then retrieve all contact records with `GET /companies/{companyId}/contactinfo`:
+
+```sh title="Add a billing address"
+curl -X POST "https://api.awork.com/api/v1/companies/123e4567-e89b-12d3-a456-426614174000/contactinfo" \
+     -H "Authorization: Bearer {token}" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "type": "address",
+           "subType": "invoice",
+           "addressLine1": "Torstraße 140",
+           "zipCode": "10119",
+           "city": "Berlin",
+           "country": "DE",
+           "isAddress": true
+         }'
+```
+
+See the [Companies API reference](/apiv1/companies) for contact-info update and delete operations.

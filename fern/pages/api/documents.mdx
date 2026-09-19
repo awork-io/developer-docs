@@ -7,6 +7,8 @@ slug: documents
 Documents (Docs) provide a collaborative space for creating, sharing, and managing content.
 They allow teams to maintain a central knowledge base, create project documentation, and collaborate on content in real-time.
 
+<img src="/assets/api/documents-overview.png" alt="awork Docs project document with collaboration and comments" width="80%" align="center" />
+
 ## Types of Documents
 
 There are three primary types of documents in awork.
@@ -44,6 +46,7 @@ Here's an example creating a document in a document space:
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My New Document" \
      -F "DocumentSpaceId=123e4567-e89b-12d3-a456-426614174000" \
@@ -55,6 +58,7 @@ To create a document in a document space, include the `DocumentSpaceId`:
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My New Document" \
      -F "DocumentSpaceId=123e4567-e89b-12d3-a456-426614174000" \
@@ -66,6 +70,7 @@ To create a document in a project, include the `ProjectId``:
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My New Document" \
      -F "ProjectId=123e4567-e89b-12d3-a456-426614174000" \
@@ -77,6 +82,7 @@ Private documents are only visible to you and users you explicitly share them wi
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=My Private Document" \
      -F "IsPrivate=true" \
@@ -88,6 +94,7 @@ To retrieve a document's content, use the following endpoint:
 
 ```sh title="Request"
 curl -X GET "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000/content" \
+-H "Authorization: Bearer {token}"
 ```
 
 By default, this returns a JSON object with the content as a string:
@@ -102,6 +109,7 @@ By default, this returns a JSON object with the content as a string:
 To stream the document content as a file instead, use the `streamAsFile` query parameter:
 ```sh title="Request"
 curl -X GET "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000/content?streamAsFile=true" \
+-H "Authorization: Bearer {token}"
 ```
 
 ### Permissions and Sharing
@@ -120,6 +128,7 @@ For workspace access, there is also the `None`- option, which is the default, ca
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000/contributors" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '[
            {
@@ -136,6 +145,7 @@ curl -X POST "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426
 #### Sharing a Document with Teams
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000/teams" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '[
            {
@@ -150,6 +160,7 @@ Documents can be nested within other documents, creating a hierarchical structur
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documents" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: multipart/form-data" \
      -F "Name=Nested Document" \
      -F "ParentId=123e4567-e89b-12d3-a456-426614174000" \
@@ -162,13 +173,15 @@ Documents can be moved to trash and later restored or permanently deleted.
 #### Deleting a Document, moving it to the Trash
 
 ```sh title="Request"
-curl -X DELETE "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000"
+curl -X DELETE "https://api.awork.com/api/v1/documents/123e4567-e89b-12d3-a456-426614174000" \
+-H "Authorization: Bearer {token}"
 ```
 
 #### Restoring a Document from the Trash
 
 ```sh title="Request"
-curl -X POST "https://api.awork.com/api/v1/documents/trash/123e4567-e89b-12d3-a456-426614174000/restore"
+curl -X POST "https://api.awork.com/api/v1/documents/trash/123e4567-e89b-12d3-a456-426614174000/restore" \
+-H "Authorization: Bearer {token}"
 ```
 
 ## Document Spaces
@@ -178,6 +191,7 @@ Document spaces provide a way to organize workspace-wide documents. They act as 
 
 ```sh title="Request"
 curl -X POST "https://api.awork.com/api/v1/documentSpaces" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
            "name": "Marketing Team",

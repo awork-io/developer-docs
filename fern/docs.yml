@@ -60,6 +60,14 @@ navigation:
   summary: ./apis/v1/summary.mdx
   slug: apiv1
   layout:
+  - page: Agents Overview
+    path: ./pages/api/agents.mdx
+    icon: robot
+  - custom agents
+  - agent files
+  - agent threads
+  - agent thread files
+  - agent runtime
   - page: Projects Overview
     path: ./pages/api/projects.mdx
     icon: diagram-project
@@ -82,7 +90,6 @@ navigation:
   - tasks
   - task statuses
   - task lists
-  - task views
   - project tasks
   - private tasks
   - assigned tasks

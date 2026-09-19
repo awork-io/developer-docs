@@ -6,6 +6,8 @@ slug: projects
 
 Projects are one of the core entities in the awork API. They represent a collection of tasks and other resources that are related to a specific project. Projects can be used to organize work, track progress, and collaborate with others in awork.
 
+<img src="/assets/api/projects-overview.png" alt="awork project timeline with project progress, deadlines, and statuses" width="80%" align="center" />
+
 ## How to work with projects
 
 There are two major ways for creating a project in awork: using a project template or from scratch. See the [Project Template](./projecttemplates.mdx) endpoint for more information on how to manage project templates.
@@ -14,8 +16,9 @@ There are two major ways for creating a project in awork: using a project templa
 
 Creating a project from scratch is easy. The only required field for creating a project is the `name`.
 
-```sh title="Request" {4}
+```sh title="Request" {5}
 curl -X POST "https://api.awork.com/api/v1/projects" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
            "name": "My new project"
@@ -27,8 +30,9 @@ curl -X POST "https://api.awork.com/api/v1/projects" \
 You can create and link a project to a workflow directly in `POST /projects` by passing `workflowId`.
 If needed, you can also pass a valid `projectStatusId` from that workflow.
 
-```sh title="Request" {5-6}
+```sh title="Request" {6-7}
 curl -X POST "https://api.awork.com/api/v1/projects" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
            "name": "My workflow-based project",
@@ -42,11 +46,13 @@ curl -X POST "https://api.awork.com/api/v1/projects" \
 Before creating a project with `workflowId`, fetch the workflow statuses and pick a valid `projectStatusId`.
 
 ```sh title="Get workflow project statuses"
-curl -X GET "https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/projectstatuses"
+curl -X GET "https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/projectstatuses" \
+-H "Authorization: Bearer {token}"
 ```
 
 ```sh title="Get workflow task statuses"
-curl -X GET "https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/taskstatuses"
+curl -X GET "https://api.awork.com/api/v1/workflows/223e4567-e89b-12d3-a456-426614174000/taskstatuses" \
+-H "Authorization: Bearer {token}"
 ```
 
 ### Getting valid statuses for an existing project
@@ -55,19 +61,22 @@ Use project-scoped endpoints to fetch the statuses that are valid for one specif
 These endpoints already return the correct set, including workflow-inherited statuses when the project is linked to a workflow.
 
 ```sh title="Get valid project statuses for a project"
-curl -X GET "https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/projectstatuses"
+curl -X GET "https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/projectstatuses" \
+-H "Authorization: Bearer {token}"
 ```
 
 ```sh title="Get valid task statuses for a project"
-curl -X GET "https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/taskstatuses"
+curl -X GET "https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/taskstatuses" \
+-H "Authorization: Bearer {token}"
 ```
 
 ### Creating a project from a template
 
 To create a project from a project template, the `projectTemplateId` has to be passed in the `POST /projects` request.
 
-```sh title="Request" {5}
+```sh title="Request" {6}
 curl -X POST "https://api.awork.com/api/v1/projects" \
+-H "Authorization: Bearer {token}" \
      -H "Content-Type: application/json" \
      -d '{
            "name": "My new project from a template",
@@ -96,6 +105,7 @@ Project comments allow for discussions and communication about projects. You can
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/comments \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "message": "This is a comment on the project"
@@ -108,6 +118,7 @@ You can mention users in comments by using a special syntax with the user's Id. 
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/comments \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "message": "<p>~[userId:123e4567-e89b-12d3-a456-426614174000] Take a look at this project</p>"
@@ -122,6 +133,7 @@ In addition to mentioning specific users, you can notify all members of a projec
 
 ```sh title="Request"
 curl -X POST https://api.awork.com/api/v1/projects/123e4567-e89b-12d3-a456-426614174000/comments \
+-H "Authorization: Bearer {token}" \
   -H 'Content-Type: application/json' \
   -d '{
     "message": "<p>~[project] This will notify all users in this project</p>"
