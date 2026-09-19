@@ -65,6 +65,8 @@ navigation:
     icon: robot
   - custom agents
   - agent files
+  - agent skills
+  - agent schedules
   - agent threads
   - agent thread files
   - agent runtime
