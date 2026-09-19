@@ -1,7 +1,7 @@
 api:
   specs:
     - openapi: openapi/openapi.json
-      origin: https://cdn.awork.com/assets/awork-openapi-v1-develop.json?cacheBust=1789240490
+      origin: https://app.awork.com/openapi/v1
       settings:
         title-as-schema-name: true
         type-dates-as-strings: true
