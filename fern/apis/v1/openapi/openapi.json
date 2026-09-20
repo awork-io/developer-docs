@@ -2205,7 +2205,7 @@
         "tags": [
           "Agent Skills"
         ],
-        "summary": "Lists accessible skills.",
+        "summary": "Returns all skills.",
         "description": "Returns one page of shared skills available to the requesting user. Pages contain at most 1000 skills. Use page and pageSize query parameters; pagination metadata is returned in aw-* headers.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetSkills",
         "parameters": [
@@ -2673,7 +2673,7 @@
         "tags": [
           "Agent Skills"
         ],
-        "summary": "Gets an accessible skill.",
+        "summary": "Returns a skill.",
         "description": "Returns one skill when the caller has read access directly or through the optional linked agent.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetSkillsBySkillId",
         "parameters": [
@@ -3446,7 +3446,7 @@
         "tags": [
           "Agent Skills"
         ],
-        "summary": "Gets skill sharing.",
+        "summary": "Returns a skill's sharing configuration.",
         "description": "Gets the sharing configuration for a manageable, user-owned skill.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetSkillsSharingBySkillId",
         "parameters": [
@@ -3511,7 +3511,7 @@
         "tags": [
           "Agent Skills"
         ],
-        "summary": "Updates skill sharing.",
+        "summary": "Updates a skill's sharing configuration.",
         "description": "Replaces the sharing configuration for a manageable, user-owned skill.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PutSkillsSharingBySkillId",
         "parameters": [
@@ -21354,7 +21354,7 @@
     "/projects/{projectId}/allfiles": {
       "get": {
         "tags": [
-          "Entity Files"
+          "Project Files"
         ],
         "summary": "Returns project files and files of tasks linked to the project.",
         "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
@@ -91832,10 +91832,6 @@
       "name": "Document Files"
     },
     {
-      "name": "Entity Files",
-      "description": "Endpoints for files attached to entities."
-    },
-    {
       "name": "FileUpload",
       "description": "These endpoints can be used to upload files to the workspace."
     },
@@ -91848,7 +91844,8 @@
       "description": "The image endpoints are used to upload and download profile images, for example for users, projects and your workspace.\n                             These endpoints also allow you to crop and scale the image to the size you need."
     },
     {
-      "name": "Project Files"
+      "name": "Project Files",
+      "description": "Endpoints for files attached to projects, including files of linked tasks."
     },
     {
       "name": "ProjectTemplate Files"
