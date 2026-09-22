@@ -1132,9 +1132,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1156,9 +1156,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1185,9 +1185,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1203,9 +1203,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1238,9 +1238,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1281,9 +1281,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1310,9 +1310,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "firstName": {
             "type": "string",
@@ -1329,7 +1329,8 @@
           "hasImage": {
             "type": "boolean",
             "description": "Whether this user has a profile image.",
-            "nullable": true
+            "nullable": true,
+            "example": true
           }
         },
         "additionalProperties": false
@@ -1339,9 +1340,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1432,9 +1433,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "hasImage": {
             "type": "boolean"
@@ -1447,9 +1448,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -1683,9 +1684,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -2107,9 +2108,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "firstName": {
             "type": "string",
@@ -2126,7 +2127,8 @@
           "hasImage": {
             "type": "boolean",
             "description": "Whether this user has a profile image.",
-            "nullable": true
+            "nullable": true,
+            "example": true
           },
           "isExternal": {
             "type": "boolean",
