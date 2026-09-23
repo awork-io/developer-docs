@@ -3177,6 +3177,94 @@
         }
       }
     },
+    "/agents/skills/{skillId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "Agent Skills"
+        ],
+        "summary": "Stores a temporary upload as a bundled skill file.",
+        "description": "Stores or replaces a bundled file from a temporary upload of the current user. The relative path\r\n            defaults to fileName and can be overridden with relativePath, for example references/logo.png.\r\n            The same file, count, and package limits apply as for the multipart upload.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostSkillsFilesByUploadIdBySkillId",
+        "parameters": [
+          {
+            "name": "skillId",
+            "in": "path",
+            "description": "The skill ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The temporary upload and target path.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadSkillFileByUploadIdRequestModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillFileResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/agents/skills/{skillId}/files/download": {
       "get": {
         "tags": [
@@ -58921,17 +59009,17 @@
             "format": "uuid",
             "example": "9ad63972-4396-4b0b-9e7d-40b852cdebf8"
           },
-          "updatedOn": {
-            "type": "string",
-            "description": "The date this entity was last modified.",
-            "format": "date-time",
-            "example": "2022-03-11T21:15:00.100Z"
-          },
           "updatedBy": {
             "type": "string",
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "3d844c62-7410-4df9-a5b2-78805c0ee260"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The parent timestamp used to order thread queue snapshots, with subsecond precision.",
+            "format": "date-time",
+            "example": "2026-09-15T15:47:35.9586190Z"
           },
           "type": {
             "type": "string",
@@ -59272,6 +59360,12 @@
       "AgentThreadSharingResponseModel": {
         "type": "object",
         "properties": {
+          "ownerUserId": {
+            "type": "string",
+            "description": "The thread owner, whose access cannot be removed through sharing.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
           "shares": {
             "type": "array",
             "items": {
@@ -59308,7 +59402,7 @@
           },
           "canWrite": {
             "type": "boolean",
-            "description": "Whether the effective share permits writing.",
+            "description": "Whether the effective share grants Manage access. The field name preserves the existing API contract.",
             "example": true
           },
           "isJoined": {
@@ -59329,6 +59423,11 @@
           "canStop": {
             "type": "boolean",
             "description": "Whether the requester can stop active work.",
+            "example": true
+          },
+          "canManageThread": {
+            "type": "boolean",
+            "description": "Whether the requester can rename or delete the thread.",
             "example": true
           },
           "canManageSharing": {
@@ -60715,6 +60814,13 @@
             "nullable": true,
             "example": 1
           },
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The parent timestamp saved with queue acceptance, absent for immediate execution.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-09-15T15:47:35.9586190Z"
+          },
           "isQueued": {
             "type": "boolean",
             "description": "Whether the backend stored the message in the queue.",
@@ -60777,9 +60883,28 @@
         "additionalProperties": false,
         "description": "Represents the processing status for a thread message."
       },
+      "AiThreadQueueMutationResponseModel": {
+        "type": "object",
+        "properties": {
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The thread timestamp after the operation completed.",
+            "format": "date-time",
+            "example": "2026-09-15T15:47:35.9586190Z"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Identifies the saved thread state that confirms a queue operation."
+      },
       "AiThreadQueueResponseModel": {
         "type": "object",
         "properties": {
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The thread timestamp after the operation completed.",
+            "format": "date-time",
+            "example": "2026-09-15T15:47:35.9586190Z"
+          },
           "messages": {
             "type": "array",
             "items": {
@@ -60841,6 +60966,13 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "3d844c62-7410-4df9-a5b2-78805c0ee260"
+          },
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The parent timestamp saved with an edit; absent on queue snapshot rows.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-09-15T15:47:35.9586190Z"
           },
           "threadId": {
             "type": "string",
@@ -63046,6 +63178,15 @@
             "type": "string",
             "description": "The prompt submitted by the linked awork user."
           },
+          "attachments": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentThreadAttachmentRequestModel"
+            },
+            "description": "The files uploaded by integrations-service for this message.",
+            "nullable": true
+          },
           "replyMessageId": {
             "maxLength": 25,
             "type": "string",
@@ -63166,6 +63307,10 @@
           "isNewThread": {
             "type": "boolean",
             "description": "Whether this request created a new awork thread."
+          },
+          "attachmentsUnavailable": {
+            "type": "boolean",
+            "description": "Whether unavailable attachments were omitted when accepting this message."
           }
         },
         "additionalProperties": false,
@@ -63480,7 +63625,7 @@
             "type": "string",
             "description": "The stable replacement model key.",
             "nullable": true,
-            "example": "openai:gpt-5.6-luna"
+            "example": "openai:gpt-6-luna"
           },
           "kind": {
             "type": "string",
@@ -63585,7 +63730,7 @@
             "type": "string",
             "description": "The replacement model key.",
             "nullable": true,
-            "example": "openai:gpt-5.6-luna"
+            "example": "openai:gpt-6-luna"
           }
         },
         "additionalProperties": false,
@@ -63604,7 +63749,7 @@
             "type": "string",
             "description": "The replacement model key, or null for a confirmed image capability removal.",
             "nullable": true,
-            "example": "openai:gpt-5.6-luna"
+            "example": "openai:gpt-6-luna"
           }
         },
         "additionalProperties": false,
@@ -65217,6 +65362,35 @@
         },
         "additionalProperties": false,
         "description": "Contains the workspace-authored rich text to save."
+      },
+      "UploadSkillFileByUploadIdRequestModel": {
+        "required": [
+          "fileName",
+          "uploadId"
+        ],
+        "type": "object",
+        "properties": {
+          "uploadId": {
+            "type": "string",
+            "description": "The temporary upload ID.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "fileName": {
+            "maxLength": 400,
+            "minLength": 1,
+            "type": "string",
+            "description": "The uploaded file name. It is the target path unless AiService.Feature.AgentRuntime.Models.UploadSkillFileByUploadIdRequestModel.RelativePath is set."
+          },
+          "relativePath": {
+            "maxLength": 400,
+            "type": "string",
+            "description": "The optional target path relative to the skill root. Defaults to the file name.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Selects a temporary upload to store as a bundled skill file."
       },
       "UsedConnectorResponseModel": {
         "type": "object",
@@ -74880,6 +75054,36 @@
           }
         },
         "additionalProperties": false
+      },
+      "OnboardingTaskProgressMigrationResult": {
+        "type": "object",
+        "properties": {
+          "scope": {
+            "type": "string",
+            "description": "Gets or sets the migration scope.",
+            "nullable": true
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "Gets or sets the migrated workspace, if the request targeted one workspace.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "Gets or sets the migrated user, if the request targeted one user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "runsInBackground": {
+            "type": "boolean",
+            "description": "Gets or sets whether the request uses background processing."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes the onboarding progress migration started by an internal request."
       },
       "OnboardingTaskProgressUpdateForm": {
         "required": [
