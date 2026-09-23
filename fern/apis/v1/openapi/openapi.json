@@ -3177,6 +3177,94 @@
         }
       }
     },
+    "/agents/skills/{skillId}/files/byuploadid": {
+      "post": {
+        "tags": [
+          "Agent Skills"
+        ],
+        "summary": "Stores a temporary upload as a bundled skill file.",
+        "description": "Stores or replaces a bundled file from a temporary upload of the current user. The relative path\r\n            defaults to fileName and can be overridden with relativePath, for example references/logo.png.\r\n            The same file, count, and package limits apply as for the multipart upload.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "PostSkillsFilesByUploadIdBySkillId",
+        "parameters": [
+          {
+            "name": "skillId",
+            "in": "path",
+            "description": "The skill ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The temporary upload and target path.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadSkillFileByUploadIdRequestModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillFileResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/agents/skills/{skillId}/files/download": {
       "get": {
         "tags": [
@@ -4872,7 +4960,7 @@
           {
             "name": "agentId",
             "in": "path",
-            "description": "The agent id.",
+            "description": "The Custom Agent ID.",
             "required": true,
             "schema": {
               "type": "string",
@@ -4890,6 +4978,16 @@
                   "items": {
                     "$ref": "#/components/schemas/AgentScheduleResponseModel"
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4940,7 +5038,7 @@
           {
             "name": "agentId",
             "in": "path",
-            "description": "The agent id.",
+            "description": "The Custom Agent ID.",
             "required": true,
             "schema": {
               "type": "string",
@@ -5028,7 +5126,7 @@
           {
             "name": "agentId",
             "in": "path",
-            "description": "The agent id.",
+            "description": "The Custom Agent ID.",
             "required": true,
             "schema": {
               "type": "string",
@@ -57354,7 +57452,14 @@
             "type": "string",
             "description": "The participating agent.",
             "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "type": "string",
+            "description": "Gets the runtime type of the participating agent.",
+            "nullable": true,
+            "readOnly": true
           },
           "agentName": {
             "type": "string",
@@ -57892,6 +57997,14 @@
             },
             "description": "Image capability keys available in this workspace.",
             "nullable": true
+          },
+          "imageCapabilityModels": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AgentRuntimeModelResponseModel"
+            },
+            "description": "The configured runtime model for each image capability, using the workspace catalog metadata.",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -58197,7 +58310,13 @@
             "type": "string",
             "description": "The agent id that is executed by this schedule.",
             "format": "uuid",
+            "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "type": {
+            "type": "string",
+            "description": "Runtime target type: personal-agent or custom-agent.",
+            "nullable": true
           },
           "ownerUserId": {
             "type": "string",
@@ -58890,17 +59009,17 @@
             "format": "uuid",
             "example": "9ad63972-4396-4b0b-9e7d-40b852cdebf8"
           },
-          "updatedOn": {
-            "type": "string",
-            "description": "The date this entity was last modified.",
-            "format": "date-time",
-            "example": "2022-03-11T21:15:00.100Z"
-          },
           "updatedBy": {
             "type": "string",
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "3d844c62-7410-4df9-a5b2-78805c0ee260"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The parent timestamp used to order thread queue snapshots, with subsecond precision.",
+            "format": "date-time",
+            "example": "2026-09-15T15:47:35.9586190Z"
           },
           "type": {
             "type": "string",
@@ -58925,12 +59044,28 @@
             "description": "Whether the requester may only read this thread.",
             "example": false
           },
+          "isShared": {
+            "type": "boolean",
+            "description": "Whether this thread without project or task context currently has active shares.",
+            "example": true
+          },
+          "viewerAccess": {
+            "$ref": "#/components/schemas/AgentThreadViewerAccessModel"
+          },
           "contributors": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AiThreadContributorResponseModel"
             },
             "description": "The users who explicitly joined this thread.",
+            "nullable": true
+          },
+          "activityUsers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NestedUserModel"
+            },
+            "description": "Current details for users referenced by membership and sharing activities on detail responses.",
             "nullable": true
           },
           "queue": {
@@ -59162,6 +59297,90 @@
         },
         "additionalProperties": false
       },
+      "AgentThreadShareRequestTargetModel": {
+        "type": "object",
+        "properties": {
+          "targetType": {
+            "type": "string",
+            "description": "Whether the target is a user, team, or workspace.",
+            "nullable": true,
+            "example": "user"
+          },
+          "targetId": {
+            "type": "string",
+            "description": "The user, team, or workspace identifier.",
+            "format": "uuid",
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
+          },
+          "canWrite": {
+            "type": "boolean",
+            "description": "Whether the target can write after Join.",
+            "example": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Defines one user, team, or workspace in a replacement thread shares."
+      },
+      "AgentThreadShareTargetModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The stable share identifier.",
+            "format": "uuid",
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
+          },
+          "targetType": {
+            "type": "string",
+            "description": "Whether the target is a user, team, or workspace.",
+            "nullable": true,
+            "example": "user"
+          },
+          "targetId": {
+            "type": "string",
+            "description": "The user, team, or workspace identifier.",
+            "format": "uuid",
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
+          },
+          "canWrite": {
+            "type": "boolean",
+            "description": "Whether the target can write after Join.",
+            "example": true
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "When this share was created.",
+            "format": "date-time",
+            "example": "2026-09-11T10:00:00Z"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes one user, team, or workspace in a thread shares."
+      },
+      "AgentThreadSharingResponseModel": {
+        "type": "object",
+        "properties": {
+          "ownerUserId": {
+            "type": "string",
+            "description": "The thread owner, whose access cannot be removed through sharing.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "shares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentThreadShareTargetModel"
+            },
+            "description": "The active user, team, and workspace shares.",
+            "nullable": true
+          },
+          "viewerAccess": {
+            "$ref": "#/components/schemas/AgentThreadViewerAccessModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes a thread shares and the requester's current access."
+      },
       "AgentThreadUpdateCountResponseModel": {
         "type": "object",
         "properties": {
@@ -59172,6 +59391,64 @@
           }
         },
         "additionalProperties": false
+      },
+      "AgentThreadViewerAccessModel": {
+        "type": "object",
+        "properties": {
+          "canRead": {
+            "type": "boolean",
+            "description": "Whether the requester can read the thread.",
+            "example": true
+          },
+          "canWrite": {
+            "type": "boolean",
+            "description": "Whether the effective share grants Manage access. The field name preserves the existing API contract.",
+            "example": true
+          },
+          "isJoined": {
+            "type": "boolean",
+            "description": "Whether the requester joined the thread.",
+            "example": true
+          },
+          "canJoin": {
+            "type": "boolean",
+            "description": "Whether the requester can Join.",
+            "example": true
+          },
+          "canSend": {
+            "type": "boolean",
+            "description": "Whether the requester can send.",
+            "example": true
+          },
+          "canStop": {
+            "type": "boolean",
+            "description": "Whether the requester can stop active work.",
+            "example": true
+          },
+          "canManageThread": {
+            "type": "boolean",
+            "description": "Whether the requester can rename or delete the thread.",
+            "example": true
+          },
+          "canManageSharing": {
+            "type": "boolean",
+            "description": "Whether the requester can manage sharing.",
+            "example": true
+          },
+          "canLeave": {
+            "type": "boolean",
+            "description": "Whether the requester can leave.",
+            "example": true
+          },
+          "sendBlockedReason": {
+            "type": "string",
+            "description": "The reason that prevents sending.",
+            "nullable": true,
+            "example": "join-required"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes the requester's current shared-thread capabilities."
       },
       "AgentThreadWorkspaceIdModel": {
         "type": "object",
@@ -59468,9 +59745,24 @@
         "properties": {
           "entityId": {
             "type": "string",
-            "description": "ID of the Agent, user, project, or client represented by this entry. The entity type is defined by the requested grouping.",
+            "description": "ID of the Agent, user, project, or client represented by this entry. The entity type is defined by the requested grouping. Provider and model entries use an empty ID and are identified by provider and model.",
             "format": "uuid",
             "example": "c17b45e8-14e2-48d1-8c4f-5b443331c2d8"
+          },
+          "provider": {
+            "type": "string",
+            "description": "The provider name for provider or model grouping.",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "The model name for model grouping.",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "description": "The display name for provider or model grouping.",
+            "nullable": true
           },
           "agentNameSnapshot": {
             "type": "string",
@@ -60195,6 +60487,16 @@
             "description": "The whole credits attributed to this thread for workspace administration.\nThis display value is independent from aggregate quota accounting.",
             "format": "int64"
           },
+          "provider": {
+            "type": "string",
+            "description": "The provider of the model with the highest total attributed credit usage, or null when no usage is recorded.",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "The model with the highest total attributed credit usage, or null when no usage is recorded.",
+            "nullable": true
+          },
           "createdOn": {
             "type": "string",
             "description": "When the thread was created.",
@@ -60512,6 +60814,13 @@
             "nullable": true,
             "example": 1
           },
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The parent timestamp saved with queue acceptance, absent for immediate execution.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-09-15T15:47:35.9586190Z"
+          },
           "isQueued": {
             "type": "boolean",
             "description": "Whether the backend stored the message in the queue.",
@@ -60574,9 +60883,28 @@
         "additionalProperties": false,
         "description": "Represents the processing status for a thread message."
       },
+      "AiThreadQueueMutationResponseModel": {
+        "type": "object",
+        "properties": {
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The thread timestamp after the operation completed.",
+            "format": "date-time",
+            "example": "2026-09-15T15:47:35.9586190Z"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Identifies the saved thread state that confirms a queue operation."
+      },
       "AiThreadQueueResponseModel": {
         "type": "object",
         "properties": {
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The thread timestamp after the operation completed.",
+            "format": "date-time",
+            "example": "2026-09-15T15:47:35.9586190Z"
+          },
           "messages": {
             "type": "array",
             "items": {
@@ -60638,6 +60966,13 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "3d844c62-7410-4df9-a5b2-78805c0ee260"
+          },
+          "threadUpdatedOn": {
+            "type": "string",
+            "description": "The parent timestamp saved with an edit; absent on queue snapshot rows.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-09-15T15:47:35.9586190Z"
           },
           "threadId": {
             "type": "string",
@@ -62770,6 +63105,217 @@
         "additionalProperties": false,
         "description": "Contains one normalized agent evaluation trial result."
       },
+      "ExternalAgentDeliveryRequestModel": {
+        "required": [
+          "leaseId"
+        ],
+        "type": "object",
+        "properties": {
+          "leaseId": {
+            "type": "string",
+            "description": "The token of this delivery attempt.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "complete": {
+            "type": "boolean",
+            "description": "True after the external provider accepted the reply."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A delivery lease update from the external integration."
+      },
+      "ExternalAgentThreadRequestModel": {
+        "required": [
+          "content",
+          "conversationId",
+          "messageId",
+          "provider",
+          "providerWorkspaceId",
+          "threadId"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "maxLength": 25,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider that sent the message, such as microsoft-teams."
+          },
+          "providerWorkspaceId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The tenant or workspace that owns the external conversation."
+          },
+          "conversationId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider conversation containing the message."
+          },
+          "messageId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider message ID, unchanged when the same message is delivered again."
+          },
+          "threadId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The root message ID of the provider discussion to continue."
+          },
+          "replyServiceUrl": {
+            "maxLength": 2048,
+            "type": "string",
+            "description": "The optional provider service URL used to send the final reply.",
+            "nullable": true
+          },
+          "content": {
+            "maxLength": 25000,
+            "minLength": 1,
+            "type": "string",
+            "description": "The prompt submitted by the linked awork user."
+          },
+          "attachments": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentThreadAttachmentRequestModel"
+            },
+            "description": "The files uploaded by integrations-service for this message.",
+            "nullable": true
+          },
+          "replyMessageId": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "The optional provider message used for the live response.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An external message verified by integrations-service."
+      },
+      "ExternalAgentThreadResponseModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The thread id.",
+            "format": "uuid",
+            "example": "6cbb219e-839d-4d23-b273-3a78bbd842ae"
+          },
+          "threadRunId": {
+            "type": "string",
+            "description": "The current run id.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "8f934a03-8f8b-44ea-9137-3ca563bb75e8"
+          },
+          "acceptedMessageId": {
+            "type": "string",
+            "description": "The accepted first-message id, or null when the thread was created without a message.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "66fcbdc5-2ae6-43bd-b3ab-f18ccd24909a"
+          },
+          "type": {
+            "type": "string",
+            "description": "The thread type.",
+            "nullable": true,
+            "example": "custom-agent"
+          },
+          "title": {
+            "type": "string",
+            "description": "The thread title.",
+            "nullable": true,
+            "example": "Weekly client status report"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "accepted",
+              "queued",
+              "failed"
+            ],
+            "type": "string",
+            "description": "The creation result: ready without a first message, accepted with a first message, queued when the first message waits for a run, or failed to start.",
+            "example": "accepted"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The creation timestamp.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-08-29T08:00:00Z"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "The id of the user who created the thread.",
+            "format": "uuid",
+            "example": "9ad63972-4396-4b0b-9e7d-40b852cdebf8"
+          },
+          "updatedOn": {
+            "type": "string",
+            "description": "The last update timestamp.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-08-29T08:05:00Z"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "The id of the user who last updated the thread.",
+            "format": "uuid",
+            "example": "9ad63972-4396-4b0b-9e7d-40b852cdebf8"
+          },
+          "agentId": {
+            "type": "string",
+            "description": "The custom agent assigned to the thread.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "4d22e163-2b4a-4d47-b51c-5b2217f84f57"
+          },
+          "projectId": {
+            "type": "string",
+            "description": "The associated project id.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "c907b29e-f640-4639-910d-722623fd5b4a"
+          },
+          "taskId": {
+            "type": "string",
+            "description": "The associated task id.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "d88ef8fa-e549-4ca6-96d8-83f5be9d37a2"
+          },
+          "clientId": {
+            "type": "string",
+            "description": "The associated client id.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "61341e18-3e3f-4efb-b471-b781e64f69f7"
+          },
+          "documentId": {
+            "type": "string",
+            "description": "The associated document id.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "5a442338-8da3-49e9-a702-b45d6f829d43"
+          },
+          "isNewThread": {
+            "type": "boolean",
+            "description": "Whether this request created a new awork thread."
+          },
+          "attachmentsUnavailable": {
+            "type": "boolean",
+            "description": "Whether unavailable attachments were omitted when accepting this message."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The awork thread accepted for an external message."
+      },
       "FilterQueryGenerationResult": {
         "type": "object",
         "properties": {
@@ -63079,7 +63625,7 @@
             "type": "string",
             "description": "The stable replacement model key.",
             "nullable": true,
-            "example": "openai:gpt-5.6-luna"
+            "example": "openai:gpt-6-luna"
           },
           "kind": {
             "type": "string",
@@ -63184,7 +63730,7 @@
             "type": "string",
             "description": "The replacement model key.",
             "nullable": true,
-            "example": "openai:gpt-5.6-luna"
+            "example": "openai:gpt-6-luna"
           }
         },
         "additionalProperties": false,
@@ -63203,11 +63749,41 @@
             "type": "string",
             "description": "The replacement model key, or null for a confirmed image capability removal.",
             "nullable": true,
-            "example": "openai:gpt-5.6-luna"
+            "example": "openai:gpt-6-luna"
           }
         },
         "additionalProperties": false,
         "description": "Maps one source catalog model to one replacement catalog model."
+      },
+      "NestedUserModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier of the nested model.",
+            "format": "uuid",
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user.",
+            "nullable": true,
+            "example": "Carla"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the user.",
+            "nullable": true,
+            "example": "Creative"
+          },
+          "hasImage": {
+            "type": "boolean",
+            "description": "Whether this user has a profile image.",
+            "nullable": true,
+            "example": true
+          }
+        },
+        "additionalProperties": false
       },
       "PendingBatchConfirmationResponseModel": {
         "type": "object",
@@ -63354,6 +63930,74 @@
         },
         "additionalProperties": false,
         "description": "Represents a connector and its explicit default connection for the personal agent."
+      },
+      "PersonalAgentSettingsModel": {
+        "required": [
+          "instructions",
+          "triggerModel"
+        ],
+        "type": "object",
+        "properties": {
+          "instructions": {
+            "maxLength": 4000,
+            "type": "string",
+            "description": "Personal instructions. Empty text clears the instructions."
+          },
+          "triggerModel": {
+            "$ref": "#/components/schemas/PersonalAgentTriggerModel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains personal settings without changing chat or capability configuration."
+      },
+      "PersonalAgentSettingsResponseModel": {
+        "type": "object",
+        "properties": {
+          "instructions": {
+            "type": "string",
+            "description": "The user's saved personal instructions.",
+            "nullable": true
+          },
+          "triggerModel": {
+            "$ref": "#/components/schemas/PersonalAgentTriggerModel"
+          },
+          "canTrigger": {
+            "type": "boolean",
+            "description": "Whether current authorization and the effective model permit triggered runs. Each run still validates its context and quota."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains saved personal settings and current trigger eligibility."
+      },
+      "PersonalAgentTriggerModel": {
+        "required": [
+          "modelName",
+          "modelProvider",
+          "reasoningLevel"
+        ],
+        "type": "object",
+        "properties": {
+          "modelProvider": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "Provider of the selected model."
+          },
+          "modelName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "Name of the selected model."
+          },
+          "reasoningLevel": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "Supported reasoning level for the selected model."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Defines the explicit text model used for a user's triggered runs."
       },
       "PublishAgentPresetDefinitionRequestModel": {
         "required": [
@@ -64497,6 +65141,15 @@
             "nullable": true,
             "example": true
           },
+          "type": {
+            "enum": [
+              "personal-agent",
+              "custom-agent"
+            ],
+            "type": "string",
+            "description": "Target type used when reassigning the schedule. Omission preserves the current target.",
+            "nullable": true
+          },
           "agentId": {
             "type": "string",
             "description": "The optional target agent id.\nWhen omitted, the agent from the update route is kept.",
@@ -64507,6 +65160,21 @@
         },
         "additionalProperties": false,
         "description": "Represents the request payload for updating a scheduled agent run."
+      },
+      "UpdateAgentThreadSharingRequestModel": {
+        "type": "object",
+        "properties": {
+          "shares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentThreadShareRequestTargetModel"
+            },
+            "description": "The complete replacement shares.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Replaces an agent thread without project or task context's sharing settings."
       },
       "UpdateAgentWorkflowStepRequestModel": {
         "type": "object",
@@ -64694,6 +65362,35 @@
         },
         "additionalProperties": false,
         "description": "Contains the workspace-authored rich text to save."
+      },
+      "UploadSkillFileByUploadIdRequestModel": {
+        "required": [
+          "fileName",
+          "uploadId"
+        ],
+        "type": "object",
+        "properties": {
+          "uploadId": {
+            "type": "string",
+            "description": "The temporary upload ID.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "fileName": {
+            "maxLength": 400,
+            "minLength": 1,
+            "type": "string",
+            "description": "The uploaded file name. It is the target path unless AiService.Feature.AgentRuntime.Models.UploadSkillFileByUploadIdRequestModel.RelativePath is set."
+          },
+          "relativePath": {
+            "maxLength": 400,
+            "type": "string",
+            "description": "The optional target path relative to the skill root. Defaults to the file name.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Selects a temporary upload to store as a bundled skill file."
       },
       "UsedConnectorResponseModel": {
         "type": "object",
@@ -68990,9 +69687,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "firstName": {
             "type": "string",
@@ -69009,7 +69706,8 @@
           "hasImage": {
             "type": "boolean",
             "description": "Whether this user has a profile image.",
-            "nullable": true
+            "nullable": true,
+            "example": true
           },
           "isExternal": {
             "type": "boolean",
@@ -70420,6 +71118,56 @@
               "$ref": "#/components/schemas/Widget"
             },
             "description": "A list of all widgets of the dashboard.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardWidgetCreateForm": {
+        "required": [
+          "name",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "maxLength": 25,
+            "minLength": 0,
+            "type": "string",
+            "description": "The widget type."
+          },
+          "name": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "description": "The widget title."
+          },
+          "entityId": {
+            "type": "string",
+            "description": "The optional entity referenced by the widget.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "filterId": {
+            "type": "string",
+            "description": "The optional saved filter referenced by a task or project list widget.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "settings": {
+            "maxLength": 25000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The optional bounded JSON settings object.",
+            "nullable": true
+          },
+          "value": {
+            "maxLength": 25000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The optional bounded widget value or note content.",
             "nullable": true
           }
         },
@@ -71893,9 +72641,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -72623,6 +73371,11 @@
             "format": "int32",
             "nullable": true,
             "example": 21600
+          },
+          "deriveDatesFromSubtasks": {
+            "type": "boolean",
+            "description": "When true, if the task is a parent task, the StartOn and DueOn will be\nautomatically adjusted to the start and due date of the subtasks.",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -72679,6 +73432,11 @@
             "format": "int32",
             "nullable": true,
             "example": 21600
+          },
+          "deriveDatesFromSubtasks": {
+            "type": "boolean",
+            "description": "When true, if the task is a parent task, the StartOn and DueOn will be\nautomatically adjusted to the start and due date of the subtasks.",
+            "nullable": true
           },
           "typeOfWorkId": {
             "type": "string",
@@ -73101,6 +73859,10 @@
       "Mentions": {
         "type": "object",
         "properties": {
+          "isMentioningPersonalAgent": {
+            "type": "boolean",
+            "description": "Gets or sets whether the comment mentions the awork Agent."
+          },
           "users": {
             "type": "array",
             "items": {
@@ -73423,9 +74185,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73447,9 +74209,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73476,9 +74238,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73513,9 +74275,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73616,9 +74378,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73634,9 +74396,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73714,9 +74476,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73807,9 +74569,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -73982,9 +74744,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -74025,9 +74787,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -74065,9 +74827,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -74089,43 +74851,14 @@
         },
         "additionalProperties": false
       },
-      "NestedUserModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Gets or sets the id of the nested model.",
-            "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "firstName": {
-            "type": "string",
-            "description": "The first name of the user.",
-            "nullable": true,
-            "example": "Carla"
-          },
-          "lastName": {
-            "type": "string",
-            "description": "The last name of the user.",
-            "nullable": true,
-            "example": "Creative"
-          },
-          "hasImage": {
-            "type": "boolean",
-            "description": "Whether this user has a profile image.",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "NestedUserModelForTasks": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "firstName": {
             "type": "string",
@@ -74142,7 +74875,8 @@
           "hasImage": {
             "type": "boolean",
             "description": "Whether this user has a profile image.",
-            "nullable": true
+            "nullable": true,
+            "example": true
           },
           "plannedEffort": {
             "type": "integer",
@@ -74320,6 +75054,36 @@
           }
         },
         "additionalProperties": false
+      },
+      "OnboardingTaskProgressMigrationResult": {
+        "type": "object",
+        "properties": {
+          "scope": {
+            "type": "string",
+            "description": "Gets or sets the migration scope.",
+            "nullable": true
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "Gets or sets the migrated workspace, if the request targeted one workspace.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "userId": {
+            "type": "string",
+            "description": "Gets or sets the migrated user, if the request targeted one user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "runsInBackground": {
+            "type": "boolean",
+            "description": "Gets or sets whether the request uses background processing."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes the onboarding progress migration started by an internal request."
       },
       "OnboardingTaskProgressUpdateForm": {
         "required": [
@@ -76396,9 +77160,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -78236,9 +79000,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "hasImage": {
             "type": "boolean"
@@ -78251,9 +79015,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -79710,9 +80474,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
@@ -83556,9 +84320,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "firstName": {
             "type": "string",
@@ -83575,7 +84339,8 @@
           "hasImage": {
             "type": "boolean",
             "description": "Whether this user has a profile image.",
-            "nullable": true
+            "nullable": true,
+            "example": true
           },
           "isExternal": {
             "type": "boolean",
@@ -87189,9 +87954,9 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Gets or sets the id of the nested model.",
+            "description": "The identifier of the nested model.",
             "format": "uuid",
-            "example": "123e4567-e89b-12d3-a456-426614174000"
+            "example": "80a2b26b-9fb3-42b5-b6dc-126c437cad5d"
           },
           "name": {
             "type": "string",
