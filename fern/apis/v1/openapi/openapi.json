@@ -58404,6 +58404,70 @@
         "type": "string",
         "description": "Identifies the product source that created a custom-agent thread."
       },
+      "AgentShareNotificationRecipientsRequest": {
+        "type": "object",
+        "properties": {
+          "shares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentShareNotificationTargetModel"
+            },
+            "description": "The grants added or restored by the complete sharing operation.",
+            "nullable": true
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The candidate recipient ids.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Requests the users who gained access from one agent assignment."
+      },
+      "AgentShareNotificationRecipientsResponse": {
+        "type": "object",
+        "properties": {
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The users who did not already have access.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Users who gained access from an agent assignment."
+      },
+      "AgentShareNotificationTargetModel": {
+        "type": "object",
+        "properties": {
+          "shareId": {
+            "type": "string",
+            "description": "The share row id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "targetType": {
+            "type": "string",
+            "description": "The target kind: user or team.",
+            "nullable": true
+          },
+          "targetId": {
+            "type": "string",
+            "description": "The user or team id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes one new agent share."
+      },
       "AgentSkillLinkResponseModel": {
         "type": "object",
         "properties": {
@@ -60074,6 +60138,12 @@
             "description": "The exclusive end of the current primary credit period.",
             "format": "date-time",
             "nullable": true
+          },
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial, when it has expired.",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -61229,6 +61299,12 @@
             "description": "Exclusive UTC end of the workspace's current shared monthly quota period.",
             "format": "date-time",
             "example": "2026-09-01T00:00:00Z"
+          },
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial, when it has expired.",
+            "format": "date-time",
+            "nullable": true
           },
           "workspaceCreditLimit": {
             "type": "integer",
@@ -65257,6 +65333,18 @@
         },
         "additionalProperties": false,
         "description": "Replaces the current global AI quota policy by creating a new immutable configuration version."
+      },
+      "UpdateAiTrialHistoryInternalModel": {
+        "type": "object",
+        "properties": {
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains retained AI trial history for a workspace."
       },
       "UpdateSkillRequestModel": {
         "required": [
