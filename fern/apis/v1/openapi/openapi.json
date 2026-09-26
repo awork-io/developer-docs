@@ -1704,8 +1704,46 @@
           "AgentThreads"
         ],
         "summary": "Returns thread metadata for usage analytics.",
-        "description": "Returns thread metadata for usage analytics, including the thread Id, name, credits, and creation timestamp.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
+        "description": "Returns thread metadata or period usage rows, including the thread Id, name, credits, and timestamps.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
         "operationId": "GetAgentsManagementThreads",
+        "parameters": [
+          {
+            "name": "usageFrom",
+            "in": "query",
+            "description": "The first included UTC calendar day for period usage rows.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "usageTo",
+            "in": "query",
+            "description": "The last included UTC calendar day for period usage rows.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "usageGroupBy",
+            "in": "query",
+            "description": "The report grouping when a usage period is provided.",
+            "schema": {
+              "type": "string",
+              "default": "none"
+            }
+          },
+          {
+            "name": "usagePageSize",
+            "in": "query",
+            "description": "Optional bounded bulk page size for period usage rows.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1716,6 +1754,16 @@
                   "items": {
                     "$ref": "#/components/schemas/AiThreadAdminMetadataResponseModel"
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -9356,6 +9404,7 @@
           {
             "name": "companyId",
             "in": "path",
+            "description": "The company that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -9365,6 +9414,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -9374,6 +9424,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12681,6 +12732,7 @@
           {
             "name": "documentId",
             "in": "path",
+            "description": "The document that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12690,6 +12742,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12699,6 +12752,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -25111,6 +25165,7 @@
           {
             "name": "projectId",
             "in": "path",
+            "description": "The project that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -25120,6 +25175,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -25129,6 +25185,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -33381,6 +33438,7 @@
           {
             "name": "projecttemplateId",
             "in": "path",
+            "description": "The projecttemplate that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -33390,6 +33448,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -33399,6 +33458,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -41489,6 +41549,7 @@
           {
             "name": "taskId",
             "in": "path",
+            "description": "The task that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -41498,6 +41559,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -41507,6 +41569,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -45170,6 +45233,7 @@
           {
             "name": "tasktemplateId",
             "in": "path",
+            "description": "The tasktemplate that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -45179,6 +45243,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -45188,6 +45253,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -51106,6 +51172,7 @@
           {
             "name": "userId",
             "in": "path",
+            "description": "The user that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -51115,6 +51182,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -51124,6 +51192,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -57033,6 +57102,7 @@
           {
             "name": "workspaceId",
             "in": "path",
+            "description": "The workspace that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -57042,6 +57112,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -57051,6 +57122,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -58404,6 +58476,78 @@
         "type": "string",
         "description": "Identifies the product source that created a custom-agent thread."
       },
+      "AgentShareNotificationRecipientsRequest": {
+        "type": "object",
+        "properties": {
+          "shares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentShareNotificationTargetModel"
+            },
+            "description": "The shares added or restored by this request.",
+            "nullable": true
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The candidate recipient ids.",
+            "nullable": true
+          },
+          "priorShares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentShareNotificationTargetModel"
+            },
+            "description": "The active shares before the request saved its changes, if known.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Requests the users who gained access from one agent assignment."
+      },
+      "AgentShareNotificationRecipientsResponse": {
+        "type": "object",
+        "properties": {
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The users to notify.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Users to notify about an agent assignment."
+      },
+      "AgentShareNotificationTargetModel": {
+        "type": "object",
+        "properties": {
+          "shareId": {
+            "type": "string",
+            "description": "The share row id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "targetType": {
+            "type": "string",
+            "description": "The target kind: user or team.",
+            "nullable": true
+          },
+          "targetId": {
+            "type": "string",
+            "description": "The user or team id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes one new agent share."
+      },
       "AgentSkillLinkResponseModel": {
         "type": "object",
         "properties": {
@@ -59237,6 +59381,13 @@
             "format": "double",
             "nullable": true,
             "example": 1
+          },
+          "listStateUpdatedOn": {
+            "type": "string",
+            "description": "When the requester's archive or pin state last changed.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-08-29T09:30:00Z"
           },
           "isAwaitingAction": {
             "type": "boolean",
@@ -60074,6 +60225,12 @@
             "description": "The exclusive end of the current primary credit period.",
             "format": "date-time",
             "nullable": true
+          },
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial, when it has expired.",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false,
@@ -60423,6 +60580,10 @@
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Whether the thread was deleted and can no longer be opened."
+          },
           "type": {
             "type": "string",
             "description": "The thread type.",
@@ -60484,17 +60645,35 @@
           },
           "creditsUsed": {
             "type": "integer",
-            "description": "The whole credits attributed to this thread for workspace administration.\nThis display value is independent from aggregate quota accounting.",
+            "description": "Whole credits attributed to this thread. Period report rows use the overview's quota factors;\nunscoped metadata uses the stable display factor.",
             "format": "int64"
+          },
+          "usageUserId": {
+            "type": "string",
+            "description": "The responsible user when the report is grouped by user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "usageGroupKey": {
+            "type": "string",
+            "description": "The selected reporting group for this row.",
+            "nullable": true
+          },
+          "usageOn": {
+            "type": "string",
+            "description": "The latest usage timestamp in the selected period.",
+            "format": "date-time",
+            "nullable": true
           },
           "provider": {
             "type": "string",
-            "description": "The provider of the model with the highest total attributed credit usage, or null when no usage is recorded.",
+            "description": "The provider of the highest-cost model pair in this row's scope, or null without usage.",
             "nullable": true
           },
           "model": {
             "type": "string",
-            "description": "The model with the highest total attributed credit usage, or null when no usage is recorded.",
+            "description": "The highest-cost model in this row's scope, or null without usage.",
             "nullable": true
           },
           "createdOn": {
@@ -61229,6 +61408,12 @@
             "description": "Exclusive UTC end of the workspace's current shared monthly quota period.",
             "format": "date-time",
             "example": "2026-09-01T00:00:00Z"
+          },
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial, when it has expired.",
+            "format": "date-time",
+            "nullable": true
           },
           "workspaceCreditLimit": {
             "type": "integer",
@@ -63945,10 +64130,13 @@
           },
           "triggerModel": {
             "$ref": "#/components/schemas/PersonalAgentTriggerModel"
+          },
+          "triggerCapabilities": {
+            "$ref": "#/components/schemas/PersonalAgentTriggerCapabilitiesModel"
           }
         },
         "additionalProperties": false,
-        "description": "Contains personal settings without changing chat or capability configuration."
+        "description": "Contains personal instructions and defaults for runs outside chat."
       },
       "PersonalAgentSettingsResponseModel": {
         "type": "object",
@@ -63961,6 +64149,9 @@
           "triggerModel": {
             "$ref": "#/components/schemas/PersonalAgentTriggerModel"
           },
+          "triggerCapabilities": {
+            "$ref": "#/components/schemas/PersonalAgentTriggerCapabilitiesModel"
+          },
           "canTrigger": {
             "type": "boolean",
             "description": "Whether current authorization and the effective model permit triggered runs. Each run still validates its context and quota."
@@ -63968,6 +64159,61 @@
         },
         "additionalProperties": false,
         "description": "Contains saved personal settings and current trigger eligibility."
+      },
+      "PersonalAgentTriggerCapabilitiesModel": {
+        "required": [
+          "connectors",
+          "skills",
+          "toolAccess"
+        ],
+        "type": "object",
+        "properties": {
+          "toolAccess": {
+            "$ref": "#/components/schemas/AgentToolAccessOptionsModel"
+          },
+          "connectors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonalAgentTriggerConnectorModel"
+            },
+            "description": "Connector choices retained for new personal-agent runs outside chat.",
+            "nullable": true
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonalAgentTriggerSkillModel"
+            },
+            "description": "Skill choices retained for new personal-agent runs outside chat.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains capability defaults for personal-agent runs outside chat."
+      },
+      "PersonalAgentTriggerConnectorModel": {
+        "type": "object",
+        "properties": {
+          "connectorId": {
+            "type": "string",
+            "description": "Connector selected for new personal-agent runs outside chat.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "Whether the connector is enabled for new personal-agent runs outside chat."
+          },
+          "connectionId": {
+            "type": "string",
+            "description": "Connection selected for the connector. Null uses the user's current default connection.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains one connector default for runs outside chat."
       },
       "PersonalAgentTriggerModel": {
         "required": [
@@ -63998,6 +64244,23 @@
         },
         "additionalProperties": false,
         "description": "Defines the explicit text model used for a user's triggered runs."
+      },
+      "PersonalAgentTriggerSkillModel": {
+        "type": "object",
+        "properties": {
+          "skillId": {
+            "type": "string",
+            "description": "Skill selected for new personal-agent runs outside chat.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "Whether the skill is enabled for new personal-agent runs outside chat."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains one skill default for runs outside chat."
       },
       "PublishAgentPresetDefinitionRequestModel": {
         "required": [
@@ -64913,6 +65176,13 @@
             "description": "The thread's pinned order.",
             "format": "double",
             "nullable": true
+          },
+          "listStateUpdatedOn": {
+            "type": "string",
+            "description": "When this user's archive or pin state last changed.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-08-29T09:30:00Z"
           }
         },
         "additionalProperties": false,
@@ -65257,6 +65527,18 @@
         },
         "additionalProperties": false,
         "description": "Replaces the current global AI quota policy by creating a new immutable configuration version."
+      },
+      "UpdateAiTrialHistoryInternalModel": {
+        "type": "object",
+        "properties": {
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains retained AI trial history for a workspace."
       },
       "UpdateSkillRequestModel": {
         "required": [
