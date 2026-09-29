@@ -60062,6 +60062,220 @@
         "additionalProperties": false,
         "description": "Defines the restricted personal-agent runtime used after the primary quota binds."
       },
+      "AiModelMigrationPlanResponseModel": {
+        "type": "object",
+        "properties": {
+          "sourceModelKey": {
+            "type": "string",
+            "description": "The model to move away from.",
+            "nullable": true,
+            "example": "openai:gpt-5.6-sol"
+          },
+          "targetModelKey": {
+            "type": "string",
+            "description": "The model to move to.",
+            "nullable": true,
+            "example": "openai:gpt-6-sol"
+          },
+          "workspaceCount": {
+            "type": "integer",
+            "description": "The number of workspaces with references to the source model.",
+            "format": "int32"
+          },
+          "agentCount": {
+            "type": "integer",
+            "description": "The number of custom agents pinned to the source model.",
+            "format": "int32"
+          },
+          "presetCount": {
+            "type": "integer",
+            "description": "The number of presets that select the source model explicitly.",
+            "format": "int32"
+          },
+          "threadCount": {
+            "type": "integer",
+            "description": "The number of threads that use the source model for their next message.",
+            "format": "int32"
+          },
+          "personalAgentSettingsCount": {
+            "type": "integer",
+            "description": "The number of awork Agent user settings that select the source model.",
+            "format": "int32"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Reasons the migration cannot start. Empty when it can start.",
+            "nullable": true
+          },
+          "operationName": {
+            "type": "string",
+            "description": "The batch operation name when the migration was scheduled.",
+            "nullable": true,
+            "example": "AiModelReferenceMigration-3f2a9c"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes what a model migration changes and whether it can start."
+      },
+      "AiModelMigrationRequestModel": {
+        "required": [
+          "sourceModelKey",
+          "targetModelKey"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceModelKey": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The model to move away from: a catalog key, or `provider:model` for a model that is not in the catalog.",
+            "example": "openai:gpt-5.6-sol"
+          },
+          "targetModelKey": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The active catalog text model to move to.",
+            "example": "openai:gpt-6-sol"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Requests moving all stored references from one text model to another in every workspace."
+      },
+      "AiModelUsageOverviewResponseModel": {
+        "type": "object",
+        "properties": {
+          "recentUsageDays": {
+            "type": "integer",
+            "description": "The number of days counted for recent model calls.",
+            "format": "int32",
+            "example": 30
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AiModelUsageResponseModel"
+            },
+            "description": "Every catalog text model and every stored model that is missing from the catalog.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Lists text model usage across all workspaces."
+      },
+      "AiModelUsageResponseModel": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The catalog key, or `provider:model` for a model that is not in the catalog.",
+            "nullable": true,
+            "example": "openai:gpt-5.6-sol"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "The display name.",
+            "nullable": true,
+            "example": "GPT-5.6 Sol"
+          },
+          "providerDisplayName": {
+            "type": "string",
+            "description": "The provider display name, or the provider id for a model that is not in the catalog.",
+            "nullable": true,
+            "example": "OpenAI"
+          },
+          "status": {
+            "type": "string",
+            "description": "The catalog lifecycle: active, deprecated, or removed. `missing` when the model is not in the catalog.",
+            "nullable": true,
+            "example": "deprecated"
+          },
+          "canBeTarget": {
+            "type": "boolean",
+            "description": "Whether references can move to this model."
+          },
+          "supportedReasoningLevels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The reasoning levels the model supports. Empty when the model is not in the catalog.",
+            "nullable": true
+          },
+          "agentCount": {
+            "type": "integer",
+            "description": "The number of custom agents pinned to this model.",
+            "format": "int32"
+          },
+          "presetCount": {
+            "type": "integer",
+            "description": "The number of workspace presets that select this model explicitly.",
+            "format": "int32"
+          },
+          "threadCount": {
+            "type": "integer",
+            "description": "The number of threads that use this model for their next message.",
+            "format": "int32"
+          },
+          "personalAgentSettingsCount": {
+            "type": "integer",
+            "description": "The number of awork Agent user settings that select this model.",
+            "format": "int32"
+          },
+          "workspaceCount": {
+            "type": "integer",
+            "description": "The number of workspaces with at least one stored reference.",
+            "format": "int32"
+          },
+          "recentModelCallCount": {
+            "type": "integer",
+            "description": "The number of model calls in the recent usage window.",
+            "format": "int32"
+          },
+          "lastUsedOn": {
+            "type": "string",
+            "description": "When this model was last called in the recent usage window.",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Shows where one text model is stored and how often it was called across all workspaces."
+      },
+      "AiModelWorkspaceUsageResponseModel": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "agentCount": {
+            "type": "integer",
+            "description": "The number of custom agents pinned to the model.",
+            "format": "int32"
+          },
+          "presetCount": {
+            "type": "integer",
+            "description": "The number of presets that select the model explicitly.",
+            "format": "int32"
+          },
+          "threadCount": {
+            "type": "integer",
+            "description": "The number of threads that use the model for their next message.",
+            "format": "int32"
+          },
+          "personalAgentSettingsCount": {
+            "type": "integer",
+            "description": "The number of awork Agent user settings that select the model.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Counts the stored references to one model in one workspace."
+      },
       "AiPlanCreditAllowanceResponseModel": {
         "type": "object",
         "properties": {
@@ -62240,6 +62454,11 @@
             "type": "boolean",
             "description": "Whether the requesting user can delete the connector and all its connections.",
             "example": true
+          },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether the requesting user has only workspace administrator access to the connector.\nThe user can manage the connector, but cannot use it or add a connection to it.",
+            "example": false
           },
           "name": {
             "type": "string",
@@ -77761,6 +77980,10 @@
             "description": "The general type of this project status.",
             "nullable": true,
             "example": "progress"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Indicates whether this status is archived."
           },
           "order": {
             "type": "integer",
