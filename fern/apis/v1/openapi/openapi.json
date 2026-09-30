@@ -3230,8 +3230,8 @@
         "tags": [
           "Agent Skills"
         ],
-        "summary": "Stores a temporary upload as a bundled skill file.",
-        "description": "Stores or replaces a bundled file from a temporary upload of the current user. The relative path\r\n            defaults to fileName and can be overridden with relativePath, for example references/logo.png.\r\n            The same file, count, and package limits apply as for the multipart upload.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Stores an uploaded file as a bundled skill file.",
+        "description": "Stores or replaces a bundled file from an upload ID or temporary file ID. The relative path\r\n            defaults to fileName and can be overridden with relativePath, for example references/logo.png.\r\n            The same file, count, and package limits apply as for the multipart upload.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostSkillsFilesByUploadIdBySkillId",
         "parameters": [
           {
@@ -3246,7 +3246,7 @@
           }
         ],
         "requestBody": {
-          "description": "The temporary upload and target path.",
+          "description": "The upload ID and target path.",
           "content": {
             "application/json": {
               "schema": {
@@ -4127,7 +4127,7 @@
           "AgentThreads"
         ],
         "summary": "Lists agent thread messages.",
-        "description": "Lists messages from the specified personal-agent or custom-agent conversation.\r\n            Use this endpoint to retrieve replies after creating a thread or submitting a message.\r\n            Returns not found if the thread is missing or the user cannot read it.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Lists messages from the specified personal-agent or custom-agent conversation, including the agent messages\r\n            of the custom agents that the conversation started.\r\n            Use this endpoint to retrieve replies after creating a thread or submitting a message.\r\n            Returns not found if the thread is missing or the user cannot read it.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetAgentsThreadsMessagesByThreadId",
         "parameters": [
           {
@@ -37729,6 +37729,17 @@
         "summary": "Creates a project or private task.",
         "description": "Creates a project or private task. The created task is returned with its project or private-task scope. <Check title=\"Required Permissions\" icon=\"key\">The user mast either have `project-planning-data:write` permissions, be assigned to the parent task (if a parent task is specified) or create a private task.</Check>",
         "operationId": "PostTask",
+        "parameters": [
+          {
+            "name": "skipCreatorAsWatcher",
+            "in": "query",
+            "description": "Prevents the task creator from automatically watching this task. Defaults to false.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
         "requestBody": {
           "description": "The general Task Post form payload.",
           "content": {
@@ -59190,7 +59201,7 @@
           },
           "isShared": {
             "type": "boolean",
-            "description": "Whether this thread without project or task context currently has active shares.",
+            "description": "Whether this directly shareable thread currently has active shares.",
             "example": true
           },
           "viewerAccess": {
@@ -65873,7 +65884,7 @@
         "properties": {
           "uploadId": {
             "type": "string",
-            "description": "The temporary upload ID.",
+            "description": "The upload ID from generateUploadUrl or an existing temporary file ID.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -65891,7 +65902,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Selects a temporary upload to store as a bundled skill file."
+        "description": "Selects an uploaded file to store as a bundled skill file."
       },
       "UsedConnectorResponseModel": {
         "type": "object",
