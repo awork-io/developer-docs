@@ -13134,7 +13134,7 @@
           "DocumentSpaces"
         ],
         "summary": "Creates a document space.",
-        "description": "Creates a document space and assigns the requested workspace access level. The space is inserted into the workspace order.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
+        "description": "Creates a document space and assigns the requested workspace access level. The space is inserted into the workspace order.\r\n            The Basic, Standard and Connect plans allow one active space, including Home.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
         "operationId": "PostDocumentSpace",
         "requestBody": {
           "description": "The model used to create the document space.",
@@ -59821,7 +59821,7 @@
             "items": {
               "$ref": "#/components/schemas/AgentUsageActivityDayResponseModel"
             },
-            "description": "Daily agent activity for the current and previous two UTC calendar months.",
+            "description": "Daily agent activity for the chosen UTC calendar window.",
             "nullable": true,
             "example": [
               {
@@ -59832,7 +59832,27 @@
           }
         },
         "additionalProperties": false,
-        "description": "Contains workspace agent activity for the current and two previous calendar months."
+        "description": "Contains workspace agent activity for the requested UTC range."
+      },
+      "AgentUsageAgentsCreatedResponseModel": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total number of non-deleted Agents, including archived Agents.",
+            "format": "int32"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Names of up to five recently created Agents.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains non-deleted workspace Agents created in the selected UTC range, including archived Agents."
       },
       "AgentUsageCreditsDayResponseModel": {
         "type": "object",
@@ -59897,10 +59917,53 @@
           },
           "topConsumers": {
             "$ref": "#/components/schemas/AgentUsageTopConsumersResponseModel"
+          },
+          "threadsStarted": {
+            "$ref": "#/components/schemas/AgentUsageThreadsStartedResponseModel"
+          },
+          "agentsCreated": {
+            "$ref": "#/components/schemas/AgentUsageAgentsCreatedResponseModel"
           }
         },
         "additionalProperties": false,
         "description": "Contains all data for the workspace agent usage overview widgets."
+      },
+      "AgentUsageThreadStartsDayResponseModel": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "UTC date in yyyy-MM-dd format.",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of threads created on this date.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains the number of threads started on one UTC date."
+      },
+      "AgentUsageThreadsStartedResponseModel": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Number of top-level, non-evaluation threads started in the range.",
+            "format": "int32"
+          },
+          "days": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentUsageThreadStartsDayResponseModel"
+            },
+            "description": "Daily thread creation counts, including dates with no threads.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains thread creation counts for the selected UTC range."
       },
       "AgentUsageTopConsumerResponseModel": {
         "type": "object",
@@ -62042,6 +62105,11 @@
             "description": "Whether normal ownership or sharing grants use of this connection and its owner is not suspended.\nAdministrator status does not grant use.",
             "example": true
           },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether only workspace administrator access makes this connection visible to the requesting user.",
+            "example": false
+          },
           "canDelete": {
             "type": "boolean",
             "description": "Whether the requesting user can delete this connection.",
@@ -63520,6 +63588,43 @@
         "additionalProperties": false,
         "description": "Contains one normalized agent evaluation trial result."
       },
+      "ExternalAgentConversationModel": {
+        "required": [
+          "conversationId",
+          "provider",
+          "providerWorkspaceId",
+          "threadId"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "maxLength": 25,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider that sent the message, such as microsoft-teams."
+          },
+          "providerWorkspaceId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The tenant or workspace that owns the external conversation."
+          },
+          "conversationId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider conversation containing the message."
+          },
+          "threadId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The root message ID of the provider discussion to continue."
+          }
+        },
+        "additionalProperties": false,
+        "description": "An Agent conversation triggered externally from Microsoft Teams or Slack, scoped to a workspace and user."
+      },
       "ExternalAgentDeliveryRequestModel": {
         "required": [
           "leaseId"
@@ -63569,17 +63674,17 @@
             "type": "string",
             "description": "The provider conversation containing the message."
           },
-          "messageId": {
-            "maxLength": 2048,
-            "minLength": 1,
-            "type": "string",
-            "description": "The provider message ID, unchanged when the same message is delivered again."
-          },
           "threadId": {
             "maxLength": 2048,
             "minLength": 1,
             "type": "string",
             "description": "The root message ID of the provider discussion to continue."
+          },
+          "messageId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider message ID, unchanged when the same message is delivered again."
           },
           "replyServiceUrl": {
             "maxLength": 2048,
@@ -76089,6 +76194,27 @@
         },
         "additionalProperties": false
       },
+      "PinnedProjectForm": {
+        "required": [
+          "isPinned",
+          "pinnedProjectId"
+        ],
+        "type": "object",
+        "properties": {
+          "pinnedProjectId": {
+            "type": "string",
+            "description": "The project whose favourite state must change.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isPinned": {
+            "type": "boolean",
+            "description": "Whether the project must be a favourite."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Changes one project favourite for the current user."
+      },
       "PlannedEffortForm": {
         "required": [
           "userId"
@@ -85277,6 +85403,10 @@
             "description": "The value of the setting.",
             "example": "true"
           },
+          "preservePinnedProjects": {
+            "type": "boolean",
+            "description": "Keeps the saved favourites when other view settings change."
+          },
           "createdOn": {
             "type": "string",
             "description": "The creation date.",
@@ -85339,6 +85469,10 @@
             "type": "string",
             "description": "The value of the setting.",
             "example": "true"
+          },
+          "preservePinnedProjects": {
+            "type": "boolean",
+            "description": "Keeps the saved favourites when other view settings change."
           }
         },
         "additionalProperties": false,
