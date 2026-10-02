@@ -58739,6 +58739,11 @@
             "nullable": true,
             "example": null
           },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether the agent is visible only through workspace administration access.",
+            "example": false
+          },
           "accessLevel": {
             "enum": [
               "read",
@@ -59109,6 +59114,14 @@
               "format": "uuid"
             },
             "description": "The connector identifiers selected for this message.",
+            "nullable": true
+          },
+          "connectorConnections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentMessageConnectorConnectionRequestModel"
+            },
+            "description": "Acting-user connection choices made by the requesting user for this message.",
             "nullable": true
           },
           "skillIds": {
@@ -65106,6 +65119,11 @@
           "isOwner": {
             "type": "boolean",
             "description": "Whether the requesting user owns the skill."
+          },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether the skill is visible only through workspace administration access.",
+            "example": false
           },
           "workspaceAccessLevel": {
             "enum": [
