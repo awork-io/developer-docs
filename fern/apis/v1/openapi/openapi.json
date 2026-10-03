@@ -52944,6 +52944,7 @@
         "description": "Creates a new workflow. It can then be linked to projects.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "operationId": "PostWorkflow",
         "requestBody": {
+          "description": "The workflow to create.",
           "content": {
             "application/json": {
               "schema": {
@@ -57921,6 +57922,198 @@
         "additionalProperties": false,
         "description": "Describes an agent preset version."
       },
+      "AgentRuntimeModelCatalogItem": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The stable catalog key.",
+            "nullable": true
+          },
+          "vendorKey": {
+            "type": "string",
+            "description": "The stable vendor key.",
+            "nullable": true
+          },
+          "vendorCountry": {
+            "type": "string",
+            "description": "The vendor country shown to users.",
+            "nullable": true
+          },
+          "vendorIsNew": {
+            "type": "boolean",
+            "description": "Whether the vendor is newly published."
+          },
+          "vendorEnabledByDefault": {
+            "type": "boolean",
+            "description": "Whether models from this vendor are enabled by default for workspaces.\nNull preserves the legacy default for existing configuration entries.",
+            "nullable": true
+          },
+          "regionKey": {
+            "type": "string",
+            "description": "The stable serving-region key.",
+            "nullable": true
+          },
+          "regionIsNew": {
+            "type": "boolean",
+            "description": "Whether the serving region is newly published."
+          },
+          "regionEnabledByDefault": {
+            "type": "boolean",
+            "description": "Whether models in this serving region are enabled by default for workspaces.\nNull preserves the legacy default for existing configuration entries.",
+            "nullable": true
+          },
+          "kind": {
+            "type": "string",
+            "description": "The model kind, such as text or image.",
+            "nullable": true
+          },
+          "isNew": {
+            "type": "boolean",
+            "description": "Whether this entry was added in the current catalog rollout."
+          },
+          "experimentalFeatureFlag": {
+            "type": "string",
+            "description": "The feature flag that enables this experimental model for a workspace.",
+            "nullable": true
+          },
+          "runtimeProvider": {
+            "type": "string",
+            "description": "The runtime provider mapping.",
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "description": "The stable provider type exposed by the API.",
+            "nullable": true
+          },
+          "providerDisplayName": {
+            "type": "string",
+            "description": "The provider display name.",
+            "nullable": true
+          },
+          "hosting": {
+            "type": "string",
+            "description": "The model hosting type.",
+            "nullable": true
+          },
+          "api": {
+            "type": "string",
+            "description": "The provider API type.",
+            "nullable": true
+          },
+          "providerConnectionName": {
+            "type": "string",
+            "description": "The provider connection name.",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "The stable model identifier exposed by the API.",
+            "nullable": true
+          },
+          "runtimeModel": {
+            "type": "string",
+            "description": "The provider-specific model identifier used at runtime.",
+            "nullable": true
+          },
+          "modelDisplayName": {
+            "type": "string",
+            "description": "The model display name.",
+            "nullable": true
+          },
+          "servedFrom": {
+            "type": "string",
+            "description": "The geographic serving description.",
+            "nullable": true
+          },
+          "servingFlag": {
+            "type": "string",
+            "description": "The short serving-location label.",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "The lifecycle status controlling whether the model is offered for new selections.",
+            "nullable": true
+          },
+          "isDisabled": {
+            "type": "boolean",
+            "description": "Whether the model is disabled.",
+            "nullable": true
+          },
+          "contextWindowTokens": {
+            "type": "integer",
+            "description": "The model context-window size in tokens.",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxOutputTokens": {
+            "type": "integer",
+            "description": "The maximum output-token count accepted by this model.",
+            "format": "int32",
+            "nullable": true
+          },
+          "defaultOutputReserveTokens": {
+            "type": "integer",
+            "description": "The default output-token reserve used for input-window planning.",
+            "format": "int32",
+            "nullable": true
+          },
+          "compactionThresholdTokens": {
+            "type": "integer",
+            "description": "The explicit compaction threshold in tokens.",
+            "format": "int32",
+            "nullable": true
+          },
+          "supportsNativeCompaction": {
+            "type": "boolean",
+            "description": "Whether the model supports client-held provider-native context compaction.",
+            "nullable": true
+          },
+          "compactionThresholdRatio": {
+            "type": "number",
+            "description": "The compaction threshold as a context-window ratio.",
+            "format": "double",
+            "nullable": true
+          },
+          "recentHistoryKeepTokens": {
+            "type": "integer",
+            "description": "The amount of recent history retained during compaction.",
+            "format": "int32",
+            "nullable": true
+          },
+          "supportsImageInput": {
+            "type": "boolean",
+            "description": "Whether the model accepts native image input.",
+            "nullable": true
+          },
+          "supportsMidConversationSystemMessages": {
+            "type": "boolean",
+            "description": "Whether the model accepts system messages after the first user message.\nWhen false, runtime context is sent as user-level data."
+          },
+          "supportsFileInput": {
+            "type": "boolean",
+            "description": "Whether the model accepts native document input.",
+            "nullable": true
+          },
+          "supportedReasoningLevels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The reasoning levels supported by the model.",
+            "nullable": true
+          },
+          "reasoningReplayFormat": {
+            "type": "string",
+            "description": "The replay wire format for provider reasoning content. A null value uses the model-family default;\nsupported values are `none` and `reasoningContent`.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Defines a configured model available to the agent runtime."
+      },
       "AgentRuntimeModelResponseModel": {
         "type": "object",
         "properties": {
@@ -58005,7 +58198,7 @@
           },
           "creditFactor": {
             "type": "number",
-            "description": "The Terra-relative cost factor for the representative cached-input workload.",
+            "description": "The cost factor relative to GPT-6.1 Sol for the measured production usage mix.",
             "format": "double",
             "nullable": true,
             "example": 1
@@ -58093,6 +58286,28 @@
         "additionalProperties": false,
         "description": "Describes the models available to the workspace."
       },
+      "AgentRuntimePerformanceLevelModelSettings": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "description": "The model provider.",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "The model name.",
+            "nullable": true
+          },
+          "reasoningLevel": {
+            "type": "string",
+            "description": "The reasoning level used with this model.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "One model that a performance level can use, with the reasoning level for that model."
+      },
       "AgentRuntimePerformanceLevelResponseModel": {
         "type": "object",
         "properties": {
@@ -58128,6 +58343,30 @@
         },
         "additionalProperties": false,
         "description": "Represents a predefined performance level for the agent model selector."
+      },
+      "AgentRuntimePerformanceLevelSettings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The stable identifier used by clients to present the performance level.",
+            "nullable": true
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentRuntimePerformanceLevelModelSettings"
+            },
+            "description": "The models for this level in priority order. A workspace uses the first model that it can run.\nThe first model is the awork choice; the others keep the level working in workspaces that disabled it.",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Whether this is the default performance level for new personal agent chats."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configures a predefined performance level for the agent model selector."
       },
       "AgentRuntimeProviderModelsResponseModel": {
         "type": "object",
@@ -60122,6 +60361,32 @@
         "additionalProperties": false,
         "description": "Describes an agent workflow step."
       },
+      "AiDiscoveredModelResponseModel": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/AgentRuntimeModelCatalogItem"
+          },
+          "pricing": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonNode"
+            },
+            "description": "The imported price entry, or null when the provider did not supply complete rates.",
+            "nullable": true
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Metadata and pricing gaps that the operator must review before enabling the model.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains a disabled candidate with suggested metadata and imported prices."
+      },
       "AiExhaustedQuotaFallbackOptions": {
         "type": "object",
         "properties": {
@@ -60149,6 +60414,119 @@
         "additionalProperties": false,
         "description": "Defines the restricted personal-agent runtime used after the primary quota binds."
       },
+      "AiModelAssignment": {
+        "type": "object",
+        "properties": {
+          "modelKey": {
+            "type": "string",
+            "description": "The stable catalog key of the model assigned to this service task.",
+            "nullable": true
+          },
+          "reasoningLevel": {
+            "type": "string",
+            "description": "The reasoning level requested when this task runs the assigned model.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Selects a model and reasoning level for one service task."
+      },
+      "AiModelCatalogDocument": {
+        "type": "object",
+        "properties": {
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentRuntimeModelCatalogItem"
+            },
+            "description": "The model inventory, including disabled and retired entries retained for stored references.",
+            "nullable": true
+          },
+          "pricing": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonNode"
+            },
+            "description": "The complete USD pricing history and provider sources used for price imports.",
+            "nullable": true
+          },
+          "assignments": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AiModelAssignment"
+            },
+            "description": "The model and reasoning level selected for each service task.",
+            "nullable": true
+          },
+          "performanceLevels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentRuntimePerformanceLevelSettings"
+            },
+            "description": "The shared performance presets with their models in fallback priority order.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains the global model inventory, assignments, and complete pricing history."
+      },
+      "AiModelCatalogResponseModel": {
+        "type": "object",
+        "properties": {
+          "versionId": {
+            "type": "string",
+            "description": "The published version ID used to reject edits based on an older catalog.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The UTC time when this version was published.",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string",
+            "description": "The operator's reason for publishing this version.",
+            "nullable": true
+          },
+          "document": {
+            "$ref": "#/components/schemas/AiModelCatalogDocument"
+          },
+          "connections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The configured provider connection names available for discovery, without credentials.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Returns one managed catalog version and available provider connections."
+      },
+      "AiModelCatalogVersionResponseModel": {
+        "type": "object",
+        "properties": {
+          "versionId": {
+            "type": "string",
+            "description": "The immutable version ID used to load this catalog from history.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The UTC time when this version was published.",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string",
+            "description": "The operator's reason for publishing this version.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Returns audit metadata without loading every catalog document."
+      },
       "AiModelMigrationPlanResponseModel": {
         "type": "object",
         "properties": {
@@ -60168,6 +60546,19 @@
             "type": "integer",
             "description": "The number of workspaces with references to the source model.",
             "format": "int32"
+          },
+          "blockedWorkspaceCount": {
+            "type": "integer",
+            "description": "The number of affected workspaces that cannot use the target and will stay unchanged.",
+            "format": "int32"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Workspace IDs and reasons for references that will be skipped.",
+            "nullable": true
           },
           "agentCount": {
             "type": "integer",
@@ -60229,6 +60620,28 @@
         },
         "additionalProperties": false,
         "description": "Requests moving all stored references from one text model to another in every workspace."
+      },
+      "AiModelTestResponseModel": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The bounded text response or image-generation confirmation from the test.",
+            "nullable": true
+          },
+          "durationMilliseconds": {
+            "type": "integer",
+            "description": "The test duration in milliseconds.",
+            "format": "int64"
+          },
+          "proof": {
+            "type": "string",
+            "description": "A protected proof of successful execution with the tested model settings, accepted during publication.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Returns the bounded result of a real text or image model check."
       },
       "AiModelUsageOverviewResponseModel": {
         "type": "object",
@@ -63282,6 +63695,29 @@
         "additionalProperties": false,
         "description": "Represents one atomic workspace model disable and migration command."
       },
+      "DiscoverAiModelsRequestModel": {
+        "required": [
+          "connectionName",
+          "templateKey"
+        ],
+        "type": "object",
+        "properties": {
+          "connectionName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "The configured provider connection to query for available models."
+          },
+          "templateKey": {
+            "maxLength": 300,
+            "minLength": 0,
+            "type": "string",
+            "description": "The stable key of an existing model used to suggest candidate settings and price meters."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Discovers candidates on one configured provider connection."
+      },
       "ErrorResponse": {
         "required": [
           "code",
@@ -64062,6 +64498,30 @@
         "additionalProperties": false,
         "description": "Sets the name of a custom agent created from a preset."
       },
+      "JsonNode": {
+        "type": "object",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/JsonNodeOptions"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/JsonNode"
+          },
+          "root": {
+            "$ref": "#/components/schemas/JsonNode"
+          }
+        },
+        "additionalProperties": false
+      },
+      "JsonNodeOptions": {
+        "type": "object",
+        "properties": {
+          "propertyNameCaseInsensitive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "ModelDisablePreflightResponseModel": {
         "type": "object",
         "properties": {
@@ -64636,6 +65096,41 @@
         "additionalProperties": false,
         "description": "Sets the language and description for an agent preset."
       },
+      "PublishAiModelCatalogRequestModel": {
+        "required": [
+          "document",
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "expectedVersionId": {
+            "type": "string",
+            "description": "The published version used to create this draft; publication rejects an older version.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "document": {
+            "$ref": "#/components/schemas/AiModelCatalogDocument"
+          },
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "type": "string",
+            "description": "The operator's reason for the change, retained with the published version."
+          },
+          "testProofs": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "Protected proofs of successful tests, keyed by model, required for newly enabled or changed models.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Publishes a complete catalog after validation and model checks."
+      },
       "PublishSkillPresetDefinitionRequestModel": {
         "required": [
           "detailedDescription",
@@ -64661,6 +65156,23 @@
         },
         "additionalProperties": false,
         "description": "Defines the preset metadata for one source skill publication."
+      },
+      "RefreshAiModelPricesRequestModel": {
+        "required": [
+          "pricing"
+        ],
+        "type": "object",
+        "properties": {
+          "pricing": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonNode"
+            },
+            "description": "The price entry whose provider source will be used to propose current rates."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Refreshes one pricing entry from its stored provider source."
       },
       "RememberAgentSessionMessageRequestModel": {
         "type": "object",
@@ -65500,6 +66012,26 @@
         },
         "additionalProperties": false,
         "description": "Describes a temporary file attached to an agent message."
+      },
+      "TestAiModelRequestModel": {
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/AgentRuntimeModelCatalogItem"
+          },
+          "prompt": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The bounded prompt used to verify text execution or generate a test image."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Tests a draft using the real runtime adapter without publishing it."
       },
       "ThreadListStateResponseModel": {
         "type": "object",
@@ -67731,6 +68263,10 @@
             "$ref": "#/components/schemas/Fido2User"
           },
           "attestationFormat": {
+            "type": "string",
+            "nullable": true
+          },
+          "attestationType": {
             "type": "string",
             "nullable": true
           },
