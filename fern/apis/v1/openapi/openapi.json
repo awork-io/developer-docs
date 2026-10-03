@@ -1704,8 +1704,46 @@
           "AgentThreads"
         ],
         "summary": "Returns thread metadata for usage analytics.",
-        "description": "Returns thread metadata for usage analytics, including the thread Id, name, credits, and creation timestamp.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
+        "description": "Returns thread metadata or period usage rows, including the thread Id, name, credits, and timestamps.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
         "operationId": "GetAgentsManagementThreads",
+        "parameters": [
+          {
+            "name": "usageFrom",
+            "in": "query",
+            "description": "The first included UTC calendar day for period usage rows.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "usageTo",
+            "in": "query",
+            "description": "The last included UTC calendar day for period usage rows.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "usageGroupBy",
+            "in": "query",
+            "description": "The report grouping when a usage period is provided.",
+            "schema": {
+              "type": "string",
+              "default": "none"
+            }
+          },
+          {
+            "name": "usagePageSize",
+            "in": "query",
+            "description": "Optional bounded bulk page size for period usage rows.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1716,6 +1754,16 @@
                   "items": {
                     "$ref": "#/components/schemas/AiThreadAdminMetadataResponseModel"
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3182,8 +3230,8 @@
         "tags": [
           "Agent Skills"
         ],
-        "summary": "Stores a temporary upload as a bundled skill file.",
-        "description": "Stores or replaces a bundled file from a temporary upload of the current user. The relative path\r\n            defaults to fileName and can be overridden with relativePath, for example references/logo.png.\r\n            The same file, count, and package limits apply as for the multipart upload.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "summary": "Stores an uploaded file as a bundled skill file.",
+        "description": "Stores or replaces a bundled file from an upload ID or temporary file ID. The relative path\r\n            defaults to fileName and can be overridden with relativePath, for example references/logo.png.\r\n            The same file, count, and package limits apply as for the multipart upload.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "PostSkillsFilesByUploadIdBySkillId",
         "parameters": [
           {
@@ -3198,7 +3246,7 @@
           }
         ],
         "requestBody": {
-          "description": "The temporary upload and target path.",
+          "description": "The upload ID and target path.",
           "content": {
             "application/json": {
               "schema": {
@@ -4079,7 +4127,7 @@
           "AgentThreads"
         ],
         "summary": "Lists agent thread messages.",
-        "description": "Lists messages from the specified personal-agent or custom-agent conversation.\r\n            Use this endpoint to retrieve replies after creating a thread or submitting a message.\r\n            Returns not found if the thread is missing or the user cannot read it.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "description": "Lists messages from the specified personal-agent or custom-agent conversation, including the agent messages\r\n            of the custom agents that the conversation started.\r\n            Use this endpoint to retrieve replies after creating a thread or submitting a message.\r\n            Returns not found if the thread is missing or the user cannot read it.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
         "operationId": "GetAgentsThreadsMessagesByThreadId",
         "parameters": [
           {
@@ -9356,6 +9404,7 @@
           {
             "name": "companyId",
             "in": "path",
+            "description": "The company that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -9365,6 +9414,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -9374,6 +9424,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12681,6 +12732,7 @@
           {
             "name": "documentId",
             "in": "path",
+            "description": "The document that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12690,6 +12742,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -12699,6 +12752,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -13080,7 +13134,7 @@
           "DocumentSpaces"
         ],
         "summary": "Creates a document space.",
-        "description": "Creates a document space and assigns the requested workspace access level. The space is inserted into the workspace order.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
+        "description": "Creates a document space and assigns the requested workspace access level. The space is inserted into the workspace order.\r\n            The Basic, Standard and Connect plans allow one active space, including Home.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin.</Check>",
         "operationId": "PostDocumentSpace",
         "requestBody": {
           "description": "The model used to create the document space.",
@@ -25111,6 +25165,7 @@
           {
             "name": "projectId",
             "in": "path",
+            "description": "The project that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -25120,6 +25175,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -25129,6 +25185,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -33381,6 +33438,7 @@
           {
             "name": "projecttemplateId",
             "in": "path",
+            "description": "The projecttemplate that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -33390,6 +33448,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -33399,6 +33458,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -37669,6 +37729,17 @@
         "summary": "Creates a project or private task.",
         "description": "Creates a project or private task. The created task is returned with its project or private-task scope. <Check title=\"Required Permissions\" icon=\"key\">The user mast either have `project-planning-data:write` permissions, be assigned to the parent task (if a parent task is specified) or create a private task.</Check>",
         "operationId": "PostTask",
+        "parameters": [
+          {
+            "name": "skipCreatorAsWatcher",
+            "in": "query",
+            "description": "Prevents the task creator from automatically watching this task. Defaults to false.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
         "requestBody": {
           "description": "The general Task Post form payload.",
           "content": {
@@ -41489,6 +41560,7 @@
           {
             "name": "taskId",
             "in": "path",
+            "description": "The task that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -41498,6 +41570,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -41507,6 +41580,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -45170,6 +45244,7 @@
           {
             "name": "tasktemplateId",
             "in": "path",
+            "description": "The tasktemplate that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -45179,6 +45254,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -45188,6 +45264,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -51106,6 +51183,7 @@
           {
             "name": "userId",
             "in": "path",
+            "description": "The user that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -51115,6 +51193,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -51124,6 +51203,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -52864,6 +52944,7 @@
         "description": "Creates a new workflow. It can then be linked to projects.\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">The user must be an admin or have `project-manage-config:write` permissions.</Check>",
         "operationId": "PostWorkflow",
         "requestBody": {
+          "description": "The workflow to create.",
           "content": {
             "application/json": {
               "schema": {
@@ -57033,6 +57114,7 @@
           {
             "name": "workspaceId",
             "in": "path",
+            "description": "The workspace that owns the file.",
             "required": true,
             "schema": {
               "type": "string",
@@ -57042,6 +57124,7 @@
           {
             "name": "fileId",
             "in": "path",
+            "description": "The file to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -57051,6 +57134,7 @@
           {
             "name": "versionId",
             "in": "path",
+            "description": "The version to download.",
             "required": true,
             "schema": {
               "type": "string",
@@ -57838,6 +57922,198 @@
         "additionalProperties": false,
         "description": "Describes an agent preset version."
       },
+      "AgentRuntimeModelCatalogItem": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The stable catalog key.",
+            "nullable": true
+          },
+          "vendorKey": {
+            "type": "string",
+            "description": "The stable vendor key.",
+            "nullable": true
+          },
+          "vendorCountry": {
+            "type": "string",
+            "description": "The vendor country shown to users.",
+            "nullable": true
+          },
+          "vendorIsNew": {
+            "type": "boolean",
+            "description": "Whether the vendor is newly published."
+          },
+          "vendorEnabledByDefault": {
+            "type": "boolean",
+            "description": "Whether models from this vendor are enabled by default for workspaces.\nNull preserves the legacy default for existing configuration entries.",
+            "nullable": true
+          },
+          "regionKey": {
+            "type": "string",
+            "description": "The stable serving-region key.",
+            "nullable": true
+          },
+          "regionIsNew": {
+            "type": "boolean",
+            "description": "Whether the serving region is newly published."
+          },
+          "regionEnabledByDefault": {
+            "type": "boolean",
+            "description": "Whether models in this serving region are enabled by default for workspaces.\nNull preserves the legacy default for existing configuration entries.",
+            "nullable": true
+          },
+          "kind": {
+            "type": "string",
+            "description": "The model kind, such as text or image.",
+            "nullable": true
+          },
+          "isNew": {
+            "type": "boolean",
+            "description": "Whether this entry was added in the current catalog rollout."
+          },
+          "experimentalFeatureFlag": {
+            "type": "string",
+            "description": "The feature flag that enables this experimental model for a workspace.",
+            "nullable": true
+          },
+          "runtimeProvider": {
+            "type": "string",
+            "description": "The runtime provider mapping.",
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "description": "The stable provider type exposed by the API.",
+            "nullable": true
+          },
+          "providerDisplayName": {
+            "type": "string",
+            "description": "The provider display name.",
+            "nullable": true
+          },
+          "hosting": {
+            "type": "string",
+            "description": "The model hosting type.",
+            "nullable": true
+          },
+          "api": {
+            "type": "string",
+            "description": "The provider API type.",
+            "nullable": true
+          },
+          "providerConnectionName": {
+            "type": "string",
+            "description": "The provider connection name.",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "The stable model identifier exposed by the API.",
+            "nullable": true
+          },
+          "runtimeModel": {
+            "type": "string",
+            "description": "The provider-specific model identifier used at runtime.",
+            "nullable": true
+          },
+          "modelDisplayName": {
+            "type": "string",
+            "description": "The model display name.",
+            "nullable": true
+          },
+          "servedFrom": {
+            "type": "string",
+            "description": "The geographic serving description.",
+            "nullable": true
+          },
+          "servingFlag": {
+            "type": "string",
+            "description": "The short serving-location label.",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "The lifecycle status controlling whether the model is offered for new selections.",
+            "nullable": true
+          },
+          "isDisabled": {
+            "type": "boolean",
+            "description": "Whether the model is disabled.",
+            "nullable": true
+          },
+          "contextWindowTokens": {
+            "type": "integer",
+            "description": "The model context-window size in tokens.",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxOutputTokens": {
+            "type": "integer",
+            "description": "The maximum output-token count accepted by this model.",
+            "format": "int32",
+            "nullable": true
+          },
+          "defaultOutputReserveTokens": {
+            "type": "integer",
+            "description": "The default output-token reserve used for input-window planning.",
+            "format": "int32",
+            "nullable": true
+          },
+          "compactionThresholdTokens": {
+            "type": "integer",
+            "description": "The explicit compaction threshold in tokens.",
+            "format": "int32",
+            "nullable": true
+          },
+          "supportsNativeCompaction": {
+            "type": "boolean",
+            "description": "Whether the model supports client-held provider-native context compaction.",
+            "nullable": true
+          },
+          "compactionThresholdRatio": {
+            "type": "number",
+            "description": "The compaction threshold as a context-window ratio.",
+            "format": "double",
+            "nullable": true
+          },
+          "recentHistoryKeepTokens": {
+            "type": "integer",
+            "description": "The amount of recent history retained during compaction.",
+            "format": "int32",
+            "nullable": true
+          },
+          "supportsImageInput": {
+            "type": "boolean",
+            "description": "Whether the model accepts native image input.",
+            "nullable": true
+          },
+          "supportsMidConversationSystemMessages": {
+            "type": "boolean",
+            "description": "Whether the model accepts system messages after the first user message.\nWhen false, runtime context is sent as user-level data."
+          },
+          "supportsFileInput": {
+            "type": "boolean",
+            "description": "Whether the model accepts native document input.",
+            "nullable": true
+          },
+          "supportedReasoningLevels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The reasoning levels supported by the model.",
+            "nullable": true
+          },
+          "reasoningReplayFormat": {
+            "type": "string",
+            "description": "The replay wire format for provider reasoning content. A null value uses the model-family default;\nsupported values are `none` and `reasoningContent`.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Defines a configured model available to the agent runtime."
+      },
       "AgentRuntimeModelResponseModel": {
         "type": "object",
         "properties": {
@@ -57922,7 +58198,7 @@
           },
           "creditFactor": {
             "type": "number",
-            "description": "The Terra-relative cost factor for the representative cached-input workload.",
+            "description": "The cost factor relative to GPT-6.1 Sol for the measured production usage mix.",
             "format": "double",
             "nullable": true,
             "example": 1
@@ -58010,6 +58286,28 @@
         "additionalProperties": false,
         "description": "Describes the models available to the workspace."
       },
+      "AgentRuntimePerformanceLevelModelSettings": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "description": "The model provider.",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "The model name.",
+            "nullable": true
+          },
+          "reasoningLevel": {
+            "type": "string",
+            "description": "The reasoning level used with this model.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "One model that a performance level can use, with the reasoning level for that model."
+      },
       "AgentRuntimePerformanceLevelResponseModel": {
         "type": "object",
         "properties": {
@@ -58045,6 +58343,30 @@
         },
         "additionalProperties": false,
         "description": "Represents a predefined performance level for the agent model selector."
+      },
+      "AgentRuntimePerformanceLevelSettings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The stable identifier used by clients to present the performance level.",
+            "nullable": true
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentRuntimePerformanceLevelModelSettings"
+            },
+            "description": "The models for this level in priority order. A workspace uses the first model that it can run.\nThe first model is the awork choice; the others keep the level working in workspaces that disabled it.",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Whether this is the default performance level for new personal agent chats."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Configures a predefined performance level for the agent model selector."
       },
       "AgentRuntimeProviderModelsResponseModel": {
         "type": "object",
@@ -58404,6 +58726,78 @@
         "type": "string",
         "description": "Identifies the product source that created a custom-agent thread."
       },
+      "AgentShareNotificationRecipientsRequest": {
+        "type": "object",
+        "properties": {
+          "shares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentShareNotificationTargetModel"
+            },
+            "description": "The shares added or restored by this request.",
+            "nullable": true
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The candidate recipient ids.",
+            "nullable": true
+          },
+          "priorShares": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentShareNotificationTargetModel"
+            },
+            "description": "The active shares before the request saved its changes, if known.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Requests the users who gained access from one agent assignment."
+      },
+      "AgentShareNotificationRecipientsResponse": {
+        "type": "object",
+        "properties": {
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The users to notify.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Users to notify about an agent assignment."
+      },
+      "AgentShareNotificationTargetModel": {
+        "type": "object",
+        "properties": {
+          "shareId": {
+            "type": "string",
+            "description": "The share row id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "targetType": {
+            "type": "string",
+            "description": "The target kind: user or team.",
+            "nullable": true
+          },
+          "targetId": {
+            "type": "string",
+            "description": "The user or team id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes one new agent share."
+      },
       "AgentSkillLinkResponseModel": {
         "type": "object",
         "properties": {
@@ -58583,6 +58977,11 @@
             "description": "The workspace-wide access level.",
             "nullable": true,
             "example": null
+          },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether the agent is visible only through workspace administration access.",
+            "example": false
           },
           "accessLevel": {
             "enum": [
@@ -58956,6 +59355,14 @@
             "description": "The connector identifiers selected for this message.",
             "nullable": true
           },
+          "connectorConnections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentMessageConnectorConnectionRequestModel"
+            },
+            "description": "Acting-user connection choices made by the requesting user for this message.",
+            "nullable": true
+          },
           "skillIds": {
             "type": "array",
             "items": {
@@ -59046,7 +59453,7 @@
           },
           "isShared": {
             "type": "boolean",
-            "description": "Whether this thread without project or task context currently has active shares.",
+            "description": "Whether this directly shareable thread currently has active shares.",
             "example": true
           },
           "viewerAccess": {
@@ -59237,6 +59644,13 @@
             "format": "double",
             "nullable": true,
             "example": 1
+          },
+          "listStateUpdatedOn": {
+            "type": "string",
+            "description": "When the requester's archive or pin state last changed.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-08-29T09:30:00Z"
           },
           "isAwaitingAction": {
             "type": "boolean",
@@ -59659,7 +60073,7 @@
             "items": {
               "$ref": "#/components/schemas/AgentUsageActivityDayResponseModel"
             },
-            "description": "Daily agent activity for the current and previous two UTC calendar months.",
+            "description": "Daily agent activity for the chosen UTC calendar window.",
             "nullable": true,
             "example": [
               {
@@ -59670,7 +60084,27 @@
           }
         },
         "additionalProperties": false,
-        "description": "Contains workspace agent activity for the current and two previous calendar months."
+        "description": "Contains workspace agent activity for the requested UTC range."
+      },
+      "AgentUsageAgentsCreatedResponseModel": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total number of non-deleted Agents, including archived Agents.",
+            "format": "int32"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Names of up to five recently created Agents.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains non-deleted workspace Agents created in the selected UTC range, including archived Agents."
       },
       "AgentUsageCreditsDayResponseModel": {
         "type": "object",
@@ -59735,10 +60169,53 @@
           },
           "topConsumers": {
             "$ref": "#/components/schemas/AgentUsageTopConsumersResponseModel"
+          },
+          "threadsStarted": {
+            "$ref": "#/components/schemas/AgentUsageThreadsStartedResponseModel"
+          },
+          "agentsCreated": {
+            "$ref": "#/components/schemas/AgentUsageAgentsCreatedResponseModel"
           }
         },
         "additionalProperties": false,
         "description": "Contains all data for the workspace agent usage overview widgets."
+      },
+      "AgentUsageThreadStartsDayResponseModel": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "UTC date in yyyy-MM-dd format.",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of threads created on this date.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains the number of threads started on one UTC date."
+      },
+      "AgentUsageThreadsStartedResponseModel": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Number of top-level, non-evaluation threads started in the range.",
+            "format": "int32"
+          },
+          "days": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentUsageThreadStartsDayResponseModel"
+            },
+            "description": "Daily thread creation counts, including dates with no threads.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains thread creation counts for the selected UTC range."
       },
       "AgentUsageTopConsumerResponseModel": {
         "type": "object",
@@ -59884,6 +60361,32 @@
         "additionalProperties": false,
         "description": "Describes an agent workflow step."
       },
+      "AiDiscoveredModelResponseModel": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/AgentRuntimeModelCatalogItem"
+          },
+          "pricing": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonNode"
+            },
+            "description": "The imported price entry, or null when the provider did not supply complete rates.",
+            "nullable": true
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Metadata and pricing gaps that the operator must review before enabling the model.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains a disabled candidate with suggested metadata and imported prices."
+      },
       "AiExhaustedQuotaFallbackOptions": {
         "type": "object",
         "properties": {
@@ -59910,6 +60413,368 @@
         },
         "additionalProperties": false,
         "description": "Defines the restricted personal-agent runtime used after the primary quota binds."
+      },
+      "AiModelAssignment": {
+        "type": "object",
+        "properties": {
+          "modelKey": {
+            "type": "string",
+            "description": "The stable catalog key of the model assigned to this service task.",
+            "nullable": true
+          },
+          "reasoningLevel": {
+            "type": "string",
+            "description": "The reasoning level requested when this task runs the assigned model.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Selects a model and reasoning level for one service task."
+      },
+      "AiModelCatalogDocument": {
+        "type": "object",
+        "properties": {
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentRuntimeModelCatalogItem"
+            },
+            "description": "The model inventory, including disabled and retired entries retained for stored references.",
+            "nullable": true
+          },
+          "pricing": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonNode"
+            },
+            "description": "The complete USD pricing history and provider sources used for price imports.",
+            "nullable": true
+          },
+          "assignments": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AiModelAssignment"
+            },
+            "description": "The model and reasoning level selected for each service task.",
+            "nullable": true
+          },
+          "performanceLevels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentRuntimePerformanceLevelSettings"
+            },
+            "description": "The shared performance presets with their models in fallback priority order.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains the global model inventory, assignments, and complete pricing history."
+      },
+      "AiModelCatalogResponseModel": {
+        "type": "object",
+        "properties": {
+          "versionId": {
+            "type": "string",
+            "description": "The published version ID used to reject edits based on an older catalog.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The UTC time when this version was published.",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string",
+            "description": "The operator's reason for publishing this version.",
+            "nullable": true
+          },
+          "document": {
+            "$ref": "#/components/schemas/AiModelCatalogDocument"
+          },
+          "connections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The configured provider connection names available for discovery, without credentials.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Returns one managed catalog version and available provider connections."
+      },
+      "AiModelCatalogVersionResponseModel": {
+        "type": "object",
+        "properties": {
+          "versionId": {
+            "type": "string",
+            "description": "The immutable version ID used to load this catalog from history.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "createdOn": {
+            "type": "string",
+            "description": "The UTC time when this version was published.",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string",
+            "description": "The operator's reason for publishing this version.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Returns audit metadata without loading every catalog document."
+      },
+      "AiModelMigrationPlanResponseModel": {
+        "type": "object",
+        "properties": {
+          "sourceModelKey": {
+            "type": "string",
+            "description": "The model to move away from.",
+            "nullable": true,
+            "example": "openai:gpt-5.6-sol"
+          },
+          "targetModelKey": {
+            "type": "string",
+            "description": "The model to move to.",
+            "nullable": true,
+            "example": "openai:gpt-6-sol"
+          },
+          "workspaceCount": {
+            "type": "integer",
+            "description": "The number of workspaces with references to the source model.",
+            "format": "int32"
+          },
+          "blockedWorkspaceCount": {
+            "type": "integer",
+            "description": "The number of affected workspaces that cannot use the target and will stay unchanged.",
+            "format": "int32"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Workspace IDs and reasons for references that will be skipped.",
+            "nullable": true
+          },
+          "agentCount": {
+            "type": "integer",
+            "description": "The number of custom agents pinned to the source model.",
+            "format": "int32"
+          },
+          "presetCount": {
+            "type": "integer",
+            "description": "The number of presets that select the source model explicitly.",
+            "format": "int32"
+          },
+          "threadCount": {
+            "type": "integer",
+            "description": "The number of threads that use the source model for their next message.",
+            "format": "int32"
+          },
+          "personalAgentSettingsCount": {
+            "type": "integer",
+            "description": "The number of awork Agent user settings that select the source model.",
+            "format": "int32"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Reasons the migration cannot start. Empty when it can start.",
+            "nullable": true
+          },
+          "operationName": {
+            "type": "string",
+            "description": "The batch operation name when the migration was scheduled.",
+            "nullable": true,
+            "example": "AiModelReferenceMigration-3f2a9c"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes what a model migration changes and whether it can start."
+      },
+      "AiModelMigrationRequestModel": {
+        "required": [
+          "sourceModelKey",
+          "targetModelKey"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceModelKey": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The model to move away from: a catalog key, or `provider:model` for a model that is not in the catalog.",
+            "example": "openai:gpt-5.6-sol"
+          },
+          "targetModelKey": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The active catalog text model to move to.",
+            "example": "openai:gpt-6-sol"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Requests moving all stored references from one text model to another in every workspace."
+      },
+      "AiModelTestResponseModel": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The bounded text response or image-generation confirmation from the test.",
+            "nullable": true
+          },
+          "durationMilliseconds": {
+            "type": "integer",
+            "description": "The test duration in milliseconds.",
+            "format": "int64"
+          },
+          "proof": {
+            "type": "string",
+            "description": "A protected proof of successful execution with the tested model settings, accepted during publication.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Returns the bounded result of a real text or image model check."
+      },
+      "AiModelUsageOverviewResponseModel": {
+        "type": "object",
+        "properties": {
+          "recentUsageDays": {
+            "type": "integer",
+            "description": "The number of days counted for recent model calls.",
+            "format": "int32",
+            "example": 30
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AiModelUsageResponseModel"
+            },
+            "description": "Every catalog text model and every stored model that is missing from the catalog.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Lists text model usage across all workspaces."
+      },
+      "AiModelUsageResponseModel": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The catalog key, or `provider:model` for a model that is not in the catalog.",
+            "nullable": true,
+            "example": "openai:gpt-5.6-sol"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "The display name.",
+            "nullable": true,
+            "example": "GPT-5.6 Sol"
+          },
+          "providerDisplayName": {
+            "type": "string",
+            "description": "The provider display name, or the provider id for a model that is not in the catalog.",
+            "nullable": true,
+            "example": "OpenAI"
+          },
+          "status": {
+            "type": "string",
+            "description": "The catalog lifecycle: active, deprecated, or removed. `missing` when the model is not in the catalog.",
+            "nullable": true,
+            "example": "deprecated"
+          },
+          "canBeTarget": {
+            "type": "boolean",
+            "description": "Whether references can move to this model."
+          },
+          "supportedReasoningLevels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The reasoning levels the model supports. Empty when the model is not in the catalog.",
+            "nullable": true
+          },
+          "agentCount": {
+            "type": "integer",
+            "description": "The number of custom agents pinned to this model.",
+            "format": "int32"
+          },
+          "presetCount": {
+            "type": "integer",
+            "description": "The number of workspace presets that select this model explicitly.",
+            "format": "int32"
+          },
+          "threadCount": {
+            "type": "integer",
+            "description": "The number of threads that use this model for their next message.",
+            "format": "int32"
+          },
+          "personalAgentSettingsCount": {
+            "type": "integer",
+            "description": "The number of awork Agent user settings that select this model.",
+            "format": "int32"
+          },
+          "workspaceCount": {
+            "type": "integer",
+            "description": "The number of workspaces with at least one stored reference.",
+            "format": "int32"
+          },
+          "recentModelCallCount": {
+            "type": "integer",
+            "description": "The number of model calls in the recent usage window.",
+            "format": "int32"
+          },
+          "lastUsedOn": {
+            "type": "string",
+            "description": "When this model was last called in the recent usage window.",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Shows where one text model is stored and how often it was called across all workspaces."
+      },
+      "AiModelWorkspaceUsageResponseModel": {
+        "type": "object",
+        "properties": {
+          "workspaceId": {
+            "type": "string",
+            "description": "The workspace id.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "agentCount": {
+            "type": "integer",
+            "description": "The number of custom agents pinned to the model.",
+            "format": "int32"
+          },
+          "presetCount": {
+            "type": "integer",
+            "description": "The number of presets that select the model explicitly.",
+            "format": "int32"
+          },
+          "threadCount": {
+            "type": "integer",
+            "description": "The number of threads that use the model for their next message.",
+            "format": "int32"
+          },
+          "personalAgentSettingsCount": {
+            "type": "integer",
+            "description": "The number of awork Agent user settings that select the model.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Counts the stored references to one model in one workspace."
       },
       "AiPlanCreditAllowanceResponseModel": {
         "type": "object",
@@ -60072,6 +60937,12 @@
           "primaryPeriodEndOn": {
             "type": "string",
             "description": "The exclusive end of the current primary credit period.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial, when it has expired.",
             "format": "date-time",
             "nullable": true
           }
@@ -60423,6 +61294,10 @@
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Whether the thread was deleted and can no longer be opened."
+          },
           "type": {
             "type": "string",
             "description": "The thread type.",
@@ -60484,17 +61359,35 @@
           },
           "creditsUsed": {
             "type": "integer",
-            "description": "The whole credits attributed to this thread for workspace administration.\nThis display value is independent from aggregate quota accounting.",
+            "description": "Whole credits attributed to this thread. Period report rows use the overview's quota factors;\nunscoped metadata uses the stable display factor.",
             "format": "int64"
+          },
+          "usageUserId": {
+            "type": "string",
+            "description": "The responsible user when the report is grouped by user.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "usageGroupKey": {
+            "type": "string",
+            "description": "The selected reporting group for this row.",
+            "nullable": true
+          },
+          "usageOn": {
+            "type": "string",
+            "description": "The latest usage timestamp in the selected period.",
+            "format": "date-time",
+            "nullable": true
           },
           "provider": {
             "type": "string",
-            "description": "The provider of the model with the highest total attributed credit usage, or null when no usage is recorded.",
+            "description": "The provider of the highest-cost model pair in this row's scope, or null without usage.",
             "nullable": true
           },
           "model": {
             "type": "string",
-            "description": "The model with the highest total attributed credit usage, or null when no usage is recorded.",
+            "description": "The highest-cost model in this row's scope, or null without usage.",
             "nullable": true
           },
           "createdOn": {
@@ -61230,6 +62123,12 @@
             "format": "date-time",
             "example": "2026-09-01T00:00:00Z"
           },
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial, when it has expired.",
+            "format": "date-time",
+            "nullable": true
+          },
           "workspaceCreditLimit": {
             "type": "integer",
             "description": "Shared monthly workspace credit maximum. Present only for sponsored access.",
@@ -61631,6 +62530,11 @@
             "type": "boolean",
             "description": "Whether normal ownership or sharing grants use of this connection and its owner is not suspended.\nAdministrator status does not grant use.",
             "example": true
+          },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether only workspace administrator access makes this connection visible to the requesting user.",
+            "example": false
           },
           "canDelete": {
             "type": "boolean",
@@ -62055,6 +62959,11 @@
             "type": "boolean",
             "description": "Whether the requesting user can delete the connector and all its connections.",
             "example": true
+          },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether the requesting user has only workspace administrator access to the connector.\nThe user can manage the connector, but cannot use it or add a connection to it.",
+            "example": false
           },
           "name": {
             "type": "string",
@@ -62786,6 +63695,29 @@
         "additionalProperties": false,
         "description": "Represents one atomic workspace model disable and migration command."
       },
+      "DiscoverAiModelsRequestModel": {
+        "required": [
+          "connectionName",
+          "templateKey"
+        ],
+        "type": "object",
+        "properties": {
+          "connectionName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "The configured provider connection to query for available models."
+          },
+          "templateKey": {
+            "maxLength": 300,
+            "minLength": 0,
+            "type": "string",
+            "description": "The stable key of an existing model used to suggest candidate settings and price meters."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Discovers candidates on one configured provider connection."
+      },
       "ErrorResponse": {
         "required": [
           "code",
@@ -63105,6 +64037,43 @@
         "additionalProperties": false,
         "description": "Contains one normalized agent evaluation trial result."
       },
+      "ExternalAgentConversationModel": {
+        "required": [
+          "conversationId",
+          "provider",
+          "providerWorkspaceId",
+          "threadId"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "maxLength": 25,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider that sent the message, such as microsoft-teams."
+          },
+          "providerWorkspaceId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The tenant or workspace that owns the external conversation."
+          },
+          "conversationId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider conversation containing the message."
+          },
+          "threadId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The root message ID of the provider discussion to continue."
+          }
+        },
+        "additionalProperties": false,
+        "description": "An Agent conversation triggered externally from Microsoft Teams or Slack, scoped to a workspace and user."
+      },
       "ExternalAgentDeliveryRequestModel": {
         "required": [
           "leaseId"
@@ -63154,17 +64123,17 @@
             "type": "string",
             "description": "The provider conversation containing the message."
           },
-          "messageId": {
-            "maxLength": 2048,
-            "minLength": 1,
-            "type": "string",
-            "description": "The provider message ID, unchanged when the same message is delivered again."
-          },
           "threadId": {
             "maxLength": 2048,
             "minLength": 1,
             "type": "string",
             "description": "The root message ID of the provider discussion to continue."
+          },
+          "messageId": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string",
+            "description": "The provider message ID, unchanged when the same message is delivered again."
           },
           "replyServiceUrl": {
             "maxLength": 2048,
@@ -63528,6 +64497,30 @@
         },
         "additionalProperties": false,
         "description": "Sets the name of a custom agent created from a preset."
+      },
+      "JsonNode": {
+        "type": "object",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/JsonNodeOptions"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/JsonNode"
+          },
+          "root": {
+            "$ref": "#/components/schemas/JsonNode"
+          }
+        },
+        "additionalProperties": false
+      },
+      "JsonNodeOptions": {
+        "type": "object",
+        "properties": {
+          "propertyNameCaseInsensitive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       },
       "ModelDisablePreflightResponseModel": {
         "type": "object",
@@ -63945,10 +64938,13 @@
           },
           "triggerModel": {
             "$ref": "#/components/schemas/PersonalAgentTriggerModel"
+          },
+          "triggerCapabilities": {
+            "$ref": "#/components/schemas/PersonalAgentTriggerCapabilitiesModel"
           }
         },
         "additionalProperties": false,
-        "description": "Contains personal settings without changing chat or capability configuration."
+        "description": "Contains personal instructions and defaults for runs outside chat."
       },
       "PersonalAgentSettingsResponseModel": {
         "type": "object",
@@ -63961,6 +64957,9 @@
           "triggerModel": {
             "$ref": "#/components/schemas/PersonalAgentTriggerModel"
           },
+          "triggerCapabilities": {
+            "$ref": "#/components/schemas/PersonalAgentTriggerCapabilitiesModel"
+          },
           "canTrigger": {
             "type": "boolean",
             "description": "Whether current authorization and the effective model permit triggered runs. Each run still validates its context and quota."
@@ -63968,6 +64967,61 @@
         },
         "additionalProperties": false,
         "description": "Contains saved personal settings and current trigger eligibility."
+      },
+      "PersonalAgentTriggerCapabilitiesModel": {
+        "required": [
+          "connectors",
+          "skills",
+          "toolAccess"
+        ],
+        "type": "object",
+        "properties": {
+          "toolAccess": {
+            "$ref": "#/components/schemas/AgentToolAccessOptionsModel"
+          },
+          "connectors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonalAgentTriggerConnectorModel"
+            },
+            "description": "Connector choices retained for new personal-agent runs outside chat.",
+            "nullable": true
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonalAgentTriggerSkillModel"
+            },
+            "description": "Skill choices retained for new personal-agent runs outside chat.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains capability defaults for personal-agent runs outside chat."
+      },
+      "PersonalAgentTriggerConnectorModel": {
+        "type": "object",
+        "properties": {
+          "connectorId": {
+            "type": "string",
+            "description": "Connector selected for new personal-agent runs outside chat.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "Whether the connector is enabled for new personal-agent runs outside chat."
+          },
+          "connectionId": {
+            "type": "string",
+            "description": "Connection selected for the connector. Null uses the user's current default connection.",
+            "format": "uuid",
+            "nullable": true,
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains one connector default for runs outside chat."
       },
       "PersonalAgentTriggerModel": {
         "required": [
@@ -63999,6 +65053,23 @@
         "additionalProperties": false,
         "description": "Defines the explicit text model used for a user's triggered runs."
       },
+      "PersonalAgentTriggerSkillModel": {
+        "type": "object",
+        "properties": {
+          "skillId": {
+            "type": "string",
+            "description": "Skill selected for new personal-agent runs outside chat.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "Whether the skill is enabled for new personal-agent runs outside chat."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains one skill default for runs outside chat."
+      },
       "PublishAgentPresetDefinitionRequestModel": {
         "required": [
           "detailedDescription",
@@ -64025,6 +65096,41 @@
         "additionalProperties": false,
         "description": "Sets the language and description for an agent preset."
       },
+      "PublishAiModelCatalogRequestModel": {
+        "required": [
+          "document",
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "expectedVersionId": {
+            "type": "string",
+            "description": "The published version used to create this draft; publication rejects an older version.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "document": {
+            "$ref": "#/components/schemas/AiModelCatalogDocument"
+          },
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "type": "string",
+            "description": "The operator's reason for the change, retained with the published version."
+          },
+          "testProofs": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "Protected proofs of successful tests, keyed by model, required for newly enabled or changed models.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Publishes a complete catalog after validation and model checks."
+      },
       "PublishSkillPresetDefinitionRequestModel": {
         "required": [
           "detailedDescription",
@@ -64050,6 +65156,23 @@
         },
         "additionalProperties": false,
         "description": "Defines the preset metadata for one source skill publication."
+      },
+      "RefreshAiModelPricesRequestModel": {
+        "required": [
+          "pricing"
+        ],
+        "type": "object",
+        "properties": {
+          "pricing": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonNode"
+            },
+            "description": "The price entry whose provider source will be used to propose current rates."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Refreshes one pricing entry from its stored provider source."
       },
       "RememberAgentSessionMessageRequestModel": {
         "type": "object",
@@ -64509,6 +65632,11 @@
             "type": "boolean",
             "description": "Whether the requesting user owns the skill."
           },
+          "hasAdminAccessOnly": {
+            "type": "boolean",
+            "description": "Whether the skill is visible only through workspace administration access.",
+            "example": false
+          },
           "workspaceAccessLevel": {
             "enum": [
               "read",
@@ -64885,6 +66013,26 @@
         "additionalProperties": false,
         "description": "Describes a temporary file attached to an agent message."
       },
+      "TestAiModelRequestModel": {
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "type": "object",
+        "properties": {
+          "model": {
+            "$ref": "#/components/schemas/AgentRuntimeModelCatalogItem"
+          },
+          "prompt": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "The bounded prompt used to verify text execution or generate a test image."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Tests a draft using the real runtime adapter without publishing it."
+      },
       "ThreadListStateResponseModel": {
         "type": "object",
         "properties": {
@@ -64913,6 +66061,13 @@
             "description": "The thread's pinned order.",
             "format": "double",
             "nullable": true
+          },
+          "listStateUpdatedOn": {
+            "type": "string",
+            "description": "When this user's archive or pin state last changed.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-08-29T09:30:00Z"
           }
         },
         "additionalProperties": false,
@@ -65258,6 +66413,18 @@
         "additionalProperties": false,
         "description": "Replaces the current global AI quota policy by creating a new immutable configuration version."
       },
+      "UpdateAiTrialHistoryInternalModel": {
+        "type": "object",
+        "properties": {
+          "aiTrialExpiredAt": {
+            "type": "string",
+            "description": "Retained UTC end of the workspace's AI trial.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contains retained AI trial history for a workspace."
+      },
       "UpdateSkillRequestModel": {
         "required": [
           "instructions"
@@ -65372,7 +66539,7 @@
         "properties": {
           "uploadId": {
             "type": "string",
-            "description": "The temporary upload ID.",
+            "description": "The upload ID from generateUploadUrl or an existing temporary file ID.",
             "format": "uuid",
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
@@ -65390,7 +66557,7 @@
           }
         },
         "additionalProperties": false,
-        "description": "Selects a temporary upload to store as a bundled skill file."
+        "description": "Selects an uploaded file to store as a bundled skill file."
       },
       "UsedConnectorResponseModel": {
         "type": "object",
@@ -67096,6 +68263,10 @@
             "$ref": "#/components/schemas/Fido2User"
           },
           "attestationFormat": {
+            "type": "string",
+            "nullable": true
+          },
+          "attestationType": {
             "type": "string",
             "nullable": true
           },
@@ -75577,6 +76748,27 @@
         },
         "additionalProperties": false
       },
+      "PinnedProjectForm": {
+        "required": [
+          "isPinned",
+          "pinnedProjectId"
+        ],
+        "type": "object",
+        "properties": {
+          "pinnedProjectId": {
+            "type": "string",
+            "description": "The project whose favourite state must change.",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000"
+          },
+          "isPinned": {
+            "type": "boolean",
+            "description": "Whether the project must be a favourite."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Changes one project favourite for the current user."
+      },
       "PlannedEffortForm": {
         "required": [
           "userId"
@@ -77479,6 +78671,10 @@
             "description": "The general type of this project status.",
             "nullable": true,
             "example": "progress"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Indicates whether this status is archived."
           },
           "order": {
             "type": "integer",
@@ -84761,6 +85957,10 @@
             "description": "The value of the setting.",
             "example": "true"
           },
+          "preservePinnedProjects": {
+            "type": "boolean",
+            "description": "Keeps the saved favourites when other view settings change."
+          },
           "createdOn": {
             "type": "string",
             "description": "The creation date.",
@@ -84823,6 +86023,10 @@
             "type": "string",
             "description": "The value of the setting.",
             "example": "true"
+          },
+          "preservePinnedProjects": {
+            "type": "boolean",
+            "description": "Keeps the saved favourites when other view settings change."
           }
         },
         "additionalProperties": false,
