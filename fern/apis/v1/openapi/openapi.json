@@ -76403,36 +76403,6 @@
         },
         "additionalProperties": false
       },
-      "OnboardingTaskProgressMigrationResult": {
-        "type": "object",
-        "properties": {
-          "scope": {
-            "type": "string",
-            "description": "Gets or sets the migration scope.",
-            "nullable": true
-          },
-          "workspaceId": {
-            "type": "string",
-            "description": "Gets or sets the migrated workspace, if the request targeted one workspace.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "userId": {
-            "type": "string",
-            "description": "Gets or sets the migrated user, if the request targeted one user.",
-            "format": "uuid",
-            "nullable": true,
-            "example": "123e4567-e89b-12d3-a456-426614174000"
-          },
-          "runsInBackground": {
-            "type": "boolean",
-            "description": "Gets or sets whether the request uses background processing."
-          }
-        },
-        "additionalProperties": false,
-        "description": "Describes the onboarding progress migration started by an internal request."
-      },
       "OnboardingTaskProgressUpdateForm": {
         "required": [
           "isDone"
