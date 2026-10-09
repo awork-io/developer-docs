@@ -2248,6 +2248,76 @@
         }
       }
     },
+    "/agents/schedules/taskdeletionimpact": {
+      "get": {
+        "tags": [
+          "Agent Schedules"
+        ],
+        "summary": "Counts schedules that will lose context when readable tasks are deleted.",
+        "description": "\r\n\r\n<Check title=\"Required Permissions\" icon=\"key\">Any authenticated user.</Check>",
+        "operationId": "GetAgentsSchedulesTaskDeletionImpact",
+        "parameters": [
+          {
+            "name": "taskIds",
+            "in": "query",
+            "description": "The tasks that may be deleted.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentScheduleTaskDeletionImpactResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "full_access"
+            ]
+          }
+        ],
+        "x-api-versions": [
+          "v1"
+        ],
+        "x-access": {
+          "any": "true"
+        }
+      }
+    },
     "/agents/skills": {
       "get": {
         "tags": [
@@ -28428,7 +28498,7 @@
         "tags": [
           "ProjectTasks"
         ],
-        "summary": "Returns types of work for the specified project.",
+        "summary": "Returns types of work from the project workspace for the specified project.",
         "description": "Returns types of work for connected or workspace projects.\r\n            <Check title=\"Required Permissions\" icon=\"key\">The user must have `project-planning-data:read` permission for the project.</Check>",
         "operationId": "GetProjectTypesOfWorkByProjectId",
         "parameters": [
@@ -58696,6 +58766,10 @@
             "nullable": true,
             "example": "123e4567-e89b-12d3-a456-426614174000"
           },
+          "isTaskContextDeleted": {
+            "type": "boolean",
+            "description": "Whether the required task context was deleted."
+          },
           "isEnabled": {
             "type": "boolean",
             "description": "Whether this schedule is active."
@@ -58729,6 +58803,18 @@
         },
         "additionalProperties": false,
         "description": "Represents a scheduled agent run configuration."
+      },
+      "AgentScheduleTaskDeletionImpactResponseModel": {
+        "type": "object",
+        "properties": {
+          "scheduleCount": {
+            "type": "integer",
+            "description": "The number of schedules that will lose a deleted task context.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes how deleting tasks affects agent schedules."
       },
       "AgentSessionSourceType": {
         "enum": [
@@ -68438,6 +68524,7 @@
           },
           "systemHostname": {
             "type": "string",
+            "description": "The root hostname of the PM product.",
             "nullable": true
           },
           "userName": {
@@ -85728,6 +85815,14 @@
       "UserPermission": {
         "type": "object",
         "properties": {
+          "aip": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "pmp": {
+            "type": "boolean",
+            "nullable": true
+          },
           "aku": {
             "type": "string",
             "format": "uuid",
@@ -85811,6 +85906,14 @@
       "UserPermissionFullModel": {
         "type": "object",
         "properties": {
+          "aiProduct": {
+            "type": "boolean",
+            "description": "Whether the user has the AI product."
+          },
+          "pmProduct": {
+            "type": "boolean",
+            "description": "Whether the user has the PM product."
+          },
           "isAiPlanActive": {
             "type": "boolean",
             "description": "Whether the workspace has an active AI plan."
@@ -87147,6 +87250,14 @@
       "WorkspaceModel": {
         "type": "object",
         "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The products available in this workspace. Read-only.",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "description": "The id of the workspace.",
@@ -93095,6 +93206,14 @@
             "description": "Whether to skip the creation of default workspace data.",
             "nullable": true
           },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The products available in this workspace. Read-only.",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "description": "The id of the workspace.",
@@ -93497,6 +93616,14 @@
       "WorkspaceSimplified": {
         "type": "object",
         "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The products available in this workspace. Read-only.",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "description": "The id of the workspace.",
@@ -93553,6 +93680,14 @@
       "WorkspaceWithSubscriptionDetails": {
         "type": "object",
         "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The products available in this workspace. Read-only.",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "description": "The id of the workspace.",
