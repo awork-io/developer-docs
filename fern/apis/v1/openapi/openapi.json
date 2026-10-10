@@ -2183,16 +2183,6 @@
                 }
               }
             }
-          },
-          "503": {
-            "description": "Service Unavailable",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2284,16 +2274,6 @@
           },
           "400": {
             "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Service Unavailable",
             "content": {
               "application/json": {
                 "schema": {
@@ -5296,16 +5276,6 @@
           },
           "404": {
             "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Service Unavailable",
             "content": {
               "application/json": {
                 "schema": {
@@ -57423,6 +57393,26 @@
         "additionalProperties": false,
         "description": "Represents a user the agent is shared with."
       },
+      "AgentCreditUsageResponseModel": {
+        "type": "object",
+        "properties": {
+          "creditsUsed": {
+            "type": "integer",
+            "description": "Whole-credit total rounded up once.",
+            "format": "int64",
+            "example": 42
+          },
+          "lastUsageOn": {
+            "type": "string",
+            "description": "Time of the latest included usage record; this does not indicate run completion.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2026-10-06T12:30:00Z"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Recorded usage converted with the current reporting credit rates."
+      },
       "AgentDefaultsResponseModel": {
         "type": "object",
         "properties": {
@@ -59535,6 +59525,9 @@
             "description": "The id of the user who last modified this entity.",
             "format": "uuid",
             "example": "3d844c62-7410-4df9-a5b2-78805c0ee260"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/AgentCreditUsageResponseModel"
           },
           "updatedOn": {
             "type": "string",
@@ -63387,6 +63380,7 @@
             "example": "medium"
           },
           "systemPrompt": {
+            "maxLength": 50000,
             "type": "string",
             "description": "The instructions that control the agent's behavior.",
             "nullable": true,
@@ -66329,7 +66323,7 @@
             "example": "medium"
           },
           "systemPrompt": {
-            "maxLength": 25000,
+            "maxLength": 50000,
             "type": "string",
             "description": "The instructions that control the agent's behavior.",
             "example": "Prepare concise client-ready project updates from awork data."
@@ -81874,6 +81868,10 @@
             "description": "Custom fields of the task.",
             "nullable": true
           },
+          "deriveDatesFromSubtasks": {
+            "type": "boolean",
+            "description": "When true, if the task is a parent task, the StartOn and DueOn will be\nautomatically adjusted to the start and due date of the subtasks."
+          },
           "trackedDuration": {
             "type": "integer",
             "description": "The summed up duration of all time trackings directly on this task (excluding subtasks).",
@@ -82715,6 +82713,11 @@
             "nullable": true,
             "example": 2
           },
+          "deriveDatesFromSubtasks": {
+            "type": "boolean",
+            "description": "When true, if the task is a parent task, the StartOn and DueOn will be\nautomatically adjusted to the start and due date of the subtasks.",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "description": "The Id of the task template.",
@@ -82879,6 +82882,11 @@
             "format": "int32",
             "nullable": true,
             "example": 2
+          },
+          "deriveDatesFromSubtasks": {
+            "type": "boolean",
+            "description": "When true, if the task is a parent task, the StartOn and DueOn will be\nautomatically adjusted to the start and due date of the subtasks.",
+            "nullable": true
           }
         },
         "additionalProperties": false
